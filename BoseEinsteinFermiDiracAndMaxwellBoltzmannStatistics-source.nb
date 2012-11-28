@@ -1,0 +1,741 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     30435,        731]
+NotebookOptionsPosition[     29131,        683]
+NotebookOutlinePosition[     29708,        706]
+CellTagsIndexPosition[     29665,        703]
+WindowTitle->Bose-Einstein, Fermi-Dirac, and Maxwell-Boltzmann Statistics - \
+Source
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["Bose-Einstein, Fermi-Dirac, and Maxwell-Boltzmann Statistics", "Section",
+ CellFrame->{{0, 0}, {0, 0}},
+ ShowCellBracket->False,
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1: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
+FP/69esnAAAAAAAAAAAAwM74B4thROM=
+   "], {{0, 0}, {1800, 25}}, {0, 255},
+   ColorFunction->RGBColor],
+  ImageSize->{1800, 25},
+  PlotRange->{{0, 1800}, {0, 25}}]], "Section",
+ CellFrame->{{0, 0}, {0, 0}},
+ ShowCellBracket->False],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"a", "=", 
+   RowBox[{"-", "500"}]}], ";", 
+  RowBox[{"b", "=", "1000"}], ";", 
+  RowBox[{"kb", "=", "0.08618292134831462"}], ";"}]], "Input",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.4034199380172234`*^9, 3.4034199570171013`*^9}, 
+   3.403521725694045*^9, {3.4035236544988575`*^9, 3.4035236590145693`*^9}},
+ CellID->84877217],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Show", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Plot", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          FractionBox["1", 
+           RowBox[{
+            RowBox[{"Exp", "[", 
+             FractionBox[
+              RowBox[{"x", " "}], 
+              RowBox[{"kb", " ", "TT"}]], "]"}], "+", "\[Epsilon]"}]], ",", 
+          RowBox[{"{", 
+           RowBox[{"\[Epsilon]", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "1"}], ",", "0", ",", "1"}], "}"}]}], "}"}]}], 
+         "]"}], "//", "Evaluate"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "a", ",", "0"}], "}"}], ",", 
+       RowBox[{"PlotStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Hue", "[", ".1", "]"}], ",", "Thick"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Hue", "[", ".4", "]"}], ",", "Thick"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Hue", "[", ".6", "]"}], ",", "Thick"}], "}"}]}], "}"}]}],
+        ",", 
+       RowBox[{"Exclusions", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", "0"}], "}"}]}]}], "]"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Plot", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          FractionBox["1", 
+           RowBox[{
+            RowBox[{"Exp", "[", 
+             FractionBox[
+              RowBox[{"x", " "}], 
+              RowBox[{"kb", " ", "TT"}]], "]"}], "+", "\[Epsilon]"}]], ",", 
+          RowBox[{"{", 
+           RowBox[{"\[Epsilon]", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "1"}], ",", "0", ",", "1"}], "}"}]}], "}"}]}], 
+         "]"}], "//", "Evaluate"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "0", ",", "b"}], "}"}], ",", 
+       RowBox[{"PlotStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Hue", "[", ".1", "]"}], ",", "Thick"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Hue", "[", ".4", "]"}], ",", "Thick"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Hue", "[", ".6", "]"}], ",", "Thick"}], "}"}]}], "}"}]}],
+        ",", 
+       RowBox[{"Exclusions", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", "0"}], "}"}]}]}], "]"}], ",", 
+     RowBox[{"AxesLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\"\<E - \[Mu] [meV]\>\"", ",", 
+        RowBox[{"Row", "[", 
+         RowBox[{"{", 
+          RowBox[{"\"\<<\>\"", ",", 
+           RowBox[{"Style", "[", 
+            RowBox[{"\"\<N\>\"", ",", "Italic"}], "]"}], ",", "\"\<(\>\"", 
+           ",", 
+           RowBox[{"Style", "[", 
+            RowBox[{"\"\<E\>\"", ",", "Italic"}], "]"}], ",", "\"\<)>\>\""}], 
+          "}"}], "]"}]}], "}"}]}], ",", 
+     RowBox[{"AxesStyle", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Directive", "[", "14", "]"}], ",", 
+        RowBox[{"Directive", "[", "14", "]"}]}], "}"}]}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "2"}], "}"}]}], ",", 
+     RowBox[{"AxesOrigin", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "b"}], "}"}]}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", "550"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"Epilog", "\[Rule]", "\[IndentingNewLine]", 
+      RowBox[{"Inset", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Panel", "[", "\[IndentingNewLine]", 
+         RowBox[{"Grid", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Graphics", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"Hue", "[", ".1", "]"}], ",", "Thick", ",", 
+                  RowBox[{"Line", "[", 
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"0", ",", "0"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+                ",", 
+                RowBox[{"ImageSize", "\[Rule]", "15"}], ",", 
+                RowBox[{"AspectRatio", "\[Rule]", ".1"}]}], "]"}], ",", 
+              "\"\<Bose-Einstein, \[Epsilon] = -1\>\""}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Graphics", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"Hue", "[", ".4", "]"}], ",", "Thick", ",", 
+                  RowBox[{"Line", "[", 
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"0", ",", "0"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+                ",", 
+                RowBox[{"ImageSize", "\[Rule]", "15"}], ",", 
+                RowBox[{"AspectRatio", "\[Rule]", ".1"}]}], "]"}], ",", 
+              "\"\<Maxwell-Boltzmann, \[Epsilon] = 0\>\""}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Graphics", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"Hue", "[", ".6", "]"}], ",", "Thick", ",", 
+                  RowBox[{"Line", "[", 
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"0", ",", "0"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+                ",", 
+                RowBox[{"ImageSize", "\[Rule]", "15"}], ",", 
+                RowBox[{"AspectRatio", "\[Rule]", ".1"}]}], "]"}], ",", 
+              "\"\<Fermi-Dirac, \[Epsilon] = +1\>\""}], "}"}]}], "}"}], "]"}],
+          "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"725", ",", "1.75"}], "}"}]}], "]"}]}], ",", 
+     RowBox[{"PlotLabel", "\[Rule]", 
+      RowBox[{"Row", "[", 
+       RowBox[{"{", 
+        RowBox[{"\"\<distribution function: \>\"", ",", 
+         RowBox[{"Style", "[", 
+          RowBox[{
+           RowBox[{"TraditionalForm", "[", 
+            FractionBox["1", 
+             RowBox[{
+              RowBox[{"Exp", "[", 
+               FractionBox[
+                RowBox[{
+                 RowBox[{"Style", "[", 
+                  RowBox[{"\"\<E\>\"", ",", "Italic"}], "]"}], "-", "\[Mu]"}], 
+                RowBox[{"k", " ", "T"}]], "]"}], "+", "\[Epsilon]"}]], "]"}], 
+           ",", "Large"}], "]"}]}], "}"}], "]"}]}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"TT", ",", "300", ",", "\"\<T(K)\>\""}], "}"}], ",", "0.1", ",",
+      "10000", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   RowBox[{"SaveDefinitions", "\[Rule]", "True"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.401708608886797*^9, 3.401708703811102*^9}, {
+   3.401708796266594*^9, 3.4017088185327883`*^9}, {3.401708863846449*^9, 
+   3.401708957067585*^9}, {3.402042159126313*^9, 3.4020421613907633`*^9}, {
+   3.402316962668393*^9, 3.402317041755389*^9}, {3.40231718865218*^9, 
+   3.402317191805168*^9}, {3.402317283996879*^9, 3.402317288251802*^9}, {
+   3.402318087852874*^9, 3.402318092449767*^9}, {3.402318425805358*^9, 
+   3.402318444570394*^9}, {3.402318499871569*^9, 3.402318583772673*^9}, {
+   3.402318912475643*^9, 3.402318969858674*^9}, {3.402319023191473*^9, 
+   3.402319025731221*^9}, {3.4023193905231*^9, 3.402319497892963*^9}, 
+   3.402319655283297*^9, {3.402320089232999*^9, 3.402320185776227*^9}, {
+   3.402320216252543*^9, 3.402320220468559*^9}, 3.402320286990908*^9, {
+   3.402320363982804*^9, 3.402320381491605*^9}, {3.40232047015637*^9, 
+   3.402320473182506*^9}, {3.402320560270432*^9, 3.40232065095354*^9}, {
+   3.4023207586835*^9, 3.402320778310174*^9}, {3.402320854722188*^9, 
+   3.402320861922611*^9}, {3.402321128418415*^9, 3.402321136557133*^9}, {
+   3.402321185504482*^9, 3.402321215964359*^9}, {3.402321357320957*^9, 
+   3.402321362971102*^9}, {3.402321399832586*^9, 3.402321425644858*^9}, {
+   3.402322989727562*^9, 3.402323272283424*^9}, {3.402323313421027*^9, 
+   3.402323333788712*^9}, {3.402323373987371*^9, 3.402323374901786*^9}, {
+   3.402323442500458*^9, 3.402323553404126*^9}, {3.402323597358872*^9, 
+   3.402323671470955*^9}, {3.402324060458284*^9, 3.402324140427643*^9}, {
+   3.402324269603101*^9, 3.40232434026812*^9}, {3.402324385145303*^9, 
+   3.402324564716379*^9}, 3.402324725552964*^9, {3.402324777852859*^9, 
+   3.402324807515635*^9}, {3.402326035672988*^9, 3.402326212887548*^9}, {
+   3.402326246154351*^9, 3.402326268592463*^9}, {3.402326338022054*^9, 
+   3.402326352342495*^9}, {3.402326398337178*^9, 3.40232642097812*^9}, 
+   3.402327029378149*^9, {3.402327233355159*^9, 3.402327317074685*^9}, {
+   3.402327390767005*^9, 3.402327570690083*^9}, {3.402327661948631*^9, 
+   3.40232775136155*^9}, {3.402327793057206*^9, 3.40232788070307*^9}, {
+   3.402327922939796*^9, 3.402327931695994*^9}, {3.402327962448347*^9, 
+   3.402328000988894*^9}, {3.402328067929608*^9, 3.402328112622381*^9}, 
+   3.402338246707334*^9, {3.402342004288637*^9, 3.40234201164248*^9}, {
+   3.40234216998728*^9, 3.402342255689044*^9}, {3.402342601054403*^9, 
+   3.402342660290865*^9}, {3.40234276742362*^9, 3.402342775149692*^9}, {
+   3.402342882808879*^9, 3.402342901139342*^9}, {3.402343038844202*^9, 
+   3.402343118876312*^9}, {3.402343219451359*^9, 3.402343311134882*^9}, {
+   3.402343366811074*^9, 3.402343474512665*^9}, {3.402343519214129*^9, 
+   3.402343520459206*^9}, {3.402343600865033*^9, 3.402343643981038*^9}, {
+   3.402343681436087*^9, 3.402343838550165*^9}, {3.402343880086365*^9, 
+   3.402343887093602*^9}, {3.402749408054395*^9, 3.402749426443703*^9}, {
+   3.403172607106825*^9, 3.403172623899724*^9}, {3.403173305825224*^9, 
+   3.403173306621256*^9}, {3.403173337648578*^9, 3.403173343938065*^9}, 
+   3.403173381289568*^9, {3.403173534666326*^9, 3.403173535545589*^9}, {
+   3.40317357877503*^9, 3.403173578957034*^9}, {3.403173630698242*^9, 
+   3.4031736445761*^9}, {3.403173839139517*^9, 3.403173875492214*^9}, {
+   3.40317392525737*^9, 3.403173945163426*^9}, {3.403174016721714*^9, 
+   3.403174016821184*^9}, {3.403174050710378*^9, 3.403174053288061*^9}, {
+   3.403174086529318*^9, 3.403174119964435*^9}, 3.403174191111818*^9, {
+   3.403174548503482*^9, 3.40317459852974*^9}, {3.403174685122768*^9, 
+   3.40317471648529*^9}, {3.403174915434136*^9, 3.403174918317103*^9}, {
+   3.403174982824656*^9, 3.403175007988771*^9}, {3.403175044981384*^9, 
+   3.403175110701165*^9}, {3.403175172805733*^9, 3.403175211543275*^9}, {
+   3.403175251186633*^9, 3.403175354036844*^9}, 3.40317551176875*^9, 
+   3.403175673600561*^9, {3.403175767543888*^9, 3.403175836171721*^9}, {
+   3.403175914828563*^9, 3.403175915332645*^9}, {3.403176004691388*^9, 
+   3.403176171372207*^9}, {3.40317626320532*^9, 3.403176358212777*^9}, {
+   3.403176423422196*^9, 3.403176431439946*^9}, {3.403176469536559*^9, 
+   3.403176474103935*^9}, {3.403176523256867*^9, 3.403176633040135*^9}, {
+   3.403176924978616*^9, 3.403176930787754*^9}, {3.403176977889974*^9, 
+   3.403176987461753*^9}, 3.403177022910364*^9, {3.403177117693118*^9, 
+   3.403177137596532*^9}, {3.403177240751871*^9, 3.403177264008859*^9}, {
+   3.403177334718862*^9, 3.403177388136409*^9}, {3.403177516098206*^9, 
+   3.40317751848382*^9}, {3.403177609930037*^9, 3.403177681975632*^9}, {
+   3.403177746846332*^9, 3.403177763471807*^9}, {3.403177801094497*^9, 
+   3.40317781830805*^9}, {3.403177862649638*^9, 3.403177871390026*^9}, {
+   3.403416161002347*^9, 3.4034161613617587`*^9}, {3.403416496177539*^9, 
+   3.4034165061934204`*^9}, {3.403416601601968*^9, 3.403416695883218*^9}, {
+   3.4034167848988433`*^9, 3.403416814914468*^9}, {3.4034198322210255`*^9, 
+   3.40341983701787*^9}, 3.4034199161736135`*^9, {3.403419965298299*^9, 
+   3.4034199768763494`*^9}, 3.4034200340634837`*^9, {3.403420180520776*^9, 
+   3.4034202152881813`*^9}, {3.403420271306674*^9, 3.403420288948202*^9}, {
+   3.403421640085085*^9, 3.4034216790082054`*^9}, {3.403521850539308*^9, 
+   3.403521857836603*^9}, 3.403522008235891*^9, {3.4035220428003817`*^9, 
+   3.4035220645672607`*^9}, 3.4035236836087914`*^9, {3.4035242197753353`*^9, 
+   3.4035242204315977`*^9}, {3.403540931070815*^9, 3.403540950023819*^9}, {
+   3.403540985382968*^9, 3.403541237709478*^9}, {3.4036368126239357`*^9, 
+   3.4036369945458107`*^9}, {3.40368917163953*^9, 3.40368917429864*^9}, {
+   3.403689209335493*^9, 3.403689233182923*^9}, {3.403689300299365*^9, 
+   3.403689308631799*^9}, {3.403689589244595*^9, 3.403689600871212*^9}, {
+   3.4036897895226*^9, 3.403689842307527*^9}, {3.403689891068634*^9, 
+   3.403689920238611*^9}, {3.4038729245299196`*^9, 3.4038730372159767`*^9}, 
+   3.403873091730904*^9},
+ CellID->672417688],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`TT$$ = 300, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`TT$$], 300, "T(K)"}, 0.1, 10000}}, Typeset`size$$ = {
+    550., {209., 214.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = False, $CellContext`TT$549$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`TT$$ = 300}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`TT$$, $CellContext`TT$549$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Show[
+        Plot[
+         Evaluate[
+          Table[
+          1/(Exp[$CellContext`x/($CellContext`kb $CellContext`TT$$)] + \
+$CellContext`\[Epsilon]), {$CellContext`\[Epsilon], {-1, 0, 
+            1}}]], {$CellContext`x, $CellContext`a, 0}, PlotStyle -> {{
+            Hue[0.1], Thick}, {
+            Hue[0.4], Thick}, {
+            Hue[0.6], Thick}}, Exclusions -> {$CellContext`a, 0}], 
+        Plot[
+         Evaluate[
+          Table[
+          1/(Exp[$CellContext`x/($CellContext`kb $CellContext`TT$$)] + \
+$CellContext`\[Epsilon]), {$CellContext`\[Epsilon], {-1, 0, 
+            1}}]], {$CellContext`x, 0, $CellContext`b}, PlotStyle -> {{
+            Hue[0.1], Thick}, {
+            Hue[0.4], Thick}, {
+            Hue[0.6], Thick}}, Exclusions -> {$CellContext`a, 0}], 
+        AxesLabel -> {"E - \[Mu] [meV]", 
+          Row[{"<", 
+            Style["N", Italic], "(", 
+            Style["E", Italic], ")>"}]}, AxesStyle -> {
+          Directive[14], 
+          Directive[14]}, PlotRange -> {0, 2}, 
+        AxesOrigin -> {0, $CellContext`b}, ImageSize -> 550, Epilog -> Inset[
+          Panel[
+           Grid[{{
+              Graphics[{
+                Hue[0.1], Thick, 
+                Line[{{0, 0}, {1, 0}}]}, ImageSize -> 15, AspectRatio -> 0.1],
+               "Bose-Einstein, \[Epsilon] = -1"}, {
+              Graphics[{
+                Hue[0.4], Thick, 
+                Line[{{0, 0}, {1, 0}}]}, ImageSize -> 15, AspectRatio -> 0.1],
+               "Maxwell-Boltzmann, \[Epsilon] = 0"}, {
+              Graphics[{
+                Hue[0.6], Thick, 
+                Line[{{0, 0}, {1, 0}}]}, ImageSize -> 15, AspectRatio -> 0.1],
+               "Fermi-Dirac, \[Epsilon] = +1"}}]], {725, 1.75}], PlotLabel -> 
+        Row[{"distribution function: ", 
+           Style[
+            TraditionalForm[
+            1/(Exp[(Style[
+                 "E", Italic] - $CellContext`\[Mu])/($CellContext`k \
+$CellContext`T)] + $CellContext`\[Epsilon])], Large]}]], 
+      "Specifications" :> {{{$CellContext`TT$$, 300, "T(K)"}, 0.1, 10000, 
+         Appearance -> "Labeled"}}, "Options" :> {}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{599., {255., 260.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>(({$CellContext`kb = 
+        0.08618292134831462, $CellContext`a = -500, $CellContext`b = 1000, 
+        Attributes[PlotRange] = {ReadProtected}}; Typeset`initDone$$ = True); 
+     ReleaseHold[
+       HoldComplete[{$CellContext`a = -500; $CellContext`b = 
+          1000; $CellContext`kb = 0.08618292134831462; Null}]]; 
+     Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->13014436]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["CAPTION", "Section",
+ CellFrame->{{0, 0}, {1, 0}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->12,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "This is a plot of the population density ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"<", 
+    RowBox[{"N", 
+     RowBox[{"(", "E", ")"}]}], ">"}], TraditionalForm]], "InlineMath"],
+ " of the Bose\[Dash]Einstein, Fermi\[Dash]Dirac, and Maxwell\[Dash]Boltzmann \
+thermodynamic statistics. The ",
+ Cell[BoxData[
+  FormBox["x", TraditionalForm]], "InlineMath"],
+ " coordinate is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"E", "-", "\[Mu]"}], TraditionalForm]], "InlineMath"],
+ ", where ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]], "InlineMath"],
+ " is the chemical potential."
+}], "Text"],
+
+Cell[TextData[{
+ "The thermodynamic chemical potential ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]], "InlineMath"],
+ " is the change of a characteristic state function per change in the number \
+of particles. More precisely it is the thermodynamic conjugate of the \
+particle number. It can be interpreted, for example, as the ability of the \
+system to perform phase transitions or chemical reactions, or its tendency to \
+diffuse. In the case of massless particles, such as a gas of photons, ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Mu]", "=", "0"}], TraditionalForm]], "InlineMath"],
+ " because the number of particles in the ensemble is not conserved."
+}], "Text"],
+
+Cell[TextData[{
+ "The Fermi\[Dash]Dirac statistics describe the population density of a gas \
+of fermions. As ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"T", "\[Rule]", "0"}], TraditionalForm]], "InlineMath"],
+ " it becomes a step function; the fermions in the gas populate states with \
+an energy ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["E", "n"], "\[LessEqual]", "\[Mu]"}], TraditionalForm]], 
+  "InlineMath"],
+ ", while states with ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["E", "n"], ">", "\[Mu]"}], TraditionalForm]], "InlineMath"],
+ " are not occupied. The reason is that fermions obey Pauli's exclusion \
+principle, which states that two particles cannot populate the same state at \
+the same time."
+}], "Text"],
+
+Cell[TextData[{
+ "The Bose\[Dash]Einstein statistics describes a gas of bosons. Since they do \
+not obey Pauli's exclusion principle, the same state can be populated by more \
+than one particle; the distribution function diverges for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"E", "\[Rule]", "\[Mu]"}], TraditionalForm]], "InlineMath"],
+ "."
+}], "Text"],
+
+Cell[TextData[{
+ "Maxwell\[Dash]Boltzmann statistics apply where quantum-mechanical effects \
+do not play a role and the particles of the gas can be considered \
+\"distinguishable\". Both Fermi\[Dash]Dirac and Bose\[Dash]Einstein \
+statistics become Maxwell\[Dash]Boltzmann statistics at high temperatures and \
+low chemical potentials where ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Mu]", "<", "0"}], TraditionalForm]], "InlineMath"],
+ "."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["THIS NOTEBOOK IS THE SOURCE CODE FROM", "Text",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellMargins->{{48, 10}, {4, 28}},
+ CellGroupingRules->{"SectionGrouping", 25},
+ CellFrameMargins->{{48, 48}, {6, 5}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->10,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "\"",
+ ButtonBox["Bose-Einstein, Fermi-Dirac, and Maxwell-Boltzmann Statistics",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/\
+BoseEinsteinFermiDiracAndMaxwellBoltzmannStatistics/"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/\
+BoseEinsteinFermiDiracAndMaxwellBoltzmannStatistics/"],
+ "\"",
+ " from ",
+ ButtonBox["the Wolfram Demonstrations Project",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+ "\[ParagraphSeparator]\[NonBreakingSpace]",
+ ButtonBox["http://demonstrations.wolfram.com/\
+BoseEinsteinFermiDiracAndMaxwellBoltzmannStatistics/",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/\
+BoseEinsteinFermiDiracAndMaxwellBoltzmannStatistics/"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/\
+BoseEinsteinFermiDiracAndMaxwellBoltzmannStatistics/"]
+}], "Text",
+ CellMargins->{{48, Inherited}, {0, Inherited}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.5]],
+
+Cell[TextData[{
+ "Contributed by: ",
+ ButtonBox["Christian Freier",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/author.html?author=Christian+\
+Freier"], None}],
+ " (University of Technology Berlin)"
+}], "Text",
+ CellDingbat->"\[FilledSmallSquare]",
+ CellMargins->{{66, 48}, {2, 4}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.6]],
+
+Cell[TextData[{
+ "A full-function Wolfram ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " system (Version 6 or higher) is required to edit this notebook.\n",
+ StyleBox[ButtonBox["GET WOLFRAM MATHEMATICA \[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.wolfram.com/products/mathematica/"], None},
+  ButtonNote->"http://www.wolfram.com/products/mathematica/"],
+  FontFamily->"Helvetica",
+  FontWeight->"Bold",
+  FontSlant->"Italic",
+  FontColor->RGBColor[1, 0.42, 0]]
+}], "Text",
+ CellFrame->True,
+ CellMargins->{{48, 68}, {8, 28}},
+ CellFrameMargins->12,
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ CellChangeTimes->{3.3750111182355957`*^9},
+ ParagraphSpacing->{1., 1.},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.411765],
+ Background->RGBColor[1, 1, 1]],
+
+Cell[TextData[{
+ "\[Copyright] ",
+ StyleBox[ButtonBox["Wolfram Demonstrations Project & Contributors",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Terms of Use",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/termsofuse.html"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/termsofuse.html"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Make a new version of this Demonstration \
+\[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/participate/upload.jsp?id=\
+BoseEinsteinFermiDiracAndMaxwellBoltzmannStatistics"], None},
+  ButtonNote->None],
+  FontColor->GrayLevel[0.6]]
+}], "Text",
+ CellFrame->{{0, 0}, {0, 0.5}},
+ CellMargins->{{48, 10}, {20, 50}},
+ CellFrameMargins->{{6, 0}, {6, 6}},
+ CellFrameColor->GrayLevel[0.6],
+ FontFamily->"Verdana",
+ FontSize->9,
+ FontColor->GrayLevel[0.6]]
+}, Open  ]]
+},
+Editable->True,
+Saveable->False,
+ScreenStyleEnvironment->"Working",
+CellInsertionPointCell->None,
+WindowSize->{1366, 683},
+WindowMargins->{{Inherited, Inherited}, {Inherited, 0}},
+WindowTitle->"Bose-Einstein, Fermi-Dirac, and Maxwell-Boltzmann Statistics - \
+Source",
+DockedCells->{},
+CellContext->Notebook,
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[642, 22, 180, 3, 66, "Section"],
+Cell[CellGroupData[{
+Cell[847, 29, 3700, 64, 37, "Section"],
+Cell[4550, 95, 365, 9, 31, "Input",
+ CellID->84877217],
+Cell[CellGroupData[{
+Cell[4940, 108, 13227, 270, 510, "Input",
+ CellID->672417688],
+Cell[18170, 380, 3889, 84, 532, "Output",
+ CellID->13014436]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22108, 470, 209, 6, 62, "Section"],
+Cell[22320, 478, 608, 19, 70, "Text"],
+Cell[22931, 499, 680, 13, 70, "Text"],
+Cell[23614, 514, 749, 21, 70, "Text"],
+Cell[24366, 537, 351, 8, 70, "Text"],
+Cell[24720, 547, 453, 10, 70, "Text"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[25210, 562, 355, 9, 20, "Text",
+ CellGroupingRules->{"SectionGrouping", 25}],
+Cell[25568, 573, 1110, 31, 34, "Text"],
+Cell[26681, 606, 390, 13, 18, "Text"],
+Cell[27074, 621, 815, 24, 98, "Text"],
+Cell[27892, 647, 1223, 33, 88, "Text"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
