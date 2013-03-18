@@ -1,0 +1,377 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     10427,        368]
+NotebookOptionsPosition[      9120,        323]
+NotebookOutlinePosition[      9502,        340]
+CellTagsIndexPosition[      9459,        337]
+WindowFrame->Normal
+ContainsDynamic->False*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["\<\
+Representations of the Dirac \[Delta] function\
+\>", "Title"],
+
+Cell["vs 0.2, 25/1/08 \[Copyright] Niels Walet", "Subtitle",
+ CellChangeTimes->{{3.4102638261235657`*^9, 3.4102638324184637`*^9}}],
+
+Cell["\<\
+There are many ways to derive the Dirac \[Delta] function. A few are sketched \
+below.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["1 Gaussian", "Section"],
+
+Cell["\<\
+One of the most useful ones is the limit of a very narrow (and very high!) \
+Gaussian. We first need to figure out how high a Gaussian must be to have \
+unit area. We calculate tjhe area under a curve to be able to divide by it:\
+\>", "Text",
+ CellChangeTimes->{{3.410253658207677*^9, 3.410253678317027*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Integrate", "[", 
+   RowBox[{
+    SuperscriptBox["\[ExponentialE]", 
+     RowBox[{"-", 
+      FractionBox[
+       SuperscriptBox["x", "2"], 
+       SuperscriptBox["a", "2"]]}]], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+    RowBox[{"Assumptions", "\[Rule]", 
+     RowBox[{"a", ">", "0"}]}]}], "]"}], TraditionalForm]], "Input"],
+
+Cell["\<\
+Now integrate with a general function (Taylor expanded to 4th order)\
+\>", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"tst", "=", 
+   RowBox[{
+    RowBox[{"Integrate", "[", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox["\[ExponentialE]", 
+        RowBox[{"-", 
+         FractionBox[
+          SuperscriptBox["x", "2"], 
+          SuperscriptBox["a", "2"]]}]], 
+       RowBox[{"Normal", "[", 
+        RowBox[{"Series", "[", 
+         RowBox[{
+          RowBox[{"f", "[", "x", "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", "0", ",", "5"}], "}"}]}], "]"}], "]"}]}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+      RowBox[{"Assumptions", "\[Rule]", 
+       RowBox[{"a", ">", "0"}]}]}], "]"}], "/", 
+    RowBox[{"Integrate", "[", 
+     RowBox[{
+      SuperscriptBox["\[ExponentialE]", 
+       RowBox[{"-", 
+        FractionBox[
+         SuperscriptBox["x", "2"], 
+         SuperscriptBox["a", "2"]]}]], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+      RowBox[{"Assumptions", "\[Rule]", 
+       RowBox[{"a", ">", "0"}]}]}], "]"}]}]}], TraditionalForm]], "Input",
+ CellChangeTimes->{{3.4102537056325274`*^9, 3.41025371093268*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"tst", "/.", 
+   RowBox[{"a", "\[Rule]", "0"}]}], TraditionalForm]], "Input",
+ CellChangeTimes->{{3.4102537241887703`*^9, 3.410253728146482*^9}}],
+
+Cell[TextData[{
+ "Thus as ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"a", "\[Rule]", "0"}], TraditionalForm]]],
+ " this goes to ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "0", ")"}], TraditionalForm]]],
+ ", and we have proven that"
+}], "Text",
+ CellChangeTimes->{{3.410253735308256*^9, 3.4102537601243763`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"\[Delta]", "(", "x", ")"}], "=", 
+   RowBox[{
+    UnderscriptBox["lim", 
+     RowBox[{"a", "\[Rule]", "0"}]], 
+    RowBox[{
+     FractionBox["1", 
+      RowBox[{"a", 
+       SqrtBox["\[Pi]"]}]], 
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{
+       RowBox[{"-", 
+        SuperscriptBox["x", "2"]}], "/", 
+       SuperscriptBox["a", "2"]}]]}]}]}], TraditionalForm]], "DisplayFormula",\
+
+ CellChangeTimes->{{3.410253735308256*^9, 3.410253761493655*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["2 Fourier transform of 1", "Section"],
+
+Cell[TextData[{
+ "The definition as a Fourier Transform, ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"\[Delta]", "(", "x", ")"}], "=", 
+    RowBox[{
+     FractionBox["1", 
+      RowBox[{"2", "\[Pi]"}]], 
+     RowBox[{
+      SubscriptBox["lim", 
+       RowBox[{"L", "\[Rule]", "\[Infinity]"}]], 
+      RowBox[{
+       SubsuperscriptBox["\[Integral]", 
+        RowBox[{"-", "L"}], "L"], 
+       RowBox[{
+        SuperscriptBox["\[ExponentialE]", 
+         RowBox[{"\[ImaginaryI]", " ", "k", " ", "x"}]], 
+        RowBox[{"\[DifferentialD]", "k"}]}]}]}]}]}], TraditionalForm]]],
+ " can be calculated explicitely"
+}], "Text",
+ CellChangeTimes->{{3.410253824171186*^9, 3.4102538241712437`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   FractionBox["1", 
+    RowBox[{"2", "\[Pi]"}]], 
+   RowBox[{
+    SubsuperscriptBox["\[Integral]", 
+     RowBox[{"-", "L"}], "L"], 
+    RowBox[{
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{"\[ImaginaryI]", " ", "k", " ", "x"}]], 
+     RowBox[{"\[DifferentialD]", "k"}]}]}]}], TraditionalForm]], "Input"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Plot", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      FractionBox[
+       RowBox[{"sin", "(", " ", "x", ")"}], 
+       RowBox[{"\[Pi]", " ", "x"}]], ",", 
+      FractionBox[
+       RowBox[{"sin", "(", " ", 
+        RowBox[{"10", "x"}], ")"}], 
+       RowBox[{"\[Pi]", " ", "x"}]]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "\[Pi]"}], ",", "\[Pi]"}], "}"}], ",", 
+    RowBox[{"PlotRange", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "4"}], "}"}]}]}], "]"}], 
+  TraditionalForm]], "Input"],
+
+Cell[TextData[{
+ "The limit isn't so well behaved: we can't Taylor expand ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]]],
+ " around zero and integrate (why not?) "
+}], "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"tst", "=", 
+   RowBox[{"Integrate", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Normal", "[", 
+       RowBox[{"Series", "[", 
+        RowBox[{
+         RowBox[{"f", "[", "x", "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "0", ",", "5"}], "}"}]}], "]"}], "]"}], 
+      FractionBox[
+       RowBox[{"sin", "(", 
+        RowBox[{"L", " ", "x"}], ")"}], 
+       RowBox[{"\[Pi]", " ", "x"}]]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", 
+       RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}]}], "]"}]}], 
+  TraditionalForm]], "Input",
+ CellChangeTimes->{{3.410253991570272*^9, 3.410254022136487*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["3 High and narrow \"tower\"", "Section"],
+
+Cell[TextData[{
+ "Finally we take a function that is constant for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"-", "a"}], "<", "x", "<", "a"}], TraditionalForm]]],
+ ", and zero elsewehere:"
+}], "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"g", "(", 
+    RowBox[{"x_", ",", "a_"}], ")"}], "=", 
+   RowBox[{
+    FractionBox["1", 
+     RowBox[{"2", "a"}]], 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Abs", "[", "x", "]"}], "<", "a"}], ",", "1", ",", "0"}], 
+     "]"}]}]}], TraditionalForm]], "Input"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Plot", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"g", "[", 
+       RowBox[{"x", ",", 
+        RowBox[{"1", "/", "2"}]}], "]"}], ",", 
+      RowBox[{"g", "[", 
+       RowBox[{"x", ",", 
+        RowBox[{"1", "/", "10"}]}], "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+    RowBox[{"PlotRange", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "5"}], "}"}]}]}], "]"}], TraditionalForm]], "Input"],
+
+Cell[TextData[{
+ "Once again, we Taylor expand a general ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]]],
+ " and integrate:"
+}], "Text",
+ CellChangeTimes->{{3.41025388952864*^9, 3.4102538913203373`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"tst", "=", 
+   RowBox[{
+    RowBox[{"Integrate", "[", 
+     RowBox[{
+      RowBox[{"Normal", "[", 
+       RowBox[{"Series", "[", 
+        RowBox[{
+         RowBox[{"f", "[", "x", "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "0", ",", "5"}], "}"}]}], "]"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{"-", "a"}], ",", "a"}], "}"}]}], "]"}], "/", 
+    RowBox[{"(", 
+     RowBox[{"2", "a"}], ")"}]}]}], TraditionalForm]], "Input",
+ CellChangeTimes->{{3.410253899097899*^9, 3.410253899666561*^9}}],
+
+Cell[TextData[{
+ "And we see how strongly higher derivatives are suppressed as ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"a", "\[Rule]", "0"}], TraditionalForm]]],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.4102538958559303`*^9, 3.410253896519699*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"Simplify", "[", "tst", "]"}], "/.", 
+   RowBox[{"a", "\[Rule]", "0"}]}], TraditionalForm]], "Input",
+ CellChangeTimes->{{3.410253905351233*^9, 3.410253933001405*^9}}]
+}, Closed]]
+},
+WindowToolbars->"EditBar",
+WindowSize->{1274, 946},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification->1.5,
+FrontEndVersion->"6.0 for Linux x86 (64-bit) (April 20, 2007)",
+StyleDefinitions->"Classroom.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[568, 21, 71, 2, 85, "Title"],
+Cell[642, 25, 130, 1, 58, "Subtitle"],
+Cell[775, 28, 110, 3, 38, "Text"],
+Cell[CellGroupData[{
+Cell[910, 35, 29, 0, 83, "Section"],
+Cell[942, 37, 318, 5, 66, "Text"],
+Cell[1263, 44, 439, 13, 97, "Input"],
+Cell[1705, 59, 92, 2, 38, "Text"],
+Cell[1800, 63, 1230, 35, 160, "Input"],
+Cell[3033, 100, 179, 4, 72, "Input"],
+Cell[3215, 106, 315, 11, 38, "Text"],
+Cell[3533, 119, 507, 17, 66, "DisplayFormula"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[4077, 141, 43, 0, 51, "Section"],
+Cell[4123, 143, 698, 21, 44, "Text"],
+Cell[4824, 166, 349, 11, 96, "Input"],
+Cell[5176, 179, 599, 20, 96, "Input"],
+Cell[5778, 201, 209, 6, 38, "Text"],
+Cell[5990, 209, 669, 20, 96, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[6696, 234, 46, 0, 51, "Section"],
+Cell[6745, 236, 210, 7, 38, "Text"],
+Cell[6958, 245, 332, 12, 95, "Input"],
+Cell[7293, 259, 525, 17, 72, "Input"],
+Cell[7821, 278, 236, 7, 38, "Text"],
+Cell[8060, 287, 579, 17, 72, "Input"],
+Cell[8642, 306, 246, 7, 38, "Text"],
+Cell[8891, 315, 213, 5, 72, "Input"]
+}, Closed]]
+}
+]
+*)
+
+(* End of internal cache information *)

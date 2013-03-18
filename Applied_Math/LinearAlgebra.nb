@@ -1,0 +1,3890 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[    132245,       3881]
+NotebookOptionsPosition[     67468,       2474]
+NotebookOutlinePosition[    125984,       3701]
+CellTagsIndexPosition[    125941,       3698]
+WindowFrame->Normal
+ContainsDynamic->False*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["A Summary of Linear Algebra", "Title"],
+
+Cell["vs 0.5, 25/1/08 \[Copyright] Niels Walet", "Subtitle",
+ CellChangeTimes->{{3.410263961160602*^9, 3.410263968252768*^9}}],
+
+Cell["\<\
+In this document I will summarise some key results of Linear Algebra, as is \
+useful for background in the course.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["Section"],
+ ".",
+ " Vectors and matrices"
+}], "Section"],
+
+Cell[TextData[{
+ "You have all seen the rather labourious notation ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    StyleBox["v",
+     FontWeight->"Bold"], "=", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["v", "1"], 
+      StyleBox["i",
+       FontWeight->"Bold"]}], "+", 
+     RowBox[{
+      SubscriptBox["v", "2"], 
+      StyleBox[" ",
+       FontWeight->"Bold"], 
+      StyleBox["j",
+       FontWeight->"Bold"]}], "+", 
+     RowBox[{
+      SubscriptBox["v", "3"], " ", 
+      StyleBox["k",
+       FontWeight->"Bold"]}]}]}], TraditionalForm]]],
+ ". Instead we prefer to use the row- and, more usually, column vector \
+notation\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    StyleBox["v",
+     FontWeight->"Bold"], "=", 
+    RowBox[{"(", 
+     RowBox[{
+      SubscriptBox["v", "1"], ",", 
+      SubscriptBox["v", "2"], ",", 
+      SubscriptBox["v", "3"]}], ")"}]}], TraditionalForm]]],
+ " or ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    StyleBox["v",
+     FontWeight->"Bold"], "=", 
+    RowBox[{"(", "\[NegativeThinSpace]", GridBox[{
+       {
+        RowBox[{
+         SubscriptBox["v", "1"], "\[IndentingNewLine]", 
+         SubscriptBox["v", "2"]}]},
+       {
+        SubscriptBox["v", "3"]}
+      }], "\[NegativeThinSpace]", ")"}]}], TraditionalForm]]],
+ ".\nThis is easily generalised to vectors of different dimension (number of \
+entries).\nVectors are special case of a matrix, which is an object with \
+multiple rows and columns, e.g., \n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"M", "=", 
+    RowBox[{"(", "\[NegativeThinSpace]", GridBox[{
+       {"1", "2"},
+       {"3", "4"}
+      }], "\[NegativeThinSpace]", ")"}]}], TraditionalForm]]],
+ ",\nis called a two-by two matrix. When finding entries of matrices, we use \
+the notation ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["M", 
+    RowBox[{"i", " ", "j"}]], TraditionalForm]]],
+ " for the entry in the ",
+ Cell[BoxData[
+  FormBox["i", TraditionalForm]]],
+ "th row and the ",
+ Cell[BoxData[
+  FormBox["j", TraditionalForm]]],
+ "th column."
+}], "Text",
+ CellChangeTimes->{
+  3.410258589699896*^9, {3.410263980989277*^9, 3.410263986884563*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " Notation"
+}], "Subsection"],
+
+Cell[TextData[{
+ "Within ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ "  a matrix is define as a \"double list\", a list of row vectors"
+}], "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"M", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", "b"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"c", ",", "d"}], "}"}]}], "}"}]}], TraditionalForm]], "Input"],
+
+Cell[TextData[{
+ "We usually get entries of the matrix by typing ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["M", 
+    RowBox[{"i", " ", "j"}]], TraditionalForm]]],
+ " for the element in the ",
+ Cell[BoxData[
+  FormBox["i", TraditionalForm]]],
+ "th row and ",
+ Cell[BoxData[
+  FormBox["j", TraditionalForm]]],
+ "th column. In ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " entries are found using the notation ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+    "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}], 
+   TraditionalForm]]],
+ ":"
+}], "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"M", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+   "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+  TraditionalForm]], "Input"],
+
+Cell[TextData[{
+ "Question: define a column vector ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", GridBox[{
+      {"1"},
+      {"2"}
+     }], ")"}], TraditionalForm]]],
+ " in ",
+ StyleBox["Mathematica.",
+  FontSlant->"Italic"]
+}], "Text"],
+
+Cell["The inner product is denoted by a dot, ", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}], ".", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "3"}], "}"}]}], TraditionalForm]], "Input"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}], ".", 
+   RowBox[{"(", "\[NoBreak]", GridBox[{
+      {"2"},
+      {"3"}
+     },
+     GridBoxAlignment->{
+      "Columns" -> {{Decimal}}, "ColumnsIndexed" -> {}, 
+       "Rows" -> {{Baseline}}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}]}], 
+  TraditionalForm]], "Input"],
+
+Cell["\<\
+Note the extra brackets in the last expression, to be explained below.\
+\>", "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Products of Matrices", "Subsection"],
+
+Cell[TextData[{
+ "We calculate matrix product according to the row \[Cross] column recipe, \
+where we take the \"inner-product\" of the ",
+ Cell[BoxData[
+  FormBox["i", TraditionalForm]]],
+ "th row of the object on the left, with the ",
+ Cell[BoxData[
+  FormBox["j", TraditionalForm]]],
+ "th column of the object on the right, to generate the ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"i", " ", ",", "j"}], TraditionalForm]]],
+ " entry for the result.\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["M", 
+     RowBox[{"i", " ", "j"}]], "=", 
+    RowBox[{
+     UnderoverscriptBox["\[Sum]", 
+      RowBox[{"k", "=", "1"}], "m"], 
+     RowBox[{
+      SubscriptBox["N", 
+       RowBox[{"i", " ", "k"}]], 
+      SubscriptBox["O", 
+       RowBox[{"k", " ", "j"}]]}]}]}], TraditionalForm]]],
+ "  "
+}], "Text"],
+
+Cell[TextData[{
+ "Example: Multiply ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", GridBox[{
+      {"1", "3"},
+      {"4", "5"}
+     }], ")"}], TraditionalForm]]],
+ " by ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", GridBox[{
+      {
+       RowBox[{"-", "1"}], "3"},
+      {
+       RowBox[{"-", "4"}], "5"}
+     }], ")"}], TraditionalForm]]],
+ ".\nWe first multiply the first row of the left matrix with the first column \
+of the right, ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"1", ",", "3"}], ")"}], ".", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", 
+       RowBox[{"-", "4"}]}], ")"}]}], "=", 
+    RowBox[{"-", "13"}]}], TraditionalForm]]],
+ ". Then the second row times the first column (to get the entry of the \
+result in first column and second row), ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"4", ",", "5"}], ")"}], ".", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", 
+       RowBox[{"-", "4"}]}], ")"}]}], "=", 
+    RowBox[{"-", "24"}]}], TraditionalForm]]],
+ ". First row and second column gives ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"1", ",", "3"}], ")"}], ".", 
+     RowBox[{"(", 
+      RowBox[{"3", ",", "5"}], ")"}]}], "=", "18"}], TraditionalForm]]],
+ ", and finally second row and second column ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"4", ",", "5"}], ")"}], ".", 
+     RowBox[{"(", 
+      RowBox[{"3", ",", "5"}], ")"}]}], "=", "37"}], TraditionalForm]]],
+ ". Thus ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", GridBox[{
+      {"1", "3"},
+      {"4", "5"}
+     }], ")"}], TraditionalForm]]],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"(", GridBox[{
+       {
+        RowBox[{"-", "1"}], "3"},
+       {
+        RowBox[{"-", "4"}], "5"}
+      }], ")"}], "=", 
+    RowBox[{"(", GridBox[{
+       {
+        RowBox[{"-", "13"}], "18"},
+       {
+        RowBox[{"-", "24"}], "37"}
+      }], ")"}]}], TraditionalForm]]],
+ ".  In ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " (Notice the use of the dot between the matrices to denote the product!):"
+}], "Example"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"(", GridBox[{
+      {"1", "3"},
+      {"4", "5"}
+     }], ")"}], ".", 
+   RowBox[{"(", GridBox[{
+      {
+       RowBox[{"-", "1"}], "3"},
+      {
+       RowBox[{"-", "4"}], "5"}
+     }], ")"}]}], TraditionalForm]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["ExerciseText"],
+ " Exercise"
+}], "Exercise"],
+
+Cell[TextData[{
+ "Calculate the multiplication below by hand, and check your answer using ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ "  "
+}], "ExerciseText"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"(", GridBox[{
+      {"1", "2"},
+      {"3", "4"},
+      {"5", "6"}
+     }], ")"}], ".", 
+   RowBox[{"(", GridBox[{
+      {"5", 
+       RowBox[{"-", "3"}]},
+      {"1", "2"}
+     }], ")"}]}], TraditionalForm]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["ExerciseText"],
+ " Exercise"
+}], "Exercise"],
+
+Cell[TextData[{
+ "Explain why the multiplication of a row-vector with a column-vector (see \
+above) gives a 1\[Times]1 matrix ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"{", "a", "}"}], TraditionalForm]]],
+ " rather than a number."
+}], "ExerciseText"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Inverse", "Subsection"],
+
+Cell[TextData[{
+ "The inverse ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["M", 
+    RowBox[{"-", "1"}]], TraditionalForm]]],
+ " of a matrix ",
+ Cell[BoxData[
+  FormBox["M", TraditionalForm]]],
+ " is defined by the relation ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     SuperscriptBox["M", 
+      RowBox[{"-", "1"}]], " ", "M"}], "=", 
+    RowBox[{
+     RowBox[{"M", " ", 
+      SuperscriptBox["M", 
+       RowBox[{"-", "1"}]]}], "=", "I"}]}], TraditionalForm]]],
+ ", where ",
+ Cell[BoxData[
+  FormBox["I", TraditionalForm]]],
+ " is the appropriate identity matrix (a matrix that is zero apart from on \
+the main diagonal, where it has ones). E.g., execute the following ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " code"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"M", "=", 
+   RowBox[{"(", "\[NoBreak]", GridBox[{
+      {"1", "2", "3"},
+      {"4", "5", "6"},
+      {"7", "8", "10"}
+     },
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.7]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}]}], 
+  TraditionalForm]], "Input"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"1", "2", "3"},
+     {"4", "5", "6"},
+     {"7", "8", "10"}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{3.4102589128215113`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Minv", "=", 
+   RowBox[{"Inverse", " ", "[", "M", "]"}]}], TraditionalForm]], "Input"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{"-", 
+       FractionBox["2", "3"]}], 
+      RowBox[{"-", 
+       FractionBox["4", "3"]}], "1"},
+     {
+      RowBox[{"-", 
+       FractionBox["2", "3"]}], 
+      FractionBox["11", "3"], 
+      RowBox[{"-", "2"}]},
+     {"1", 
+      RowBox[{"-", "2"}], "1"}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{3.410259283941736*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Minv", " ", ".", " ", "M"}], TraditionalForm]], "Input"],
+
+Cell["\<\
+Note that an invertible matrix (with an existing inverse) is always \
+\"square\" with equal column and row dimension. A good technique to calculate \
+the inverse is the elimination method, which is discussed in the section \
+\"Simultaneous equations\"\
+\>", "Text",
+ CellChangeTimes->{{3.410258814033688*^9, 3.410258870075782*^9}, {
+  3.410259404142975*^9, 3.410259411765417*^9}, {3.4102597855287733`*^9, 
+  3.410259805398477*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Determinants", "Subsection"],
+
+Cell[TextData[{
+ "The determinant of a square matrix is given by an expansion (\"the \
+Laplacian development by minors\"). First we assign each entry a sign (",
+ Cell[BoxData[
+  FormBox["+", TraditionalForm]]],
+ " or ",
+ Cell[BoxData[
+  FormBox["-", TraditionalForm]]],
+ ") starting with a ",
+ Cell[BoxData[
+  FormBox["+", TraditionalForm]]],
+ "  in the top left corner of the matrix, making sure that each direct \
+neighbour, in row or column, has the opposite sign, i.e., of the following \
+form"
+}], "Text",
+ CellChangeTimes->{{3.410258732827859*^9, 3.410258733928854*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"(", GridBox[{
+      {"+", "-", "+", "-"},
+      {"-", "+", "-", "+"},
+      {"+", "-", "+", "-"},
+      {"-", "+", "-", "+"}
+     }], ")"}], ".", " "}], TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{{3.410258732827859*^9, 3.4102587374810658`*^9}}],
+
+Cell["\<\
+We then pick one row or a column, take each element of the row or column in \
+turn, multiply it by its sign and by the determinant with all elements in the \
+row and column of the current element removed, until we end up with a 1\
+\[Times]1 matrix. Let's look at that, expanding the following matrix by the \
+second column\
+\>", "Text",
+ CellChangeTimes->{{3.410258732827859*^9, 3.410258741520561*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"|", GridBox[{
+      {"1", "2", "3", "4"},
+      {"5", "4", "1", "2"},
+      {"6", "8", "0", "3"},
+      {"4", "7", "2", "1"}
+     }], "|"}], "=", 
+   RowBox[{
+    RowBox[{"-", "2"}], "|", GridBox[{
+      {"5", "1", "2"},
+      {"6", "0", "3"},
+      {"4", "2", "1"}
+     }], "|", 
+    RowBox[{"+", "4"}], "|", GridBox[{
+      {"1", "3", "4"},
+      {"6", "0", "3"},
+      {"4", "2", "1"}
+     }], "|", 
+    RowBox[{"-", "8"}], "|", GridBox[{
+      {"1", "3", "4"},
+      {"5", "1", "2"},
+      {"4", "2", "1"}
+     }], "|", 
+    RowBox[{"+", "7"}], "|", GridBox[{
+      {"1", "3", "4"},
+      {"5", "1", "2"},
+      {"6", "0", "3"}
+     }], "|", 
+    RowBox[{".", " "}]}]}], TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{{3.410258732827859*^9, 3.410258748719819*^9}}],
+
+Cell["\<\
+Now expand all of the determinants w.r.t. to the middle column,\
+\>", "Text",
+ CellChangeTimes->{{3.410258732827859*^9, 3.410258751799474*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"|", GridBox[{
+      {"1", "2", "3", "4"},
+      {"5", "4", "1", "2"},
+      {"6", "8", "0", "3"},
+      {"4", "7", "2", "1"}
+     }], "|"}], "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "2"}], 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "1"}], "|", GridBox[{
+          {"6", "3"},
+          {"4", "1"}
+         }], "|", 
+        RowBox[{"-", "2"}], "|", GridBox[{
+          {"5", "2"},
+          {"6", "3"}
+         }], "|"}], ")"}]}], "+", 
+     RowBox[{"4", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "3"}], "|", GridBox[{
+          {"6", "3"},
+          {"4", "1"}
+         }], "|", 
+        RowBox[{"-", "2"}], "|", GridBox[{
+          {"1", "4"},
+          {"6", "3"}
+         }], "|"}], ")"}]}], "-", 
+     RowBox[{"8", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "3"}], "|", GridBox[{
+          {"5", "2"},
+          {"4", "1"}
+         }], "|", 
+        RowBox[{"+", "1"}], "|", GridBox[{
+          {"1", "4"},
+          {"4", "1"}
+         }], "|", 
+        RowBox[{"-", "2"}], "|", GridBox[{
+          {"1", "4"},
+          {"5", "2"}
+         }], "|"}], ")"}]}], "+", 
+     RowBox[{"7", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "3"}], "|", GridBox[{
+          {"5", "2"},
+          {"6", "3"}
+         }], "|", 
+        RowBox[{"+", "1"}], "|", GridBox[{
+          {"1", "4"},
+          {"6", "3"}
+         }], "|"}], ")"}]}]}], "=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "2"}], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "1"}], 
+          RowBox[{"(", 
+           RowBox[{"-", "6"}], ")"}]}], "-", 
+         RowBox[{"2", 
+          RowBox[{"(", "3", ")"}]}]}], ")"}]}], "+", 
+      RowBox[{"4", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "3"}], 
+          RowBox[{"(", 
+           RowBox[{"-", "6"}], ")"}]}], "-", 
+         RowBox[{"2", 
+          RowBox[{"(", 
+           RowBox[{"-", "21"}], ")"}]}]}], ")"}]}], "-", 
+      RowBox[{"8", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "3"}], 
+          RowBox[{"(", 
+           RowBox[{"-", "3"}], ")"}]}], "+", 
+         RowBox[{"1", 
+          RowBox[{"(", 
+           RowBox[{"-", "15"}], ")"}]}], "-", 
+         RowBox[{"2", 
+          RowBox[{"(", 
+           RowBox[{"-", "18"}], ")"}]}]}], ")"}]}], "+", 
+      RowBox[{"7", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "3"}], 
+          RowBox[{"(", "3", ")"}]}], "+", 
+         RowBox[{"1", 
+          RowBox[{"(", 
+           RowBox[{"-", "21"}], ")"}]}]}], ")"}]}]}], "=", 
+     RowBox[{"-", "210"}]}]}]}], TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{{3.410258732827859*^9, 3.4102587564627438`*^9}}],
+
+Cell["Check using Mathematica", "Text",
+ CellChangeTimes->{{3.410258732827859*^9, 3.4102587595038958`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Det", "[", 
+   RowBox[{"(", GridBox[{
+      {"1", "2", "3", "4"},
+      {"5", "4", "1", "2"},
+      {"6", "8", "0", "3"},
+      {"4", "7", "2", "1"}
+     }], ")"}], "]"}], TraditionalForm]], "Input"],
+
+Cell["Another example", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"M", "=", 
+   RowBox[{"(", "\[NoBreak]", GridBox[{
+      {"1", "2", "3"},
+      {"4", "5", "6"},
+      {"7", "8", "9"}
+     },
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.7]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}]}], 
+  TraditionalForm]], "Input"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Det", "[", "M", "]"}], TraditionalForm]], "Input"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Inverse", "[", "M", "]"}], TraditionalForm]], "Input"],
+
+Cell["So if a determinant is zero, an inverse doesn't exist!", "Text"],
+
+Cell[TextData[{
+ "A useful property of a determinant is that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"det", "(", 
+     RowBox[{"A", " ", "B"}], ")"}], "=", 
+    RowBox[{
+     RowBox[{"det", "(", "A", ")"}], " ", 
+     RowBox[{"det", "(", "B", ")"}]}]}], TraditionalForm]]],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"det", "(", 
+     SuperscriptBox["A", 
+      RowBox[{"-", "1"}]], ")"}], "=", 
+    RowBox[{"1", "/", 
+     RowBox[{"det", "(", "A", ")"}]}]}], TraditionalForm]]],
+ ".These can be used to show that the determinant is the product of \
+eigenvalues (see below).\nAlso, more importantly a determinant is \
+antisymmetric under the interchange of any rows or column, i.e., it changes \
+its sign. This can be used to show we can add any column (or row) to another \
+matrix without changing the determinant,"
+}], "Text",
+ CellChangeTimes->{{3.410258620763151*^9, 3.410258634499003*^9}, 
+   3.410259441730843*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"det", "(", GridBox[{
+      {
+       RowBox[{
+        SubscriptBox["a", "1"], "+", 
+        RowBox[{"k", " ", 
+         SubscriptBox["a", "3"]}]}], 
+       SubscriptBox["a", "2"], 
+       SubscriptBox["a", "3"]},
+      {
+       RowBox[{
+        SubscriptBox["b", "1"], "+", 
+        RowBox[{"k", " ", 
+         SubscriptBox["b", "3"]}]}], 
+       SubscriptBox["b", "2"], 
+       SubscriptBox["b", "3"]},
+      {
+       RowBox[{
+        SubscriptBox["c", "1"], "+", 
+        RowBox[{"k", " ", 
+         SubscriptBox["c", "3"]}]}], 
+       SubscriptBox["c", "2"], 
+       SubscriptBox["c", "3"]}
+     }], ")"}], "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"det", "(", GridBox[{
+        {
+         SubscriptBox["a", "1"], 
+         SubscriptBox["a", "2"], 
+         SubscriptBox["a", "3"]},
+        {
+         SubscriptBox["b", "1"], 
+         SubscriptBox["b", "2"], 
+         SubscriptBox["b", "3"]},
+        {
+         SubscriptBox["c", "1"], 
+         SubscriptBox["c", "2"], 
+         SubscriptBox["c", "3"]}
+       }], ")"}], "+", 
+     RowBox[{"k", " ", 
+      RowBox[{"det", "(", GridBox[{
+         {
+          SubscriptBox["a", "3"], 
+          SubscriptBox["a", "2"], 
+          SubscriptBox["a", "3"]},
+         {
+          SubscriptBox["b", "3"], 
+          SubscriptBox["b", "2"], 
+          SubscriptBox["b", "3"]},
+         {
+          SubscriptBox["c", "3"], 
+          SubscriptBox["c", "2"], 
+          SubscriptBox["c", "3"]}
+        }], ")"}]}]}], "=", 
+    RowBox[{
+     RowBox[{"det", "(", GridBox[{
+        {
+         SubscriptBox["a", "1"], 
+         SubscriptBox["a", "2"], 
+         SubscriptBox["a", "3"]},
+        {
+         SubscriptBox["b", "1"], 
+         SubscriptBox["b", "2"], 
+         SubscriptBox["b", "3"]},
+        {
+         SubscriptBox["c", "1"], 
+         SubscriptBox["c", "2"], 
+         SubscriptBox["c", "3"]}
+       }], ")"}], ".", " "}]}]}], TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{{3.410258620763151*^9, 3.410258634499003*^9}, {
+  3.410259441730843*^9, 3.410259446602057*^9}}],
+
+Cell["\<\
+Here we equated the second determinant to zero, since it must change sign \
+under interchange of two identical columns, an impossibility unless the \
+answer is zero. \
+\>", "Text",
+ CellChangeTimes->{{3.410258620763151*^9, 3.410258634499003*^9}, {
+  3.410259441730843*^9, 3.410259446602057*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Trace", "Subsection"],
+
+Cell["\<\
+The trace of a matrix is the sum of all the diagonal elements (the ones with \
+equal row- and column index):\
+\>", "Text",
+ CellChangeTimes->{3.41025953216991*^9, 3.4102596098359213`*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"Tr", "(", "H", ")"}], "=", 
+   RowBox[{
+    UnderoverscriptBox["\[Sum]", 
+     RowBox[{"i", "=", "1"}], "n"], 
+    RowBox[{
+     SubscriptBox["H", 
+      RowBox[{"i", " ", "i"}]], "."}]}]}], TraditionalForm]], "DisplayFormula",\
+
+ CellChangeTimes->{
+  3.41025953216991*^9, {3.4102596098359213`*^9, 3.410259613905264*^9}}],
+
+Cell["\<\
+This can be shown to equal the sum of eigenvalues (see below). Equally useful \
+is the cyclicity of the trace,\
+\>", "Text",
+ CellChangeTimes->{
+  3.41025953216991*^9, {3.4102596098359213`*^9, 3.410259616152891*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"Tr", "(", 
+    RowBox[{"A", " ", "B", " ", "C"}], ")"}], "=", 
+   RowBox[{
+    RowBox[{"Tr", "(", 
+     RowBox[{"C", " ", "A", " ", "B"}], ")"}], "=", 
+    RowBox[{
+     RowBox[{"Tr", "(", 
+      RowBox[{"B", " ", "C", " ", "A"}], ")"}], ".", " "}]}]}], 
+  TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{
+  3.41025953216991*^9, {3.4102596098359213`*^9, 3.4102596181927958`*^9}}],
+
+Cell["The proof is rather simple for two matrices,", "Text",
+ CellChangeTimes->{
+  3.41025953216991*^9, {3.4102596098359213`*^9, 3.4102596181927958`*^9}}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"Tr", "(", 
+     RowBox[{"A", " ", "D"}], ")"}], "=", 
+    RowBox[{
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       RowBox[{"i", " "}]], 
+      SubscriptBox[
+       RowBox[{"(", 
+        RowBox[{"A", " ", "D"}], ")"}], 
+       RowBox[{"i", " ", "i"}]]}], "=", 
+     RowBox[{
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        RowBox[{"i", " ", "j"}]], 
+       RowBox[{
+        SubscriptBox["A", 
+         RowBox[{"i", " ", "j"}]], 
+        SubscriptBox["D", 
+         RowBox[{"j", " ", "i", " "}]]}]}], "=", 
+      RowBox[{
+       RowBox[{
+        SubscriptBox["\[Sum]", "j"], 
+        SubscriptBox[
+         RowBox[{"(", 
+          RowBox[{"D", " ", "A"}], ")"}], 
+         RowBox[{"j", " ", "j"}]]}], "=", 
+       RowBox[{"Tr", "(", 
+        RowBox[{"D", " ", "A"}], ")"}]}]}]}]}], TraditionalForm]]],
+ ". "
+}], "DisplayFormula",
+ CellChangeTimes->{{3.41025953216991*^9, 3.410259534977038*^9}, 
+   3.410259625462555*^9}],
+
+Cell[TextData[{
+ "Using ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"D", "=", 
+    RowBox[{"B", " ", "C"}]}], TraditionalForm]]],
+ " we get the desired expression."
+}], "Text",
+ CellChangeTimes->{{3.41025953216991*^9, 3.410259534977038*^9}, 
+   3.410259627314845*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Symmetric and Hermitian Matrices", "Subsection",
+ CellChangeTimes->{3.410258637005308*^9}],
+
+Cell[TextData[{
+ "A very common operation on matrices is transposition (denoted by \"",
+ Cell[BoxData[
+  FormBox["T", TraditionalForm]]],
+ "\"), where we swap rows and columns, or mirror in the main diagonal,  ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox[
+     RowBox[{"(", 
+      SuperscriptBox["M", "T"], ")"}], 
+     RowBox[{"i", " ", "j"}]], "\[Congruent]", 
+    SubscriptBox["M", 
+     RowBox[{"j", " ", "i"}]]}], TraditionalForm]], "NumberedEquation"],
+ ". It is straightforward to show that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{"(", 
+      RowBox[{"A", " ", "B"}], ")"}], "T"], "=", 
+    RowBox[{
+     SuperscriptBox["B", "T"], 
+     SuperscriptBox["A", "T"]}]}], TraditionalForm]]],
+ ", "
+}], "Text",
+ CellChangeTimes->{3.4102596747230873`*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   SubscriptBox[
+    RowBox[{"(", 
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{"A", " ", "B"}], ")"}], "T"], ")"}], 
+    RowBox[{"i", " ", "j"}]], "=", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["\[Sum]", "k"], 
+     RowBox[{
+      SubscriptBox["A", 
+       RowBox[{"j", " ", "k"}]], 
+      SubscriptBox["B", 
+       RowBox[{"k", " ", "i"}]]}]}], "=", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["\[Sum]", "k"], 
+      RowBox[{
+       SubscriptBox[
+        RowBox[{"(", 
+         SuperscriptBox["B", "T"], ")"}], 
+        RowBox[{"i", " ", "k"}]], 
+       SubscriptBox[
+        RowBox[{"(", 
+         SuperscriptBox["A", "T"], ")"}], 
+        RowBox[{"k", " ", "j"}]]}]}], "=", 
+     RowBox[{
+      SubscriptBox[
+       RowBox[{"(", 
+        RowBox[{
+         SuperscriptBox["B", "T"], 
+         SuperscriptBox["A", "T"]}], ")"}], 
+       RowBox[{"i", " ", "j"}]], "."}]}]}]}], 
+  TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{{3.4102596747230873`*^9, 3.410259678250597*^9}}],
+
+Cell[TextData[{
+ "Symmetric matrices don't change under transposition. We usually reserve the \
+term symmetric for real matrices:\nThus ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox[
+     RowBox[{"(", 
+      SuperscriptBox["M", "T"], ")"}], 
+     RowBox[{"i", " ", "j"}]], "\[Congruent]", 
+    SubscriptBox["M", 
+     RowBox[{"j", " ", "i"}]]}], TraditionalForm]], "NumberedEquation"],
+ ", and for a symmetric matrix ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["M", 
+     RowBox[{"i", " ", "j", " "}]], "=", 
+    SubscriptBox["M", 
+     RowBox[{"j", " ", "i"}]]}], TraditionalForm]]],
+ ".\nFor complex matrices we normally combine the action of transposition \
+with complex conjugation to obtain the Hermitian conjugate of a matrix, ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["M", "\[Dagger]"], "\[Congruent]", 
+    SuperscriptBox[
+     RowBox[{"(", 
+      SuperscriptBox["M", "T"], ")"}], "*"]}], TraditionalForm]]],
+ ", and in index notation ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox[
+     RowBox[{"(", 
+      SuperscriptBox["M", "\[Dagger]"], ")"}], 
+     RowBox[{"i", " ", "j"}]], "\[Congruent]", 
+    SuperscriptBox[
+     RowBox[{"(", 
+      SubscriptBox["M", 
+       RowBox[{"j", " ", "i"}]], ")"}], "*"]}], TraditionalForm]]],
+ ". For a Hermitian matrix ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["M", "\[Dagger]"], "=", "M"}], TraditionalForm]]],
+ ", or ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["M", 
+     RowBox[{"i", " ", "j", " "}]], "=", 
+    SuperscriptBox[
+     RowBox[{"(", 
+      SubscriptBox["M", 
+       RowBox[{"j", " ", "i", " "}]], ")"}], "*"]}], TraditionalForm]]],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.410258639042794*^9, 3.4102586424659967`*^9}}],
+
+Cell[TextData[{
+ "See Eric W.Weisstein.\"Hermitian Matrix.\" From MathWorld--A Wolfram Web \
+Resource. ",
+ ButtonBox["http://mathworld.wolfram.com/HermitianMatrix.html",
+  BaseStyle->"Hyperlink"]
+}], "Text",
+ CellChangeTimes->{3.410259710296308*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Pauli matrices", "Subsubsection"],
+
+Cell["\<\
+A very useful set of Hermitian matrices are the three Pauli (spin) matrices\
+\>", "Text",
+ CellChangeTimes->{3.410258655945691*^9, 3.410259724040533*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["\[Sigma]", "x"], "=", 
+    RowBox[{"(", "\[NegativeThinSpace]", GridBox[{
+       {"0", "1"},
+       {"1", "0"}
+      }], "\[NegativeThinSpace]", ")"}]}], ";", 
+   RowBox[{
+    FormBox[
+     RowBox[{
+      RowBox[{
+       SubscriptBox["\[Sigma]", "y"], "=", 
+       RowBox[{"(", "\[NegativeThinSpace]", GridBox[{
+          {"0", 
+           RowBox[{"-", "\[ImaginaryI]"}]},
+          {"\[ImaginaryI]", "0"}
+         }], "\[NegativeThinSpace]", ")"}]}], " ", ";"}],
+     TraditionalForm], 
+    FormBox[
+     RowBox[{
+      SubscriptBox["\[Sigma]", "z"], "=", 
+      RowBox[{"(", "\[NegativeThinSpace]", GridBox[{
+         {"1", "0"},
+         {"0", 
+          RowBox[{"-", "1"}]}
+        }], "\[NegativeThinSpace]", ")"}]}],
+     TraditionalForm]}], " ", ";"}], TraditionalForm]], "Input"],
+
+Cell[TextData[{
+ "If we multiply two of these matrices we always obtain ",
+ Cell[BoxData[
+  FormBox["i", TraditionalForm]]],
+ " times the 3rd:"
+}], "Text"],
+
+Cell[BoxData[{
+ FormBox[
+  RowBox[{
+   SubscriptBox["\[Sigma]", "x"], ".", 
+   SubscriptBox["\[Sigma]", "y"]}], TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   SubscriptBox["\[Sigma]", "y"], ".", 
+   SubscriptBox["\[Sigma]", "z"]}], TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   SubscriptBox["\[Sigma]", "z"], ".", 
+   SubscriptBox["\[Sigma]", "x"]}], TraditionalForm]}], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["A 4\[Times]4 example", "Subsubsection"],
+
+Cell[TextData[{
+ "The matrix ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", "\[NoBreak]", GridBox[{
+      {"2", 
+       RowBox[{"3", "+", "\[ImaginaryI]"}], 
+       RowBox[{"4", "+", 
+        RowBox[{"2", " ", "\[ImaginaryI]"}]}], 
+       RowBox[{"5", "+", 
+        RowBox[{"3", " ", "\[ImaginaryI]"}]}]},
+      {
+       RowBox[{"3", "-", "\[ImaginaryI]"}], "4", 
+       RowBox[{"5", "+", "\[ImaginaryI]"}], 
+       RowBox[{"6", "+", 
+        RowBox[{"2", " ", "\[ImaginaryI]"}]}]},
+      {
+       RowBox[{"4", "-", 
+        RowBox[{"2", " ", "\[ImaginaryI]"}]}], 
+       RowBox[{"5", "-", "\[ImaginaryI]"}], "6", 
+       RowBox[{"7", "+", "\[ImaginaryI]"}]},
+      {
+       RowBox[{"5", "-", 
+        RowBox[{"3", " ", "\[ImaginaryI]"}]}], 
+       RowBox[{"6", "-", 
+        RowBox[{"2", " ", "\[ImaginaryI]"}]}], 
+       RowBox[{"7", "-", "\[ImaginaryI]"}], "8"}
+     },
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.7]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+   TraditionalForm]]],
+ " is Hermitian. Note that the entries on the diagonal are always real!"
+}], "Text",
+ CellChangeTimes->{3.4102586569986753`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["ExerciseText"],
+ " Exercise"
+}], "Exercise"],
+
+Cell["Calculate the Hermitian conjugate of", "ExerciseText"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"M", "=", 
+   RowBox[{"(", "\[NoBreak]", GridBox[{
+      {"1", 
+       RowBox[{"1", "+", "\[ImaginaryI]"}], "3"},
+      {"3", "\[ImaginaryI]", "4"},
+      {"5", 
+       RowBox[{"2", " ", "\[ImaginaryI]"}], "7"},
+      {"9", "\[ImaginaryI]", 
+       RowBox[{"2", "+", 
+        RowBox[{"3", " ", "\[ImaginaryI]"}]}]}
+     },
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.7]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}]}], 
+  TraditionalForm]], "Input"],
+
+Cell[TextData[{
+ "and check using ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " "
+}], "ExerciseText"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"ConjugateTranspose", "[", "M", "]"}], TraditionalForm]], "Input"]
+}, Open  ]]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["Section"],
+ ". Simultaneous equations"
+}], "Section"],
+
+Cell[TextData[{
+ "The equation\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    TagBox[
+     StyleBox[
+      RowBox[{"{", 
+       StyleBox[GridBox[{
+          {
+           RowBox[{
+            RowBox[{"x", "+", "y"}], "=", "5"}]},
+          {
+           RowBox[{
+            RowBox[{"x", "-", "y"}], "=", "2"}]}
+         }],
+        ShowAutoStyles->True]}],
+      ShowAutoStyles->False],
+     #& ], 
+    TagBox["",
+     #& ]}], TraditionalForm]]],
+ " \ncan be written in matrix language as\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", GridBox[{
+        {"1", "1"},
+        {"1", 
+         RowBox[{"-", "1"}]}
+       }], ")"}], 
+     RowBox[{"(", GridBox[{
+        {"x"},
+        {"y"}
+       }], ")"}]}], "=", 
+    RowBox[{"(", GridBox[{
+       {"5"},
+       {"2"}
+      }], ")"}]}], TraditionalForm]]],
+ ".\nThis has as solution\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"(", GridBox[{
+       {"x"},
+       {"y"}
+      }], ")"}], "=", 
+    RowBox[{
+     SuperscriptBox[
+      RowBox[{"(", GridBox[{
+         {"1", "1"},
+         {"1", 
+          RowBox[{"-", "1"}]}
+        }], ")"}], 
+      RowBox[{"-", "1"}]], 
+     RowBox[{"(", GridBox[{
+        {"5"},
+        {"2"}
+       }], ")"}]}]}], TraditionalForm]]],
+ ".\nFrom"
+}], "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"(", GridBox[{
+      {"1", "1"},
+      {"1", 
+       RowBox[{"-", "1"}]}
+     }], ")"}], ".", 
+   RowBox[{"(", GridBox[{
+      {"1", "1"},
+      {"1", 
+       RowBox[{"-", "1"}]}
+     }], ")"}]}], TraditionalForm]], "Input"],
+
+Cell[TextData[{
+ "We conclude that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{"(", GridBox[{
+        {"1", "1"},
+        {"1", 
+         RowBox[{"-", "1"}]}
+       }], ")"}], 
+     RowBox[{"-", "1"}]], "=", 
+    RowBox[{"(", GridBox[{
+       {
+        RowBox[{"1", "/", "2"}], 
+        RowBox[{"1", "/", "2"}]},
+       {
+        RowBox[{"1", "/", "2"}], 
+        RowBox[{
+         RowBox[{"-", "1"}], "/", "2"}]}
+      }], ")"}]}], TraditionalForm]]],
+ ", and thus ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"(", GridBox[{
+       {"x"},
+       {"y"}
+      }], ")"}], "=", 
+    RowBox[{"(", GridBox[{
+       {
+        RowBox[{"7", "/", "2"}]},
+       {
+        RowBox[{"3", "/", "2"}]}
+      }], ")"}]}], TraditionalForm]]],
+ "."
+}], "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Solve", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"x", "+", "y"}], "\[Equal]", "5"}], ",", 
+     RowBox[{
+      RowBox[{"x", "-", "y"}], "\[Equal]", "2"}]}], "}"}], "]"}], 
+  TraditionalForm]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell["Elimination and calculation of the inverse", "Subsection"],
+
+Cell[TextData[{
+ "One easy technique for inverting a matrix is the \"Gaussian elimination \
+technique\", where we start with a matrix (in this case ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", "\[NoBreak]", GridBox[{
+      {"1", "2", "3"},
+      {"4", "5", "6"},
+      {"7", "8", "10"}
+     },
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.7]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+   TraditionalForm]]],
+ "), and extend it with the identity matrix as shown below:"
+}], "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"sys", "=", 
+    RowBox[{"(", "\[NoBreak]", GridBox[{
+       {"1", "2", "3", "1", "0", "0"},
+       {"4", "5", "6", "0", "1", "0"},
+       {"7", "8", "10", "0", "0", "1"}
+      },
+      GridBoxAlignment->{
+       "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+        "RowsIndexed" -> {}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.7]}, 
+          Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.4]}, 
+          Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}]}], ";"}], 
+  TraditionalForm]], "Input"],
+
+Cell[TextData[{
+ "By elimination (adding and subtracting rows) we try to have the identity \
+appear in the first half, and generate the inverse in the second half \
+(sys[[i]] gives the ",
+ Cell[BoxData[
+  FormBox["i", TraditionalForm]]],
+ "th row)"
+}], "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"sys", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"sys", "[", 
+       RowBox[{"[", "1", "]"}], "]"}], "-", 
+      RowBox[{
+       RowBox[{"1", "/", "2"}], 
+       RowBox[{"sys", "[", 
+        RowBox[{"[", "2", "]"}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"sys", "[", 
+       RowBox[{"[", "2", "]"}], "]"}], "-", 
+      RowBox[{"sys", "[", 
+       RowBox[{"[", "3", "]"}], "]"}], "+", 
+      RowBox[{"3", " ", 
+       RowBox[{"sys", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"sys", "[", 
+       RowBox[{"[", "3", "]"}], "]"}], "-", 
+      RowBox[{"4", " ", 
+       RowBox[{"sys", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}]}]}], "}"}]}], 
+  TraditionalForm]], "Input"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"4", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"sys", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "+", 
+       RowBox[{
+        RowBox[{"sys", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], "/", "6"}], "+", 
+       RowBox[{
+        RowBox[{"sys", "[", 
+         RowBox[{"[", "3", "]"}], "]"}], " ", 
+        RowBox[{"5", " ", "/", "12"}]}]}], ")"}]}], ",", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "4"}], "/", "3"}], 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"sys", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "+", 
+       RowBox[{
+        RowBox[{"5", "/", "2"}], 
+        RowBox[{"sys", "[", 
+         RowBox[{"[", "3", "]"}], "]"}]}], "+", 
+       RowBox[{
+        RowBox[{"15", "/", "2"}], 
+        RowBox[{"sys", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ")"}]}], ",", 
+    RowBox[{"2", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"sys", "[", 
+        RowBox[{"[", "3", "]"}], "]"}], "+", 
+       RowBox[{"3", 
+        RowBox[{"sys", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], "+", 
+       RowBox[{
+        RowBox[{"1", "/", "2"}], 
+        RowBox[{"sys", "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}]}], ")"}]}]}], "}"}], 
+  TraditionalForm]], "Input"],
+
+Cell["So let's check we have indeed found the inverse:", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"(", GridBox[{
+      {"1", "2", "3"},
+      {"4", "5", "6"},
+      {"7", "8", "10"}
+     }], ")"}], ".", 
+   RowBox[{"(", "\[NoBreak]", GridBox[{
+      {
+       RowBox[{"-", 
+        FractionBox["2", "3"]}], 
+       RowBox[{"-", 
+        FractionBox["4", "3"]}], "1"},
+      {
+       RowBox[{"-", 
+        FractionBox["2", "3"]}], 
+       FractionBox["11", "3"], 
+       RowBox[{"-", "2"}]},
+      {"1", 
+       RowBox[{"-", "2"}], "1"}
+     },
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.7]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}]}], 
+  TraditionalForm]], "Input"],
+
+Cell[TextData[{
+ "The reason this works is actually quite simple. If we multiply the extended \
+matrix by the column vector ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{"x", ",", "y", ",", "z", ",", "a", ",", "b", ",", "c"}], ")"}], 
+    "T"], TraditionalForm]]],
+ " we can clearly see that\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", "\[NoBreak]", GridBox[{
+        {"1", "2", "3", "1", "0", "0"},
+        {"4", "5", "6", "0", "1", "0"},
+        {"7", "8", "10", "0", "0", "1"}
+       },
+       GridBoxAlignment->{
+        "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}},
+          "RowsIndexed" -> {}},
+       GridBoxSpacings->{"Columns" -> {
+           Offset[0.27999999999999997`], {
+            Offset[0.7]}, 
+           Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+           Offset[0.2], {
+            Offset[0.4]}, 
+           Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+     RowBox[{"(", GridBox[{
+        {"x"},
+        {"y"},
+        {"z"},
+        {"a"},
+        {"b"},
+        {"c"}
+       }], ")"}]}], "=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"1", "2", "3"},
+         {"4", "5", "6"},
+         {"7", "8", "10"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], ")"}], 
+      RowBox[{"(", GridBox[{
+         {"x"},
+         {"y"},
+         {"z"}
+        }], ")"}]}], "+", 
+     RowBox[{"(", GridBox[{
+        {"a"},
+        {"b"},
+        {"c"}
+       }], ")"}]}]}], TraditionalForm]]],
+ ". If we assume this has right-hand side zero, we are solving the most \
+general set of equations for fixed coefficients. After all the manipulations \
+the right-hand side remains zero, but the equation now reads \n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {
+          RowBox[{"-", 
+           FractionBox["2", "3"]}], 
+          RowBox[{"-", 
+           FractionBox["4", "3"]}], "1"},
+         {
+          RowBox[{"-", 
+           FractionBox["2", "3"]}], 
+          FractionBox["11", "3"], 
+          RowBox[{"-", "2"}]},
+         {"1", 
+          RowBox[{"-", "2"}], "1"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+      RowBox[{"(", GridBox[{
+         {"a"},
+         {"b"},
+         {"c"}
+        }], ")"}]}], "+", 
+     RowBox[{"(", GridBox[{
+        {"x"},
+        {"y"},
+        {"z"}
+       }], ")"}]}], "=", 
+    RowBox[{"(", GridBox[{
+       {"0"},
+       {"0"},
+       {"0"}
+      }], ")"}]}], TraditionalForm]]],
+ ", which means we have found the inverse."
+}], "Text",
+ CellChangeTimes->{
+  3.4102586663754597`*^9, {3.41025985271231*^9, 3.410259859383998*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["ExerciseText"],
+ " Exercise"
+}], "Exercise"],
+
+Cell[TextData[{
+ "Invert ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", "\[NoBreak]", GridBox[{
+      {"0", 
+       RowBox[{"-", "2"}], "1"},
+      {"2", "4", "0"},
+      {"1", "1", "2"}
+     },
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.7]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+   TraditionalForm]]],
+ ". Test your answer using ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " "
+}], "ExerciseText"],
+
+Cell[BoxData[
+ RowBox[{"Inverse", "[", 
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0", 
+      RowBox[{"-", "2"}], "1"},
+     {"2", "4", "0"},
+     {"1", "1", "2"}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+  "]"}]], "Input"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Determinants, existence and non-uniqueness", "Subsection",
+ CellChangeTimes->{3.4102586711880903`*^9}],
+
+Cell["\<\
+As stated above determinants don't change if we add a column to another \
+column, or a row to another row. Thus the invertability of a matrix \
+(uniqueness of its solution) is also not influenced by this. But if a \
+determinant is zero, we now that we may be able to express one column as a \
+linear combination of the others (a rather deep corollary of the antisymmetry \
+property). Thus we conclude that a zero determinant means a dependent set of \
+equations, and an underdetermined solution. In other words this corresponds \
+to a non-invertible matrix.\
+\>", "Text",
+ CellChangeTimes->{{3.4102586858194647`*^9, 3.410258691298381*^9}}]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["Section"],
+ ". Eigenvalues and eigenvectors"
+}], "Section"],
+
+Cell[CellGroupData[{
+
+Cell["Eigenproblems", "Subsection"],
+
+Cell[TextData[{
+ "An eigenvalue problem is one where a ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "\[Cross]", "n"}], TraditionalForm]]],
+ " matrix reproduces a vector,"
+}], "Text",
+ CellChangeTimes->{3.410259917764439*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["\[Sum]", "j"], 
+    RowBox[{
+     SubscriptBox["M", 
+      RowBox[{"i", " ", "j"}]], " ", 
+     SubscriptBox["e", "j"]}]}], "=", 
+   RowBox[{"\[Lambda]", " ", 
+    RowBox[{
+     SubscriptBox["e", "i"], "."}]}]}], TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{{3.410259917764439*^9, 3.410259924272409*^9}}],
+
+Cell[TextData[{
+ "With the help of the identity matrix, ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"I", "=", 
+    RowBox[{"diag", "(", 
+     RowBox[{"1", ",", "1", ",", "1", ",", "...", ",", "1"}], ")"}]}], 
+   TraditionalForm]]],
+ ", e.g.,"
+}], "Text",
+ CellChangeTimes->{{3.410259917764439*^9, 3.410259922118286*^9}}],
+
+Cell[BoxData[
+ RowBox[{"IdentityMatrix", "[", "5", "]"}]], "Input"],
+
+Cell["\<\
+We can turn this into a homogeneous set of equations\
+\>", "Text",
+ CellChangeTimes->{3.4102586979271812`*^9, 3.4102599035160713`*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"M", "-", 
+      RowBox[{"\[Lambda]", " ", "I"}]}], ")"}], " ", "e"}], "=", "0."}], 
+  TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{
+  3.4102586979271812`*^9, {3.4102599035160713`*^9, 3.4102599086674213`*^9}}],
+
+Cell[TextData[{
+ "We are now interested in the case that there is more than a zero solution. \
+This means ",
+ Cell[BoxData[
+  FormBox["e", TraditionalForm]]],
+ " is not unique! Also we can use the fact that non-uniqueness requires ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{"M", "-", 
+     RowBox[{"\[Lambda]", " ", "I"}]}], ")"}], TraditionalForm]]],
+ " not to have an inverse, or ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"det", "(", 
+     RowBox[{"M", "-", 
+      RowBox[{"\[Lambda]", " ", "I"}]}], ")"}], "=", "0"}], 
+   TraditionalForm]]],
+ " . This is an ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ "th order polynomial equation for the eigenvalues \[Lambda], with in general \
+",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " complex roots. Thus we have ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " eigenvalues and eigenvectors. Strictly speaking the eigenvectors defined \
+above are the right eigenvectors, which are different from the left \
+eigenvector, which occur for the same eigenvalue, but multiply ",
+ Cell[BoxData[
+  FormBox["M", TraditionalForm]]],
+ " from the left,"
+}], "Text",
+ CellChangeTimes->{
+  3.4102586979271812`*^9, {3.4102599035160713`*^9, 3.410259912547082*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["\[Sum]", "i"], 
+    RowBox[{
+     SubscriptBox["l", "i"], " ", 
+     SubscriptBox["M", 
+      RowBox[{"i", " ", "j"}]]}]}], "=", 
+   RowBox[{"\[Lambda]", " ", 
+    SubscriptBox["l", "j"]}]}], TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{
+  3.4102586979271812`*^9, {3.4102599035160713`*^9, 3.4102599130658607`*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["The matrix of eigenvectors", "Subsection"],
+
+Cell[TextData[{
+ "We rewrite the eigenvalue problem by labelling the eigenvalues and (right) \
+eigenvectors ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["\[Lambda]", 
+     RowBox[{"(", "j", ")"}]], ",", " ", 
+    SubsuperscriptBox["e", "i", 
+     RowBox[{"(", "j", ")"}]], " "}], TraditionalForm]]],
+ " for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"i", ",", 
+    RowBox[{"j", "=", "1"}], ",", "...", ",", "n"}], TraditionalForm]]],
+ ", "
+}], "Text",
+ CellChangeTimes->{3.410259950991582*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   StyleBox[
+    RowBox[{
+     RowBox[{
+      SubscriptBox["\[Sum]", "j"], 
+      RowBox[{
+       SubscriptBox["M", 
+        RowBox[{"i", " ", "j"}]], " ", 
+       SubsuperscriptBox["e", "j", 
+        RowBox[{"(", "k", ")"}]]}]}], "=", 
+     RowBox[{
+      SuperscriptBox["\[Lambda]", 
+       RowBox[{"(", "k", ")"}]], " ", 
+      SubsuperscriptBox["e", "i", 
+       RowBox[{"(", "k", ")"}]]}]}], "DisplayFormula"], ",", " "}], 
+  TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{{3.410259950991582*^9, 3.41025995580682*^9}}],
+
+Cell[TextData[{
+ "and then define the matrix of eigenvectors ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["O", 
+     RowBox[{"j", " ", "k"}]], "=", 
+    SubsuperscriptBox["e", "j", 
+     RowBox[{"(", "k", ")"}]]}], TraditionalForm]]],
+ ". We get "
+}], "Text",
+ CellChangeTimes->{{3.410259950991582*^9, 3.410259959286593*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["\[Sum]", "j"], 
+    RowBox[{
+     SubscriptBox["M", 
+      RowBox[{"i", " ", "j"}]], " ", 
+     SubscriptBox["O", 
+      RowBox[{"j", " ", "k"}]]}]}], "=", 
+   RowBox[{
+    SubscriptBox["O", 
+     RowBox[{"i", " ", "k"}]], 
+    RowBox[{
+     SuperscriptBox["\[Lambda]", 
+      RowBox[{"(", "k", ")"}]], " ", ".", " "}]}]}], 
+  TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{{3.410259950991582*^9, 3.410259964013667*^9}}],
+
+Cell[TextData[{
+ "If we know the inverse ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["O", 
+    RowBox[{"-", "1"}]], TraditionalForm]]],
+ " of ",
+ Cell[BoxData[
+  FormBox["O", TraditionalForm]]],
+ ", "
+}], "Text",
+ CellChangeTimes->{{3.410259950991582*^9, 3.410259967349633*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["\[Sum]", "j"], 
+    RowBox[{
+     SubscriptBox[
+      RowBox[{"(", 
+       SuperscriptBox["O", 
+        RowBox[{"-", "1"}]], ")"}], 
+      RowBox[{"i", " ", "j"}]], " ", 
+     SubscriptBox["O", 
+      RowBox[{"j", " ", "k"}]]}]}], "=", 
+   SubscriptBox["\[Delta]", 
+    RowBox[{"i", " ", "j"}]], " "}], TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{{3.410259950991582*^9, 3.41025997060538*^9}}],
+
+Cell[TextData[{
+ "(where ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["\[Delta]", 
+    RowBox[{"i", " ", "j"}]], TraditionalForm]]],
+ " is another way to denote the ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "\[Cross]", "n"}], TraditionalForm]]],
+ " unit matrix), we can left multiply the eigenvalue problem by ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["O", 
+    RowBox[{"-", "1"}]], TraditionalForm]]],
+ " to get"
+}], "Text",
+ CellChangeTimes->{{3.410259950991582*^9, 3.410259975052833*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   FormBox[
+    RowBox[{
+     RowBox[{
+      SubscriptBox["\[Sum]", 
+       RowBox[{"i", " ", "j"}]], 
+      RowBox[{
+       SubscriptBox[
+        RowBox[{"(", 
+         SuperscriptBox["O", 
+          RowBox[{"-", "1"}]], ")"}], 
+        RowBox[{"l", " ", "i"}]], 
+       SubscriptBox["M", 
+        RowBox[{"i", " ", "j"}]], 
+       SubscriptBox["O", 
+        RowBox[{"j", " ", "k"}]]}]}], "="}],
+    TraditionalForm], 
+   SuperscriptBox["\[Lambda]", 
+    RowBox[{"(", "k", ")"}]], 
+   SubscriptBox["\[Delta]", 
+    RowBox[{"l", " ", "k"}]], " "}], TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{{3.410259950991582*^9, 3.410259977404582*^9}}],
+
+Cell["which can be cast in the slightly more compact form", "Text",
+ CellChangeTimes->{{3.410259950991582*^9, 3.410259979564447*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SuperscriptBox["O", 
+     RowBox[{"-", "1"}]], "M", " ", "O"}], "=", 
+   RowBox[{
+    RowBox[{"diag", "(", 
+     RowBox[{
+      SubscriptBox["\[Lambda]", "1"], ",", 
+      RowBox[{"...", "."}], ",", 
+      SubscriptBox["\[Lambda]", "n"]}], ")"}], "."}]}], 
+  TraditionalForm]], "DisplayFormula",
+ CellChangeTimes->{{3.410259950991582*^9, 3.410259981580204*^9}}],
+
+Cell[TextData[{
+ "We have now \"diagonalised\" the matrix ",
+ Cell[BoxData[
+  FormBox["M", TraditionalForm]]],
+ ". Also note that ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["O", 
+    RowBox[{"-", "1"}]], TraditionalForm]]],
+ " is the matrix of left eigenvectors with a suitable normalisation, "
+}], "Text",
+ CellChangeTimes->{{3.410259950991582*^9, 3.410259983587846*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox[
+     RowBox[{"(", 
+      SuperscriptBox["O", 
+       RowBox[{"-", "1"}]], ")"}], 
+     RowBox[{"i", " ", "j"}]], "=", 
+    SubsuperscriptBox["l", "i", 
+     RowBox[{"(", "j", ")"}]]}], ",", " ", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox["l", 
+      RowBox[{"(", "j", ")"}]], ".", " ", 
+     SuperscriptBox["e", 
+      RowBox[{"(", "k", ")"}]]}], "=", 
+    RowBox[{
+     SubscriptBox["\[Delta]", 
+      RowBox[{"j", " ", "k"}]], "."}]}]}], TraditionalForm]], "DisplayFormula",\
+
+ CellChangeTimes->{{3.410259950991582*^9, 3.410259983587846*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["ExerciseText"],
+ " Exercise"
+}], "Exercise"],
+
+Cell[TextData[{
+ "Diagonalise the matrix ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", "\[NoBreak]", GridBox[{
+      {"0", 
+       RowBox[{"-", "2"}], "1"},
+      {"2", "4", "0"},
+      {"1", "1", "2"}
+     },
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.7]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+   TraditionalForm]]],
+ ". Test your answer using ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " "
+}], "ExerciseText"],
+
+Cell[BoxData[{
+ FormBox[
+  RowBox[{
+   RowBox[{"t", "=", 
+    RowBox[{"Eigensystem", "[", 
+     RowBox[{"(", "\[NoBreak]", GridBox[{
+        {"0", 
+         RowBox[{"-", "2"}], "1"},
+        {"2", "4", "0"},
+        {"1", "1", "2"}
+       },
+       GridBoxAlignment->{
+        "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}},
+          "RowsIndexed" -> {}},
+       GridBoxSpacings->{"Columns" -> {
+           Offset[0.27999999999999997`], {
+            Offset[0.7]}, 
+           Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+           Offset[0.2], {
+            Offset[0.4]}, 
+           Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], "]"}]}], 
+   ";", 
+   RowBox[{"eval", "=", 
+    RowBox[{"t", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], 
+   ";", 
+   RowBox[{"evec", "=", 
+    RowBox[{"Transpose", "[", 
+     RowBox[{"t", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+     "]"}]}]}], TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{"Inverse", "[", "evec", " ", "]"}], ".", " ", 
+   RowBox[{"(", "\[NoBreak]", GridBox[{
+      {"0", 
+       RowBox[{"-", "2"}], "1"},
+      {"2", "4", "0"},
+      {"1", "1", "2"}
+     },
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.7]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], " ", ".", 
+   " ", "evec"}], TraditionalForm]}], "Input"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Special cases: Symmetric and Hermitian matrices; Orthogonal and Unitary \
+matrices\
+\>", "Subsection",
+ CellChangeTimes->{3.41025870419341*^9}],
+
+Cell["\<\
+Two very interesting cases of the diagonalisation problem can be found when \
+\>", "Text"],
+
+Cell[TextData[{
+ "1. The matrix ",
+ Cell[BoxData[
+  FormBox["M", TraditionalForm]]],
+ " is symmetric. In that case ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["M", "T"], "=", "M"}], TraditionalForm]]],
+ ", and we can rewrite the eigenvalue problem in the form\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     SuperscriptBox["O", 
+      RowBox[{"-", "1"}]], "M", " ", "O"}], "=", 
+    RowBox[{
+     RowBox[{"diag", "(", 
+      RowBox[{
+       SubscriptBox["\[Lambda]", "1"], ",", 
+       RowBox[{"...", "."}], ",", 
+       SubscriptBox["\[Lambda]", "n"]}], ")"}], "=", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox["O", "T"], 
+       SuperscriptBox["M", "T"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         SuperscriptBox["O", 
+          RowBox[{"-", "1"}]], ")"}], "T"]}], "=", 
+      RowBox[{
+       SuperscriptBox["O", "T"], "M", " ", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"(", 
+          SuperscriptBox["O", "T"], ")"}], 
+         RowBox[{"-", "1"}]], "."}]}]}]}]}], TraditionalForm]]],
+ "\n(We use ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{"(", 
+      SuperscriptBox["O", 
+       RowBox[{"-", "1"}]], ")"}], "T"], "="}], TraditionalForm]]],
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    RowBox[{"(", 
+     SuperscriptBox["O", "T"], ")"}], 
+    RowBox[{"-", "1"}]], TraditionalForm]]],
+ " in the last expression. Prove for yourself this is true!)\nWe conclude \
+that we should have ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["O", "T"], "=", 
+    SuperscriptBox["O", 
+     RowBox[{"-", "1"}]], " "}], TraditionalForm]]],
+ ", or in other words the left and right eigenvalues coincide! The \
+normalisation condition becomes ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     SuperscriptBox["e", 
+      RowBox[{"(", "k", ")"}]], ".", 
+     SuperscriptBox["e", 
+      RowBox[{"(", "l", ")"}]]}], "=", 
+    SubscriptBox["\[Delta]", 
+     RowBox[{"k", " ", "l"}]]}], TraditionalForm]]],
+ ", which is the requirement of \"normalised\" eigenvectors.\nA matrix with \
+the property ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["O", 
+     RowBox[{"-", "1"}]], "=", 
+    SuperscriptBox["O", "T"]}], TraditionalForm]]],
+ " is called orthogonal\[LongDash]no big surprise since it is made up of a \
+set of orthonormal vectors (orthogonal vectors with length 1)"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["ExerciseText"],
+ " Exercise"
+}], "Exercise"],
+
+Cell["Show that the matrix ", "ExerciseText"],
+
+Cell[BoxData[{
+ RowBox[{"<<", "Geometry`Rotations`"}], "\[IndentingNewLine]", 
+ RowBox[{"Orth", "=", 
+  RowBox[{"RotationMatrix3D", "[", 
+   RowBox[{"\[Phi]", ",", "\[Theta]", ",", " ", "\[Psi]"}], "]"}]}]}], "Input"],
+
+Cell[TextData[{
+ "Is orthogonal. Check by using ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"]
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"TrigExpand", "[", 
+  RowBox[{"Orth", ".", " ", 
+   RowBox[{"Transpose", "[", "Orth", "]"}]}], "]"}]], "Input"],
+
+Cell[TextData[{
+ "2. The matrix ",
+ Cell[BoxData[
+  FormBox["M", TraditionalForm]]],
+ " is Hermitian. In that case ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["M", "\[Dagger]"], "=", "M"}], TraditionalForm]]],
+ ", and we can rewrite the eigenvalue problem in the form (checking that the \
+eigenvalues are real!!!)\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     SuperscriptBox["O", 
+      RowBox[{"-", "1"}]], "M", " ", "O"}], "=", 
+    RowBox[{
+     RowBox[{"diag", "(", 
+      RowBox[{
+       SubscriptBox["\[Lambda]", "1"], ",", 
+       RowBox[{"...", "."}], ",", 
+       SubscriptBox["\[Lambda]", "n"]}], ")"}], "=", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox["O", "\[Dagger]"], 
+       SuperscriptBox["M", "\[Dagger]"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         SuperscriptBox["O", 
+          RowBox[{"-", "1"}]], ")"}], "\[Dagger]"]}], "=", 
+      RowBox[{
+       SuperscriptBox["O", "\[Dagger]"], "M", " ", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"(", 
+          SuperscriptBox["O", "\[Dagger]"], ")"}], 
+         RowBox[{"-", "1"}]], "."}]}]}]}]}], TraditionalForm]]],
+ "\n(We use ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{"(", 
+      SuperscriptBox["O", 
+       RowBox[{"-", "1"}]], ")"}], "\[Dagger]"], "="}], TraditionalForm]]],
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    RowBox[{"(", 
+     SuperscriptBox["O", "\[Dagger]"], ")"}], 
+    RowBox[{"-", "1"}]], TraditionalForm]]],
+ " in the last expression. Prove for yourself this is true!)\nWe conclude \
+that we should have ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["O", 
+     RowBox[{"\[Dagger]", " "}]], "=", 
+    SuperscriptBox["O", 
+     RowBox[{"-", "1"}]], " "}], TraditionalForm]]],
+ ", or in other words the left and right eigenvalues coincide up to complex \
+conjugation! The normalisation condition becomes ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     SuperscriptBox["e", 
+      SuperscriptBox[
+       RowBox[{"(", "k", ")"}], "*"]], ".", 
+     SuperscriptBox["e", 
+      RowBox[{"(", "l", ")"}]]}], "=", 
+    SubscriptBox["\[Delta]", 
+     RowBox[{"k", " ", "l"}]]}], TraditionalForm]]],
+ ", which is the requirement of \"normalised\" eigenvectors in a space of \
+complex vectors.\nA matrix with the property ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["O", 
+     RowBox[{"-", "1"}]], "=", 
+    SuperscriptBox["O", "\[Dagger]"]}], TraditionalForm]]],
+ " is called unitary, which is why one often writes \"",
+ Cell[BoxData[
+  FormBox["U", TraditionalForm]]],
+ "\" for such a matrix rather than ",
+ Cell[BoxData[
+  FormBox["O", TraditionalForm]]],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.4102585542736273`*^9, 3.410258563201556*^9}, 
+   3.410260083939899*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["ExerciseText"],
+ " Exercise"
+}], "Exercise"],
+
+Cell["Show that the matrix ", "ExerciseText"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["\[Sigma]", "x"], "=", 
+    RowBox[{"(", "\[NegativeThinSpace]", GridBox[{
+       {"0", "1"},
+       {"1", "0"}
+      }], "\[NegativeThinSpace]", ")"}]}], ";", 
+   RowBox[{
+    FormBox[
+     RowBox[{
+      RowBox[{
+       SubscriptBox["\[Sigma]", "y"], "=", 
+       RowBox[{"(", "\[NegativeThinSpace]", GridBox[{
+          {"0", 
+           RowBox[{"-", "\[ImaginaryI]"}]},
+          {"\[ImaginaryI]", "0"}
+         }], "\[NegativeThinSpace]", ")"}]}], " ", ";"}],
+     TraditionalForm], 
+    FormBox[
+     RowBox[{
+      SubscriptBox["\[Sigma]", "z"], "=", 
+      RowBox[{"(", "\[NegativeThinSpace]", GridBox[{
+         {"1", "0"},
+         {"0", 
+          RowBox[{"-", "1"}]}
+        }], "\[NegativeThinSpace]", ")"}]}],
+     TraditionalForm]}], " ", ";", 
+   RowBox[{"unitary", "=", 
+    RowBox[{"Simplify", "[", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["a", "0"], " ", 
+       RowBox[{"IdentityMatrix", "[", "2", "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          SubscriptBox["a", "1"], "  ", 
+          SubscriptBox["\[Sigma]", "x"]}], "+", 
+         RowBox[{
+          SubscriptBox["a", "2"], "  ", 
+          SubscriptBox["\[Sigma]", "y"]}], "+", 
+         RowBox[{
+          SubscriptBox["a", "3"], "  ", 
+          SubscriptBox["\[Sigma]", "z"]}]}], ")"}]}]}], "]"}]}]}], 
+  TraditionalForm]], "Input"],
+
+Cell[TextData[{
+ "is unitary if ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     SubscriptBox["\[Sum]", "i"], 
+     SuperscriptBox[
+      SubscriptBox["a", "i"], "2"]}], "=", "1"}], TraditionalForm]]],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["a", "i"], TraditionalForm]]],
+ " is real. Check using ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " "
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"ComplexExpand", "[", 
+  RowBox[{"unitary", ".", 
+   RowBox[{"ConjugateTranspose", "[", "unitary", "]"}]}], "]"}]], "Input"]
+}, Open  ]]
+}, Closed]]
+}, Closed]]
+},
+WindowToolbars->"EditBar",
+WindowSize->{1206, 930},
+WindowMargins->{{30, Automatic}, {-82, Automatic}},
+Magnification->1.5,
+FrontEndVersion->"6.0 for Linux x86 (64-bit) (April 20, 2007)",
+StyleDefinitions->Notebook[{
+   Cell[
+    CellGroupData[{
+      Cell[
+       TextData[
+        StyleBox["Style Definitions", FontFamily -> "Luxi sans"]], "Title"], 
+      Cell[
+      "Modify the definitions below to change the default appearance of all \
+cells in a given style.  Make modifications to any definition using commands \
+in the Format menu.", "Text"], 
+      Cell[
+       CellGroupData[{
+         Cell[
+          TextData[
+           StyleBox["Style Environment Names", FontFamily -> "Luxi sans"]], 
+          "Section"], 
+         Cell[
+          StyleData[All, "Working"], PageWidth -> WindowWidth, ScriptMinSize -> 
+          9], 
+         Cell[
+          StyleData[All, "Presentation"], PageWidth -> WindowWidth, 
+          ScriptMinSize -> 12, FontSize -> 16], 
+         Cell[
+          StyleData[All, "SlideShow"], PageWidth -> WindowWidth, 
+          ScrollingOptions -> {
+           "PagewiseDisplay" -> True, "VerticalScrollRange" -> Fit}, 
+          ShowCellBracket -> False, ScriptMinSize -> 9], 
+         Cell[
+          StyleData[All, "Condensed"], PageWidth -> WindowWidth, 
+          CellBracketOptions -> {"Margins" -> {1, 1}, "Widths" -> {0, 5}}, 
+          ScriptMinSize -> 8, FontSize -> 11], 
+         Cell[
+          StyleData[All, "Printout"], PageWidth -> PaperWidth, ScriptMinSize -> 
+          7, FontSize -> 10, 
+          PrivateFontOptions -> {"FontType" -> "Outline"}]}, Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell["Notebook Options", "Section"], 
+         Cell[
+         "The options defined for the style below will be used at the \
+Notebook level.", "Text"], 
+         Cell[
+          StyleData["Notebook"], PageHeaders -> {{
+             Cell[
+              TextData[{
+                CounterBox["Page"]}], "PageNumber"], None, 
+             Cell[
+              TextData[{
+                ValueBox["FileName"]}], "Header"]}, {
+             Cell[
+              TextData[{
+                ValueBox["FileName"]}], "Header"], None, 
+             Cell[
+              TextData[{
+                CounterBox["Page"]}], "PageNumber"]}}, 
+          PageHeaderLines -> {True, True}, 
+          PrintingOptions -> {
+           "FacingPages" -> True, "FirstPageHeader" -> False}, 
+          CellFrameLabelMargins -> 6, StyleMenuListing -> None]}, Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell["Styles for Headings", "Section"], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Title"], ShowCellBracket -> False, 
+             CellMargins -> {{0, 0}, {0, 0}}, PageBreakBelow -> False, 
+             InputAutoReplacements -> {"TeX" -> StyleBox[
+                 RowBox[{"T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "LaTeX" -> StyleBox[
+                 RowBox[{"L", 
+                   StyleBox[
+                    AdjustmentBox[
+                    "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, 
+                    BoxBaselineShift -> -0.2], FontSize -> Smaller], "T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "mma" -> "Mathematica", 
+               "Mma" -> "Mathematica", "MMA" -> "Mathematica", 
+               "gridMathematica" -> FormBox[
+                 RowBox[{"grid", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               "webMathematica" -> FormBox[
+                 RowBox[{"web", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               Inherited}, LineSpacing -> {1, 11}, CounterIncrements -> 
+             "Title", 
+             CounterAssignments -> {{"Section", 0}, {"Equation", 0}, {
+               "Figure", 0}, {"Subtitle", 0}, {"Subsubtitle", 0}}, FontSize -> 
+             34, FontColor -> GrayLevel[1], Background -> 
+             RGBColor[0.571389, 0.19675, 0.570504]], 
+            Cell[
+             StyleData["Title", "Presentation"], 
+             CellMargins -> {{0, 0}, {0, 0}}, 
+             CellFrameMargins -> {{12, 10}, {24, 24}}, LineSpacing -> {1, 0}, 
+             FontSize -> 46], 
+            Cell[
+             StyleData["Title", "Condensed"], CellMargins -> {{0, 0}, {0, 0}},
+              FontSize -> 20], 
+            Cell[
+             StyleData["Title", "Printout"], CellMargins -> {{0, 0}, {0, 0}}, 
+             FontSize -> 24, FontTracking -> "Plain", Background -> 
+             GrayLevel[0]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Subtitle"], ShowCellBracket -> False, 
+             CellMargins -> {{0, 0}, {0, 0}}, PageBreakBelow -> False, 
+             InputAutoReplacements -> {"TeX" -> StyleBox[
+                 RowBox[{"T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "LaTeX" -> StyleBox[
+                 RowBox[{"L", 
+                   StyleBox[
+                    AdjustmentBox[
+                    "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, 
+                    BoxBaselineShift -> -0.2], FontSize -> Smaller], "T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "mma" -> "Mathematica", 
+               "Mma" -> "Mathematica", "MMA" -> "Mathematica", 
+               "gridMathematica" -> FormBox[
+                 RowBox[{"grid", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               "webMathematica" -> FormBox[
+                 RowBox[{"web", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               Inherited}, LineSpacing -> {1, 3}, ParagraphIndent -> -96, 
+             CounterIncrements -> "Subtitle", 
+             CounterAssignments -> {{"Section", 0}, {"Equation", 0}, {
+               "Figure", 0}, {"Subsubtitle", 0}}, FontFamily -> "Helvetica", 
+             FontSize -> 18, FontColor -> GrayLevel[1], Background -> 
+             RGBColor[0.2, 0.700008, 0.700008]], 
+            Cell[
+             StyleData["Subtitle", "Presentation"], 
+             CellMargins -> {{0, 0}, {4, 0}}, 
+             CellFrameMargins -> {{12, 10}, {12, 8}}, LineSpacing -> {1, 6}, 
+             ParagraphIndent -> -157, FontSize -> 28], 
+            Cell[
+             StyleData["Subtitle", "Condensed"], 
+             CellMargins -> {{0, 0}, {0, 0}}, ParagraphIndent -> -78, 
+             FontSize -> 14], 
+            Cell[
+             StyleData["Subtitle", "Printout"], 
+             CellMargins -> {{0, 0}, {0, 0}}, ParagraphIndent -> -85, 
+             FontSize -> 16, Background -> GrayLevel[0.6]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Subsubtitle"], ShowCellBracket -> False, 
+             CellMargins -> {{10, 4}, {30, 10}}, PageBreakBelow -> False, 
+             InputAutoReplacements -> {"TeX" -> StyleBox[
+                 RowBox[{"T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "LaTeX" -> StyleBox[
+                 RowBox[{"L", 
+                   StyleBox[
+                    AdjustmentBox[
+                    "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, 
+                    BoxBaselineShift -> -0.2], FontSize -> Smaller], "T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "mma" -> "Mathematica", 
+               "Mma" -> "Mathematica", "MMA" -> "Mathematica", 
+               "gridMathematica" -> FormBox[
+                 RowBox[{"grid", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               "webMathematica" -> FormBox[
+                 RowBox[{"web", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               Inherited}, CounterIncrements -> "Subsubtitle", 
+             CounterAssignments -> {{"Section", 0}, {"Equation", 0}, {
+               "Figure", 0}}, FontFamily -> "Helvetica", FontSize -> 14, 
+             FontSlant -> "Italic"], 
+            Cell[
+             StyleData["Subsubtitle", "Presentation"], 
+             CellMargins -> {{15, 10}, {50, 10}}, LineSpacing -> {1, 0}, 
+             FontSize -> 22], 
+            Cell[
+             StyleData["Subsubtitle", "Condensed"], 
+             CellMargins -> {{8, 10}, {12, 8}}, FontSize -> 12], 
+            Cell[
+             StyleData["Subsubtitle", "Printout"], 
+             CellMargins -> {{9, 10}, {50, 10}}, FontSize -> 14]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Section"], CellFrame -> {{6, 0}, {0, 1}}, CellDingbat -> 
+             None, CellMargins -> {{12, Inherited}, {4, 24}}, 
+             CellGroupingRules -> {"SectionGrouping", 30}, PageBreakBelow -> 
+             False, CellFrameMargins -> 6, 
+             InputAutoReplacements -> {"TeX" -> StyleBox[
+                 RowBox[{"T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "LaTeX" -> StyleBox[
+                 RowBox[{"L", 
+                   StyleBox[
+                    AdjustmentBox[
+                    "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, 
+                    BoxBaselineShift -> -0.2], FontSize -> Smaller], "T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "mma" -> "Mathematica", 
+               "Mma" -> "Mathematica", "MMA" -> "Mathematica", 
+               "gridMathematica" -> FormBox[
+                 RowBox[{"grid", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               "webMathematica" -> FormBox[
+                 RowBox[{"web", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               Inherited}, LineSpacing -> {1, 7}, CounterIncrements -> 
+             "Section", 
+             CounterAssignments -> {{"Subsection", 0}, {"Subsubsection", 0}}, 
+             FontFamily -> "Helvetica", FontSize -> 16, FontWeight -> "Bold", 
+             FontColor -> RGBColor[0.571389, 0.19675, 0.570504]], 
+            Cell[
+             StyleData["Section", "Presentation"], 
+             CellFrame -> {{8, 0}, {0, 2}}, 
+             CellMargins -> {{15, 10}, {14, 32}}, 
+             CellFrameMargins -> {{8, 10}, {10, 14}}, LineSpacing -> {1, 2}, 
+             FontSize -> 24, FontTracking -> "Condensed"], 
+            Cell[
+             StyleData["Section", "Condensed"], 
+             CellMargins -> {{8, Inherited}, {2, 12}}, FontSize -> 12], 
+            Cell[
+             StyleData["Section", "Printout"], 
+             CellMargins -> {{9, 0}, {2, 50}}, FontSize -> 14, FontTracking -> 
+             "Plain", FontColor -> GrayLevel[0]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Subsection"], 
+             CellMargins -> {{12, Inherited}, {8, 20}}, 
+             CellGroupingRules -> {"SectionGrouping", 40}, PageBreakBelow -> 
+             False, InputAutoReplacements -> {"TeX" -> StyleBox[
+                 RowBox[{"T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "LaTeX" -> StyleBox[
+                 RowBox[{"L", 
+                   StyleBox[
+                    AdjustmentBox[
+                    "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, 
+                    BoxBaselineShift -> -0.2], FontSize -> Smaller], "T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "mma" -> "Mathematica", 
+               "Mma" -> "Mathematica", "MMA" -> "Mathematica", 
+               "gridMathematica" -> FormBox[
+                 RowBox[{"grid", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               "webMathematica" -> FormBox[
+                 RowBox[{"web", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               Inherited}, LineSpacing -> {1, 7}, CounterIncrements -> 
+             "Subsection", CounterAssignments -> {{"Subsubsection", 0}}, 
+             FontFamily -> "Helvetica", FontSize -> 13, FontWeight -> "Bold"],
+             
+            Cell[
+             StyleData["Subsection", "Presentation"], 
+             CellMargins -> {{15, 10}, {12, 32}}, LineSpacing -> {1, 0}, 
+             FontSize -> 22], 
+            Cell[
+             StyleData["Subsection", "Condensed"], 
+             CellMargins -> {{8, Inherited}, {2, 12}}, FontSize -> 12], 
+            Cell[
+             StyleData["Subsection", "Printout"], 
+             CellMargins -> {{9, 0}, {4, 40}}, FontSize -> 12]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Subsubsection"], CellDingbat -> "\[FilledSquare]", 
+             CellMargins -> {{25, Inherited}, {8, 12}}, 
+             CellGroupingRules -> {"SectionGrouping", 50}, PageBreakBelow -> 
+             False, InputAutoReplacements -> {"TeX" -> StyleBox[
+                 RowBox[{"T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "LaTeX" -> StyleBox[
+                 RowBox[{"L", 
+                   StyleBox[
+                    AdjustmentBox[
+                    "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, 
+                    BoxBaselineShift -> -0.2], FontSize -> Smaller], "T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "mma" -> "Mathematica", 
+               "Mma" -> "Mathematica", "MMA" -> "Mathematica", 
+               "gridMathematica" -> FormBox[
+                 RowBox[{"grid", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               "webMathematica" -> FormBox[
+                 RowBox[{"web", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               Inherited}, LineSpacing -> {1, 9}, CounterIncrements -> 
+             "Subsubsection", FontFamily -> "Times", FontSize -> 13, 
+             FontWeight -> "Bold"], 
+            Cell[
+             StyleData["Subsubsection", "Presentation"], 
+             CellMargins -> {{34, 10}, {18, 28}}, LineSpacing -> {1, 0}, 
+             FontSize -> 18], 
+            Cell[
+             StyleData["Subsubsection", "Condensed"], 
+             CellMargins -> {{22, Inherited}, {2, 12}}, FontSize -> 10], 
+            Cell[
+             StyleData["Subsubsection", "Printout"], 
+             CellMargins -> {{21, 0}, {4, 20}}, FontSize -> 11]}, Closed]]}, 
+        Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell["Styles for Body Text", "Section"], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Text"], CellMargins -> {{12, 10}, {5, 5}}, 
+             InputAutoReplacements -> {"TeX" -> StyleBox[
+                 RowBox[{"T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "LaTeX" -> StyleBox[
+                 RowBox[{"L", 
+                   StyleBox[
+                    AdjustmentBox[
+                    "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, 
+                    BoxBaselineShift -> -0.2], FontSize -> Smaller], "T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "mma" -> "Mathematica", 
+               "Mma" -> "Mathematica", "MMA" -> "Mathematica", 
+               "gridMathematica" -> FormBox[
+                 RowBox[{"grid", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               "webMathematica" -> FormBox[
+                 RowBox[{"web", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               Inherited}, LineSpacing -> {1, 3}, ParagraphSpacing -> {0, 12},
+              CounterIncrements -> "Text", FontFamily -> "Times"], 
+            Cell[
+             StyleData["Text", "Presentation"], 
+             CellMargins -> {{15, 10}, {8, 10}}, LineSpacing -> {1, 5}, 
+             ParagraphSpacing -> {0, 12}, FontSize -> 18], 
+            Cell[
+             StyleData["Text", "Condensed"], CellMargins -> {{8, 10}, {4, 4}},
+              LineSpacing -> {1, 1}, ParagraphSpacing -> {0, 4}], 
+            Cell[
+             StyleData["Text", "Printout"], CellMargins -> {{9, 0}, {4, 4}}, 
+             Hyphenation -> True, ParagraphSpacing -> {0, 6}]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["SmallText"], CellMargins -> {{12, 10}, {5, 5}}, 
+             InputAutoReplacements -> {"TeX" -> StyleBox[
+                 RowBox[{"T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "LaTeX" -> StyleBox[
+                 RowBox[{"L", 
+                   StyleBox[
+                    AdjustmentBox[
+                    "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, 
+                    BoxBaselineShift -> -0.2], FontSize -> Smaller], "T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "mma" -> "Mathematica", 
+               "Mma" -> "Mathematica", "MMA" -> "Mathematica", 
+               "gridMathematica" -> FormBox[
+                 RowBox[{"grid", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               "webMathematica" -> FormBox[
+                 RowBox[{"web", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               Inherited}, LineSpacing -> {1, 3}, ParagraphSpacing -> {0, 6}, 
+             CounterIncrements -> "SmallText", FontFamily -> "Helvetica", 
+             FontSize -> 9], 
+            Cell[
+             StyleData["SmallText", "Presentation"], 
+             CellMargins -> {{15, 10}, {8, 10}}, LineSpacing -> {1, 5}, 
+             FontSize -> 14], 
+            Cell[
+             StyleData["SmallText", "Condensed"], 
+             CellMargins -> {{8, 10}, {2, 2}}, LineSpacing -> {1, 2}, 
+             FontSize -> 9], 
+            Cell[
+             StyleData["SmallText", "Printout"], 
+             CellMargins -> {{9, 0}, {4, 4}}, Hyphenation -> True, FontSize -> 
+             7]}, Closed]]}, Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell["Styles for Input/Output", "Section"], 
+         Cell[
+         "The cells in this section define styles used for input and output \
+to the kernel.  Be careful when modifying, renaming, or removing these \
+styles, because the front end associates special meanings with these style \
+names.", "Text"], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Input"], CellFrame -> {{3, 0}, {0, 0}}, 
+             CellMargins -> {{52, 10}, {8, 8}}, Evaluatable -> True, 
+             CellGroupingRules -> "InputGrouping", CellHorizontalScrolling -> 
+             True, PageBreakWithin -> False, GroupPageBreakWithin -> False, 
+             CellLabelMargins -> {{5, Inherited}, {Inherited, Inherited}}, 
+             DefaultFormatType -> DefaultInputFormatType, 
+             "TwoByteSyntaxCharacterAutoReplacement" -> True, 
+             HyphenationOptions -> {
+              "HyphenationCharacter" -> "\[Continuation]"}, LanguageCategory -> 
+             "Formula", FormatType -> InputForm, ShowStringCharacters -> True,
+              NumberMarks -> True, 
+             LinebreakAdjustments -> {0.85, 2, 10, 0, 1}, CounterIncrements -> 
+             "Input", FontWeight -> "Bold", Background -> 
+             RGBColor[1, 0.700008, 0.4]], 
+            Cell[
+             StyleData["Input", "Presentation"], 
+             CellFrame -> {{5, 0}, {0, 0}}, 
+             CellMargins -> {{74, 10}, {8, 10}}, 
+             CellFrameMargins -> {{10, 10}, {14, 14}}, LineSpacing -> {1, 0}, 
+             FontSize -> 18], 
+            Cell[
+             StyleData["Input", "Condensed"], 
+             CellMargins -> {{40, Inherited}, {1, 4}}], 
+            Cell[
+             StyleData["Input", "Printout"], CellMargins -> {{44, 0}, {2, 6}},
+              Background -> GrayLevel[0.900008]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["InlineInput"], Evaluatable -> True, CellGroupingRules -> 
+             "InputGrouping", CellHorizontalScrolling -> True, 
+             PageBreakWithin -> False, GroupPageBreakWithin -> False, 
+             DefaultFormatType -> DefaultInputFormatType, 
+             "TwoByteSyntaxCharacterAutoReplacement" -> True, 
+             HyphenationOptions -> {
+              "HyphenationCharacter" -> "\[Continuation]"}, 
+             AutoItalicWords -> {}, FormatType -> InputForm, 
+             ShowStringCharacters -> True, NumberMarks -> True, 
+             CounterIncrements -> "Input", FontWeight -> "Bold"], 
+            Cell[
+             StyleData["InlineInput", "Presentation"], FontSize -> 18], 
+            Cell[
+             StyleData["InlineInput", "Condensed"]], 
+            Cell[
+             StyleData["InlineInput", "Printout"], FontSize -> 10]}, Closed]],
+          
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Output"], CellFrame -> {{3, 0}, {0, 0}}, 
+             CellMargins -> {{52, 10}, {8, 8}}, CellEditDuplicate -> True, 
+             CellGroupingRules -> "OutputGrouping", CellHorizontalScrolling -> 
+             True, PageBreakWithin -> False, GroupPageBreakWithin -> False, 
+             GeneratedCell -> True, CellAutoOverwrite -> True, 
+             CellLabelMargins -> {{3, Inherited}, {Inherited, Inherited}}, 
+             DefaultFormatType -> DefaultOutputFormatType, 
+             "TwoByteSyntaxCharacterAutoReplacement" -> True, 
+             HyphenationOptions -> {
+              "HyphenationCharacter" -> "\[Continuation]"}, LanguageCategory -> 
+             "Formula", FormatType -> InputForm, CounterIncrements -> 
+             "Output", Background -> RGBColor[1, 0.900008, 0.900008]], 
+            Cell[
+             StyleData["Output", "Presentation"], 
+             CellFrame -> {{5, 0}, {0, 0}}, 
+             CellMargins -> {{74, 10}, {12, 5}}, 
+             CellFrameMargins -> {{10, 10}, {14, 14}}, LineSpacing -> {1, 0}, 
+             FontSize -> 18], 
+            Cell[
+             StyleData["Output", "Condensed"], 
+             CellMargins -> {{40, Inherited}, {4, 1}}], 
+            Cell[
+             StyleData["Output", "Printout"], 
+             CellMargins -> {{44, 0}, {6, 2}}, Background -> 
+             GrayLevel[0.900008]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Message"], 
+             CellMargins -> {{62, Inherited}, {Inherited, Inherited}}, 
+             CellGroupingRules -> "OutputGrouping", PageBreakWithin -> False, 
+             GroupPageBreakWithin -> False, GeneratedCell -> True, 
+             CellAutoOverwrite -> True, ShowCellLabel -> False, 
+             DefaultFormatType -> DefaultOutputFormatType, 
+             "TwoByteSyntaxCharacterAutoReplacement" -> True, 
+             HyphenationOptions -> {
+              "HyphenationCharacter" -> "\[Continuation]"}, FormatType -> 
+             InputForm, CounterIncrements -> "Message", StyleMenuListing -> 
+             None, FontColor -> RGBColor[1, 0, 0]], 
+            Cell[
+             StyleData["Message", "Presentation"], 
+             CellMargins -> {{86, 20}, {10, 10}}, LineSpacing -> {1, 0}, 
+             FontSize -> 18], 
+            Cell[
+             StyleData["Message", "Condensed"], 
+             CellMargins -> {{50, Inherited}, {Inherited, Inherited}}], 
+            Cell[
+             StyleData["Message", "Printout"], 
+             CellMargins -> {{54, Inherited}, {Inherited, Inherited}}, 
+             FontColor -> GrayLevel[0]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Print"], 
+             CellMargins -> {{62, Inherited}, {Inherited, Inherited}}, 
+             CellGroupingRules -> "OutputGrouping", CellHorizontalScrolling -> 
+             True, PageBreakWithin -> False, GroupPageBreakWithin -> False, 
+             GeneratedCell -> True, CellAutoOverwrite -> True, ShowCellLabel -> 
+             False, DefaultFormatType -> DefaultOutputFormatType, 
+             "TwoByteSyntaxCharacterAutoReplacement" -> True, 
+             HyphenationOptions -> {
+              "HyphenationCharacter" -> "\[Continuation]"}, FormatType -> 
+             InputForm, CounterIncrements -> "Print", StyleMenuListing -> 
+             None], 
+            Cell[
+             StyleData["Print", "Presentation"], 
+             CellMargins -> {{86, 20}, {4, 4}}, LineSpacing -> {1, 0}, 
+             FontSize -> 18], 
+            Cell[
+             StyleData["Print", "Condensed"], 
+             CellMargins -> {{50, Inherited}, {Inherited, Inherited}}], 
+            Cell[
+             StyleData["Print", "Printout"], 
+             CellMargins -> {{54, Inherited}, {Inherited, Inherited}}]}, 
+           Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Graphics"], 
+             CellMargins -> {{62, Inherited}, {Inherited, Inherited}}, 
+             CellGroupingRules -> "GraphicsGrouping", CellHorizontalScrolling -> 
+             True, PageBreakWithin -> False, GeneratedCell -> True, 
+             CellAutoOverwrite -> True, ShowCellLabel -> False, 
+             DefaultFormatType -> DefaultOutputFormatType, FormatType -> 
+             InputForm, CounterIncrements -> "Graphics", StyleMenuListing -> 
+             None], 
+            Cell[
+             StyleData["Graphics", "Presentation"], 
+             CellMargins -> {{86, 20}, {8, 8}}, FontSize -> 18], 
+            Cell[
+             StyleData["Graphics", "Condensed"], 
+             CellMargins -> {{52, Inherited}, {Inherited, Inherited}}, 
+             ImageSize -> {175, 175}], 
+            Cell[
+             StyleData["Graphics", "Printout"], 
+             CellMargins -> {{54, Inherited}, {Inherited, Inherited}}, 
+             ImageSize -> {250, 250}]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["CellLabel"], StyleMenuListing -> None, FontFamily -> 
+             "Helvetica", FontSize -> 11, FontWeight -> "Bold", FontColor -> 
+             RGBColor[0.571389, 0.19675, 0.570504]], 
+            Cell[
+             StyleData["CellLabel", "Presentation"], FontSize -> 12], 
+            Cell[
+             StyleData["CellLabel", "Condensed"], FontSize -> 8], 
+            Cell[
+             StyleData["CellLabel", "Printout"], FontSize -> 8, FontColor -> 
+             GrayLevel[0]]}, Closed]]}, Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell["Unique Styles", "Section"], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Author"], ShowCellBracket -> False, 
+             CellMargins -> {{10, 4}, {2, 10}}, LineSpacing -> {1, 5}, 
+             FontSize -> 16, FontSlant -> "Italic"], 
+            Cell[
+             StyleData["Author", "Presentation"], 
+             CellMargins -> {{15, 10}, {4, 16}}, LineSpacing -> {1, 5}, 
+             ParagraphSpacing -> {0, 12}, FontSize -> 24], 
+            Cell[
+             StyleData["Author", "Condensed"], 
+             CellMargins -> {{8, 10}, {1, 4}}, LineSpacing -> {1, 1}, 
+             ParagraphSpacing -> {0, 4}, FontSize -> 12], 
+            Cell[
+             StyleData["Author", "Printout"], 
+             CellMargins -> {{9, 0}, {4, 12}}, ParagraphSpacing -> {0, 6}, 
+             FontSize -> 14]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Copyright"], ShowCellBracket -> False, 
+             CellMargins -> {{10, 10}, {40, 2}}, FontFamily -> "Helvetica", 
+             FontSize -> 9], 
+            Cell[
+             StyleData["Copyright", "Presentation"], 
+             CellMargins -> {{15, 10}, {50, 4}}, LineSpacing -> {1, 5}, 
+             FontSize -> 14], 
+            Cell[
+             StyleData["Copyright", "Condensed"], 
+             CellMargins -> {{8, 10}, {12, 1}}, LineSpacing -> {1, 2}, 
+             FontSize -> 9], 
+            Cell[
+             StyleData["Copyright", "Printout"], 
+             CellMargins -> {{9, 0}, {72, 4}}, FontSize -> 7]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Example"], CellMargins -> {{12, 10}, {5, 12}}, 
+             LineSpacing -> {1, 3}, ParagraphSpacing -> {0, 12}, 
+             CounterIncrements -> "Example", FontFamily -> "Times", 
+             FontWeight -> "Bold"], 
+            Cell[
+             StyleData["Example", "Presentation"], 
+             CellMargins -> {{18, 10}, {8, 20}}, LineSpacing -> {1, 5}, 
+             ParagraphSpacing -> {0, 12}, FontSize -> 18], 
+            Cell[
+             StyleData["Example", "Condensed"], 
+             CellMargins -> {{8, 10}, {4, 8}}, LineSpacing -> {1, 1}, 
+             ParagraphSpacing -> {0, 4}], 
+            Cell[
+             StyleData["Example", "Printout"], 
+             CellMargins -> {{9, 0}, {4, 10}}, ParagraphSpacing -> {0, 6}]}, 
+           Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Definition"], CellFrame -> {{3, 0}, {0, 0}}, 
+             CellMargins -> {{52, 10}, {8, 8}}, PageBreakWithin -> False, 
+             GroupPageBreakWithin -> False, 
+             CellLabelMargins -> {{23, Inherited}, {Inherited, Inherited}}, 
+             ShowStringCharacters -> True, CounterIncrements -> "Definition", 
+             FontFamily -> "Helvetica", FontWeight -> "Bold", FontColor -> 
+             GrayLevel[1], Background -> RGBColor[0.2, 0.700008, 0.700008]], 
+            Cell[
+             StyleData["Definition", "Presentation"], 
+             CellFrame -> {{5, 0}, {0, 0}}, 
+             CellMargins -> {{74, 10}, {8, 12}}, 
+             CellFrameMargins -> {{10, 10}, {14, 14}}, LineSpacing -> {1, 0}, 
+             FontSize -> 18], 
+            Cell[
+             StyleData["Definition", "Condensed"], 
+             CellMargins -> {{40, 10}, {1, 4}}], 
+            Cell[
+             StyleData["Definition", "Printout"], 
+             CellMargins -> {{44, 0}, {2, 6}}, Hyphenation -> True, 
+             Background -> GrayLevel[0.6]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Theorem"], CellFrame -> {{3, 0}, {0, 0}}, 
+             CellMargins -> {{52, 10}, {8, 8}}, PageBreakWithin -> False, 
+             GroupPageBreakWithin -> False, 
+             CellLabelMargins -> {{23, Inherited}, {Inherited, Inherited}}, 
+             ShowStringCharacters -> True, CounterIncrements -> "Theorem", 
+             FontFamily -> "Helvetica", FontWeight -> "Bold", FontColor -> 
+             GrayLevel[1], Background -> 
+             RGBColor[0.571389, 0.19675, 0.570504]], 
+            Cell[
+             StyleData["Theorem", "Presentation"], 
+             CellFrame -> {{5, 0}, {0, 0}}, 
+             CellMargins -> {{74, 10}, {8, 12}}, 
+             CellFrameMargins -> {{10, 10}, {14, 14}}, LineSpacing -> {1, 0}, 
+             FontSize -> 18], 
+            Cell[
+             StyleData["Theorem", "Condensed"], 
+             CellMargins -> {{40, 10}, {1, 4}}], 
+            Cell[
+             StyleData["Theorem", "Printout"], 
+             CellMargins -> {{44, 0}, {2, 6}}, Hyphenation -> True, 
+             Background -> GrayLevel[0.4]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["ExerciseMain"], CellFrame -> {{6, 0}, {0, 1}}, 
+             CellMargins -> {{12, Inherited}, {4, 20}}, 
+             CellGroupingRules -> {"SectionGrouping", 30}, PageBreakBelow -> 
+             False, CellFrameColor -> RGBColor[0.571389, 0.19675, 0.570504], 
+             LineSpacing -> {1, 7}, CounterIncrements -> "Subsection", 
+             CounterAssignments -> {{"Subsubsection", 0}}, FontFamily -> 
+             "Helvetica", FontSize -> 16, FontWeight -> "Bold", FontColor -> 
+             RGBColor[0.571389, 0.19675, 0.570504]], 
+            Cell[
+             StyleData["ExerciseMain", "Presentation"], 
+             CellFrame -> {{8, 0}, {0, 2}}, 
+             CellMargins -> {{18, 10}, {12, 32}}, 
+             CellFrameMargins -> {{10, 10}, {14, 14}}, LineSpacing -> {1, 2}, 
+             FontSize -> 24, FontTracking -> "Condensed"], 
+            Cell[
+             StyleData["ExerciseMain", "Condensed"], 
+             CellMargins -> {{8, Inherited}, {2, 12}}, FontSize -> 12], 
+            Cell[
+             StyleData["ExerciseMain", "Printout"], 
+             CellMargins -> {{9, 0}, {2, 50}}, CellFrameColor -> 
+             GrayLevel[0.500008], FontSize -> 14, FontTracking -> "Plain", 
+             FontColor -> GrayLevel[0]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Exercise"], CellDingbat -> "\[FilledDownTriangle]", 
+             CellMargins -> {{23, Inherited}, {4, 18}}, 
+             CellGroupingRules -> {"SectionGrouping", 50}, PageBreakBelow -> 
+             False, LineSpacing -> {1, 7}, CounterIncrements -> 
+             "Subsubsection", FontFamily -> "Times", FontSize -> 13, 
+             FontWeight -> "Bold", FontColor -> 
+             RGBColor[0.571389, 0.19675, 0.570504]], 
+            Cell[
+             StyleData["Exercise", "Presentation"], 
+             CellMargins -> {{28, 10}, {10, 34}}, LineSpacing -> {1, 0}, 
+             FontSize -> 22], 
+            Cell[
+             StyleData["Exercise", "Condensed"], 
+             CellMargins -> {{17, Inherited}, {2, 12}}, FontSize -> 10], 
+            Cell[
+             StyleData["Exercise", "Printout"], 
+             CellFrame -> {{0, 0}, {0.5, 0}}, CellDingbat -> None, 
+             CellMargins -> {{9, 0}, {6, 20}}, Hyphenation -> True, FontSize -> 
+             11, FontColor -> GrayLevel[0]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["ExerciseText"], CellMargins -> {{62, 10}, {5, 5}}, 
+             LineSpacing -> {1, 3}, ParagraphSpacing -> {0, 8}, 
+             CounterIncrements -> "ExerciseText", FontFamily -> "Times"], 
+            Cell[
+             StyleData["ExerciseText", "Presentation"], 
+             CellMargins -> {{100, 10}, {8, 8}}, LineSpacing -> {1, 5}, 
+             ParagraphSpacing -> {0, 12}, FontSize -> 18], 
+            Cell[
+             StyleData["ExerciseText", "Condensed"], 
+             CellMargins -> {{52, 10}, {2, 2}}, LineSpacing -> {1, 1}, 
+             ParagraphSpacing -> {0, 4}], 
+            Cell[
+             StyleData["ExerciseText", "Printout"], 
+             CellMargins -> {{54, 0}, {4, 4}}, Hyphenation -> True, 
+             ParagraphSpacing -> {0, 6}]}, Closed]]}, Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell["Formulas and Programming", "Section"], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["DisplayFormula"], CellMargins -> {{62, 10}, {2, 10}}, 
+             CellHorizontalScrolling -> True, DefaultFormatType -> 
+             DefaultInputFormatType, "TwoByteSyntaxCharacterAutoReplacement" -> 
+             True, 
+             HyphenationOptions -> {
+              "HyphenationCharacter" -> "\[Continuation]"}, LanguageCategory -> 
+             "Formula", ScriptLevel -> 0, SingleLetterItalics -> True, 
+             UnderoverscriptBoxOptions -> {LimitsPositioning -> True}], 
+            Cell[
+             StyleData["DisplayFormula", "Presentation"], 
+             CellMargins -> {{100, 10}, {8, 16}}, FontSize -> 18], 
+            Cell[
+             StyleData["DisplayFormula", "Condensed"], 
+             CellMargins -> {{52, 10}, {2, 10}}, FontSize -> 10], 
+            Cell[
+             StyleData["DisplayFormula", "Printout"], 
+             CellMargins -> {{54, 10}, {2, 10}}, FontSize -> 10]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["ChemicalFormula"], CellMargins -> {{62, 10}, {2, 10}},
+              DefaultFormatType -> DefaultInputFormatType, 
+             "TwoByteSyntaxCharacterAutoReplacement" -> True, 
+             HyphenationOptions -> {
+              "HyphenationCharacter" -> "\[Continuation]"}, LanguageCategory -> 
+             "Formula", AutoSpacing -> False, 
+             ScriptBaselineShifts -> {0.6, Automatic}, ScriptLevel -> 1, 
+             SingleLetterItalics -> False, ZeroWidthTimes -> True], 
+            Cell[
+             StyleData["ChemicalFormula", "Presentation"], 
+             CellMargins -> {{100, 10}, {8, 12}}, FontSize -> 18], 
+            Cell[
+             StyleData["ChemicalFormula", "Condensed"], 
+             CellMargins -> {{52, 10}, {2, 10}}, FontSize -> 10], 
+            Cell[
+             StyleData["ChemicalFormula", "Printout"], 
+             CellMargins -> {{54, 10}, {2, 10}}, FontSize -> 10]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Program"], CellMargins -> {{12, 10}, {Inherited, 6}}, 
+             Hyphenation -> False, LanguageCategory -> "Formula", FontFamily -> 
+             "Courier"], 
+            Cell[
+             StyleData["Program", "Presentation"], 
+             CellMargins -> {{20, 30}, {4, 4}}, FontSize -> 18], 
+            Cell[
+             StyleData["Program", "Condensed"], 
+             CellMargins -> {{8, 10}, {Inherited, 4}}, FontSize -> 9.5], 
+            Cell[
+             StyleData["Program", "Printout"], 
+             CellMargins -> {{9, 0}, {Inherited, 4}}, FontSize -> 9.5]}, 
+           Closed]]}, Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell["Styles for Automatic Numbering", "Section"], 
+         Cell[
+         "The following styles are useful for numbered equations, figures, \
+etc.  They automatically give the cell a FrameLabel containing a reference to \
+a particular counter, and also increment that counter.", "Text"], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["NumberedEquation"], 
+             CellMargins -> {{62, 10}, {Inherited, Inherited}}, 
+             CellFrameLabels -> {{None, 
+                Cell[
+                 TextData[{"(", 
+                   CounterBox["NumberedEquation"], ")"}]]}, {None, None}}, 
+             DefaultFormatType -> DefaultInputFormatType, 
+             "TwoByteSyntaxCharacterAutoReplacement" -> True, 
+             HyphenationOptions -> {
+              "HyphenationCharacter" -> "\[Continuation]"}, CounterIncrements -> 
+             "NumberedEquation", FormatTypeAutoConvert -> False], 
+            Cell[
+             StyleData["NumberedEquation", "Presentation"], 
+             CellMargins -> {{100, 10}, {6, 8}}, FontSize -> 18], 
+            Cell[
+             StyleData["NumberedEquation", "Condensed"], 
+             CellMargins -> {{52, 10}, {Inherited, Inherited}}], 
+            Cell[
+             StyleData["NumberedEquation", "Printout"], 
+             CellMargins -> {{54, 0}, {Inherited, Inherited}}]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["NumberedFigure"], 
+             CellMargins -> {{62, 145}, {Inherited, Inherited}}, 
+             CellFrameLabels -> {{None, None}, {
+                Cell[
+                 TextData[{"Figure ", 
+                   CounterBox["NumberedFigure"]}]], None}}, CounterIncrements -> 
+             "NumberedFigure", 
+             ImageMargins -> {{43, Inherited}, {Inherited, 0}}, 
+             FormatTypeAutoConvert -> False], 
+            Cell[
+             StyleData["NumberedFigure", "Presentation"], 
+             CellMargins -> {{100, 145}, {8, 6}}, FontSize -> 18], 
+            Cell[
+             StyleData["NumberedFigure", "Condensed"]], 
+            Cell[
+             StyleData["NumberedFigure", "Printout"]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["NumberedTable"], 
+             CellMargins -> {{62, 145}, {Inherited, Inherited}}, 
+             CellFrameLabels -> {{None, None}, {
+                Cell[
+                 TextData[{"Table ", 
+                   CounterBox["NumberedTable"]}]], None}}, TextAlignment -> 
+             Center, CounterIncrements -> "NumberedTable", 
+             FormatTypeAutoConvert -> False], 
+            Cell[
+             StyleData["NumberedTable", "Presentation"], 
+             CellMargins -> {{100, 145}, {8, 8}}, FontSize -> 18], 
+            Cell[
+             StyleData["NumberedTable", "Condensed"]], 
+            Cell[
+             StyleData["NumberedTable", "Printout"]]}, Closed]]}, Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell["Styles for Headers and Footers", "Section"], 
+         Cell[
+          StyleData["Header"], CellMargins -> {{0, 0}, {4, 1}}, 
+          StyleMenuListing -> None, FontFamily -> "Helvetica", FontSize -> 9, 
+          FontSlant -> "Italic"], 
+         Cell[
+          StyleData["Footer"], CellMargins -> {{0, 0}, {0, 4}}, 
+          StyleMenuListing -> None, FontFamily -> "Helvetica", FontSize -> 6],
+          
+         Cell[
+          StyleData["PageNumber"], CellMargins -> {{0, 0}, {4, 1}}, 
+          StyleMenuListing -> None, FontFamily -> "Helvetica", FontSize -> 9, 
+          FontWeight -> "Bold"]}, Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell["Hyperlink Styles", "Section"], 
+         Cell[
+         "The cells below define styles useful for making hypertext \
+ButtonBoxes.  The \"Hyperlink\" style is for links within the same Notebook, \
+or between Notebooks.", "Text"], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["Hyperlink"], StyleMenuListing -> None, 
+             ButtonStyleMenuListing -> Automatic, FontColor -> GrayLevel[1], 
+             Background -> RGBColor[1, 0.4, 0], 
+             ButtonBoxOptions -> {
+              Active -> True, ButtonFrame -> "None", 
+               ButtonFunction :> (FrontEndExecute[{
+                  FrontEnd`NotebookLocate[#2]}]& ), ButtonNote -> 
+               ButtonData}], 
+            Cell[
+             StyleData["Hyperlink", "Presentation"]], 
+            Cell[
+             StyleData["Hyperlink", "Condensed"]], 
+            Cell[
+             StyleData["Hyperlink", "Printout"], FontColor -> GrayLevel[0], 
+             Background -> GrayLevel[1]]}, Closed]], 
+         Cell[
+         "The following styles are for linking automatically to the on-line \
+help system.", "Text"], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["MainBookLink"], StyleMenuListing -> None, 
+             ButtonStyleMenuListing -> Automatic, FontColor -> GrayLevel[1], 
+             Background -> RGBColor[1, 0.4, 0], 
+             ButtonBoxOptions -> {
+              Active -> True, ButtonFrame -> "None", 
+               ButtonFunction :> (FrontEndExecute[{
+                  FrontEnd`HelpBrowserLookup["MainBook", #]}]& )}], 
+            Cell[
+             StyleData["MainBookLink", "Presentation"]], 
+            Cell[
+             StyleData["MainBookLink", "Condensed"]], 
+            Cell[
+             StyleData["MainBookLink", "Printout"], FontColor -> GrayLevel[0],
+              Background -> GrayLevel[1]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["AddOnsLink"], StyleMenuListing -> None, 
+             ButtonStyleMenuListing -> Automatic, FontFamily -> "Courier", 
+             FontColor -> GrayLevel[1], Background -> RGBColor[1, 0.4, 0], 
+             ButtonBoxOptions -> {
+              Active -> True, ButtonFrame -> "None", 
+               ButtonFunction :> (FrontEndExecute[{
+                  FrontEnd`HelpBrowserLookup["AddOns", #]}]& )}], 
+            Cell[
+             StyleData["AddOnsLink", "Presentation"]], 
+            Cell[
+             StyleData["AddOnsLink", "Condensed"]], 
+            Cell[
+             StyleData["AddOnLink", "Printout"], FontColor -> GrayLevel[0], 
+             Background -> GrayLevel[1]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["RefGuideLink"], StyleMenuListing -> None, 
+             ButtonStyleMenuListing -> Automatic, FontFamily -> "Courier", 
+             FontColor -> GrayLevel[1], Background -> RGBColor[1, 0.4, 0], 
+             ButtonBoxOptions -> {
+              Active -> True, ButtonFrame -> "None", 
+               ButtonFunction :> (FrontEndExecute[{
+                  FrontEnd`HelpBrowserLookup["RefGuideLink", #]}]& )}], 
+            Cell[
+             StyleData["RefGuideLink", "Presentation"]], 
+            Cell[
+             StyleData["RefGuideLink", "Condensed"]], 
+            Cell[
+             StyleData["RefGuideLink", "Printout"], FontColor -> GrayLevel[0],
+              Background -> GrayLevel[1]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["GettingStartedLink"], StyleMenuListing -> None, 
+             ButtonStyleMenuListing -> Automatic, FontColor -> GrayLevel[1], 
+             Background -> RGBColor[1, 0.4, 0], 
+             ButtonBoxOptions -> {
+              Active -> True, ButtonFrame -> "None", 
+               ButtonFunction :> (FrontEndExecute[{
+                  FrontEnd`HelpBrowserLookup["GettingStarted", #]}]& )}], 
+            Cell[
+             StyleData["GettingStartedLink", "Presentation"]], 
+            Cell[
+             StyleData["GettingStartedLink", "Condensed"]], 
+            Cell[
+             StyleData["GettingStartedLink", "Printout"], FontColor -> 
+             GrayLevel[0], Background -> GrayLevel[1]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["OtherInformationLink"], StyleMenuListing -> None, 
+             ButtonStyleMenuListing -> Automatic, FontColor -> GrayLevel[1], 
+             Background -> RGBColor[1, 0.4, 0], 
+             ButtonBoxOptions -> {
+              Active -> True, ButtonFrame -> "None", 
+               ButtonFunction :> (FrontEndExecute[{
+                  FrontEnd`HelpBrowserLookup["OtherInformation", #]}]& )}], 
+            Cell[
+             StyleData["OtherInformationLink", "Presentation"]], 
+            Cell[
+             StyleData["OtherInformationLink", "Condensed"]], 
+            Cell[
+             StyleData["OtherInformationLink", "Printout"], FontColor -> 
+             GrayLevel[0], Background -> GrayLevel[1]]}, Closed]]}, Closed]], 
+      
+      Cell[
+       CellGroupData[{
+         Cell["Palette Styles", "Section"], 
+         Cell[
+         "The cells below define styles that define standard ButtonFunctions, \
+for use in palette buttons.", "Text"], 
+         Cell[
+          StyleData["Paste"], StyleMenuListing -> None, 
+          ButtonStyleMenuListing -> Automatic, 
+          ButtonBoxOptions -> {ButtonFunction :> (FrontEndExecute[{
+               FrontEnd`NotebookApply[
+                FrontEnd`InputNotebook[], #, After]}]& )}], 
+         Cell[
+          StyleData["Evaluate"], StyleMenuListing -> None, 
+          ButtonStyleMenuListing -> Automatic, 
+          ButtonBoxOptions -> {ButtonFunction :> (FrontEndExecute[{
+               FrontEnd`NotebookApply[
+                FrontEnd`InputNotebook[], #, All], 
+               FrontEnd`SelectionEvaluate[
+                FrontEnd`InputNotebook[], All]}]& )}], 
+         Cell[
+          StyleData["EvaluateCell"], StyleMenuListing -> None, 
+          ButtonStyleMenuListing -> Automatic, 
+          ButtonBoxOptions -> {ButtonFunction :> (FrontEndExecute[{
+               FrontEnd`NotebookApply[
+                FrontEnd`InputNotebook[], #, All], 
+               FrontEnd`SelectionMove[
+                FrontEnd`InputNotebook[], All, Cell, 1], 
+               FrontEnd`SelectionEvaluateCreateCell[
+                FrontEnd`InputNotebook[], All]}]& )}], 
+         Cell[
+          StyleData["CopyEvaluate"], StyleMenuListing -> None, 
+          ButtonStyleMenuListing -> Automatic, 
+          ButtonBoxOptions -> {ButtonFunction :> (FrontEndExecute[{
+               FrontEnd`SelectionCreateCell[
+                FrontEnd`InputNotebook[], All], 
+               FrontEnd`NotebookApply[
+                FrontEnd`InputNotebook[], #, All], 
+               FrontEnd`SelectionEvaluate[
+                FrontEnd`InputNotebook[], All]}]& )}], 
+         Cell[
+          StyleData["CopyEvaluateCell"], StyleMenuListing -> None, 
+          ButtonStyleMenuListing -> Automatic, 
+          ButtonBoxOptions -> {ButtonFunction :> (FrontEndExecute[{
+               FrontEnd`SelectionCreateCell[
+                FrontEnd`InputNotebook[], All], 
+               FrontEnd`NotebookApply[
+                FrontEnd`InputNotebook[], #, All], 
+               FrontEnd`SelectionEvaluateCreateCell[
+                FrontEnd`InputNotebook[], All]}]& )}]}, Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell["Slide Show Styles", "Section"], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["SlideShowNavigationBar"], Editable -> False, 
+             CellFrame -> True, CellMargins -> {{0, 0}, {3, 3}}, 
+             CellElementSpacings -> {"CellMinHeight" -> 0.8125}, 
+             CellGroupingRules -> {"SectionGrouping", 30}, CellFrameMargins -> 
+             False, CellFrameColor -> GrayLevel[1], CellFrameLabelMargins -> 
+             False, TextAlignment -> Center, CounterIncrements -> 
+             "SlideShowNavigationBar", StyleMenuListing -> None, FontSize -> 
+             10, Magnification -> 1, Background -> GrayLevel[0.8], 
+             GridBoxOptions -> {
+              BaselinePosition -> Center, 
+               GridBoxAlignment -> {
+                "Columns" -> {
+                  Center, Center, Center, Center, Center, Center, Right, {
+                   Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+                 "RowsIndexed" -> {}}, 
+               GridBoxItemSize -> {
+                "Columns" -> {3.5, 3.5, 3.5, 3.5, 13, 5, {4}}, 
+                 "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+                 "RowsIndexed" -> {}}, GridBoxSpacings -> {"Columns" -> {
+                   Offset[0.27999999999999997`], {
+                    Offset[0.]}, 
+                   Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+                 "Rows" -> {
+                   Offset[0.2], {
+                    Offset[0.]}, 
+                   Offset[0.2]}, "RowsIndexed" -> {}}}], 
+            Cell[
+             StyleData["SlideShowNavigationBar", "Presentation"]], 
+            Cell[
+             StyleData["SlideShowNavigationBar", "SlideShow"], Deletable -> 
+             False, ShowCellBracket -> False, 
+             CellMargins -> {{-1, -1}, {-1, -1}}, PageBreakAbove -> True, 
+             CellFrameMargins -> {{1, 1}, {0, 0}}], 
+            Cell[
+             StyleData["SlideShowNavigationBar", "Printout"], 
+             CellMargins -> {{18, 4}, {4, 4}}, LineSpacing -> {1, 3}, 
+             FontSize -> 10]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["SlideShowSection"], CellFrame -> {{0, 0}, {0, 0.5}}, 
+             CellMargins -> {{0, 0}, {10, 0}}, 
+             CellGroupingRules -> {"SectionGrouping", 40}, PageBreakBelow -> 
+             False, CellFrameMargins -> {{12, 4}, {6, 12}}, 
+             InputAutoReplacements -> {"TeX" -> StyleBox[
+                 RowBox[{"T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "LaTeX" -> StyleBox[
+                 RowBox[{"L", 
+                   StyleBox[
+                    AdjustmentBox[
+                    "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, 
+                    BoxBaselineShift -> -0.2], FontSize -> Smaller], "T", 
+                   AdjustmentBox[
+                   "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, 
+                    BoxBaselineShift -> 0.5], "X"}]], "mma" -> "Mathematica", 
+               "Mma" -> "Mathematica", "MMA" -> "Mathematica", 
+               "gridMathematica" -> FormBox[
+                 RowBox[{"grid", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               "webMathematica" -> FormBox[
+                 RowBox[{"web", 
+                   AdjustmentBox[
+                    StyleBox["Mathematica", FontSlant -> "Italic"], 
+                    BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], 
+               Inherited}, CounterIncrements -> "Section", 
+             CounterAssignments -> {{"Subsection", 0}, {"Subsubsection", 0}}, 
+             StyleMenuListing -> None, FontFamily -> "Helvetica", FontSize -> 
+             18, FontWeight -> "Plain", FontColor -> GrayLevel[1], Background -> 
+             RGBColor[0.408011, 0.440726, 0.8]], 
+            Cell[
+             StyleData["SlideShowSection", "Presentation"], 
+             CellFrameMargins -> {{18, 10}, {10, 16}}, FontSize -> 27], 
+            Cell[
+             StyleData["SlideShowSection", "SlideShow"], ShowCellBracket -> 
+             False, PageBreakAbove -> True], 
+            Cell[
+             StyleData["SlideShowSection", "Printout"], 
+             CellMargins -> {{18, 30}, {0, 30}}, CellFrameMargins -> 5, 
+             FontSize -> 14]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["SlideHyperlink"], StyleMenuListing -> None, 
+             ButtonStyleMenuListing -> Automatic, FontSize -> 26, FontColor -> 
+             GrayLevel[0.400015], 
+             ButtonBoxOptions -> {
+              Active -> True, ButtonFunction :> (FrontEndExecute[{
+                  FrontEnd`NotebookLocate[#2]}]& ), ButtonMargins -> 0.5, 
+               ButtonMinHeight -> 0.85, ButtonNote -> None}], 
+            Cell[
+             StyleData["SlideHyperlink", "Presentation"], 
+             CellMargins -> {{10, 10}, {8, 12}}, FontSize -> 36], 
+            Cell[
+             StyleData["SlideHyperlink", "SlideShow"]], 
+            Cell[
+             StyleData["SlideHyperlink", "Printout"], FontSize -> 10, 
+             FontVariations -> {"Underline" -> False}, FontColor -> 
+             GrayLevel[0]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["SlideTOCLink"], 
+             CellMargins -> {{24, Inherited}, {Inherited, Inherited}}, 
+             StyleMenuListing -> None, ButtonStyleMenuListing -> Automatic, 
+             FontFamily -> "Helvetica", 
+             ButtonBoxOptions -> {
+              Active -> True, ButtonFunction :> (FrontEndExecute[{
+                  FrontEnd`NotebookLocate[#2]}]& ), ButtonMargins -> 1.5, 
+               ButtonNote -> ButtonData}], 
+            Cell[
+             StyleData["SlideTOCLink", "Presentation"], 
+             CellMargins -> {{35, 10}, {4, 6}}, FontSize -> 18], 
+            Cell[
+             StyleData["SlideTOCLink", "SlideShow"]], 
+            Cell[
+             StyleData["SlideTOCLink", "Printout"], 
+             FontVariations -> {"Underline" -> False}, FontColor -> 
+             GrayLevel[0]]}, Closed]], 
+         Cell[
+          CellGroupData[{
+            Cell[
+             StyleData["SlideTOC"], CellDingbat -> "\[Bullet]", 
+             CellMargins -> {{18, Inherited}, {Inherited, Inherited}}, 
+             StyleMenuListing -> None, FontFamily -> "Helvetica"], 
+            Cell[
+             StyleData["SlideTOC", "Presentation"], 
+             CellMargins -> {{25, 10}, {8, 6}}, FontSize -> 18], 
+            Cell[
+             StyleData["SlideTOC", "SlideShow"], FontSize -> 14], 
+            Cell[
+             StyleData["SlideTOC", "Printout"], FontSize -> 10, FontColor -> 
+             GrayLevel[0]]}, Closed]]}, Closed]]}, Open]]}, Visible -> False, 
+  FrontEndVersion -> "6.0 for Linux x86 (64-bit) (April 20, 2007)", 
+  StyleDefinitions -> "Default.nb"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[568, 21, 44, 0, 85, "Title"],
+Cell[615, 23, 126, 1, 58, "Subtitle"],
+Cell[744, 26, 138, 3, 38, "Text"],
+Cell[CellGroupData[{
+Cell[907, 33, 87, 5, 89, "Section"],
+Cell[997, 40, 2103, 73, 353, "Text"],
+Cell[CellGroupData[{
+Cell[3125, 117, 95, 4, 67, "Subsection"],
+Cell[3223, 123, 156, 5, 38, "Text"],
+Cell[3382, 130, 233, 8, 72, "Input"],
+Cell[3618, 140, 629, 23, 66, "Text"],
+Cell[4250, 165, 197, 5, 72, "Input"],
+Cell[4450, 172, 236, 11, 58, "Text"],
+Cell[4689, 185, 55, 0, 38, "Text"],
+Cell[4747, 187, 176, 6, 72, "Input"],
+Cell[4926, 195, 356, 12, 92, "Input"],
+Cell[5285, 209, 94, 2, 38, "Text"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[5416, 216, 42, 0, 41, "Subsection"],
+Cell[5461, 218, 812, 27, 105, "Text"],
+Cell[6276, 247, 2213, 87, 215, "Example"],
+Cell[8492, 336, 270, 12, 92, "Input"],
+Cell[CellGroupData[{
+Cell[8787, 352, 75, 4, 70, "Exercise"],
+Cell[8865, 358, 167, 5, 38, "ExerciseText"],
+Cell[9035, 365, 265, 12, 114, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9337, 382, 75, 4, 70, "Exercise"],
+Cell[9415, 388, 248, 7, 66, "ExerciseText"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[9712, 401, 29, 0, 41, "Subsection"],
+Cell[9744, 403, 758, 28, 66, "Text"],
+Cell[CellGroupData[{
+Cell[10527, 435, 622, 18, 114, "Input"],
+Cell[11152, 455, 629, 18, 115, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11818, 478, 121, 3, 72, "Input"],
+Cell[11942, 483, 840, 27, 129, "Output"]
+}, Open  ]],
+Cell[12797, 513, 91, 2, 72, "Input"],
+Cell[12891, 517, 441, 8, 66, "Text"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[13369, 530, 34, 0, 41, "Subsection"],
+Cell[13406, 532, 576, 15, 93, "Text"],
+Cell[13985, 549, 304, 9, 107, "DisplayFormula"],
+Cell[14292, 560, 412, 7, 93, "Text"],
+Cell[14707, 569, 824, 31, 107, "DisplayFormula"],
+Cell[15534, 602, 153, 3, 38, "Text"],
+Cell[15690, 607, 2828, 105, 195, "DisplayFormula"],
+Cell[18521, 714, 107, 1, 38, "Text"],
+Cell[18631, 717, 234, 8, 138, "Input"],
+Cell[18868, 727, 31, 0, 38, "Text"],
+Cell[18902, 729, 621, 18, 114, "Input"],
+Cell[19526, 749, 85, 2, 72, "Input"],
+Cell[19614, 753, 89, 2, 72, "Input"],
+Cell[19706, 757, 70, 0, 38, "Text"],
+Cell[19779, 759, 947, 26, 133, "Text"],
+Cell[20729, 787, 2085, 73, 85, "DisplayFormula"],
+Cell[22817, 862, 305, 6, 66, "Text"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[23159, 873, 27, 0, 41, "Subsection"],
+Cell[23189, 875, 197, 4, 38, "Text"],
+Cell[23389, 881, 368, 12, 76, "DisplayFormula"],
+Cell[23760, 895, 226, 5, 38, "Text"],
+Cell[23989, 902, 434, 13, 41, "DisplayFormula"],
+Cell[24426, 917, 154, 2, 38, "Text"],
+Cell[24583, 921, 998, 35, 44, "DisplayFormula"],
+Cell[25584, 958, 263, 9, 38, "Text"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[25884, 972, 96, 1, 41, "Subsection"],
+Cell[25983, 975, 802, 26, 69, "Text"],
+Cell[26788, 1003, 1036, 37, 50, "DisplayFormula"],
+Cell[27827, 1042, 1765, 58, 151, "Text"],
+Cell[29595, 1102, 249, 6, 66, "Text"],
+Cell[CellGroupData[{
+Cell[29869, 1112, 39, 0, 55, "Subsubsection"],
+Cell[29911, 1114, 163, 3, 38, "Text"],
+Cell[30077, 1119, 852, 28, 92, "Input"],
+Cell[30932, 1149, 155, 5, 38, "Text"],
+Cell[31090, 1156, 418, 12, 133, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31545, 1173, 45, 0, 55, "Subsubsection"],
+Cell[31593, 1175, 1451, 41, 104, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33081, 1221, 75, 4, 70, "Exercise"],
+Cell[33159, 1227, 60, 0, 38, "ExerciseText"],
+Cell[33222, 1229, 817, 23, 138, "Input"],
+Cell[34042, 1254, 110, 5, 38, "ExerciseText"],
+Cell[34155, 1261, 100, 2, 72, "Input"]
+}, Open  ]]
+}, Closed]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[34316, 1270, 84, 4, 57, "Section"],
+Cell[34403, 1276, 1273, 60, 336, "Text"],
+Cell[35679, 1338, 270, 12, 92, "Input"],
+Cell[35952, 1352, 781, 36, 59, "Text"],
+Cell[36736, 1390, 259, 9, 72, "Input"],
+Cell[CellGroupData[{
+Cell[37020, 1403, 64, 0, 67, "Subsection"],
+Cell[37087, 1405, 818, 22, 110, "Text"],
+Cell[37908, 1429, 703, 19, 114, "Input"],
+Cell[38614, 1450, 260, 7, 66, "Text"],
+Cell[38877, 1459, 774, 26, 72, "Input"],
+Cell[39654, 1487, 1276, 43, 103, "Input"],
+Cell[40933, 1532, 64, 0, 38, "Text"],
+Cell[41000, 1534, 951, 32, 134, "Input"],
+Cell[41954, 1568, 3566, 116, 342, "Text"],
+Cell[CellGroupData[{
+Cell[45545, 1688, 75, 4, 70, "Exercise"],
+Cell[45623, 1694, 748, 25, 82, "ExerciseText"],
+Cell[46374, 1721, 610, 18, 106, "Input"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[47033, 1745, 108, 1, 41, "Subsection"],
+Cell[47144, 1748, 649, 10, 148, "Text"]
+}, Closed]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[47842, 1764, 90, 4, 57, "Section"],
+Cell[CellGroupData[{
+Cell[47957, 1772, 35, 0, 67, "Subsection"],
+Cell[47995, 1774, 224, 7, 38, "Text"],
+Cell[48222, 1783, 380, 12, 53, "DisplayFormula"],
+Cell[48605, 1797, 316, 10, 38, "Text"],
+Cell[48924, 1809, 67, 1, 72, "Input"],
+Cell[48994, 1812, 144, 3, 38, "Text"],
+Cell[49141, 1817, 298, 9, 41, "DisplayFormula"],
+Cell[49442, 1828, 1246, 37, 148, "Text"],
+Cell[50691, 1867, 390, 12, 50, "DisplayFormula"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[51118, 1884, 48, 0, 41, "Subsection"],
+Cell[51169, 1886, 505, 17, 42, "Text"],
+Cell[51677, 1905, 567, 18, 53, "DisplayFormula"],
+Cell[52247, 1925, 338, 11, 45, "Text"],
+Cell[52588, 1938, 494, 17, 53, "DisplayFormula"],
+Cell[53085, 1957, 281, 11, 38, "Text"],
+Cell[53369, 1970, 469, 15, 53, "DisplayFormula"],
+Cell[53841, 1987, 499, 17, 38, "Text"],
+Cell[54343, 2006, 686, 23, 53, "DisplayFormula"],
+Cell[55032, 2031, 133, 1, 38, "Text"],
+Cell[55168, 2034, 412, 13, 41, "DisplayFormula"],
+Cell[55583, 2049, 376, 11, 38, "Text"],
+Cell[55962, 2062, 612, 21, 48, "DisplayFormula"],
+Cell[CellGroupData[{
+Cell[56599, 2087, 75, 4, 70, "Exercise"],
+Cell[56677, 2093, 764, 25, 82, "ExerciseText"],
+Cell[57444, 2120, 1711, 48, 194, "Input"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[59204, 2174, 153, 4, 41, "Subsection"],
+Cell[59360, 2180, 100, 2, 38, "Text"],
+Cell[59463, 2184, 2401, 81, 276, "Text"],
+Cell[CellGroupData[{
+Cell[61889, 2269, 75, 4, 70, "Exercise"],
+Cell[61967, 2275, 45, 0, 38, "ExerciseText"],
+Cell[62015, 2277, 217, 4, 103, "Input"],
+Cell[62235, 2283, 110, 4, 38, "Text"],
+Cell[62348, 2289, 134, 3, 72, "Input"],
+Cell[62485, 2294, 2787, 91, 276, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[65309, 2390, 75, 4, 70, "Exercise"],
+Cell[65387, 2396, 45, 0, 38, "ExerciseText"],
+Cell[65435, 2398, 1453, 47, 124, "Input"],
+Cell[66891, 2447, 387, 17, 38, "Text"],
+Cell[67281, 2466, 147, 3, 72, "Input"]
+}, Open  ]]
+}, Closed]]
+}, Closed]]
+}
+]
+*)
+
+(* End of internal cache information *)

@@ -1,0 +1,298 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      8070,        289]
+NotebookOptionsPosition[      6654,        241]
+NotebookOutlinePosition[      7065,        259]
+CellTagsIndexPosition[      7022,        256]
+WindowFrame->Normal
+ContainsDynamic->False*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["Orthonormality", "Title"],
+
+Cell["vs 0.2, 25/1/08 \[Copyright] Niels Walet", "Subtitle",
+ CellChangeTimes->{{3.4102611536628017`*^9, 3.410261164445698*^9}}],
+
+Cell["\<\
+In this notebook we tests the two orthonormalization procedures discussed in \
+class. Everything will be demonstrated by 10 vectors in 10 dimensions.
+Let's create 10 random vectors (Press Shift Return to execute a \"cell\")\
+\>", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"vectors", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"Random", "[", "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "1", ",", "10"}], "}"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"j", ",", "1", ",", "10"}], "}"}]}], "]"}]}], 
+  TraditionalForm]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{3.410261099945355*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Overlap matrix method", "Section",
+ CellChangeTimes->{{3.410261047925667*^9, 3.410261052568961*^9}}],
+
+Cell["\<\
+Calculate a table (matrix) of overlaps (innerproducts) of these vectors\
+\>", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"overlap", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"vectors", "[", 
+       RowBox[{"[", "i", "]"}], "]"}], ".", 
+      RowBox[{"vectors", "[", 
+       RowBox[{"[", "j", "]"}], "]"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"j", ",", "1", ",", "10"}], "}"}]}], "]"}]}], 
+  TraditionalForm]], "Input",
+ CellChangeTimes->{3.410261110633478*^9}],
+
+Cell["Construct a list of eigenvalues", "Text",
+ CellChangeTimes->{3.4102611131630907`*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"evs", "=", 
+   RowBox[{
+    RowBox[{"Eigensystem", "[", "overlap", "]"}], "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}], TraditionalForm]], "Input"],
+
+Cell["And a matrix of eigenvectors", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"evmat", "=", 
+    RowBox[{
+     RowBox[{"Eigensystem", "[", "overlap", "]"}], "[", 
+     RowBox[{"[", "2", "]"}], "]"}]}], ";"}], TraditionalForm]], "Input"],
+
+Cell[TextData[{
+ "Check that we can reconstruct the overlap matrix from its eigensystem. \
+(Chop equates small numbers (",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["10", 
+    RowBox[{"-", "14"}]], TraditionalForm]]],
+ " or so) to zero)."
+}], "Text",
+ CellChangeTimes->{3.410260974258128*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Chop", "[", 
+   RowBox[{"overlap", "-", 
+    RowBox[{
+     RowBox[{"Transpose", "[", "evmat", "]"}], " ", ".", " ", 
+     RowBox[{"DiagonalMatrix", "[", "evs", "]"}], ".", "evmat"}]}], "]"}], 
+  TraditionalForm]], "Input"],
+
+Cell["Now calculate the inverse square root as follows:", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"ovh", "=", 
+    RowBox[{
+     RowBox[{"Transpose", "[", "evmat", "]"}], " ", ".", " ", 
+     RowBox[{"DiagonalMatrix", "[", 
+      SuperscriptBox["evs", 
+       RowBox[{
+        RowBox[{"-", "1"}], "/", "2"}]], "]"}], ".", "evmat"}]}], ";"}], 
+  TraditionalForm]], "Input"],
+
+Cell["Check again:", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Chop", "[", 
+   RowBox[{"ovh", ".", "overlap", ".", "ovh"}], "]"}], 
+  TraditionalForm]], "Input"],
+
+Cell["Transform the basis", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"newvec", "=", 
+    RowBox[{"ovh", ".", "vectors"}]}], ";"}], TraditionalForm]], "Input"],
+
+Cell["And show they are orthogonal (well, to numerical accuracy", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Chop", "[", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"newvec", "[", 
+       RowBox[{"[", "i", "]"}], "]"}], ".", 
+      RowBox[{"newvec", "[", 
+       RowBox[{"[", "j", "]"}], "]"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"j", ",", "1", ",", "10"}], "}"}]}], "]"}], "]"}], 
+  TraditionalForm]], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Gramm-Schmidt Method", "Section",
+ CellChangeTimes->{{3.4102610787062693`*^9, 3.410261085013351*^9}}],
+
+Cell["Define a place-holder for the vectors", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"nv", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10"}], "}"}]}], "]"}]}], 
+  TraditionalForm]], "Input"],
+
+Cell["This is the whole algorithm!", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Do", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"nv", "[", 
+       RowBox[{"[", "k", "]"}], "]"}], "=", 
+      RowBox[{
+       RowBox[{"vectors", "[", 
+        RowBox[{"[", "k", "]"}], "]"}], "-", 
+       RowBox[{
+        UnderoverscriptBox["\[Sum]", 
+         RowBox[{"j", "=", "1"}], 
+         RowBox[{"k", "-", "1"}]], 
+        RowBox[{
+         RowBox[{
+          RowBox[{"vectors", "[", 
+           RowBox[{"[", "k", "]"}], "]"}], ".", 
+          RowBox[{"nv", "[", 
+           RowBox[{"[", "j", "]"}], "]"}]}], " ", 
+         RowBox[{"nv", "[", 
+          RowBox[{"[", "j", "]"}], "]"}]}]}]}]}], ";", "\[IndentingNewLine]", 
+     
+     RowBox[{
+      RowBox[{"nv", "[", 
+       RowBox[{"[", "k", "]"}], "]"}], "=", 
+      RowBox[{
+       RowBox[{"nv", "[", 
+        RowBox[{"[", "k", "]"}], "]"}], "/", 
+       RowBox[{"Sqrt", "[", 
+        RowBox[{
+         RowBox[{"nv", "[", 
+          RowBox[{"[", "k", "]"}], "]"}], ".", 
+         RowBox[{"nv", "[", 
+          RowBox[{"[", "k", "]"}], "]"}]}], "]"}]}]}], ";"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"k", ",", "1", ",", "10"}], "}"}]}], "]"}], 
+  TraditionalForm]], "Input"],
+
+Cell["And check we have done the right thing", "Text"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Chop", "[", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"nv", "[", 
+       RowBox[{"[", "i", "]"}], "]"}], ".", 
+      RowBox[{"nv", "[", 
+       RowBox[{"[", "j", "]"}], "]"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"j", ",", "1", ",", "10"}], "}"}]}], "]"}], "]"}], 
+  TraditionalForm]], "Input"]
+}, Closed]]
+},
+AutoGeneratedPackage->None,
+WindowToolbars->"EditBar",
+WindowSize->{1274, 946},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification->1.25,
+FrontEndVersion->"6.0 for Linux x86 (64-bit) (April 20, 2007)",
+StyleDefinitions->"Classroom.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[568, 21, 31, 0, 71, "Title"],
+Cell[602, 23, 128, 1, 49, "Subtitle"],
+Cell[733, 26, 247, 4, 68, "Text"],
+Cell[983, 32, 441, 14, 60, "Input",
+ InitializationCell->True],
+Cell[CellGroupData[{
+Cell[1449, 50, 106, 1, 69, "Section"],
+Cell[1558, 53, 95, 2, 32, "Text"],
+Cell[1656, 57, 483, 15, 81, "Input"],
+Cell[2142, 74, 91, 1, 32, "Text"],
+Cell[2236, 77, 180, 5, 60, "Input"],
+Cell[2419, 84, 44, 0, 32, "Text"],
+Cell[2466, 86, 204, 6, 60, "Input"],
+Cell[2673, 94, 294, 9, 32, "Text"],
+Cell[2970, 105, 257, 7, 60, "Input"],
+Cell[3230, 114, 65, 0, 32, "Text"],
+Cell[3298, 116, 320, 10, 65, "Input"],
+Cell[3621, 128, 28, 0, 32, "Text"],
+Cell[3652, 130, 133, 4, 60, "Input"],
+Cell[3788, 136, 35, 0, 32, "Text"],
+Cell[3826, 138, 135, 4, 60, "Input"],
+Cell[3964, 144, 73, 0, 32, "Text"],
+Cell[4040, 146, 441, 14, 60, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[4518, 165, 107, 1, 43, "Section"],
+Cell[4628, 168, 53, 0, 32, "Text"],
+Cell[4684, 170, 225, 8, 81, "Input"],
+Cell[4912, 180, 44, 0, 32, "Text"],
+Cell[4959, 182, 1186, 38, 156, "Input"],
+Cell[6148, 222, 54, 0, 32, "Text"],
+Cell[6205, 224, 433, 14, 81, "Input"]
+}, Closed]]
+}
+]
+*)
+
+(* End of internal cache information *)

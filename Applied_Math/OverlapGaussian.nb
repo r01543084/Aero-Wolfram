@@ -1,0 +1,511 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     15121,        502]
+NotebookOptionsPosition[     13590,        451]
+NotebookOutlinePosition[     14001,        469]
+CellTagsIndexPosition[     13958,        466]
+WindowFrame->Normal
+ContainsDynamic->False*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["Orthormality and functions", "Title"],
+
+Cell["vs 0.2, 25/1/08 \[Copyright] Niels Walet", "Subtitle",
+ CellChangeTimes->{{3.410261225632153*^9, 3.410261234606661*^9}}],
+
+Cell[TextData[{
+ "Work with Gaussians, use ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubsuperscriptBox["\[Integral]", 
+     RowBox[{"-", "\[Infinity]"}], "\[Infinity]"], 
+    RowBox[{
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{
+       RowBox[{"-", "a"}], " ", 
+       SuperscriptBox["x", "2"]}]], 
+     RowBox[{"\[DifferentialD]", "x"}]}]}], TraditionalForm]]],
+ "=",
+ Cell[BoxData[
+  FormBox[
+   FractionBox[
+    SqrtBox["\[Pi]"], 
+    SqrtBox["a"]], TraditionalForm]]],
+ " if ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"a", ">", "0"}], TraditionalForm]]],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.410261240267193*^9, 3.4102612504639673`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   SubsuperscriptBox["\[Integral]", 
+    RowBox[{"-", "\[Infinity]"}], "\[Infinity]"], 
+   RowBox[{
+    SuperscriptBox["\[ExponentialE]", 
+     RowBox[{
+      RowBox[{"-", "a"}], " ", 
+      SuperscriptBox["x", "2"]}]], 
+    RowBox[{"\[DifferentialD]", "x"}]}]}], TraditionalForm]], "Input"],
+
+Cell[TextData[{
+ "Now let us use a \"basis\" of Gaussians, as used in numerical calculations. \
+This corresponds to a choice of ",
+ Cell[BoxData[
+  FormBox["a", TraditionalForm]]],
+ "'s. We shall compare a linear progression ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     SubscriptBox["a", "i"], "=", 
+     RowBox[{"i", " ", "h"}]}], ")"}], TraditionalForm]]],
+ " abd a geometrix progression ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      SubscriptBox["a", "i"], "=", 
+      RowBox[{
+       SuperscriptBox["h", "i"], 
+       SubscriptBox["a", "0"]}]}], ")"}], "."}], TraditionalForm]]]
+}], "Text",
+ CellChangeTimes->{{3.410261332267625*^9, 3.410261395387269*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["0 A smart shorthand", "Section"],
+
+Cell[TextData[{
+ "This command sums two elements of the list ",
+ Cell[BoxData[
+  FormBox["a", TraditionalForm]]],
+ " and places those into an array (using the ",
+ Cell[BoxData[
+  FormBox["Outer", TraditionalForm]]],
+ " command). The ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{"N", "[", 
+      FractionBox[
+       SqrtBox["\[Pi]"], 
+       SqrtBox["#1"]], "]"}], "&"}]}], TraditionalForm]]],
+ " command replace each element in the array by the numerical value of ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox[
+    SqrtBox["\[Pi]"], 
+    SqrtBox["element"]], TraditionalForm]]],
+ ". The overlap between two (unnormalised) Gaussians is"
+}], "Text",
+ CellChangeTimes->{{3.410261281919754*^9, 3.41026128483611*^9}, {
+  3.4102614229734364`*^9, 3.4102614445932827`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     SubsuperscriptBox["\[Integral]", 
+      RowBox[{"-", "\[Infinity]"}], "\[Infinity]"], 
+     RowBox[{
+      SuperscriptBox["\[ExponentialE]", 
+       RowBox[{
+        RowBox[{"-", 
+         RowBox[{"(", 
+          RowBox[{"a", "+", "b"}], ")"}]}], " ", 
+        SuperscriptBox["x", "2"]}]], 
+      RowBox[{"\[DifferentialD]", "x"}]}]}], "=", 
+    FractionBox[
+     SqrtBox["\[Pi]"], 
+     SqrtBox[
+      RowBox[{"a", "+", "b"}]]]}], ","}], TraditionalForm]], "DisplayFormula",\
+
+ CellChangeTimes->{{3.410261281919754*^9, 3.41026128483611*^9}, {
+  3.4102614229734364`*^9, 3.410261477208091*^9}}],
+
+Cell[TextData[{
+ " so that we are really calculating the overlap matrix quite quickly if we \
+give the list of coefficients ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["a", "i"], TraditionalForm]]],
+ " as input to ov[ ]."
+}], "Text",
+ CellChangeTimes->{{3.410261281919754*^9, 3.41026128483611*^9}, {
+  3.4102614229734364`*^9, 3.4102614469128323`*^9}, {3.410261484253291*^9, 
+  3.410261518273896*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"ov", "[", "a_", "]"}], ":=", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"N", "[", 
+       FractionBox[
+        SqrtBox["\[Pi]"], 
+        SqrtBox["#1"]], "]"}], "&"}], ",", 
+     RowBox[{"Outer", "[", 
+      RowBox[{"Plus", ",", "a", ",", "a"}], "]"}]}], "]"}]}], 
+  TraditionalForm]], "Input",
+ InitializationCell->True],
+
+Cell["\<\
+Now compare the two following cases, and draw some conclusions. Which is \
+best? Which might be complete? Which will fail numerically?\
+\>", "Text",
+ CellChangeTimes->{{3.4102635217457123`*^9, 3.410263546078868*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["1 Linear progression", "Section"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"l", "=", 
+    RowBox[{"{", "}"}]}], ";", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"a", "=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"2", " ", "i"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", "1", ",", "Ngs"}], "}"}]}], "]"}]}], ";", 
+      RowBox[{"overlap", "=", 
+       RowBox[{"ov", "[", "a", "]"}]}], ";", 
+      RowBox[{"Print", "[", 
+       RowBox[{"Eigenvalues", "[", "overlap", "]"}], "]"}], ";", 
+      RowBox[{"l", "=", 
+       RowBox[{"Append", "[", 
+        RowBox[{"l", ",", 
+         RowBox[{"{", 
+          RowBox[{"Ngs", ",", 
+           RowBox[{"Last", "[", 
+            RowBox[{"Eigenvalues", "[", "overlap", "]"}], "]"}]}], "}"}]}], 
+        "]"}]}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"Ngs", ",", "1", ",", "10"}], "}"}]}], "]"}]}], 
+  TraditionalForm]], "Input",
+ CellChangeTimes->{{3.410262402962408*^9, 3.4102624682000227`*^9}}],
+
+Cell["Plot the smallest eigenvalue versus N", "Text",
+ CellChangeTimes->{{3.410262559149228*^9, 3.410262569152235*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"ft", "=", 
+   RowBox[{"FindFit", "[", 
+    RowBox[{"l", ",", 
+     RowBox[{"c", " ", 
+      RowBox[{"Exp", "[", 
+       RowBox[{
+        RowBox[{"-", "d"}], " ", "x"}], "]"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"c", ",", "d"}], "}"}], ",", "x"}], "]"}]}], 
+  TraditionalForm]], "Input",
+ CellChangeTimes->{{3.41026309480166*^9, 3.410263100427985*^9}, {
+  3.410263157881555*^9, 3.410263160556808*^9}, {3.410263207102911*^9, 
+  3.410263213919207*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Show", "[", 
+   RowBox[{
+    RowBox[{"ListLogPlot", "[", "l", "]"}], ",", 
+    RowBox[{"LogPlot", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"c", " ", 
+        RowBox[{"Exp", "[", 
+         RowBox[{
+          RowBox[{"-", "d"}], " ", "x"}], "]"}]}], "/.", "ft"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "1", ",", "10"}], "}"}]}], "]"}]}], "]"}], 
+  TraditionalForm]], "Input",
+ CellChangeTimes->{{3.410262454265725*^9, 3.410262550862864*^9}, {
+  3.41026313893016*^9, 3.410263182222622*^9}, {3.410263227377367*^9, 
+  3.4102632546493597`*^9}}],
+
+Cell["\<\
+Turn the eigenvectors into eigenfunctions by muktiplying with the relevant \
+Gaussians\
+\>", "Text",
+ CellChangeTimes->{{3.4102623338633547`*^9, 3.4102623697404346`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"evs", "=", 
+    RowBox[{
+     RowBox[{"Eigensystem", "[", "overlap", "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}]}], ";", 
+   RowBox[{"evmat", "=", 
+    RowBox[{
+     RowBox[{"Eigensystem", "[", "overlap", "]"}], "[", 
+     RowBox[{"[", "2", "]"}], "]"}]}], ";", 
+   RowBox[{"ovh", "=", 
+    RowBox[{
+     RowBox[{"Transpose", "[", "evmat", "]"}], " ", ".", " ", 
+     RowBox[{"DiagonalMatrix", "[", 
+      SuperscriptBox["evs", 
+       RowBox[{
+        RowBox[{"-", "1"}], "/", "2"}]], "]"}], ".", "evmat"}]}], ";", 
+   RowBox[{"basis", "=", 
+    RowBox[{"ovh", ".", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Exp", "[", 
+         RowBox[{
+          RowBox[{"-", "#1"}], " ", 
+          SuperscriptBox["x", "2"]}], "]"}], "&"}], ",", "a"}], "]"}]}]}], 
+   ";"}], TraditionalForm]], "Input"],
+
+Cell["And plot them", "Text",
+ CellChangeTimes->{{3.410262579333191*^9, 3.410262581719284*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"GraphicsColumn", "[", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Plot", "[", 
+      RowBox[{
+       RowBox[{"Table", "[", 
+        RowBox[{"basis", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "2"}], ",", "2"}], "}"}]}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10"}], "}"}]}], "]"}], "]"}], 
+  TraditionalForm]], "Input",
+ CellChangeTimes->{{3.410261659364149*^9, 3.410261736197283*^9}, 
+   3.41026181083665*^9, {3.410262292894271*^9, 3.4102622993767567`*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["2 Geometric progression", "Section"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"l", "=", 
+    RowBox[{"{", "}"}]}], ";", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"a", "=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         SuperscriptBox["3", "i"], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", "1", ",", "Ngs"}], "}"}]}], "]"}]}], ";", 
+      RowBox[{"overlap", "=", 
+       RowBox[{"ov", "[", "a", "]"}]}], ";", 
+      RowBox[{"Print", "[", 
+       RowBox[{"Eigenvalues", "[", "overlap", "]"}], "]"}], ";", 
+      RowBox[{"l", "=", 
+       RowBox[{"Append", "[", 
+        RowBox[{"l", ",", 
+         RowBox[{"{", 
+          RowBox[{"Ngs", ",", 
+           RowBox[{"Last", "[", 
+            RowBox[{"Eigenvalues", "[", "overlap", "]"}], "]"}]}], "}"}]}], 
+        "]"}]}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"Ngs", ",", "1", ",", "10"}], "}"}]}], "]"}]}], 
+  TraditionalForm]], "Input",
+ CellChangeTimes->{{3.410262607620059*^9, 3.410262622198477*^9}}],
+
+Cell["Plot the smallest eigenvalue versus N", "Text",
+ CellChangeTimes->{{3.410262559149228*^9, 3.410262569152235*^9}}],
+
+Cell["Behavior seems powerlike, rather than exponential:", "Text",
+ CellChangeTimes->{{3.410262742563833*^9, 3.410262760301526*^9}, 
+   3.410263500443819*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"ft", "=", 
+   RowBox[{"FindFit", "[", 
+    RowBox[{"l", ",", 
+     RowBox[{"c", " ", 
+      SuperscriptBox[
+       RowBox[{"(", "x", ")"}], 
+       RowBox[{"-", "n"}]]}], " ", ",", 
+     RowBox[{"{", 
+      RowBox[{"c", ",", "n"}], "}"}], ",", "x"}], "]"}]}], 
+  TraditionalForm]], "Input",
+ CellChangeTimes->{{3.410262768010355*^9, 3.410262794238305*^9}, {
+  3.410262863846859*^9, 3.4102628894207172`*^9}, {3.4102629440461903`*^9, 
+  3.4102629655116167`*^9}, {3.410262997963695*^9, 3.41026303433025*^9}, {
+  3.410263285111466*^9, 3.410263331084119*^9}, {3.410263377733059*^9, 
+  3.410263390942868*^9}, {3.410263430462831*^9, 3.410263435818961*^9}, {
+  3.410263466115012*^9, 3.41026349800213*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"Show", "[", 
+   RowBox[{
+    RowBox[{"ListLogPlot", "[", "l", "]"}], ",", 
+    RowBox[{"LogPlot", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"c", " ", 
+        SuperscriptBox["x", 
+         RowBox[{"-", "n"}]]}], "/.", "ft"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "1", ",", "10"}], "}"}]}], "]"}]}], "]"}], 
+  TraditionalForm]], "Input",
+ CellChangeTimes->{{3.410263460401341*^9, 3.4102634628391867`*^9}}],
+
+Cell["\<\
+Turn the eigenvectors into eigenfunctions by multiplying with the relevant \
+Gaussians\
+\>", "Text",
+ CellChangeTimes->{{3.4102623338633547`*^9, 3.4102623697404346`*^9}, {
+  3.41026265326477*^9, 3.410262654480812*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"evs", "=", 
+    RowBox[{
+     RowBox[{"Eigensystem", "[", "overlap", "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}]}], ";", 
+   RowBox[{"evmat", "=", 
+    RowBox[{
+     RowBox[{"Eigensystem", "[", "overlap", "]"}], "[", 
+     RowBox[{"[", "2", "]"}], "]"}]}], ";", 
+   RowBox[{"ovh", "=", 
+    RowBox[{
+     RowBox[{"Transpose", "[", "evmat", "]"}], " ", ".", " ", 
+     RowBox[{"DiagonalMatrix", "[", 
+      SuperscriptBox["evs", 
+       RowBox[{
+        RowBox[{"-", "1"}], "/", "2"}]], "]"}], ".", "evmat"}]}], ";", 
+   RowBox[{"basis", "=", 
+    RowBox[{"ovh", ".", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Exp", "[", 
+         RowBox[{
+          RowBox[{"-", "#1"}], " ", 
+          SuperscriptBox["x", "2"]}], "]"}], "&"}], ",", "a"}], "]"}]}]}], 
+   ";"}], TraditionalForm]], "Input"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"GraphicsColumn", "[", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Plot", "[", 
+      RowBox[{
+       RowBox[{"Table", "[", 
+        RowBox[{"basis", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "2"}], ",", "2"}], "}"}]}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10"}], "}"}]}], "]"}], "]"}], 
+  TraditionalForm]], "Input",
+ CellChangeTimes->{{3.410261659364149*^9, 3.410261736197283*^9}, 
+   3.41026181083665*^9, {3.410262292894271*^9, 3.4102622993767567`*^9}}]
+}, Closed]]
+},
+AutoGeneratedPackage->None,
+WindowToolbars->"EditBar",
+WindowSize->{1274, 946},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification->1.25,
+FrontEndVersion->"6.0 for Linux x86 (64-bit) (April 20, 2007)",
+StyleDefinitions->"Classroom.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[568, 21, 43, 0, 71, "Title"],
+Cell[614, 23, 126, 1, 49, "Subtitle"],
+Cell[743, 26, 653, 25, 47, "Text"],
+Cell[1399, 53, 326, 10, 79, "Input"],
+Cell[1728, 65, 712, 23, 60, "Text"],
+Cell[CellGroupData[{
+Cell[2465, 92, 38, 0, 69, "Section"],
+Cell[2506, 94, 797, 25, 86, "Text"],
+Cell[3306, 121, 658, 21, 64, "DisplayFormula"],
+Cell[3967, 144, 401, 10, 32, "Text"],
+Cell[4371, 156, 391, 14, 101, "Input",
+ InitializationCell->True],
+Cell[4765, 172, 226, 4, 32, "Text"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[5028, 181, 39, 0, 43, "Section"],
+Cell[5070, 183, 973, 29, 107, "Input"],
+Cell[6046, 214, 119, 1, 32, "Text"],
+Cell[6168, 217, 490, 14, 81, "Input"],
+Cell[6661, 233, 595, 17, 81, "Input"],
+Cell[7259, 252, 180, 4, 32, "Text"],
+Cell[7442, 258, 874, 27, 92, "Input"],
+Cell[8319, 287, 95, 1, 32, "Text"],
+Cell[8417, 290, 755, 21, 81, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[9209, 316, 42, 0, 43, "Section"],
+Cell[9254, 318, 972, 29, 113, "Input"],
+Cell[10229, 349, 119, 1, 32, "Text"],
+Cell[10351, 352, 158, 2, 32, "Text"],
+Cell[10512, 356, 732, 17, 62, "Input"],
+Cell[11247, 375, 461, 14, 83, "Input"],
+Cell[11711, 391, 228, 5, 32, "Text"],
+Cell[11942, 398, 874, 27, 113, "Input"],
+Cell[12819, 427, 755, 21, 81, "Input"]
+}, Closed]]
+}
+]
+*)
+
+(* End of internal cache information *)
