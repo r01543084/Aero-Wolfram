@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     15933,        494]
-NotebookOptionsPosition[     14887,        455]
-NotebookOutlinePosition[     15230,        470]
-CellTagsIndexPosition[     15187,        467]
+NotebookDataLength[     16251,        504]
+NotebookOptionsPosition[     15205,        465]
+NotebookOutlinePosition[     15548,        480]
+CellTagsIndexPosition[     15505,        477]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -75,17 +75,26 @@ Cell[BoxData[
     RowBox[{
     "Uniform", " ", "section", " ", "catilever", " ", "of", " ", "tapered", 
      " ", "cantilever"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"area", "[", "x_", "]"}], ":=", " ", 
+      RowBox[{
+       SubscriptBox["A", "0"], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          SubscriptBox["A", "l"], "-", 
+          SubscriptBox["A", "0"]}], ")"}], "*", 
+        RowBox[{"x", "/", "L"}]}]}]}], ";"}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"area", "[", "x_", "]"}], ":=", " ", 
      RowBox[{
-      SubscriptBox["A", "0"], "+", 
-      RowBox[{
-       RowBox[{"(", 
-        RowBox[{
-         SubscriptBox["A", "l"], "-", 
-         SubscriptBox["A", "0"]}], ")"}], "*", 
-       RowBox[{"x", "/", "L"}]}]}]}], ";"}], " ", "\[IndentingNewLine]", 
+      SubscriptBox["A", "0"], 
+      RowBox[{"(", 
+       RowBox[{"x", "/", "L"}], ")"}]}]}], ";"}], " ", "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"area", "[", "x_", "]"}], ":=", " ", "A"}], "*)"}]}]}]], "Input",
@@ -96,7 +105,8 @@ Cell[BoxData[
    3.5719815754420004`*^9, 3.5719815755540066`*^9}, 3.5719816091219263`*^9, {
    3.5719818414272137`*^9, 3.5719818495706797`*^9}, {3.5719970429560924`*^9, 
    3.571997050523525*^9}, {3.57199804069516*^9, 3.571998061956376*^9}, {
-   3.5720553677428613`*^9, 3.572055381829686*^9}}],
+   3.5720553677428613`*^9, 3.572055381829686*^9}, {3.572936272032034*^9, 
+   3.5729363445201797`*^9}}],
 
 Cell[CellGroupData[{
 
@@ -470,31 +480,31 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[557, 20, 282, 7, 52, "Input"],
-Cell[842, 29, 2555, 69, 192, "Input"],
+Cell[842, 29, 2873, 79, 212, "Input"],
 Cell[CellGroupData[{
-Cell[3422, 102, 1240, 32, 72, "Input"],
-Cell[4665, 136, 1114, 30, 47, "Output"],
-Cell[5782, 168, 586, 14, 47, "Output"],
-Cell[6371, 184, 532, 13, 33, "Output"]
+Cell[3740, 112, 1240, 32, 72, "Input"],
+Cell[4983, 146, 1114, 30, 47, "Output"],
+Cell[6100, 178, 586, 14, 47, "Output"],
+Cell[6689, 194, 532, 13, 33, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[6940, 202, 225, 4, 31, "Input"],
-Cell[7168, 208, 1482, 46, 47, "Output"]
+Cell[7258, 212, 225, 4, 31, "Input"],
+Cell[7486, 218, 1482, 46, 47, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[8687, 259, 552, 14, 72, "Input"],
-Cell[9242, 275, 807, 25, 50, "Output"],
-Cell[10052, 302, 900, 28, 50, "Output"],
-Cell[10955, 332, 145, 2, 30, "Output"]
+Cell[9005, 269, 552, 14, 72, "Input"],
+Cell[9560, 285, 807, 25, 50, "Output"],
+Cell[10370, 312, 900, 28, 50, "Output"],
+Cell[11273, 342, 145, 2, 30, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[11137, 339, 581, 15, 31, "Input"],
-Cell[11721, 356, 444, 9, 21, "Message"],
-Cell[12168, 367, 1796, 52, 55, "Output"]
+Cell[11455, 349, 581, 15, 31, "Input"],
+Cell[12039, 366, 444, 9, 21, "Message"],
+Cell[12486, 377, 1796, 52, 55, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[14001, 424, 294, 8, 31, "Input"],
-Cell[14298, 434, 573, 18, 53, "Output"]
+Cell[14319, 434, 294, 8, 31, "Input"],
+Cell[14616, 444, 573, 18, 53, "Output"]
 }, Open  ]]
 }
 ]
