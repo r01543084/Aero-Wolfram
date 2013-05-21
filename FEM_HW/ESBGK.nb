@@ -10,26 +10,180 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     50586,       1552]
-NotebookOptionsPosition[     48160,       1478]
-NotebookOutlinePosition[     48502,       1493]
-CellTagsIndexPosition[     48459,       1490]
+NotebookDataLength[     57901,       1765]
+NotebookOptionsPosition[     52716,       1632]
+NotebookOutlinePosition[     55322,       1690]
+CellTagsIndexPosition[     55279,       1687]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
 Cell[TextData[{
  StyleBox["Semiclassical ES-BGK formulation", "Title"],
+ "\nFrom Statistical Mechanics using ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
  "\nIn this notebook I\[CloseCurlyQuote]ll will collect everything I know \
 about the ES-BGK formulation"
 }], "Text",
  CellChangeTimes->{{3.576298980726764*^9, 3.5762990348628607`*^9}, 
-   3.5762998744308815`*^9, {3.5763020551596117`*^9, 3.5763020582467885`*^9}}],
+   3.5762998744308815`*^9, {3.5763020551596117`*^9, 3.5763020582467885`*^9}, {
+   3.5774991913001614`*^9, 3.5774992275162325`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Rules for Changing variables", "Section"],
+ "\n",
+ Cell[BoxData[{
+  RowBox[{
+   RowBox[{"TtoLambda", "=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"T", "\[Rule]", 
+       FractionBox[
+        RowBox[{"2", " ", "\[Pi]", " ", 
+         SuperscriptBox["\[HBar]", "2"]}], 
+        RowBox[{"m", " ", 
+         SubscriptBox["k", "B"], " ", 
+         SuperscriptBox["\[Lambda]", "2"]}]]}], ",", " ", 
+      RowBox[{"\[Beta]", "\[Rule]", 
+       FractionBox["1", 
+        RowBox[{
+         SubscriptBox["k", "B"], "T"}]]}]}], "}"}]}], ";"}], "\n", 
+  RowBox[{
+   RowBox[{"lambdaToT", "=", 
+    RowBox[{"{", 
+     RowBox[{"\[Lambda]", "\[Rule]", 
+      SqrtBox[
+       FractionBox[
+        RowBox[{"2", " ", "\[Pi]", " ", 
+         SuperscriptBox["\[HBar]", "2"]}], 
+        RowBox[{"m", " ", 
+         SubscriptBox["k", "B"], " ", "T"}]]]}], "}"}]}], ";"}], "\n", 
+  RowBox[{
+   RowBox[{"lambdaToZ", "=", 
+    RowBox[{"{", 
+     RowBox[{"\[Lambda]", "\[Rule]", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        FractionBox[
+         RowBox[{"g", " ", "V", " ", 
+          RowBox[{"fermi", "[", 
+           RowBox[{
+            FractionBox["3", "2"], ",", "z"}], "]"}]}], "\[ScriptCapitalN]"], 
+        ")"}], 
+       RowBox[{"1", "/", "3"}]]}], "}"}]}], ";"}]}]],
+ "\[LineSeparator]",
+ Cell[BoxData[{
+  RowBox[{
+   RowBox[{"zToTau", "=", 
+    RowBox[{"z", "\[Rule]", 
+     RowBox[{"fugacity", "[", "\[Tau]", "]"}]}]}], ";"}], "\n", 
+  RowBox[{
+   RowBox[{"muToZ", "=", 
+    RowBox[{"\[Mu]", " ", "\[Rule]", 
+     RowBox[{
+      SubscriptBox["k", "B"], "T", " ", 
+      RowBox[{"Log", "[", "z", "]"}]}]}]}], ";"}], "\n", 
+  RowBox[{
+   RowBox[{"zToT", " ", "=", " ", 
+    RowBox[{"z", "\[Rule]", 
+     RowBox[{"Exp", "[", 
+      FractionBox["\[Mu]", 
+       RowBox[{
+        SubscriptBox["k", "B"], "T"}]], "]"}]}]}], ";"}]}]]
+}], "Text",
+ CellChangeTimes->{{3.577499075699549*^9, 3.5774990774906516`*^9}, {
+  3.5775000848352685`*^9, 3.5775001027762947`*^9}, {3.577500267500716*^9, 
+  3.577500270477886*^9}}],
+
+Cell[TextData[StyleBox["Fermi-Dirac functions", "Section"]], "Text",
+ CellChangeTimes->{{3.5775002741870985`*^9, 3.5775002826275816`*^9}}],
+
+Cell["\<\
+Fermi-Diract functions are closer to the polylogarithm function by \
+mathematica as Polylog[\[Nu],z]\
+\>", "Text",
+ CellChangeTimes->{{3.5775003389788046`*^9, 3.577500342322996*^9}, {
+  3.5775042596190524`*^9, 3.577504298235261*^9}}],
+
+Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"Quit", "[", "]"}], ";"}]], "Input",
- CellChangeTimes->{{3.5763010021203814`*^9, 3.5763010049195414`*^9}}],
+  RowBox[{"fermi", "[", 
+   RowBox[{"\[Nu]_", ",", "z_"}], "]"}], "=", 
+  FractionBox[
+   RowBox[{"Integrate", "[", 
+    RowBox[{
+     FractionBox[
+      SuperscriptBox["x", 
+       RowBox[{"\[Nu]", "-", "1"}]], 
+      RowBox[{
+       RowBox[{
+        SuperscriptBox["z", 
+         RowBox[{"-", "1"}]], 
+        RowBox[{"Exp", "[", "x", "]"}]}], "+", "1"}]], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", "0", ",", "\[Infinity]"}], "}"}], ",", 
+     RowBox[{"Assumptions", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Re", "[", "\[Nu]", "]"}], ">", "0"}], "}"}]}]}], "]"}], 
+   RowBox[{"Gamma", "[", "\[Nu]", "]"}]]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"-", 
+  RowBox[{"PolyLog", "[", 
+   RowBox[{"\[Nu]", ",", 
+    RowBox[{"-", "z"}]}], "]"}]}]], "Output",
+ CellChangeTimes->{3.577504229212313*^9}]
+}, Open  ]],
+
+Cell[TextData[StyleBox["Recursion relations for symbolic derivates", \
+"Section"]], "Text",
+ CellChangeTimes->{{3.5775043066037397`*^9, 3.5775043146432*^9}, {
+  3.5775045280274043`*^9, 3.577504552923828*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  SubscriptBox["\[PartialD]", "z"], 
+  RowBox[{"fermi", "[", 
+   RowBox[{"\[Nu]", ",", "z"}], "]"}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"-", 
+  FractionBox[
+   RowBox[{"PolyLog", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "1"}], "+", "\[Nu]"}], ",", 
+     RowBox[{"-", "z"}]}], "]"}], "z"]}]], "Output",
+ CellChangeTimes->{3.577504554979946*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"z", 
+   RowBox[{
+    SubscriptBox["\[PartialD]", "z"], 
+    RowBox[{"fermi", "[", 
+     RowBox[{"\[Nu]", ",", "z"}], "]"}]}]}], "\[Equal]", 
+  RowBox[{"fermi", "[", 
+   RowBox[{
+    RowBox[{"\[Nu]", "-", "1"}], ",", "z"}], "]"}]}]], "Input"],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{3.577504564419486*^9}]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.5763010021203814`*^9, 3.5763010049195414`*^9}, {
+   3.5774991068443303`*^9, 3.5774991564841695`*^9}, {3.5774993180844126`*^9, 
+   3.5774993199005165`*^9}, 3.5775002064042215`*^9}],
 
 Cell[TextData[{
  StyleBox["Introduction: The rules of this Game:", "Section"],
@@ -1476,8 +1630,51 @@ Cell[BoxData[
    3.57631890504037*^9}]
 }, Open  ]]
 },
-WindowSize->{960, 659},
+WindowSize->{1288, 673},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
+InputAliases->{"intt" -> RowBox[{"\[Integral]", 
+     RowBox[{"\[SelectionPlaceholder]", 
+       RowBox[{"\[DifferentialD]", "\[Placeholder]"}]}]}], "dintt" -> RowBox[{
+     SubsuperscriptBox[
+     "\[Integral]", "\[SelectionPlaceholder]", "\[Placeholder]"], 
+     RowBox[{"\[Placeholder]", 
+       RowBox[{"\[DifferentialD]", "\[Placeholder]"}]}]}], "sumt" -> RowBox[{
+     UnderoverscriptBox["\[Sum]", 
+      RowBox[{"\[SelectionPlaceholder]", "=", "\[Placeholder]"}], 
+      "\[Placeholder]"], "\[Placeholder]"}], "prodt" -> RowBox[{
+     UnderoverscriptBox["\[Product]", 
+      RowBox[{"\[SelectionPlaceholder]", "=", "\[Placeholder]"}], 
+      "\[Placeholder]"], "\[Placeholder]"}], "dt" -> RowBox[{
+     SubscriptBox["\[PartialD]", "\[Placeholder]"], " ", 
+     "\[SelectionPlaceholder]"}], "ket" -> 
+  TemplateBox[{"\[Placeholder]"}, "Ket"], "bra" -> 
+  TemplateBox[{"\[Placeholder]"}, "Bra"], "braket" -> 
+  TemplateBox[{"\[Placeholder]", "\[Placeholder]"}, "BraKet"], "notation" -> 
+  RowBox[{"Notation", "[", 
+     RowBox[{
+       TagBox["\[Placeholder]", "NotationTemplateTag"], " ", 
+       "\[DoubleLongLeftRightArrow]", " ", 
+       TagBox["\[Placeholder]", "NotationTemplateTag"]}], "]"}], "notation>" -> 
+  RowBox[{"Notation", "[", 
+     RowBox[{
+       TagBox["\[Placeholder]", "NotationTemplateTag"], " ", 
+       "\[DoubleLongRightArrow]", " ", 
+       TagBox["\[Placeholder]", "NotationTemplateTag"]}], "]"}], "notation<" -> 
+  RowBox[{"Notation", "[", 
+     RowBox[{
+       TagBox["\[Placeholder]", "NotationTemplateTag"], " ", 
+       "\[DoubleLongLeftArrow]", " ", 
+       TagBox["\[Placeholder]", "NotationTemplateTag"]}], "]"}], "symb" -> 
+  RowBox[{"Symbolize", "[", 
+     "NotationTemplateTag"[Utilities`Notation`Private`\[Placeholder]], "]"}], 
+  "infixnotation" -> RowBox[{"InfixNotation", "[", 
+     RowBox[{
+       "NotationTemplateTag"[Utilities`Notation`Private`\[Placeholder]], ",", 
+       "\[Placeholder]"}], "]"}], "addia" -> RowBox[{"AddInputAlias", "[", 
+     RowBox[{"\"\[Placeholder]\"", "->", 
+       "NotationTemplateTag"[Utilities`Notation`Private`\[Placeholder]]}], 
+     "]"}], "pattwraper" -> TagBox["\[Placeholder]", "NotationPatternTag"], 
+  "madeboxeswraper" -> TagBox["\[Placeholder]", "NotationMadeBoxesTag"]},
 FrontEndVersion->"8.0 for Microsoft Windows (64-bit) (November 7, 2010)",
 StyleDefinitions->"Default.nb"
 ]
@@ -1492,67 +1689,83 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[557, 20, 335, 6, 75, "Text"],
-Cell[895, 28, 140, 3, 31, "Input"],
-Cell[1038, 33, 424, 8, 57, "Text"],
-Cell[1465, 43, 1703, 49, 89, "Input"],
-Cell[3171, 94, 634, 21, 52, "Input"],
-Cell[3808, 117, 681, 19, 57, "Input"],
-Cell[4492, 138, 291, 9, 49, "Input"],
-Cell[4786, 149, 1377, 43, 90, "Input"],
-Cell[6166, 194, 809, 21, 67, "Input"],
-Cell[6978, 217, 625, 15, 31, "Input"],
-Cell[7606, 234, 493, 11, 68, "Text"],
-Cell[8102, 247, 375, 10, 31, "Input"],
-Cell[8480, 259, 234, 5, 31, "Input"],
-Cell[8717, 266, 219, 2, 30, "Text"],
-Cell[8939, 270, 638, 18, 33, "Input"],
-Cell[9580, 290, 134, 1, 30, "Text"],
-Cell[9717, 293, 384, 11, 43, "Input"],
-Cell[10104, 306, 197, 2, 30, "Text"],
-Cell[10304, 310, 177, 4, 29, "Text"],
-Cell[10484, 316, 489, 16, 49, "Input"],
-Cell[10976, 334, 228, 3, 30, "Text"],
-Cell[11207, 339, 772, 24, 55, "Input"],
-Cell[11982, 365, 480, 14, 65, "Input"],
-Cell[12465, 381, 197, 2, 30, "Text"],
-Cell[12665, 385, 3369, 107, 219, "Input"],
-Cell[16037, 494, 258, 6, 31, "Input"],
-Cell[16298, 502, 311, 6, 31, "Input"],
-Cell[16612, 510, 4717, 151, 244, "Input"],
-Cell[21332, 663, 132, 1, 38, "Text"],
-Cell[21467, 666, 273, 5, 29, "Text"],
-Cell[21743, 673, 140, 3, 31, "Input"],
-Cell[21886, 678, 866, 21, 92, "Input"],
-Cell[22755, 701, 779, 24, 92, "Input"],
-Cell[23537, 727, 894, 27, 92, "Input"],
-Cell[24434, 756, 161, 2, 29, "Text"],
+Cell[557, 20, 478, 10, 93, "Text"],
+Cell[1038, 32, 2034, 64, 225, "Text"],
+Cell[3075, 98, 138, 1, 38, "Text"],
+Cell[3216, 101, 243, 5, 29, "Text"],
 Cell[CellGroupData[{
-Cell[24620, 762, 667, 18, 54, "Input"],
-Cell[25290, 782, 437, 15, 45, "Output"]
+Cell[3484, 110, 675, 21, 63, "Input"],
+Cell[4162, 133, 169, 5, 30, "Output"]
 }, Open  ]],
-Cell[25742, 800, 129, 3, 29, "Text"],
-Cell[25874, 805, 466, 14, 31, "Input"],
+Cell[4346, 141, 208, 3, 38, "Text"],
 Cell[CellGroupData[{
-Cell[26365, 823, 4169, 111, 293, "Input"],
-Cell[30537, 936, 2211, 66, 122, "Output"],
-Cell[32751, 1004, 6009, 180, 144, "Output"]
+Cell[4579, 148, 136, 4, 31, "Input"],
+Cell[4718, 154, 241, 8, 47, "Output"]
 }, Open  ]],
-Cell[38775, 1187, 127, 3, 29, "Text"],
 Cell[CellGroupData[{
-Cell[38927, 1194, 267, 7, 47, "Input"],
-Cell[39197, 1203, 133, 3, 30, "Output"]
+Cell[4996, 167, 276, 9, 31, "Input"],
+Cell[5275, 178, 73, 1, 30, "Output"]
 }, Open  ]],
-Cell[39345, 1209, 278, 8, 32, "Text"],
+Cell[5363, 182, 228, 3, 31, "Input"],
+Cell[5594, 187, 424, 8, 57, "Text"],
+Cell[6021, 197, 1703, 49, 89, "Input"],
+Cell[7727, 248, 634, 21, 52, "Input"],
+Cell[8364, 271, 681, 19, 57, "Input"],
+Cell[9048, 292, 291, 9, 49, "Input"],
+Cell[9342, 303, 1377, 43, 90, "Input"],
+Cell[10722, 348, 809, 21, 67, "Input"],
+Cell[11534, 371, 625, 15, 31, "Input"],
+Cell[12162, 388, 493, 11, 68, "Text"],
+Cell[12658, 401, 375, 10, 31, "Input"],
+Cell[13036, 413, 234, 5, 31, "Input"],
+Cell[13273, 420, 219, 2, 30, "Text"],
+Cell[13495, 424, 638, 18, 33, "Input"],
+Cell[14136, 444, 134, 1, 30, "Text"],
+Cell[14273, 447, 384, 11, 43, "Input"],
+Cell[14660, 460, 197, 2, 30, "Text"],
+Cell[14860, 464, 177, 4, 29, "Text"],
+Cell[15040, 470, 489, 16, 49, "Input"],
+Cell[15532, 488, 228, 3, 30, "Text"],
+Cell[15763, 493, 772, 24, 55, "Input"],
+Cell[16538, 519, 480, 14, 65, "Input"],
+Cell[17021, 535, 197, 2, 30, "Text"],
+Cell[17221, 539, 3369, 107, 219, "Input"],
+Cell[20593, 648, 258, 6, 31, "Input"],
+Cell[20854, 656, 311, 6, 31, "Input"],
+Cell[21168, 664, 4717, 151, 244, "Input"],
+Cell[25888, 817, 132, 1, 38, "Text"],
+Cell[26023, 820, 273, 5, 29, "Text"],
+Cell[26299, 827, 140, 3, 31, "Input"],
+Cell[26442, 832, 866, 21, 92, "Input"],
+Cell[27311, 855, 779, 24, 92, "Input"],
+Cell[28093, 881, 894, 27, 92, "Input"],
+Cell[28990, 910, 161, 2, 29, "Text"],
 Cell[CellGroupData[{
-Cell[39648, 1221, 1877, 47, 100, "Input"],
-Cell[41528, 1270, 1877, 55, 76, "Output"]
+Cell[29176, 916, 667, 18, 54, "Input"],
+Cell[29846, 936, 437, 15, 45, "Output"]
 }, Open  ]],
-Cell[43420, 1328, 444, 15, 32, "Text"],
+Cell[30298, 954, 129, 3, 29, "Text"],
+Cell[30430, 959, 466, 14, 31, "Input"],
 Cell[CellGroupData[{
-Cell[43889, 1347, 860, 22, 75, "Input"],
-Cell[44752, 1371, 1696, 51, 179, "Output"],
-Cell[46451, 1424, 1693, 51, 179, "Output"]
+Cell[30921, 977, 4169, 111, 293, "Input"],
+Cell[35093, 1090, 2211, 66, 122, "Output"],
+Cell[37307, 1158, 6009, 180, 144, "Output"]
+}, Open  ]],
+Cell[43331, 1341, 127, 3, 29, "Text"],
+Cell[CellGroupData[{
+Cell[43483, 1348, 267, 7, 47, "Input"],
+Cell[43753, 1357, 133, 3, 30, "Output"]
+}, Open  ]],
+Cell[43901, 1363, 278, 8, 32, "Text"],
+Cell[CellGroupData[{
+Cell[44204, 1375, 1877, 47, 100, "Input"],
+Cell[46084, 1424, 1877, 55, 76, "Output"]
+}, Open  ]],
+Cell[47976, 1482, 444, 15, 32, "Text"],
+Cell[CellGroupData[{
+Cell[48445, 1501, 860, 22, 75, "Input"],
+Cell[49308, 1525, 1696, 51, 179, "Output"],
+Cell[51007, 1578, 1693, 51, 179, "Output"]
 }, Open  ]]
 }
 ]
