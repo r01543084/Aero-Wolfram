@@ -1,0 +1,2915 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     81242,       1601]*)
+(*NotebookOutlinePosition[    115187,       2825]*)
+(*  CellTagsIndexPosition[    115143,       2821]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Testing for Points on Border or Interior of a Polygon", "Title",
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell[TextData[{
+  "from ",
+  StyleBox[ButtonBox["Essential Mathematica for Students of Science",
+    Active->False,
+    ButtonData:>{
+      URL[ 
+      "http://www.physics.umd.edu/courses/CourseWare/EssentialMathematica/"], 
+      None},
+    Active->False,
+    ButtonStyle->"Hyperlink"],
+    Active->False],
+  "\n\[Copyright] James J. Kelly, 1998\nLast revised: January, 2007"
+}], "Author",
+  Active->True,
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Section"],
+
+Cell[BoxData[{
+    \(\(ClearAll["\<Global`*\>"];\)\), "\n", 
+    \(\(Off[General::spell, \ General::spell1];\)\), "\[IndentingNewLine]", 
+    \(Needs["\<Graphics`\>"]\)}], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section"],
+
+Cell[TextData[{
+  "It is often necessary to numerically test whether a point is within a \
+specified polygon or on its border.  Here we will develop some functions for \
+this purpose and later we will use them in the ",
+  StyleBox["pde relaxation",
+    FontSlant->"Italic"],
+  " notebook in problems that compute the electrostatic potential outside \
+systems of electrodes in two dimensions.\nWe define a polygon ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[ScriptCapitalP] = {z\_1, z\_2, \[CenterEllipsis], 
+          z\_n, z\_\(n + 1\)}\)]],
+  " as a list of vertices whose first and last points coincide, such that ",
+  Cell[BoxData[
+      \(TraditionalForm\`z\_\(n + 1\) = z\_1\)]],
+  ".  Suppose that the point ",
+  Cell[BoxData[
+      \(TraditionalForm\`p\)]],
+  " is an interior point of ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[ScriptCapitalP]\)]],
+  ".  Let ",
+  Cell[BoxData[
+      \(TraditionalForm\`{\[Alpha]\_1, \[Alpha]\_2, \[CenterEllipsis], \
+\[Alpha]\_n}\)]],
+  " represent the ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  " interior angles formed between lines from ",
+  Cell[BoxData[
+      \(TraditionalForm\`p\)]],
+  " to each ",
+  Cell[BoxData[
+      \(TraditionalForm\`z\_i\)]],
+  ", as sketched below.  If we interpret the points as lying in the complex \
+plane, these angles can be computed easily according to"
+}], "Text"],
+
+Cell[BoxData[
+    \(\[Alpha]\_i\  = \ 
+      Arg[\(z\_\(i + 1\) - p\)\/\(z\_i - p\)]\)], "DisplayFormula",
+  FontFamily->"Times New Roman"],
+
+Cell[TextData[{
+  "The identification of interior points is based upon the ",
+  StyleBox["winding number",
+    FontSlant->"Italic"]
+}], "Text"],
+
+Cell[BoxData[
+    \(W = \(1\/\(2  \[Pi]\)\) \(\[Sum]\+\(i = 1\)\%n \[Alpha]\_i\)\)], \
+"DisplayFormula",
+  FontFamily->"Times New Roman"],
+
+Cell[TextData[{
+  "that counts the number of times ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[ScriptCapitalP]\)]],
+  " winds around ",
+  Cell[BoxData[
+      \(TraditionalForm\`p\)]],
+  " in a positive (counter-clockwise) sense; a negative winding number \
+corresponds to a clockwise loop.  A point ",
+  Cell[BoxData[
+      \(TraditionalForm\`p\)]],
+  " is interior to ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[ScriptCapitalP]\)]],
+  " iff ",
+  Cell[BoxData[
+      \(TraditionalForm\`W \[NotEqual] 0\)]],
+  " and is exterior otherwise."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(p = {1, 2};\)\), "\[IndentingNewLine]", 
+    \(\(poly = {{3, 4}, {1, 5}, {\(-2\), 3}, {2, \(-1\)}, {3, 
+            4}};\)\), "\[IndentingNewLine]", 
+    \(\(ListPlot[Append[poly, p], PlotStyle \[Rule] AbsolutePointSize[4], 
+        Epilog \[Rule] {Line[poly], Dashing[{0.02, 0.02}], 
+            Table[Line[{p, 
+                  poly\[LeftDoubleBracket]k\[RightDoubleBracket]}], {k, 
+                Length[poly]}]}];\)\)}], "Input"],
+
+Cell[GraphicsData["PostScript", "\<\
+%!
+%%Creator: Mathematica
+%%AspectRatio: .61803 
+MathPictureStart
+/Mabs {
+Mgmatrix idtransform
+Mtmatrix dtransform
+} bind def
+/Mabsadd { Mabs
+3 -1 roll add
+3 1 roll add
+exch } bind def
+%% Graphics
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10  scalefont  setfont
+% Scaling calculations
+0.404762 0.190476 0.112816 0.0981006 [
+[.02381 .10032 -6 -9 ]
+[.02381 .10032 6 0 ]
+[.21429 .10032 -6 -9 ]
+[.21429 .10032 6 0 ]
+[.59524 .10032 -3 -9 ]
+[.59524 .10032 3 0 ]
+[.78571 .10032 -3 -9 ]
+[.78571 .10032 3 0 ]
+[.97619 .10032 -3 -9 ]
+[.97619 .10032 3 0 ]
+[.39226 .01472 -12 -4.5 ]
+[.39226 .01472 0 4.5 ]
+[.39226 .21092 -6 -4.5 ]
+[.39226 .21092 0 4.5 ]
+[.39226 .30902 -6 -4.5 ]
+[.39226 .30902 0 4.5 ]
+[.39226 .40712 -6 -4.5 ]
+[.39226 .40712 0 4.5 ]
+[.39226 .50522 -6 -4.5 ]
+[.39226 .50522 0 4.5 ]
+[.39226 .60332 -6 -4.5 ]
+[.39226 .60332 0 4.5 ]
+[ 0 0 0 0 ]
+[ 1 .61803 0 0 ]
+] MathScale
+% Start of Graphics
+1 setlinecap
+1 setlinejoin
+newpath
+0 g
+.25 Mabswid
+[ ] 0 setdash
+.02381 .11282 m
+.02381 .11907 L
+s
+[(-2)] .02381 .10032 0 1 Mshowa
+.21429 .11282 m
+.21429 .11907 L
+s
+[(-1)] .21429 .10032 0 1 Mshowa
+.59524 .11282 m
+.59524 .11907 L
+s
+[(1)] .59524 .10032 0 1 Mshowa
+.78571 .11282 m
+.78571 .11907 L
+s
+[(2)] .78571 .10032 0 1 Mshowa
+.97619 .11282 m
+.97619 .11907 L
+s
+[(3)] .97619 .10032 0 1 Mshowa
+.125 Mabswid
+.0619 .11282 m
+.0619 .11657 L
+s
+.1 .11282 m
+.1 .11657 L
+s
+.1381 .11282 m
+.1381 .11657 L
+s
+.17619 .11282 m
+.17619 .11657 L
+s
+.25238 .11282 m
+.25238 .11657 L
+s
+.29048 .11282 m
+.29048 .11657 L
+s
+.32857 .11282 m
+.32857 .11657 L
+s
+.36667 .11282 m
+.36667 .11657 L
+s
+.44286 .11282 m
+.44286 .11657 L
+s
+.48095 .11282 m
+.48095 .11657 L
+s
+.51905 .11282 m
+.51905 .11657 L
+s
+.55714 .11282 m
+.55714 .11657 L
+s
+.63333 .11282 m
+.63333 .11657 L
+s
+.67143 .11282 m
+.67143 .11657 L
+s
+.70952 .11282 m
+.70952 .11657 L
+s
+.74762 .11282 m
+.74762 .11657 L
+s
+.82381 .11282 m
+.82381 .11657 L
+s
+.8619 .11282 m
+.8619 .11657 L
+s
+.9 .11282 m
+.9 .11657 L
+s
+.9381 .11282 m
+.9381 .11657 L
+s
+.25 Mabswid
+0 .11282 m
+1 .11282 L
+s
+.40476 .01472 m
+.41101 .01472 L
+s
+[(-1)] .39226 .01472 1 0 Mshowa
+.40476 .21092 m
+.41101 .21092 L
+s
+[(1)] .39226 .21092 1 0 Mshowa
+.40476 .30902 m
+.41101 .30902 L
+s
+[(2)] .39226 .30902 1 0 Mshowa
+.40476 .40712 m
+.41101 .40712 L
+s
+[(3)] .39226 .40712 1 0 Mshowa
+.40476 .50522 m
+.41101 .50522 L
+s
+[(4)] .39226 .50522 1 0 Mshowa
+.40476 .60332 m
+.41101 .60332 L
+s
+[(5)] .39226 .60332 1 0 Mshowa
+.125 Mabswid
+.40476 .03434 m
+.40851 .03434 L
+s
+.40476 .05396 m
+.40851 .05396 L
+s
+.40476 .07358 m
+.40851 .07358 L
+s
+.40476 .0932 m
+.40851 .0932 L
+s
+.40476 .13244 m
+.40851 .13244 L
+s
+.40476 .15206 m
+.40851 .15206 L
+s
+.40476 .17168 m
+.40851 .17168 L
+s
+.40476 .1913 m
+.40851 .1913 L
+s
+.40476 .23054 m
+.40851 .23054 L
+s
+.40476 .25016 m
+.40851 .25016 L
+s
+.40476 .26978 m
+.40851 .26978 L
+s
+.40476 .2894 m
+.40851 .2894 L
+s
+.40476 .32864 m
+.40851 .32864 L
+s
+.40476 .34826 m
+.40851 .34826 L
+s
+.40476 .36788 m
+.40851 .36788 L
+s
+.40476 .3875 m
+.40851 .3875 L
+s
+.40476 .42674 m
+.40851 .42674 L
+s
+.40476 .44636 m
+.40851 .44636 L
+s
+.40476 .46598 m
+.40851 .46598 L
+s
+.40476 .4856 m
+.40851 .4856 L
+s
+.40476 .52484 m
+.40851 .52484 L
+s
+.40476 .54446 m
+.40851 .54446 L
+s
+.40476 .56408 m
+.40851 .56408 L
+s
+.40476 .5837 m
+.40851 .5837 L
+s
+.25 Mabswid
+.40476 0 m
+.40476 .61803 L
+s
+0 0 m
+1 0 L
+1 .61803 L
+0 .61803 L
+closepath
+clip
+newpath
+4 Mabswid
+.97619 .50522 Mdot
+.59524 .60332 Mdot
+.02381 .40712 Mdot
+.78571 .01472 Mdot
+.97619 .50522 Mdot
+.59524 .30902 Mdot
+.5 Mabswid
+.97619 .50522 m
+.59524 .60332 L
+.02381 .40712 L
+.78571 .01472 L
+.97619 .50522 L
+s
+[ .02 .02 ] 0 setdash
+.59524 .30902 m
+.97619 .50522 L
+s
+.59524 .30902 m
+.59524 .60332 L
+s
+.59524 .30902 m
+.02381 .40712 L
+s
+.59524 .30902 m
+.78571 .01472 L
+s
+.59524 .30902 m
+.97619 .50522 L
+s
+% End of Graphics
+MathPictureEnd
+\
+\>"], "Graphics",
+  ImageSize->{288, 177.938},
+  ImageMargins->{{0, 0}, {0, 0}},
+  ImageRegion->{{0, 1}, {0, 1}},
+  ImageCache->GraphicsData["Bitmap", "\<\
+CF5dJ6E]HGAYHf4PAg9QL6QYHg<PAVmbKF5d0`40006`00012R000`400?l00000o`00003o[P3oool0
+0`000000oooo0?ooo`3o0?ooo`00[P3oool00`000000oooo0?ooo`3o0?ooo`00[P3oool00`000000
+oooo0?ooo`3o0?ooo`00X@3oool00`3o_g@000000000000300000003001d_`3oool0oooo00@0oooo
+00<000000?ooo`3oool0o`3oool00:@0oooo00<0W4Q809cOo`3oool01`3oool00`000000oooo0?oo
+o`2P0?ooo`800000G@3oool00:@0oooo00<0W4Q809cOo`3oool01`3oool00`000000oooo0?ooo`2O
+0?ooo`@00000G03oool00:@0oooo00<0W4Q809cOo`3oool01`3oool4000009d0oooo1P00001K0?oo
+o`00V03oool00`2LB000000000000003000000030018W03oool0oooo00<0oooo00<0W4Q809cOo`3o
+ool01`3oool00`000000oooo0?ooo`2N0?ooo`H00000F`3oool00:@0oooo00<0W4Q809cOo`3oool0
+1`3oool00`000000oooo0?ooo`2M0?ooo`H00000G03oool00:@0oooo00<0W4Q809cOo`3oool01`3o
+ool00`000000oooo0?ooo`2K0?ooo`8000000`3oool3000005`0oooo002Q0?ooo`050=nLB0000000
+04RL09a8B02Lgol0203oool00`000000oooo0?ooo`2I0?ooo`8000000`3oool00`000000oooo0?oo
+o`020?ooo`030000003oool0oooo05T0oooo002S0?ooo`030=nLB00004P0W=oo00P0oooo00<00000
+0?ooo`3oool0U`3oool2000000@0oooo00<000000?ooo`3oool00`3oool00`000000oooo0?ooo`1I
+0?ooo`00[P3oool00`000000oooo0?ooo`2E0?ooo`8000001P3oool00`000000oooo0?ooo`030?oo
+o`030000003oool0oooo05T0oooo002^0?ooo`030000003oool0oooo09<0oooo0P0000070?ooo`03
+0000003oool0oooo00D0oooo00<000000?ooo`3oool0F03oool00:h0oooo00<000000?ooo`3oool0
+T@3oool2000000P0oooo00<000000?ooo`3oool01P3oool00`000000oooo0?ooo`1H0?ooo`00[P3o
+ool3000008l0oooo0P0000090?ooo`030000003oool0oooo00L0oooo00<000000?ooo`3oool0F03o
+ool00:h0oooo00<000000?ooo`3oool0S@3oool2000000/0oooo00<000000?ooo`3oool0203oool0
+0`000000oooo0?ooo`1G0?ooo`00[P3oool00`000000oooo0?ooo`2;0?ooo`800000303oool00`00
+0000oooo0?ooo`090?ooo`030000003oool0oooo05L0oooo002^0?ooo`030000003oool0oooo08T0
+oooo0P00000K0?ooo`030000003oool0oooo05H0oooo002^0?ooo`030000003oool0oooo08L0oooo
+0P00000M0?ooo`030000003oool0oooo05H0oooo002^0?ooo`030000003oool0oooo08D0oooo0P00
+000O0?ooo`030000003oool0oooo05H0oooo002^0?ooo`030000003oool0oooo08@0oooo00<00000
+0?ooo`3oool0803oool00`000000oooo0?ooo`1E0?ooo`00[P3oool00`000000oooo0?ooo`220?oo
+o`8000008`3oool00`000000oooo0?ooo`1E0?ooo`00[P3oool300000800oooo0P00000V0?ooo`03
+0000003oool0oooo05@0oooo002^0?ooo`030000003oool0oooo07h0oooo0P00000X0?ooo`030000
+003oool0oooo05@0oooo002^0?ooo`030000003oool0oooo07`0oooo0P00000G0?ooo`030000003o
+ool0oooo0100oooo00<000000?ooo`3oool0E03oool00:h0oooo00<000000?ooo`3oool0NP3oool2
+000001P0oooo00<000000?ooo`3oool04P3oool00`000000oooo0?ooo`1C0?ooo`00[P3oool00`00
+0000oooo0?ooo`1h0?ooo`8000006P3oool00`000000oooo0?ooo`0B0?ooo`030000003oool0oooo
+05<0oooo002^0?ooo`030000003oool0oooo07H0oooo0P00000K0?ooo`030000003oool0oooo01<0
+oooo00<000000?ooo`3oool0D`3oool00:h0oooo00<000000?ooo`3oool0M03oool2000001`0oooo
+00<000000?ooo`3oool05@3oool00`000000oooo0?ooo`1B0?ooo`00[P3oool00`000000oooo0?oo
+o`1b0?ooo`8000007@3oool00`000000oooo0?ooo`0F0?ooo`030000003oool0oooo0580oooo000;
+0?ooo`030?oo_`1d0000000000@0000000<0M;oo0?ooo`3oool0B03oool00`3o_g@0000000000003
+00000003001d_`3oool0oooo04P0oooo00<000000?ooo`3oool0B`3oool00`3o_g@0000000000003
+00000003001d_`3oool0oooo01`0oooo0P00000O0?ooo`030000003oool0oooo00P0oooo00<0oono
+07@000000000100000000`1d_ol0oooo0?ooo`050?ooo`030000003oool0oooo0480oooo00D0_g@0
+000000000000000004RLg`0:0?ooo`00303oool00`2oM000001d0;ooo`020?ooo`030=nLM02Lgol0
+oooo04`0oooo00<0W4Q809cOo`3oool0B`3oool3000004h0oooo00<0W4Q809cOo`3oool07@3oool2
+00000200oooo00<000000?ooo`3oool02P3oool00`2oM000001d0;ooo`020?ooo`030=nLM02Lgol0
+oooo00H0oooo00<000000?ooo`3oool0@@3oool01`2oM00007Bo0?ooo`3oool0oono07@00018W=l0
+2@3oool000d0oooo00<0okmd0000B02Lgol0D03oool00`2LB4P0W=oo0?ooo`1;0?ooo`030000003o
+ool0oooo04h0oooo00<0W4Q809cOo`3oool06`3oool200000300oooo00<0okmd0000B02Lgol02P3o
+ool00`000000oooo0?ooo`160?ooo`030?noM000M;l0oooo00P0oooo000>0?ooo`030?oOW0180000
+B9cO04l0oooo00<0W4Q809cOo`3oool0B`3oool00`000000oooo0?ooo`1>0?ooo`0309a8B02Lgol0
+oooo01T0oooo0P00000c0?ooo`030?oOW0180000B9cO00X0oooo00<000000?ooo`3oool0A03oool0
+0`3ogi`0B01809cOo`090?ooo`000`3oool00`2LB000000000000003000000030018W03oool0oooo
+00@0oooo00<0W4P004RLg`3oool0@@3oool00`2LB000000000000003000000030018W03oool0oooo
+00<0oooo00<0W4Q809cOo`3oool0B`3oool00`000000oooo0?ooo`1>0?ooo`0309a8B02Lgol0oooo
+01L0oooo0P00000g0?ooo`0309a80018W=l0oooo00P0oooo00<000000?ooo`3oool0@P3oool0103O
+W4P000000000B02Lgol:0?ooo`004@3oool00`2LB7@0_ooo0?ooo`1<0?ooo`0309a8B02Lgol0oooo
+04/0oooo00<000000?ooo`3oool0CP3oool00`2LB4P0W=oo0?ooo`0E0?ooo`800000>P3oool00`2L
+B7@0_ooo0?ooo`080?ooo`030000003oool0oooo04<0oooo00<0omnL04P0B02Lgol02@3oool000`0
+oooo00<0gia807Boo`3oool00P3oool00`2oM000M;oo0?ooo`1<0?ooo`0309a8B02Lgol0oooo04/0
+oooo00<000000?ooo`3oool0CP3oool00`2LB4P0W=oo0?ooo`0D0?ooo`030000003oool0oooo03D0
+oooo00<0gia807Boo`3oool00P3oool00`2oM000M;oo0?ooo`080?ooo`030000003oool0oooo04@0
+oooo00<0_g@007Boo`3oool0203oool000`0oooo00L0okmd0000M02oool0oooo0?noM00004P0W=oo
+04X0oooo00D0gia800000000B9`0W4Q809cOo`1<0?ooo`030000003oool0oooo04/0oooo00D0gia8
+00000000B9`0W4Q809cOo`0C0?ooo`800000>03oool01`3o_g@0001d0;ooo`3oool0okmd0000B02L
+gol02@3oool00`000000oooo0?ooo`0o0?ooo`070?noM00004P0W=oo0?ooo`3ogi`0B01809cOo`09
+0?ooo`003@3oool01@3o_g@000000000000004P0W=oo04d0oooo00<0gia80000B02Lgol0C03oool0
+0`000000oooo0?ooo`1=0?ooo`030=nLB00004P0W=oo0140oooo0P00000X0?ooo`030000003oool0
+oooo0100oooo00D0okmd000000000000001809cOo`0;0?ooo`030000003oool0oooo03l0oooo00D0
+omnL04P000000000000007Boo`0:0?ooo`00[P3oool3000005l0oooo0P00000Y0?ooo`030000003o
+ool0oooo0240oooo00<000000?ooo`3oool0CP3oool00:h0oooo00<000000?ooo`3oool0G@3oool2
+000002/0oooo00<000000?ooo`3oool08@3oool00`000000oooo0?ooo`1>0?ooo`00[P3oool00`00
+0000oooo0?ooo`1K0?ooo`800000;03oool00`000000oooo0?ooo`0S0?ooo`030000003oool0oooo
+04d0oooo002^0?ooo`030000003oool0oooo05T0oooo0P00000^0?ooo`030000003oool0oooo02<0
+oooo00<000000?ooo`3oool0C@3oool00:h0oooo00<000000?ooo`3oool0E`3oool2000002l0oooo
+00<000000?ooo`3oool09@3oool00`000000oooo0?ooo`1<0?ooo`00[P3oool00`000000oooo0?oo
+o`1E0?ooo`800000<@3oool00`000000oooo0?ooo`0U0?ooo`030000003oool0oooo04`0oooo002^
+0?ooo`030000003oool0oooo05<0oooo0P00000b0?ooo`030000003oool0oooo02H0oooo00<00000
+0?ooo`3oool0C03oool00:h0oooo00<000000?ooo`3oool0D@3oool2000005h0oooo00<000000?oo
+o`3oool0B`3oool000030?ooo`00000000000?l00000[00000020?ooo`002`3oool00`000000oooo
+0?ooo`0=0?ooo`030000003oool0oooo00d0oooo00<000000?ooo`3oool03P3oool00`000000oooo
+0?ooo`0=0?ooo`030000003oool0oooo00d0oooo00<000000?ooo`3oool03P3oool00`000000oooo
+0?ooo`0=0?ooo`030000003oool0oooo00d0oooo00<000000?ooo`3oool03P3oool00`000000oooo
+0?ooo`0=0?ooo`030000003oool0oooo00h0oooo00<000000?ooo`3oool03@3oool00`000000oooo
+0?ooo`0=0?ooo`030000003oool0oooo00h0oooo00<000000?ooo`3oool02`3oool3000000l0oooo
+00<000000?ooo`3oool03P3oool00`000000oooo0?ooo`0=0?ooo`030000003oool0oooo00d0oooo
+00<000000?ooo`3oool03P3oool00`000000oooo0?ooo`0=0?ooo`8000003P3oool00`000000oooo
+0?ooo`0>0?ooo`030000003oool0oooo00d0oooo00<000000?ooo`3oool03@3oool00`000000oooo
+0?ooo`0:0?ooo`002`3oool00`000000oooo0?ooo`0=0?ooo`030000003oool0oooo00d0oooo00<0
+00000?ooo`3oool03P3oool00`000000oooo0?ooo`0=0?ooo`030000003oool0oooo00d0oooo00<0
+00000?ooo`3oool03P3oool00`000000oooo0?ooo`0=0?ooo`030000003oool0oooo00d0oooo00<0
+00000?ooo`3oool03P3oool00`000000oooo0?ooo`0=0?ooo`030000003oool0oooo00h0oooo00<0
+00000?ooo`3oool03@3oool00`000000oooo0?ooo`0=0?ooo`030000003oool0oooo00h0oooo00<0
+00000?ooo`3oool02@3oool200000080oooo00<000000?ooo`3oool03@3oool00`000000oooo0?oo
+o`0>0?ooo`030000003oool0oooo00d0oooo00<000000?ooo`3oool03@3oool00`000000oooo0?oo
+o`0>0?ooo`030000003oool0oooo00d0oooo0P00000>0?ooo`030000003oool0oooo00h0oooo00<0
+00000?ooo`3oool03@3oool00`000000oooo0?ooo`0=0?ooo`030000003oool0oooo00X0oooo000;
+0?ooo`030000003oool0oooo04h0oooo00<000000?ooo`3oool0C`3oool00`000000oooo0?ooo`19
+0?ooo`800000103oool00`000000oooo0?ooo`1?0?ooo`030000003oool0oooo00h0oooo00<00000
+0?ooo`3oool0?@3oool00`000000oooo0?ooo`0:0?ooo`00[P3oool00`000000oooo0?ooo`180?oo
+o`030000003oool0oooo06P0oooo00<000000?ooo`3oool0B@3oool00:h0oooo00<000000?ooo`3o
+ool0AP3oool2000003X0oooo00<000000?ooo`3oool0;P3oool00`000000oooo0?ooo`190?ooo`00
+[P3oool00`000000oooo0?ooo`140?ooo`800000>`3oool00`000000oooo0?ooo`0_0?ooo`030000
+003oool0oooo04T0oooo002^0?ooo`030000003oool0oooo0480oooo0P00000m0?ooo`030000003o
+ool0oooo0300oooo00<000000?ooo`3oool0B03oool00:h0oooo00<000000?ooo`3oool0@03oool2
+000003h0oooo00<000000?ooo`3oool0<@3oool00`000000oooo0?ooo`180?ooo`00[P3oool30000
+03h0oooo0P00000o0?ooo`030000003oool0oooo03<0oooo00<000000?ooo`3oool0A`3oool00:h0
+oooo00<000000?ooo`3oool0?03oool200000440oooo00<000000?ooo`3oool0<`3oool00`000000
+oooo0?ooo`170?ooo`00[P3oool00`000000oooo0?ooo`0j0?ooo`800000@P3oool00`000000oooo
+0?ooo`0d0?ooo`030000003oool0oooo04L0oooo002^0?ooo`030000003oool0oooo03P0oooo0P00
+00140?ooo`030000003oool0oooo03D0oooo00<000000?ooo`3oool0AP3oool00:h0oooo00<00000
+0?ooo`3oool0=P3oool2000004D0oooo00<000000?ooo`3oool0=P3oool00`000000oooo0?ooo`16
+0?ooo`00[P3oool00`000000oooo0?ooo`0d0?ooo`800000P03oool00`000000oooo0?ooo`160?oo
+o`00[P3oool00`000000oooo0?ooo`0b0?ooo`800000P`3oool00`000000oooo0?ooo`150?ooo`00
+[P3oool00`000000oooo0?ooo`0`0?ooo`800000Q@3oool00`000000oooo0?ooo`150?ooo`00[P3o
+ool3000002h0oooo0P0000280?ooo`030000003oool0oooo04@0oooo002^0?ooo`030000003oool0
+oooo02`0oooo0P00002:0?ooo`030000003oool0oooo04@0oooo002^0?ooo`030000003oool0oooo
+02/0oooo00<000000?ooo`3oool0RP3oool00`000000oooo0?ooo`140?ooo`00[P3oool00`000000
+oooo0?ooo`0Y0?ooo`800000CP3oool00`000000oooo0?ooo`0m0?ooo`030000003oool0oooo04<0
+oooo002^0?ooo`030000003oool0oooo02L0oooo0P00001?0?ooo`030000003oool0oooo03h0oooo
+00<000000?ooo`3oool0@`3oool00:h0oooo00<000000?ooo`3oool09@3oool200000540oooo00<0
+00000?ooo`3oool0?`3oool00`000000oooo0?ooo`120?ooo`00[P3oool00`000000oooo0?ooo`0S
+0?ooo`800000DP3oool00`000000oooo0?ooo`100?ooo`030000003oool0oooo0480oooo002^0?oo
+o`030000003oool0oooo0240oooo0P00001C0?ooo`030000003oool0oooo0440oooo00<000000?oo
+o`3oool0@P3oool00:h0oooo00<000000?ooo`3oool07`3oool2000005@0oooo00<000000?ooo`3o
+ool0@`3oool00`000000oooo0?ooo`110?ooo`00[P3oool3000001d0oooo0P00001F0?ooo`030000
+003oool0oooo04<0oooo00<000000?ooo`3oool0@@3oool00:h0oooo00<000000?ooo`3oool06`3o
+ool2000005L0oooo00<000000?ooo`3oool0A03oool00`000000oooo0?ooo`110?ooo`00[P3oool0
+0`000000oooo0?ooo`0I0?ooo`800000X@3oool00`000000oooo0?ooo`100?ooo`00[P3oool00`00
+0000oooo0?ooo`0G0?ooo`800000X`3oool00`000000oooo0?ooo`100?ooo`00[P3oool00`000000
+oooo0?ooo`0E0?ooo`800000YP3oool00`000000oooo0?ooo`0o0?ooo`00[P3oool00`000000oooo
+0?ooo`0C0?ooo`800000Z03oool00`000000oooo0?ooo`0o0?ooo`00[P3oool00`000000oooo0?oo
+o`0A0?ooo`800000ZP3oool00`000000oooo0?ooo`0o0?ooo`00[P3oool00`000000oooo0?ooo`0?
+0?ooo`800000[@3oool00`000000oooo0?ooo`0n0?ooo`00[P3oool3000000d0oooo0P00001P0?oo
+o`030000003oool0oooo04`0oooo00<000000?ooo`3oool0?P3oool00:h0oooo00<000000?ooo`3o
+ool0303oool00`000000oooo0?ooo`1O0?ooo`030000003oool0oooo04h0oooo00<000000?ooo`3o
+ool0?@3oool00:h0oooo00<000000?ooo`3oool02P3oool200000680oooo00<000000?ooo`3oool0
+CP3oool00`000000oooo0?ooo`0m0?ooo`00[P3oool00`000000oooo0?ooo`080?ooo`800000H`3o
+ool00`000000oooo0?ooo`1?0?ooo`030000003oool0oooo03d0oooo002^0?ooo`030000003oool0
+oooo00H0oooo0P00001U0?ooo`030000003oool0oooo0500oooo00<000000?ooo`3oool0?03oool0
+0:40oooo00<0okmd0000000000000`0000000`00M;l0oooo0?ooo`040?ooo`030000003oool0oooo
+00@0oooo0P00001V0?ooo`030000003oool0oooo0540oooo00<000000?ooo`3oool0?03oool00:@0
+oooo00<0W4Q809cOo`3oool01`3oool00`000000oooo0?ooo`020?ooo`800000J03oool00`000000
+oooo0?ooo`1A0?ooo`030000003oool0oooo03`0oooo002T0?ooo`0309a8B02Lgol0oooo00L0oooo
+00<000000?ooo`3oool00P00001Y0?ooo`030000003oool0oooo05<0oooo00<000000?ooo`3oool0
+>`3oool00:@0oooo00<0W4Q809cOo`3oool01`3oool400000<00oooo00<000000?ooo`3oool0>`3o
+ool00:@0oooo00<0W4Q809cOo`3oool01P3oool200000<@0oooo00<000000?ooo`3oool0>P3oool0
+0:@0oooo00<0W4Q809cOo`3oool0103oool2000000030?ooo`000000oooo0<<0oooo00<000000?oo
+o`3oool0>P3oool00:@0oooo00<0W4Q809cOo`3oool00P3oool2000000<0oooo00<000000?ooo`3o
+ool0`P3oool00`000000oooo0?ooo`0j0?ooo`00X@3oool01P3OW4P000000018W02LB4P0W=oo0?oo
+o`8000001@3oool00`000000oooo0?ooo`330?ooo`030000003oool0oooo03T0oooo002S0?ooo`04
+0=nLB00004P00000000000L0oooo00<000000?ooo`3oool0``3oool00`000000oooo0?ooo`0i0?oo
+o`00X`3oool2000000T0oooo00<000000?ooo`3oool0a03oool00`000000oooo0?ooo`0h0?ooo`00
+X@3oool2000000/0oooo00<000000?ooo`3oool0IP3oool00`000000oooo0?ooo`1K0?ooo`030000
+003oool0oooo03P0oooo002P0?ooo`030000003oool0oooo00/0oooo00<000000?ooo`3oool0I@3o
+ool00`000000oooo0?ooo`1L0?ooo`030000003oool0oooo03P0oooo002N0?ooo`8000003P3oool3
+000006D0oooo00<000000?ooo`3oool0G@3oool00`000000oooo0?ooo`0g0?ooo`00W03oool20000
+0100oooo00<000000?ooo`3oool0I03oool00`000000oooo0?ooo`1N0?ooo`030000003oool0oooo
+03L0oooo002J0?ooo`8000004P3oool00`000000oooo0?ooo`1S0?ooo`030000003oool0oooo05l0
+oooo00<000000?ooo`3oool0=`3oool009P0oooo0P00000D0?ooo`030000003oool0oooo0680oooo
+00<000000?ooo`3oool0H@3oool00`000000oooo0?ooo`0f0?ooo`00UP3oool2000001H0oooo00<0
+00000?ooo`3oool0HP3oool00`000000oooo0?ooo`1Q0?ooo`030000003oool0oooo03H0oooo002D
+0?ooo`800000603oool00`000000oooo0?ooo`1Q0?ooo`030000003oool0oooo06<0oooo00<00000
+0?ooo`3oool0=@3oool00980oooo0P00000J0?ooo`030000003oool0oooo0<L0oooo00<000000?oo
+o`3oool0=@3oool00900oooo0P00000L0?ooo`030000003oool0oooo0<L0oooo00<000000?ooo`3o
+ool0=@3oool008h0oooo0P00000N0?ooo`<00000b03oool00`000000oooo0?ooo`0d0?ooo`00S03o
+ool200000200oooo00<000000?ooo`3oool0b03oool00`000000oooo0?ooo`0d0?ooo`00RP3oool2
+00000280oooo00<000000?ooo`3oool0b@3oool00`000000oooo0?ooo`0c0?ooo`00R03oool20000
+02@0oooo00<000000?ooo`3oool0b@3oool00`000000oooo0?ooo`0c0?ooo`00QP3oool2000002H0
+oooo00<000000?ooo`3oool0G@3oool00`000000oooo0?ooo`1Y0?ooo`030000003oool0oooo03<0
+oooo00240?ooo`800000:03oool00`000000oooo0?ooo`1L0?ooo`030000003oool0oooo06/0oooo
+00<000000?ooo`3oool0<P3oool00880oooo0P00000Z0?ooo`030000003oool0oooo05`0oooo00<0
+00000?ooo`3oool0J`3oool00`000000oooo0?ooo`0b0?ooo`00P@3oool00`000000oooo0?ooo`0Z
+0?ooo`030000003oool0oooo05/0oooo00<000000?ooo`3oool0K03oool00`000000oooo0?ooo`0b
+0?ooo`00O`3oool2000002d0oooo00<000000?ooo`3oool0FP3oool00`000000oooo0?ooo`1^0?oo
+o`030000003oool0oooo0340oooo001m0?ooo`800000;`3oool3000005T0oooo00<000000?ooo`3o
+ool0K`3oool00`000000oooo0?ooo`0a0?ooo`00N`3oool200000340oooo00<000000?ooo`3oool0
+F@3oool00`000000oooo0?ooo`1`0?ooo`030000003oool0oooo0300oooo001i0?ooo`800000<`3o
+ool00`000000oooo0?ooo`1H0?ooo`030000003oool0oooo0740oooo00<000000?ooo`3oool0<03o
+ool007L0oooo0P00000e0?ooo`030000003oool0oooo0<`0oooo00<000000?ooo`3oool0<03oool0
+07D0oooo0P00000g0?ooo`030000003oool0oooo0<d0oooo00<000000?ooo`3oool0;`3oool007<0
+oooo0P00000i0?ooo`030000003oool0oooo0<d0oooo00<000000?ooo`3oool0;`3oool00740oooo
+0P00000k0?ooo`030000003oool0oooo0<h0oooo00<000000?ooo`3oool0;P3oool006l0oooo0P00
+000m0?ooo`030000003oool0oooo0<h0oooo00<000000?ooo`3oool0;P3oool006d0oooo0P00000o
+0?ooo`<00000cP3oool00`000000oooo0?ooo`0^0?ooo`00J`3oool200000440oooo00<000000?oo
+o`3oool0D`3oool00`000000oooo0?ooo`1i0?ooo`030000003oool0oooo02d0oooo001Y0?ooo`80
+0000@`3oool00`000000oooo0?ooo`1B0?ooo`030000003oool0oooo07X0oooo00<000000?ooo`3o
+ool0;@3oool006L0oooo0P0000150?ooo`030000003oool0oooo0580oooo00<000000?ooo`3oool0
+NP3oool00`000000oooo0?ooo`0]0?ooo`00I@3oool2000004L0oooo00<000000?ooo`3oool0D@3o
+ool00`000000oooo0?ooo`1l0?ooo`030000003oool0oooo02`0oooo001T0?ooo`030000003oool0
+oooo03T0oooo00<0oono07@000000000100000000`1d_ol0oooo0?ooo`040?ooo`030000003oool0
+oooo0540oooo00<000000?ooo`3oool0O03oool00`000000oooo0?ooo`0/0?ooo`00HP3oool20000
+03d0oooo00<0_g@00000M02oool00P3oool00`3OW7@0W=oo0?ooo`050?ooo`030000003oool0oooo
+04h0oooo0`0000200?ooo`030000003oool0oooo02/0oooo001P0?ooo`800000@03oool00`3o_g@0
+001809cOo`090?ooo`030000003oool0oooo04d0oooo100000200?ooo`030000003oool0oooo02/0
+oooo001N0?ooo`800000@`3oool00`3ogi`0B00004RLg`080?ooo`030000003oool0oooo04`0oooo
+1P00001o0?ooo`030000003oool0oooo02/0oooo001L0?ooo`800000A`3oool00`2LB000B9cO0?oo
+o`060?ooo`@00000BP3oool700000800oooo00<000000?ooo`3oool0:P3oool005X0oooo0P00001:
+0?ooo`0309a8M02oool0oooo00D0oooo00<000000?ooo`3oool0AP3oool500000080oooo1P00001o
+0?ooo`030000003oool0oooo02X0oooo001H0?ooo`800000A`3oool00`3OW4P0M;oo0?ooo`020?oo
+o`030;md001d_ol0oooo00D0oooo00<000000?ooo`3oool0?03oool3000000l0oooo0P0000030?oo
+o`800000OP3oool00`000000oooo0?ooo`0Y0?ooo`00EP3oool2000004T0oooo00L0okmd0000M02o
+ool0oooo0?noM00004P0W=oo00H0oooo00<000000?ooo`3oool0>03oool4000001<0oooo00<00000
+0?ooo`3oool00`3oool2000007`0oooo00<000000?ooo`3oool0:@3oool005@0oooo0P00001<0?oo
+o`050?noM000000000000000B02Lgol01`3oool00`000000oooo0?ooo`0e0?ooo`<000005`3oool0
+0`000000oooo0?ooo`210?ooo`030000003oool0oooo02T0oooo001B0?ooo`800000FP3oool00`00
+0000oooo0?ooo`0/0?ooo`8000008@3oool00`000000oooo0?ooo`220?ooo`030000003oool0oooo
+02P0oooo001@0?ooo`800000G03oool00`000000oooo0?ooo`0X0?ooo`@000008`3oool00`000000
+oooo0?ooo`220?ooo`030000003oool0oooo02P0oooo001>0?ooo`800000GP3oool00`000000oooo
+0?ooo`0U0?ooo`<000009`3oool00`000000oooo0?ooo`0<0?ooo`030000003oool0oooo07<0oooo
+00<000000?ooo`3oool0:03oool004`0oooo0P00001P0?ooo`<000006`3oool200000380oooo00<0
+00000?ooo`3oool03@3oool2000007@0oooo00<000000?ooo`3oool09`3oool004X0oooo0P00001R
+0?ooo`030000003oool0oooo01L0oooo100000160?ooo`800000LP3oool00`000000oooo0?ooo`0W
+0?ooo`00B03oool2000006@0oooo00<000000?ooo`3oool0503oool3000004`0oooo0P00001a0?oo
+o`030000003oool0oooo02H0oooo00170?ooo`030000003oool0oooo06@0oooo00<000000?ooo`3o
+ool02P3oool2000005T0oooo0P00001_0?ooo`030000003oool0oooo02H0oooo00150?ooo`800000
+I`3oool00`000000oooo0?ooo`060?ooo`@00000c03oool00`000000oooo0?ooo`0V0?ooo`00@`3o
+ool2000006T0oooo00<000000?ooo`3oool00`3oool300000=40oooo00<000000?ooo`3oool09@3o
+ool00440oooo0P00001W0?ooo`8000000P3oool00`000000oooo0?ooo`3G0?ooo`030000003oool0
+oooo02D0oooo000o0?ooo`800000I@3oool4000000@0oooo00<000000?ooo`3oool0K@3oool00`00
+0000oooo0?ooo`1X0?ooo`030000003oool0oooo02@0oooo000m0?ooo`800000I03oool3000000P0
+oooo0`00001^0?ooo`800000J03oool00`000000oooo0?ooo`0T0?ooo`00>`3oool2000005X0oooo
+1000000C0?ooo`030000003oool0oooo04l0oooo00<000000?ooo`3oool07P3oool2000006H0oooo
+00<000000?ooo`3oool0903oool003T0oooo0P00001G0?ooo`D000005`3oool00`000000oooo0?oo
+o`1?0?ooo`030000003oool0oooo0200oooo0P00001U0?ooo`030000003oool0oooo02<0oooo000g
+0?ooo`800000M@3oool00`000000oooo0?ooo`1?0?ooo`030000003oool0oooo0280oooo0P00001S
+0?ooo`030000003oool0oooo02<0oooo000e0?ooo`800000C`3oool4000002@0oooo00<000000?oo
+o`3oool0C`3oool00`000000oooo0?ooo`270?ooo`030000003oool0oooo02<0oooo000c0?ooo`80
+0000C03oool5000002P0oooo00<000000?ooo`3oool0C`3oool00`000000oooo0?ooo`280?ooo`03
+0000003oool0oooo0280oooo000a0?ooo`800000N`3oool00`000000oooo0?ooo`1?0?ooo`030000
+003oool0oooo08P0oooo00<000000?ooo`3oool08P3oool002l0oooo0P0000140?ooo`D00000=03o
+ool00`000000oooo0?ooo`1?0?ooo`030000003oool0oooo02/0oooo00<000000?ooo`3oool0F`3o
+ool00`000000oooo0?ooo`0Q0?ooo`00;@3oool200000440oooo1@00000i0?ooo`030000003oool0
+oooo04l0oooo00<000000?ooo`3oool0;03oool2000005/0oooo00<000000?ooo`3oool08@3oool0
+02/0oooo0P0000210?ooo`<00000C`3oool00`000000oooo0?ooo`0^0?ooo`800000F@3oool00`00
+0000oooo0?ooo`0Q0?ooo`00:@3oool2000003T0oooo1@0000150?ooo`030000003oool0oooo0880
+oooo0P00001H0?ooo`030000003oool0oooo0200oooo000X0?ooo`030000003oool0oooo03@0oooo
+1@00001:0?ooo`030000003oool0oooo08@0oooo00<000000?ooo`3oool0E@3oool00`000000oooo
+0?ooo`0P0?ooo`009P3oool2000008H0oooo00<000000?ooo`3oool0g@3oool00`000000oooo0?oo
+o`0O0?ooo`00903oool2000002d0oooo1@00001F0?ooo`030000003oool0oooo0=d0oooo00<00000
+0?ooo`3oool07`3oool00280oooo0P00000Z0?ooo`D00000F`3oool00`000000oooo0?ooo`3M0?oo
+o`030000003oool0oooo01l0oooo000P0?ooo`8000008P3oool3000006L0oooo00<000000?ooo`3o
+ool0S03oool00`000000oooo0?ooo`1?0?ooo`030000003oool0oooo01h0oooo000N0?ooo`800000
+803oool4000006X0oooo00<000000?ooo`3oool0S@3oool2000004l0oooo00<000000?ooo`3oool0
+7P3oool001`0oooo0P00000O0?ooo`<00000KP3oool3000008l0oooo0P00001=0?ooo`030000003o
+ool0oooo01h0oooo000J0?ooo`800000603oool2000007P0oooo00<000000?ooo`3oool0C`3oool0
+0`000000oooo0?ooo`0o0?ooo`800000C03oool00`000000oooo0?ooo`0M0?ooo`00603oool20000
+01H0oooo1000001j0?ooo`030000003oool0oooo04l0oooo00<000000?ooo`3oool0@@3oool00`00
+0000oooo0?ooo`190?ooo`030000003oool0oooo01d0oooo000F0?ooo`8000005@3oool3000007h0
+oooo00<000000?ooo`3oool0C`3oool00`000000oooo0?ooo`2>0?ooo`030000003oool0oooo01`0
+oooo000D0?ooo`8000003@3oool2000008T0oooo00<000000?ooo`3oool0C`3oool00`000000oooo
+0?ooo`2>0?ooo`030000003oool0oooo01`0oooo000B0?ooo`8000002`3oool4000007l0oooo00D0
+_g@0000000000000000004RLg`070?ooo`030000003oool0oooo04l0oooo00<000000?ooo`3oool0
+SP3oool00`000000oooo0?ooo`0L0?ooo`002P3oool2000000@0oooo0P00000:0?ooo`<00000PP3o
+ool01`2oM00007Bo0?ooo`3oool0oono07@00018W=l01P3oool00`000000oooo0?ooo`1?0?ooo`03
+0000003oool0oooo04T0oooo00<000000?ooo`3oool0@`3oool00`000000oooo0?ooo`0K0?ooo`00
+2@3oool4000000030?ooo`00000000000080oooo0P00002B0?ooo`030?noM000M;l0oooo00D0oooo
+00<000000?ooo`3oool0C`3oool00`000000oooo0?ooo`1:0?ooo`800000@`3oool00`000000oooo
+0?ooo`0K0?ooo`00203oool:000009<0oooo00<0omnL04P0B02Lgol01P3oool00`000000oooo0?oo
+o`1?0?ooo`030000003oool0oooo04`0oooo0P0000110?ooo`030000003oool0oooo01/0oooo0008
+0?ooo`H00000U@3oool0103OW4P000000000B02Lgol70?ooo`@00000CP3oool00`000000oooo0?oo
+o`1>0?ooo`800000@03oool00`000000oooo0?ooo`0J0?ooo`002@3oool7000009D0oooo00<0omnL
+04P0B02Lgol01P3oool00`000000oooo0?ooo`2R0?ooo`800000?P3oool00`000000oooo0?ooo`0J
+0?ooo`002P3oool2000000@0oooo0`00002C0?ooo`030;md001d_ol0oooo00D0oooo00<000000?oo
+o`3oool0h`3oool00`000000oooo0?ooo`0I0?ooo`004`3oool3000008/0oooo00L0okmd0000B02L
+gol0oooo0?oOW01804P0W=oo00H0oooo00<000000?ooo`3oool0h`3oool00`000000oooo0?ooo`0I
+0?ooo`005P3oool3000008T0oooo00D0omnL04P000000000000007Boo`070?ooo`030000003oool0
+oooo0><0oooo00<000000?ooo`3oool06@3oool001T0oooo0`00002B0?ooo`030000003oool0oooo
+0:X0oooo00<000000?ooo`3oool0=`3oool00`000000oooo0?ooo`0H0?ooo`00703oool200000900
+oooo00<000000?ooo`3oool0Z`3oool2000003L0oooo00<000000?ooo`3oool0603oool001h0oooo
+0`00002=0?ooo`030000003oool0oooo0:d0oooo0P00000f0?ooo`030000003oool0oooo01L0oooo
+000Q0?ooo`<00000RP3oool300000:l0oooo0P00000d0?ooo`030000003oool0oooo01L0oooo000T
+0?ooo`<00000Q`3oool00`000000oooo0?ooo`1?0?ooo`030000003oool0oooo05l0oooo0P00000b
+0?ooo`030000003oool0oooo01L0oooo000W0?ooo`<00000Q03oool00`000000oooo0?ooo`1?0?oo
+o`030000003oool0oooo09@0oooo00<000000?ooo`3oool05P3oool002X0oooo0`0000210?ooo`03
+0000003oool0oooo04l0oooo00<000000?ooo`3oool0U03oool00`000000oooo0?ooo`0F0?ooo`00
+;@3oool3000007h0oooo00<000000?ooo`3oool0C`3oool00`000000oooo0?ooo`2D0?ooo`030000
+003oool0oooo01H0oooo000`0?ooo`<00000N`3oool00`000000oooo0?ooo`1?0?ooo`030000003o
+ool0oooo06P0oooo0P00000[0?ooo`030000003oool0oooo01D0oooo000c0?ooo`<00000N03oool0
+0`000000oooo0?ooo`1?0?ooo`030000003oool0oooo06X0oooo0P00000Y0?ooo`030000003oool0
+oooo01D0oooo000f0?ooo`<00000M@3oool00`000000oooo0?ooo`1?0?ooo`030000003oool0oooo
+06`0oooo0P00000X0?ooo`030000003oool0oooo01@0oooo000i0?ooo`<00000LP3oool3000004l0
+oooo00<000000?ooo`3oool0KP3oool2000002H0oooo00<000000?ooo`3oool0503oool003`0oooo
+0`00001_0?ooo`030000003oool0oooo04l0oooo00<000000?ooo`3oool0UP3oool00`000000oooo
+0?ooo`0D0?ooo`00?`3oool2000006d0oooo00<000000?ooo`3oool0C`3oool00`000000oooo0?oo
+o`2G0?ooo`030000003oool0oooo01<0oooo00110?ooo`<00000JP3oool00`000000oooo0?ooo`3Y
+0?ooo`030000003oool0oooo01<0oooo00140?ooo`<00000I`3oool00`000000oooo0?ooo`390?oo
+o`030000003oool0oooo01h0oooo00<000000?ooo`3oool04P3oool004L0oooo0`00001T0?ooo`03
+0000003oool0oooo0<X0oooo0P00000N0?ooo`030000003oool0oooo0180oooo001:0?ooo`<00000
+H@3oool00`000000oooo0?ooo`3<0?ooo`800000703oool00`000000oooo0?ooo`0B0?ooo`00C@3o
+ool3000005h0oooo00<000000?ooo`3oool0cP3oool2000001/0oooo00<000000?ooo`3oool04@3o
+ool00500oooo0`00001K0?ooo`030000003oool0oooo0=00oooo00<000000?ooo`3oool0603oool0
+0`000000oooo0?ooo`0A0?ooo`00D`3oool3000005P0oooo0`00003[0?ooo`030000003oool0oooo
+0140oooo001F0?ooo`<00000E@3oool00`000000oooo0?ooo`1?0?ooo`030000003oool0oooo09X0
+oooo00<000000?ooo`3oool0403oool005T0oooo0`00001B0?ooo`030000003oool0oooo04l0oooo
+00<000000?ooo`3oool0VP3oool00`000000oooo0?ooo`0@0?ooo`00G03oool3000004l0oooo00<0
+00000?ooo`3oool0C`3oool00`000000oooo0?ooo`260?ooo`030000003oool0oooo0180oooo00<0
+00000?ooo`3oool03`3oool005l0oooo0`00001<0?ooo`030000003oool0oooo04l0oooo00<00000
+0?ooo`3oool0Q`3oool200000180oooo00<000000?ooo`3oool03`3oool00680oooo0P00001:0?oo
+o`030000003oool0oooo04l0oooo00<000000?ooo`3oool0R@3oool200000100oooo00<000000?oo
+o`3oool03`3oool006@0oooo0`0000170?ooo`030000003oool0oooo04l0oooo00<000000?ooo`3o
+ool0R`3oool2000000l0oooo00<000000?ooo`3oool03P3oool006L0oooo0`0000140?ooo`030000
+003oool0oooo04l0oooo00<000000?ooo`3oool0S@3oool2000000d0oooo00<000000?ooo`3oool0
+3P3oool006X0oooo0`0000110?ooo`<00000C`3oool00`000000oooo0?ooo`2M0?ooo`030000003o
+ool0oooo00d0oooo001]0?ooo`<00000?P3oool00`000000oooo0?ooo`1?0?ooo`030000003oool0
+oooo09d0oooo00<000000?ooo`3oool03@3oool00700oooo0`00000k0?ooo`030000003oool0oooo
+04l0oooo00<000000?ooo`3oool0W@3oool00`000000oooo0?ooo`0=0?ooo`00L`3oool3000003P0
+oooo00<000000?ooo`3oool0i`3oool00`000000oooo0?ooo`060?ooo`030000003oool0oooo00`0
+oooo001f0?ooo`<00000=@3oool00`000000oooo0?ooo`3X0?ooo`8000001P3oool00`000000oooo
+0?ooo`0<0?ooo`00N@3oool3000002L0oooo00D0omnL04P000000000000007Boo`060?ooo`030000
+003oool0oooo0>X0oooo0P0000040?ooo`030000003oool0oooo00`0oooo001l0?ooo`<000009P3o
+ool00`2oM000M;oo0?ooo`060?ooo`030000003oool0oooo0>`0oooo0P0000030?ooo`<000002`3o
+ool007l0oooo0`00000S0?ooo`030;md001d_ol0oooo00H0oooo00<000000?ooo`3oool0kP3oool2
+000000030?ooo`0000000000008000002P3oool00880oooo0`00000L0?ooo`030=nLB00000000000
+00<0000000<0M;oo0?ooo`3oool0103oool00`000000oooo0?ooo`3`0?ooo`H000002@3oool008D0
+oooo0P00000J0?ooo`060?noM00007@0_ooo0?ooo`2oM000M;oo1`3oool400000>l0oooo1P000009
+0?ooo`00Q`3oool3000001P0oooo00D0gia8001d_`3oool0_g@007Boo`070?ooo`030000003oool0
+oooo04l0oooo00<000000?ooo`3oool0V`3oool8000000X0oooo002:0?ooo`<000005P3oool0102L
+B000B9cO0;md001d_ol70?ooo`030000003oool0oooo04l0oooo00<000000?ooo`3oool0U`3oool4
+000000D0oooo0P00000;0?ooo`00S@3oool3000001<0oooo00@0omnL04P0B018B000M;oo1`3oool0
+0`000000oooo0?ooo`1?0?ooo`030000003oool0oooo09<0oooo1000000F0?ooo`00T03oool30000
+0140oooo00<0okmd0000001d_ol01`3oool00`000000oooo0?ooo`1?0?ooo`030000003oool0oooo
+08l0oooo1000000J0?ooo`00T`3oool3000001P0oooo00<000000?ooo`3oool0C`3oool00`000000
+oooo0?ooo`2;0?ooo`@000007P3oool009H0oooo0`00000E0?ooo`030000003oool0oooo04l0oooo
+00<000000?ooo`3oool0Q`3oool400000280oooo002I0?ooo`<000004P3oool00`000000oooo0?oo
+o`1?0?ooo`030000003oool0oooo08<0oooo1000000V0?ooo`00W03oool3000000l0oooo0`00001?
+0?ooo`030000003oool0oooo0800oooo0`00000Z0?ooo`00W`3oool3000000`0oooo00<000000?oo
+o`3oool0C`3oool00`000000oooo0?ooo`1l0?ooo`@00000;@3oool00:80oooo0`0000090?ooo`03
+0000003oool0oooo04l0oooo00<000000?ooo`3oool0N03oool400000340oooo002U0?ooo`<00000
+1P3oool00`000000oooo0?ooo`360?ooo`@00000=@3oool00:P0oooo0P0000040?ooo`030000003o
+ool0oooo0<80oooo1000000i0?ooo`00ZP3oool3000000030?ooo`000000oooo0;l0oooo1000000m
+0?ooo`00[@3oool300000;/0oooo100000110?ooo`00[P3oool00`000000oooo0000000200000;@0
+oooo100000150?ooo`00[P3oool00`000000oooo0?ooo`020?ooo`<00000[@3oool4000004T0oooo
+002^0?ooo`<000001@3oool300000:L0oooo0`00001=0?ooo`00[P3oool00`000000oooo0?ooo`08
+0?ooo`<00000A03oool00`000000oooo0?ooo`1I0?ooo`@00000D03oool00:h0oooo00<000000?oo
+o`3oool02`3oool300000440oooo00<000000?ooo`3oool0E@3oool4000005@0oooo002^0?ooo`03
+0000003oool0oooo00h0oooo0`00000n0?ooo`030000003oool0oooo0540oooo1000001H0?ooo`00
+[P3oool00`000000oooo0?ooo`0A0?ooo`<00000>`3oool00`000000oooo0?ooo`1=0?ooo`@00000
+G03oool00:h0oooo00<000000?ooo`3oool0503oool3000003P0oooo00<000000?ooo`3oool0B@3o
+ool400000600oooo002^0?ooo`030000003oool0oooo01L0oooo0`00000e0?ooo`030000003oool0
+oooo04D0oooo1000001T0?ooo`00[P3oool00`000000oooo0?ooo`0J0?ooo`800000<`3oool00`00
+0000oooo0?ooo`110?ooo`@00000J03oool00:h0oooo0`00000L0?ooo`<00000<03oool00`000000
+oooo0?ooo`0n0?ooo`<00000K03oool00:h0oooo00<000000?ooo`3oool07`3oool3000002d0oooo
+00<000000?ooo`3oool0>P3oool4000006l0oooo002^0?ooo`030000003oool0oooo0280oooo0`00
+000Z0?ooo`030000003oool0oooo03H0oooo1000001c0?ooo`00[P3oool00`000000oooo0?ooo`0U
+0?ooo`<00000G03oool4000007L0oooo002^0?ooo`030000003oool0oooo02P0oooo0`00001E0?oo
+o`@00000N`3oool00:h0oooo00<000000?ooo`3oool0:`3oool3000004h0oooo1000001o0?ooo`00
+[P3oool00`000000oooo0?ooo`0^0?ooo`<00000A`3oool4000008<0oooo002^0?ooo`030000003o
+ool0oooo0340oooo0`0000100?ooo`@00000Q`3oool00:h0oooo0`00000d0?ooo`<00000>@3oool4
+000008/0oooo002^0?ooo`030000003oool0oooo03L0oooo0`00000c0?ooo`<00000S`3oool00:h0
+oooo00<000000?ooo`3oool0>P3oool3000002`0oooo1000002B0?ooo`00[P3oool00`000000oooo
+0?ooo`0m0?ooo`800000403oool00`000000oooo0?ooo`0C0?ooo`@00000UP3oool00:h0oooo00<0
+00000?ooo`3oool0?`3oool3000000d0oooo00<000000?ooo`3oool03`3oool4000009X0oooo002R
+0?ooo`050;md0000000000000000001d_ol01`3oool00`000000oooo0?ooo`120?ooo`<000002P3o
+ool00`000000oooo0?ooo`0;0?ooo`@00000WP3oool00:40oooo00L0_g@0001d_`3oool0oooo0?oO
+W0180000M;oo00H0oooo00<000000?ooo`3oool0A@3oool3000000H0oooo0P0000090?ooo`@00000
+XP3oool00:H0oooo00<0okmd001d_`3oool01@3oool00`000000oooo0?ooo`180?ooo`<000000P3o
+ool4000000@0oooo1000002V0?ooo`00YP3oool00`3o_g@007Bo0?ooo`050?ooo`030000003oool0
+oooo04/0oooo2P00002Z0?ooo`00YP3oool00`2LB000M;oo0?ooo`050?ooo`@00000B`3oool60000
+0:d0oooo002Q0?ooo`030?oo_`1d000000000080000000<0B9cO0?ooo`3oool01@3oool00`000000
+oooo0?ooo`1=0?ooo`@00000[P3oool00:40oooo00<0oono07@0M02oool02P3oool00`000000oooo
+0?ooo`1>0?ooo`800000[`3oool00:40oooo00<0oono07@0M02oool02P3oool00`000000oooo0?oo
+o`3o0?ooo`00X@3oool00`3ookl0M00000000002000000030000M02oool0oooo00D0oooo00<00000
+0?ooo`3oool0o`3oool00:h0oooo00<000000?ooo`3oool0o`3oool00:h0oooo00<000000?ooo`3o
+ool0o`3oool00001\
+\>"],
+  ImageRangeCache->{{{0, 431}, {265.875, 0}} -> {-2.13867, -1.16046, \
+0.0183666, 0.0356614}}]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Implementation", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["winding number, wn", "Subsection"],
+
+Cell[TextData[{
+  "The following function evaluates the winding number.  The dot products \
+with ",
+  Cell[BoxData[
+      \(TraditionalForm\`{1, \[ImaginaryI]}\)]],
+  " convert the Cartesian coordinates to the complex numbers needed by ",
+  StyleBox["Arg", "InlineInput"],
+  ".  Chop ensures that vanishing winding numbers are returned as 0 instead \
+of a numerically insignificant number.  Note that this function is undefined \
+for points that coincide with any of the vertices."
+}], "Text"],
+
+Cell[BoxData[
+    \(wn[a_, poly_] := 
+      Chop[\(1\/\(2  \[Pi]\)\) 
+          Sum[Arg\ [\((poly\[LeftDoubleBracket]k + 1\[RightDoubleBracket] - \
+a)\) . {1. , \
+\[ImaginaryI]}\/\((poly\[LeftDoubleBracket]k\[RightDoubleBracket] - a)\) . \
+{1. , \[ImaginaryI]}], {k, 1, Length[poly] - 1}]]\)], "Input"],
+
+Cell["\<\
+To test this function, we construct a closed polygon with several loops.  \
+Selected points are numbered in the diagram.  Point 1 is clearly surrounded \
+once in a positive sense, point 2 once in a negative sense, point 3 twice in \
+a negative sense, and point 4 is exterior.  Also observe that point 5 is not \
+enclosed while point 6 is encompassed once in a negative sense.  As shown \
+below, our function successfully computes these winding numbers.\
+\>", "Text"],
+
+Cell[BoxData[{
+    \(\(poly = {{0, 4}, {7, 4}, {7, \(-3\)}, {\(-2\), \(-3\)}, {0, 2}, {5, 
+            2}, {3, \(-2\)}, {\(-4\), 3}, {\(-5\), 0}, {\(-3\), \(-3\)}, {0, 
+            4}};\)\), "\[IndentingNewLine]", 
+    \(\(pts = {{\(-3\), \(-1\)}, {5, 3}, {2, 1}, {\(-2\), 
+            4}, {\(-1.85\), \(-1.5\)}, {\(-0.6\), 1.5}};\)\)}], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(TextListPlot[pts, PlotStyle \[Rule] AbsolutePointSize[4], 
+        PlotRange \[Rule] {{\(-7.5\), 7.5}, {\(-5\), 5}}, Ticks \[Rule] None, 
+        Epilog \[Rule] {Line[poly], 
+            Table[Arrow[
+                poly\[LeftDoubleBracket]
+                  k\[RightDoubleBracket], \(poly\[LeftDoubleBracket]k\
+\[RightDoubleBracket] + poly\[LeftDoubleBracket]k + \
+1\[RightDoubleBracket]\)\/2], {k, 1, Length[poly] - 1}]}];\)\)], "Input"],
+
+Cell[GraphicsData["PostScript", "\<\
+%!
+%%Creator: Mathematica
+%%AspectRatio: .61803 
+MathPictureStart
+/Mabs {
+Mgmatrix idtransform
+Mtmatrix dtransform
+} bind def
+/Mabsadd { Mabs
+3 -1 roll add
+3 1 roll add
+exch } bind def
+%% Graphics
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10  scalefont  setfont
+% Scaling calculations
+0.5 0.0666667 0.309017 0.0618034 [
+[ 0 0 0 0 ]
+[ 1 .61803 0 0 ]
+] MathScale
+% Start of Graphics
+1 setlinecap
+1 setlinejoin
+newpath
+0 g
+.25 Mabswid
+[ ] 0 setdash
+0 .30902 m
+1 .30902 L
+s
+.5 0 m
+.5 .61803 L
+s
+0 0 m
+1 0 L
+1 .61803 L
+0 .61803 L
+closepath
+clip
+newpath
+% Start of user PostScript
+/mathtops {
+gsave
+MBeginOrig
+moveto
+MEndOrig
+currentpoint
+grestore
+} bind def
+/MAtocoords {
+mathtops 4 2 roll mathtops
+4 copy pop pop
+3 -1 roll sub
+/arry exch def
+exch sub
+/arrx exch def
+arrx dup mul
+arry dup mul
+add sqrt
+/arrl exch def
+translate
+} bind def
+/MAarrowhead1 {
+gsave
+MAtocoords
+arrl 0. eq
+{ 0 0 Mdot }
+{
+[ arrx arrl div
+arry arrl div
+-1 arry mul arrl div
+arrx arrl div
+0 0 ]
+concat
+-0.05 0.0125 moveto 0 0 lineto
+-0.05 -0.0125 lineto fill
+-0.05 0.0125 moveto 0 0 lineto
+-0.05 -0.0125 lineto
+-0.05 0.0125 lineto stroke
+} ifelse
+grestore
+} def
+% End of user PostScript
+[(1)] .3 .24721 0 0 Mshowa
+[(2)] .83333 .49443 0 0 Mshowa
+[(3)] .63333 .37082 0 0 Mshowa
+[(4)] .36667 .55623 0 0 Mshowa
+[(5)] .37667 .21631 0 0 Mshowa
+[(6)] .46 .40172 0 0 Mshowa
+.5 Mabswid
+.5 .55623 m
+.96667 .55623 L
+.96667 .12361 L
+.36667 .12361 L
+.5 .43262 L
+.83333 .43262 L
+.7 .18541 L
+.23333 .49443 L
+.16667 .30902 L
+.3 .12361 L
+.5 .55623 L
+s
+.5 .55623 m
+.73333 .55623 L
+s
+% Start of user PostScript
+0. 4. 3.5 4. MAarrowhead1
+% End of user PostScript
+.96667 .55623 m
+.96667 .33992 L
+s
+% Start of user PostScript
+7. 4. 7. 0.5 MAarrowhead1
+% End of user PostScript
+.96667 .12361 m
+.66667 .12361 L
+s
+% Start of user PostScript
+7. -3. 2.5 -3. MAarrowhead1
+% End of user PostScript
+.36667 .12361 m
+.43333 .27812 L
+s
+% Start of user PostScript
+-2. -3. -1. -0.5 MAarrowhead1
+% End of user PostScript
+.5 .43262 m
+.66667 .43262 L
+s
+% Start of user PostScript
+0. 2. 2.5 2. MAarrowhead1
+% End of user PostScript
+.83333 .43262 m
+.76667 .30902 L
+s
+% Start of user PostScript
+5. 2. 4. 0. MAarrowhead1
+% End of user PostScript
+.7 .18541 m
+.46667 .33992 L
+s
+% Start of user PostScript
+3. -2. -0.5 0.5 MAarrowhead1
+% End of user PostScript
+.23333 .49443 m
+.2 .40172 L
+s
+% Start of user PostScript
+-4. 3. -4.5 1.5 MAarrowhead1
+% End of user PostScript
+.16667 .30902 m
+.23333 .21631 L
+s
+% Start of user PostScript
+-5. 0. -4. -1.5 MAarrowhead1
+% End of user PostScript
+.3 .12361 m
+.4 .33992 L
+s
+% Start of user PostScript
+-3. -3. -1.5 0.5 MAarrowhead1
+% End of user PostScript
+% End of Graphics
+MathPictureEnd
+\
+\>"], "Graphics",
+  ImageSize->{288, 177.938},
+  ImageMargins->{{0, 0}, {0, 0}},
+  ImageRegion->{{0, 1}, {0, 1}},
+  ImageCache->GraphicsData["Bitmap", "\<\
+CF5dJ6E]HGAYHf4PAg9QL6QYHg<PAVmbKF5d0`40006`00012R000`400?l00000o`00003oe`3oool0
+0`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000
+oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?oo
+o`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?oo
+o`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3o
+ool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`00
+0000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo
+0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F
+0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00
+e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool0
+0`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000
+oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?oo
+o`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?oo
+o`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3o
+ool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`00
+0000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo
+0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F
+0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00
+e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool0
+0`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000
+oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?oo
+o`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?oo
+o`00e`3oool00`000000oooo0?ooo`1I0?ooo`800000N`3oool00=L0oooo00<000000?ooo`3oool0
+E@3oool6000007/0oooo003G0?ooo`030000003oool0oooo0580oooo2@00001k0?ooo`00e`3oool0
+0`000000oooo0?ooo`1>0?ooo`d00000N`3oool00=L0oooo00<000000?ooo`3oool0B`3oool@0000
+07/0oooo003G0?ooo`030000003oool0oooo04L0oooo5000001k0?ooo`00P@3oool00`000000oooo
+0?ooo`0J0?ooool000001000000?0?ooo`00P03oool2000001`0oooo00<000000?ooo`3oool0=P3o
+ool00`000000oooo0?ooo`180?oooa<00000J`3oool00`000000oooo0?ooo`0=0?ooo`00P03oool0
+0`000000oooo0000000L0?ooo`030000003oool0oooo03D0oooo00<000000?ooo`3oool0C03oool?
+000006/0oooo00<000000?ooo`3oool03@3oool007l0oooo00@000000?ooo`3oool00000703oool0
+0`000000oooo0?ooo`0e0?ooo`030000003oool0oooo0500oooo2`00001[0?ooo`030000003oool0
+oooo00d0oooo001n0?ooo`030000003oool0oooo0080oooo00<000000?ooo`3oool06P3oool00`00
+0000oooo0?ooo`0d0?ooo`030000003oool0oooo05@0oooo1`00001[0?ooo`030000003oool0oooo
+00d0oooo001m0?ooo`030000003oool0oooo00<0oooo00<000000?ooo`3oool06P3oool00`000000
+oooo0?ooo`0d0?ooo`030000003oool0oooo05P0oooo0`00001[0?ooo`030000003oool0oooo00d0
+oooo001m0?ooo`030000003oool0oooo00@0oooo00<000000?ooo`3oool06P3oool00`000000oooo
+0?ooo`0c0?ooo`030000003oool0oooo0<H0oooo00<000000?ooo`3oool03@3oool007`0oooo00<0
+00000?ooo`3oool01@3oool00`000000oooo0?ooo`0J0?ooo`030000003oool0oooo03<0oooo00<0
+00000?ooo`3oool0aP3oool00`000000oooo0?ooo`0=0?ooo`00N`3oool00`000000oooo0?ooo`07
+0?ooo`030000003oool0oooo01T0oooo00<000000?ooo`3oool0<`3oool00`000000oooo0?ooo`36
+0?ooo`030000003oool0oooo00d0oooo001k0?ooo`030000003oool0oooo00L0oooo00<000000?oo
+o`3oool06P3oool00`000000oooo0?ooo`0b0?ooo`030000003oool0oooo0<H0oooo00<000000?oo
+o`3oool03@3oool007X0oooo00<000000?ooo`3oool02@3oool00`000000oooo0?ooo`0I0?ooo`03
+0000003oool0oooo0380oooo00<000000?ooo`3oool0aP3oool00`000000oooo0?ooo`0=0?ooo`00
+N@3oool00`000000oooo0?ooo`0:0?ooo`030000003oool0oooo01X0oooo00<000000?ooo`3oool0
+<@3oool00`000000oooo0?ooo`360?ooo`030000003oool0oooo00d0oooo001h0?ooo`030000003o
+ool0oooo00`0oooo00<000000?ooo`3oool06@3oool00`000000oooo0?ooo`0a0?ooo`030000003o
+ool0oooo0<H0oooo00<000000?ooo`3oool03@3oool007P0oooo00<000000?ooo`3oool0303oool0
+0`000000oooo0?ooo`0J0?ooo`030000003oool0oooo0300oooo00<000000?ooo`3oool0aP3oool0
+0`000000oooo0?ooo`0=0?ooo`00M`3oool00`000000oooo0?ooo`0=0?ooo`030000003oool0oooo
+01X0oooo00<000000?ooo`3oool0<03oool00`000000oooo0?ooo`360?ooo`030000003oool0oooo
+00d0oooo001f0?ooo`030000003oool0oooo00l0oooo00<000000?ooo`3oool06@3oool00`000000
+oooo0?ooo`0`0?ooo`030000003oool0oooo0<H0oooo00<000000?ooo`3oool03@3oool007H0oooo
+00<000000?ooo`3oool03`3oool00`000000oooo0?ooo`0J0?ooo`030000003oool0oooo02l0oooo
+00<000000?ooo`3oool0aP3oool00`000000oooo0?ooo`0=0?ooo`00M@3oool00`000000oooo0?oo
+o`0A0?ooo`030000003oool0oooo01T0oooo00<000000?ooo`3oool0;`3oool00`000000oooo0?oo
+o`360?ooo`030000003oool0oooo00d0oooo001d0?ooo`030000003oool0oooo0180oooo00<00000
+0?ooo`3oool06P3oool00`000000oooo0?ooo`0^0?ooo`030000003oool0oooo0<H0oooo00<00000
+0?ooo`3oool03@3oool007<0oooo00<000000?ooo`3oool0503oool00`000000oooo0?ooo`0I0?oo
+o`030000003oool0oooo02h0oooo00<000000?ooo`3oool0aP3oool00`000000oooo0?ooo`0=0?oo
+o`00L`3oool00`000000oooo0?ooo`0D0?ooo`030000003oool0oooo01T0oooo0P00000_0?ooo`03
+0000003oool0oooo0<H0oooo00<000000?ooo`3oool03@3oool00780oooo00<000000?ooo`3oool0
+5P3oool00`000000oooo0?ooo`0I0?ooo`030000003oool0oooo02d0oooo00<000000?ooo`3oool0
+aP3oool00`000000oooo0?ooo`0=0?ooo`00L@3oool00`000000oooo0?ooo`0G0?ooo`030000003o
+ool0oooo01T0oooo00<000000?ooo`3oool0;@3oool00`000000oooo0?ooo`360?ooo`030000003o
+ool0oooo00d0oooo001a0?ooo`030000003oool0oooo01P0oooo00<000000?ooo`3oool06@3oool0
+0`000000oooo0?ooo`0/0?ooo`030000003oool0oooo0<H0oooo00<000000?ooo`3oool03@3oool0
+0700oooo00<000000?ooo`3oool06@3oool00`000000oooo0?ooo`0I0?ooo`030000003oool0oooo
+02`0oooo00<000000?ooo`3oool0aP3oool00`000000oooo0?ooo`0=0?ooo`00K`3oool00`000000
+oooo0?ooo`0K0?ooo`030000003oool0oooo01T0oooo00<000000?ooo`3oool0:`3oool00`000000
+oooo0?ooo`360?ooo`030000003oool0oooo00d0oooo001^0?ooo`030000003oool0oooo01`0oooo
+00<000000?ooo`3oool06@3oool00`000000oooo0?ooo`0[0?ooo`030000003oool0oooo05<0oooo
+00<000000?ooo`3oool0L03oool00`000000oooo0?ooo`0=0?ooo`00KP3oool00`000000oooo0?oo
+o`0L0?ooo`030000003oool0oooo01T0oooo0P00000/0?ooo`030000003oool0oooo0540oooo0P00
+00000`3oool000000?ooo`1`0?ooo`030000003oool0oooo00d0oooo001]0?ooo`030000003oool0
+oooo01h0oooo00<000000?ooo`3oool06@3oool00`000000oooo0?ooo`0Z0?ooo`030000003oool0
+oooo0500oooo00D000000?ooo`3oool0oooo0000001a0?ooo`030000003oool0oooo00d0oooo001/
+0?ooo`030000003oool0oooo01l0oooo00<000000?ooo`3oool06@3oool00`000000oooo0?ooo`0Z
+0?ooo`030000003oool0oooo04h0oooo0P0000050?ooo`030000003oool0oooo06h0oooo00<00000
+0?ooo`3oool03@3oool006`0oooo00<000000?ooo`3oool0803oool00`000000oooo0?ooo`0I0?oo
+o`030000003oool0oooo02T0oooo00<000000?ooo`3oool0C@3oool00`000000oooo0?ooo`050?oo
+o`030000003oool0oooo06h0oooo00<000000?ooo`3oool03@3oool006/0oooo00<000000?ooo`3o
+ool08@3oool00`000000oooo0?ooo`0I0?ooo`030000003oool0oooo02T0oooo00<000000?ooo`3o
+ool0B`3oool2000000T0oooo00<000000?ooo`3oool0K@3oool00`000000oooo0?ooo`0=0?ooo`00
+JP3oool00`000000oooo0?ooo`0S0?ooo`030000003oool0oooo01T0oooo00<000000?ooo`3oool0
+:03oool00`000000oooo0?ooo`1:0?ooo`030000003oool0oooo00T0oooo00<000000?ooo`3oool0
+K@3oool00`000000oooo0?ooo`0=0?ooo`00J@3oool00`000000oooo0?ooo`0T0?ooo`030000003o
+ool0oooo01T0oooo00<000000?ooo`3oool0:03oool00`000000oooo0?ooo`180?ooo`8000003@3o
+ool00`000000oooo0?ooo`1/0?ooo`030000003oool0oooo00d0oooo001Y0?ooo`030000003oool0
+oooo02D0oooo00<000000?ooo`3oool0603oool2000002T0oooo00<000000?ooo`3oool0A`3oool0
+0`000000oooo0?ooo`0=0?ooo`030000003oool0oooo06`0oooo00<000000?ooo`3oool03@3oool0
+06P0oooo00<000000?ooo`3oool09P3oool00`000000oooo0?ooo`0I0?ooo`030000003oool0oooo
+02L0oooo00<000000?ooo`3oool0A@3oool200000140oooo00<000000?ooo`3oool0J`3oool00`00
+0000oooo0?ooo`0=0?ooo`00I`3oool00`000000oooo0?ooo`0X0?ooo`030000003oool0oooo00X0
+oooo00D0_g@0000000000000000007Boo`090?ooo`030000003oool0oooo02L0oooo00<000000?oo
+o`3oool0A03oool00`000000oooo0?ooo`0A0?ooo`030000003oool0oooo06/0oooo00<000000?oo
+o`3oool03@3oool006L0oooo00<000000?ooo`3oool0:03oool00`000000oooo0?ooo`090?ooo`07
+0;md0000M;l0oooo0?ooo`3ogi`0B00007Boo`090?ooo`030000003oool0oooo02H0oooo00<00000
+0?ooo`3oool0@P3oool2000001D0oooo00<000000?ooo`3oool0JP3oool00`000000oooo0?ooo`0=
+0?ooo`00IP3oool00`000000oooo0?ooo`0Z0?ooo`030000003oool0oooo00d0oooo00<0okmd001d
+_`3oool0203oool00`000000oooo0?ooo`0V0?ooo`030000003oool0oooo0440oooo00<000000?oo
+o`3oool05@3oool00`000000oooo0?ooo`1Z0?ooo`030000003oool0oooo00d0oooo001U0?ooo`03
+0000003oool0oooo02/0oooo00<000000?ooo`3oool03@3oool00`3o_g@007Bo0?ooo`090?ooo`03
+0000003oool0oooo02D0oooo00<000000?ooo`3oool0?`3oool2000001T0oooo00<000000?ooo`3o
+ool0J@3oool00`000000oooo0?ooo`0=0?ooo`00I03oool00`000000oooo0?ooo`0/0?ooo`030000
+003oool0oooo00d0oooo00<0W4P007Boo`3oool02@3oool00`000000oooo0?ooo`0U0?ooo`030000
+003oool0oooo03h0oooo00<000000?ooo`3oool06@3oool00`000000oooo0?ooo`1Y0?ooo`030000
+003oool0oooo00d0oooo001S0?ooo`800000;`3oool00`000000oooo0?ooo`070?ooo`030?oo_`1d
+000000000080000000<0B9cO0?ooo`3oool02@3oool2000002H0oooo00<000000?ooo`3oool0?03o
+ool2000001d0oooo00<000000?ooo`3oool0J03oool00`000000oooo0?ooo`0=0?ooo`00H@3oool3
+00000300oooo00<000000?ooo`3oool01`3oool00`3ookl0M01d0;ooo`0?0?ooo`030000003oool0
+oooo02@0oooo00<000000?ooo`3oool0>`3oool00`000000oooo0?ooo`0N0?ooo`030000003oool0
+oooo06L0oooo00<000000?ooo`3oool03@3oool00600oooo1000000a0?ooo`030000003oool0oooo
+00H0oooo00<0oono07@0M02oool03`3oool00`000000oooo0?ooo`0T0?ooo`030000003oool0oooo
+03T0oooo0P00000Q0?ooo`030000003oool0oooo06L0oooo00<000000?ooo`3oool03@3oool005l0
+oooo1000000b0?ooo`030000003oool0oooo00H0oooo00<0oono07@0000000000P0000000`0007@0
+_ooo0?ooo`0;0?ooo`030000003oool0oooo00<0oooo00<000000?ooo`3oool07@3oool00`000000
+oooo0?ooo`0h0?ooo`030000003oool0oooo0280oooo00<000000?ooo`3oool0IP3oool00`000000
+oooo0?ooo`0=0?ooo`00GP3oool5000003<0oooo00<000000?ooo`3oool0603oool010000000oooo
+0?ooo`3oool3000001l0oooo00<000000?ooo`3oool0=P3oool2000002D0oooo00<000000?ooo`3o
+ool0IP3oool00`000000oooo0?ooo`0=0?ooo`00G@3oool6000003<0oooo00<000000?ooo`3oool0
+6@3oool6000001l0oooo00<000000?ooo`3oool0=@3oool00`000000oooo0?ooo`0V0?ooo`030000
+003oool0oooo06D0oooo00<000000?ooo`3oool03@3oool005/0oooo1`00000e0?ooo`030000003o
+ool0oooo01L0oooo1`00000O0?ooo`030000003oool0oooo03<0oooo0P00000Y0?ooo`030000003o
+ool0oooo06D0oooo00<000000?ooo`3oool03@3oool005X0oooo2000000e0?ooo`030000003oool0
+oooo01D0oooo2P00000N0?ooo`030000003oool0oooo0340oooo0P00000/0?ooo`030000003oool0
+oooo06@0oooo00<000000?ooo`3oool03@3oool005T0oooo2000000L0?ooo`030?noM00000000000
+00<0000000<007Bo0?ooo`3oool04P3oool00`000000oooo0?ooo`0B0?ooo``000007P3oool00`00
+0000oooo0?ooo`0`0?ooo`800000;@3oool00`000000oooo0?ooo`1T0?ooo`030000003oool0oooo
+00d0oooo001H0?ooo`T000007`3oool00`2LB4P0W=oo0?ooo`0E0?ooo`030000003oool0oooo01<0
+oooo2`00000N0?ooo`030000003oool0oooo02h0oooo0P00000`0?ooo`030000003oool0oooo06<0
+oooo00<000000?ooo`3oool03@3oool005L0oooo2P00000O0?ooo`0309a8B02Lgol0oooo01H0oooo
+00<000000?ooo`3oool04`3oool:000001h0oooo00<000000?ooo`3oool0;@3oool200000340oooo
+00<000000?ooo`3oool0H`3oool00`000000oooo0?ooo`0=0?ooo`00E@3oool;00000200oooo00<0
+W4Q809cOo`3oool05P3oool00`000000oooo0?ooo`0C0?ooo`X000007P3oool00`000000oooo0?oo
+o`0[0?ooo`800000=03oool00`000000oooo0?ooo`1R0?ooo`030000003oool0oooo00d0oooo001D
+0?ooo``00000803oool00`2LB4P0W=oo0?ooo`0G0?ooo`030000003oool0oooo01<0oooo2@00000N
+0?ooo`030000003oool0oooo02X0oooo0P00000e0?ooo`030000003oool0oooo0680oooo00<00000
+0?ooo`3oool03@3oool005<0oooo3000000Q0?ooo`0309a8B02Lgol0oooo01L0oooo00<000000?oo
+o`3oool0503oool8000001h0oooo00<000000?ooo`3oool0:03oool2000003P0oooo00<000000?oo
+o`3oool0H@3oool00`000000oooo0?ooo`0=0?ooo`00E03oool;00000240oooo00<0W4Q809cOo`3o
+ool05`3oool00`000000oooo0?ooo`0E0?ooo`L000007P3oool00`000000oooo0?ooo`0W0?ooo`80
+0000>@3oool00`000000oooo0?ooo`1Q0?ooo`030000003oool0oooo00d0oooo001F0?ooo`T00000
+7P3oool01@3OW4P000000018W02LB4P0W=oo01T0oooo00<000000?ooo`3oool0503oool8000001d0
+oooo00<000000?ooo`3oool09@3oool2000003`0oooo00<000000?ooo`3oool0H03oool00`000000
+oooo0?ooo`0=0?ooo`00E`3oool700000240oooo00<0gia80000B02Lgol06@3oool00`000000oooo
+0?ooo`0E0?ooo`L000007@3oool00`000000oooo0?ooo`0T0?ooo`800000?P3oool00`000000oooo
+0?ooo`1O0?ooo`030000003oool0oooo00d0oooo001G0?ooo`L00000?P3oool00`000000oooo0?oo
+o`0E0?ooo`H000007@3oool00`000000oooo0?ooo`0R0?ooo`800000@03oool00`000000oooo0?oo
+o`1O0?ooo`030000003oool0oooo00d0oooo001G0?ooo`030000003oool0oooo00<00000?`3oool0
+0`000000oooo0?ooo`0F0?ooo`D000007@3oool00`000000oooo0?ooo`0Q0?ooo`800000@P3oool0
+0`000000oooo0?ooo`1N0?ooo`030000003oool0oooo00d0oooo001F0?ooo`030000003oool0oooo
+00<0oooo00<000000?ooo`3oool0?P3oool00`000000oooo0?ooo`0E0?ooo`D000007@3oool00`00
+0000oooo0?ooo`0O0?ooo`<00000@`3oool00`000000oooo0?ooo`1N0?ooo`030000003oool0oooo
+00d0oooo001E0?ooo`800000AP3oool00`000000oooo0?ooo`0F0?ooo`@000007@3oool00`000000
+oooo0?ooo`0N0?ooo`800000AP3oool00`000000oooo0?ooo`1M0?ooo`030000003oool0oooo00d0
+oooo001E0?ooo`030000003oool0oooo04H0oooo00<000000?ooo`3oool05P3oool3000001d0oooo
+00<000000?ooo`3oool0703oool3000004L0oooo00<000000?ooo`3oool0G@3oool00`000000oooo
+0?ooo`0=0?ooo`00E03oool00`000000oooo0?ooo`170?ooo`030000003oool0oooo01L0oooo0`00
+000L0?ooo`030000003oool0oooo01/0oooo0P00001:0?ooo`030000003oool0oooo05`0oooo00<0
+00000?ooo`3oool03@3oool005<0oooo00<000000?ooo`3oool0B@3oool00`000000oooo0?ooo`0F
+0?ooo`<00000703oool00`000000oooo0?ooo`0I0?ooo`<00000B`3oool00`000000oooo0?ooo`1L
+0?ooo`030000003oool0oooo00d0oooo001B0?ooo`800000B`3oool00`000000oooo0?ooo`0G0?oo
+o`800000703oool00`000000oooo0?ooo`0H0?ooo`800000CP3oool00`000000oooo0?ooo`1K0?oo
+o`030000003oool0oooo00d0oooo001B0?ooo`030000003oool0oooo04/0oooo00<000000?ooo`3o
+ool05`3oool00`000000oooo0?ooo`0J0?ooo`030000003oool0oooo01H0oooo0`00001?0?ooo`03
+0000003oool0oooo05/0oooo00<000000?ooo`3oool03@3oool00540oooo00<000000?ooo`3oool0
+C03oool00`000000oooo0?ooo`0H0?ooo`030000003oool0oooo01T0oooo00<000000?ooo`3oool0
+5@3oool200000580oooo00<000000?ooo`3oool0FP3oool00`000000oooo0?ooo`0=0?ooo`00D03o
+ool2000004h0oooo00<000000?ooo`3oool0603oool00`000000oooo0?ooo`0I0?ooo`030000003o
+ool0oooo01<0oooo0`00001C0?ooo`030000003oool0oooo05X0oooo00<000000?ooo`3oool03@3o
+ool00500oooo00<000000?ooo`3oool0CP3oool00`000000oooo0?ooo`0H0?ooo`030000003oool0
+oooo01P0oooo00<000000?ooo`3oool04P3oool2000005H0oooo00<000000?ooo`3oool0F@3oool0
+0`000000oooo0?ooo`0=0?ooo`00C`3oool00`000000oooo0?ooo`1?0?ooo`030000003oool0oooo
+01P0oooo00<000000?ooo`3oool0603oool00`000000oooo0?ooo`0@0?ooo`<00000E`3oool00`00
+0000oooo0?ooo`1I0?ooo`030000003oool0oooo00d0oooo001>0?ooo`030000003oool0oooo0540
+oooo00<000000?ooo`3oool00`3oool00`000000oooo0?ooo`0A0?ooo`030000003oool0oooo01P0
+oooo00<000000?ooo`3oool03`3oool2000005X0oooo00<000000?ooo`3oool0F03oool00`000000
+oooo0?ooo`0=0?ooo`00CP3oool00`000000oooo0?ooo`1A0?ooo`040000003oool0oooo0?ooo`<0
+0000503oool00`000000oooo0?ooo`0G0?ooo`030000003oool0oooo00d0oooo0`00001L0?ooo`03
+0000003oool0oooo05L0oooo00<000000?ooo`3oool03@3oool004d0oooo00<000000?ooo`3oool0
+D`3oool6000001@0oooo00<000000?ooo`3oool05`3oool00`000000oooo0?ooo`0<0?ooo`800000
+GP3oool00`000000oooo0?ooo`1G0?ooo`030000003oool0oooo00d0oooo001<0?ooo`030000003o
+ool0oooo05<0oooo2000000D0?ooo`030000003oool0oooo01H0oooo00<000000?ooo`3oool02P3o
+ool300000600oooo00<000000?ooo`3oool0EP3oool00`000000oooo0?ooo`0=0?ooo`00B`3oool2
+000005<0oooo2P00000D0?ooo`030000003oool0oooo01H0oooo00<000000?ooo`3oool02@3oool2
+00000680oooo00<000000?ooo`3oool0EP3oool00`000000oooo0?ooo`0=0?ooo`00B`3oool00`00
+0000oooo0?ooo`1@0?ooo``000005@3oool00`000000oooo0?ooo`0E0?ooo`030000003oool0oooo
+00L0oooo0`00001T0?ooo`030000003oool0oooo05D0oooo00<000000?ooo`3oool03@3oool004X0
+oooo00<000000?ooo`3oool0DP3oool;000001D0oooo00<000000?ooo`3oool05@3oool2000000L0
+oooo0P00001V0?ooo`030000003oool0oooo05D0oooo00<000000?ooo`3oool03@3oool004T0oooo
+00<000000?ooo`3oool0E03oool:000001D0oooo00<000000?ooo`3oool05@3oool3000000@0oooo
+0`00001X0?ooo`030000003oool0oooo05@0oooo00<000000?ooo`3oool03@3oool004T0oooo00<0
+00000?ooo`3oool0E03oool:000001H0oooo00<000000?ooo`3oool04`3oool4000000<0oooo0P00
+001Z0?ooo`030000003oool0oooo05@0oooo00<000000?ooo`3oool03@3oool00?l00000/0000001
+0?ooo`00B03oool00`000000oooo0?ooo`1G0?ooo`T000005P3oool00`000000oooo0?ooo`0@0?oo
+o`P00000KP3oool2000005@0oooo00<000000?ooo`3oool03@3oool004T0oooo00<000000?ooo`3o
+ool0E`3oool8000001H0oooo00<000000?ooo`3oool03`3oool:000006d0oooo0`00001C0?ooo`03
+0000003oool0oooo00d0oooo00190?ooo`030000003oool0oooo05P0oooo1`00000G0?ooo`030000
+003oool0oooo00d0oooo2`00001^0?ooo`<00000DP3oool00`000000oooo0?ooo`0=0?ooo`00B@3o
+ool00`000000oooo0?ooo`1I0?ooo`H000005`3oool00`000000oooo0?ooo`0<0?ooo`d00000K@3o
+ool400000540oooo00<000000?ooo`3oool03@3oool004X0oooo00<000000?ooo`3oool0F03oool7
+000001H0oooo00<000000?ooo`3oool02`3oool?000006`0oooo1@00001@0?ooo`030000003oool0
+oooo00d0oooo001:0?ooo`030000003oool0oooo05T0oooo1P00000G0?ooo`030000003oool0oooo
+00X0oooo3@00001^0?ooo`H00000C`3oool00`000000oooo0?ooo`0=0?ooo`00BP3oool00`000000
+oooo0?ooo`1J0?ooo`D000005`3oool00`000000oooo0?ooo`090?ooo``00000L@3oool6000004h0
+oooo00<000000?ooo`3oool03@3oool004/0oooo00<000000?ooo`3oool0FP3oool4000001P0oooo
+00<000000?ooo`3oool01`3oool:000007@0oooo1P00001>0?ooo`030000003oool0oooo00d0oooo
+001;0?ooo`030000003oool0oooo05/0oooo0`00000H0?ooo`030000003oool0oooo00H0oooo2000
+00020?ooo`030000003oool0oooo0780oooo1`00001=0?ooo`030000003oool0oooo00d0oooo001<
+0?ooo`030000003oool0oooo05/0oooo0P00000I0?ooo`030000003oool0oooo00@0oooo1`000004
+0?ooo`030000003oool0oooo0780oooo2000001<0?ooo`030000003oool0oooo00d0oooo001<0?oo
+o`030000003oool0oooo05/0oooo0`00000H0?ooo`030000003oool0oooo00<0oooo1@0000070?oo
+o`030000003oool0oooo07<0oooo2000001;0?ooo`030000003oool0oooo00d0oooo001<0?ooo`03
+0000003oool0oooo05`0oooo0P00000H0?ooo`040000003oool0oooo0?ooo`@000002P3oool00`00
+0000oooo0?ooo`1c0?ooo`T00000BP3oool00`000000oooo0?ooo`0=0?ooo`00C@3oool00`000000
+oooo0?ooo`1L0?ooo`030000003oool0oooo01L0oooo1@00000<0?ooo`030000003oool0oooo07<0
+oooo2P0000190?ooo`030000003oool0oooo00d0oooo001=0?ooo`030000003oool0oooo05`0oooo
+00<000000?ooo`3oool05`3oool00`000000oooo0?ooo`0>0?ooo`030000003oool0oooo07<0oooo
+2`0000180?ooo`030000003oool0oooo00d0oooo001=0?ooo`030000003oool0oooo05d0oooo00<0
+00000?ooo`3oool0503oool2000000030?ooo`000000oooo00h0oooo00<000000?ooo`3oool0M03o
+ool;000004H0oooo0P00000?0?ooo`00CP3oool00`000000oooo0?ooo`1L0?ooo`030000003oool0
+oooo01<0oooo00D000000?ooo`3oool0oooo0000000?0?ooo`030000003oool0oooo07@0oooo3000
+00150?ooo`<000003P3oool004h0oooo00<000000?ooo`3oool0G@3oool00`000000oooo0?ooo`0@
+0?ooo`8000001@3oool00`000000oooo0?ooo`0<0?ooo`030000003oool0oooo07@0oooo2`000016
+0?ooo`<000003P3oool004h0oooo00<000000?ooo`3oool0G@3oool00`000000oooo0?ooo`0?0?oo
+o`030000003oool0oooo00D0oooo00<000000?ooo`3oool0303oool00`000000oooo0?ooo`1d0?oo
+o`T00000B03oool3000000h0oooo001?0?ooo`030000003oool0oooo05d0oooo00<000000?ooo`3o
+ool0303oool2000000P0oooo00<000000?ooo`3oool0303oool00`000000oooo0?ooo`1e0?ooo`H0
+0000B@3oool4000000h0oooo001?0?ooo`030000003oool0oooo05d0oooo00<000000?ooo`3oool0
+2`3oool00`000000oooo0?ooo`090?ooo`030000003oool0oooo00/0oooo00<000000?ooo`3oool0
+M@3oool4000000030?ooo`000000000004P0oooo1@00000=0?ooo`00C`3oool00`000000oooo0?oo
+o`1N0?ooo`030000003oool0oooo00P0oooo0P00000<0?ooo`030000003oool0oooo00/0oooo00<0
+00000?ooo`3oool0M@3oool2000000@0oooo00<000000?ooo`3oool0AP3oool5000000d0oooo001@
+0?ooo`030000003oool0oooo05d0oooo00<000000?ooo`3oool01`3oool00`000000oooo0?ooo`0=
+0?ooo`030000003oool0oooo00X0oooo00<000000?ooo`3oool0N`3oool2000004H0oooo1P00000=
+0?ooo`00D03oool00`000000oooo0?ooo`1N0?ooo`030000003oool0oooo00@0oooo0P00000@0?oo
+o`030000003oool0oooo00X0oooo00<000000?ooo`3oool0=03oool01@2oM0000000000000000000
+B9cO04<0oooo00<000000?ooo`3oool0A03oool6000000d0oooo001A0?ooo`030000003oool0oooo
+05d0oooo00<000000?ooo`3oool00`3oool00`000000oooo0?ooo`0A0?ooo`030000003oool0oooo
+00T0oooo00<000000?ooo`3oool0<`3oool01`2oM00007Bo0?ooo`3oool0oono07@00018W=l0@`3o
+ool00`000000oooo0?ooo`130?ooo`L00000303oool00540oooo00<000000?ooo`3oool0GP3oool0
+0`000000oooo0?ooo`02000001@0oooo00<000000?ooo`3oool02@3oool00`000000oooo0?ooo`0h
+0?ooo`030?noM000M;l0oooo0480oooo00<000000?ooo`3oool0@`3oool7000000`0oooo001A0?oo
+o`030000003oool0oooo05h0oooo00<000000?ooo`0000005P3oool00`000000oooo0?ooo`090?oo
+o`030000003oool0oooo03L0oooo00<0omnL04P0B02Lgol0A03oool00`000000oooo0?ooo`110?oo
+o`P00000303oool00580oooo00<000000?ooo`3oool0G@3oool2000001P0oooo00<000000?ooo`3o
+ool0203oool00`000000oooo0?ooo`0e0?ooo`040=nLB0000000001809cOodD0oooo00<000000?oo
+o`3oool0@@3oool8000000`0oooo001B0?ooo`030000003oool0oooo05`0oooo00<000000?ooo`00
+0000603oool00`000000oooo0?ooo`080?ooo`030000003oool0oooo03L0oooo00<0omnL04P0B02L
+gol0A@3oool00`000000oooo0?ooo`100?ooo`T000002`3oool00580oooo00<000000?ooo`3oool0
+FP3oool200000080oooo00<000000?ooo`3oool05`3oool00`000000oooo0?ooo`070?ooo`030000
+003oool0oooo03P0oooo00<0_g@007Boo`3oool0A03oool00`000000oooo0?ooo`0o0?ooo`X00000
+2`3oool005<0oooo00<000000?ooo`3oool0F03oool00`000000oooo0?ooo`030?ooo`030000003o
+ool0oooo01H0oooo00<000000?ooo`3oool01`3oool00`000000oooo0?ooo`0c0?ooo`070?noM000
+04P0W=oo0?ooo`3ogi`0B01809cOo`160?ooo`030000003oool0oooo03h0oooo2P00000;0?ooo`00
+D`3oool00`000000oooo0?ooo`1F0?ooo`8000001P3oool00`000000oooo0?ooo`0G0?ooo`030000
+003oool0oooo00H0oooo00<000000?ooo`3oool0=03oool01@3ogi`0B000000000000000M;oo04L0
+oooo00<000000?ooo`3oool0?P3oool:000000/0oooo001C0?ooo`030000003oool0oooo05D0oooo
+00<000000?ooo`3oool01`3oool00`000000oooo0?ooo`0F0?ooo`030000003oool0oooo00H0oooo
+00<000000?ooo`3oool0P@3oool00`000000oooo0?ooo`0m0?ooo`/000002P3oool005@0oooo00<0
+00000?ooo`3oool0DP3oool2000000X0oooo00<000000?ooo`3oool05P3oool00`000000oooo0?oo
+o`060?ooo`030000003oool0oooo0840oooo00<000000?ooo`3oool0?03oool<000000X0oooo001D
+0?ooo`030000003oool0oooo0540oooo00<000000?ooo`3oool02`3oool00`000000oooo0?ooo`0F
+0?ooo`030000003oool0oooo00D0oooo00<000000?ooo`3oool0PP3oool00`000000oooo0?ooo`0k
+0?ooo``000002P3oool005@0oooo00<000000?ooo`3oool0C`3oool2000000h0oooo00<000000?oo
+o`3oool05P3oool00`000000oooo0?ooo`050?ooo`030000003oool0oooo0880oooo00<000000?oo
+o`3oool0@@3oool00`000000oooo0?ooo`0=0?ooo`00E@3oool00`000000oooo0?ooo`1=0?ooo`03
+0000003oool0oooo00l0oooo00<000000?ooo`3oool02P3oool01@2oM00000000000000007@0_ooo
+00L0oooo00<000000?ooo`3oool0103oool00`000000oooo0?ooo`230?ooo`030000003oool0oooo
+0400oooo00<000000?ooo`3oool03@3oool005D0oooo00<000000?ooo`3oool0B`3oool200000180
+oooo00<000000?ooo`3oool02@3oool01P3OW4P007Bo0?ooo`3oool0okmd001d_`L0oooo00<00000
+0?ooo`3oool0103oool00`000000oooo0?ooo`230?ooo`800000@@3oool00`000000oooo0?ooo`0=
+0?ooo`00E@3oool00`000000oooo0?ooo`1:0?ooo`030000003oool0oooo01<0oooo00<000000?oo
+o`3oool01`3oool00`3ookl0M00007Boo`020?ooo`030?oo_`1dB9`0oooo00L0oooo00<000000?oo
+o`3oool00`3oool00`000000oooo0?ooo`240?ooo`030000003oool0oooo03l0oooo00<000000?oo
+o`3oool03@3oool005H0oooo00<000000?ooo`3oool0A`3oool2000001H0oooo00<000000?ooo`3o
+ool01`3oool01`3o_g@004Q807@0M02oool0oooo0=nLB000M;l0203oool00`000000oooo0?ooo`03
+0?ooo`030000003oool0oooo08D0oooo00<000000?ooo`3oool0?P3oool00`000000oooo0?ooo`0=
+0?ooo`00EP3oool2000004L0oooo00<000000?ooo`3oool05P3oool00`000000oooo0?ooo`070?oo
+o`030?oOW018B9`0okmd0080000000<004RL0?ooo`3oool01`3oool00`000000oooo0?ooo`030?oo
+o`030000003oool0oooo08D0oooo00<000000?ooo`3oool0?P3oool00`000000oooo0?ooo`0=0?oo
+o`00EP3oool2000004D0oooo0P00000J0?ooo`030000003oool0oooo00H0oooo00<0oono07@0M02o
+ool03@3oool00`000000oooo0?ooo`020?ooo`030000003oool0oooo08H0oooo00<000000?ooo`3o
+ool0?@3oool00`000000oooo0?ooo`0=0?ooo`00EP3oool3000004<0oooo00<000000?ooo`3oool0
+6P3oool00`000000oooo0?ooo`070?ooo`030;md0018W=l0oooo00`0oooo00<000000?ooo`3oool0
+0P3oool00`000000oooo0?ooo`260?ooo`030000003oool0oooo03d0oooo00<000000?ooo`3oool0
+3@3oool005H0oooo100000100?ooo`8000007P3oool00`000000oooo0?ooo`060?ooo`030?oo_`1d
+000007Bo00d0oooo00D000000?ooo`3oool0oooo000000290?ooo`030000003oool0oooo03`0oooo
+00<000000?ooo`3oool03@3oool005H0oooo1000000o0?ooo`030000003oool0oooo01h0oooo00<0
+00000?ooo`3oool0203oool0102oM000000000000000B9`:0?ooo`050000003oool0oooo0?ooo`00
+0000R@3oool00`000000oooo0?ooo`0l0?ooo`030000003oool0oooo00d0oooo001G0?ooo`@00000
+?03oool200000280oooo00<000000?ooo`3oool05P3oool010000000oooo0?ooo`00002:0?ooo`03
+0000003oool0oooo03/0oooo00<000000?ooo`3oool03@3oool005L0oooo1000000k0?ooo`030000
+003oool0oooo0280oooo00<000000?ooo`3oool05P3oool010000000oooo0?ooo`00002:0?ooo`03
+0000003oool0oooo03/0oooo00<000000?ooo`3oool03@3oool005L0oooo1@00000h0?ooo`800000
+9P3oool00`000000oooo0?ooo`0E0?ooo`040000003oool0oooo00000340oooo0P00001H0?ooo`03
+0000003oool0oooo03X0oooo00<000000?ooo`3oool03@3oool005L0oooo1P00000f0?ooo`030000
+003oool0oooo02H0oooo00<000000?ooo`3oool05P3oool00`000000oooo0000000a0?ooo`H00000
+E03oool00`000000oooo0?ooo`0j0?ooo`030000003oool0oooo00d0oooo001G0?ooo`H00000=03o
+ool2000002X0oooo00<000000?ooo`3oool05@3oool00`000000oooo0000000a0?ooo`X00000D@3o
+ool00`000000oooo0?ooo`0i0?ooo`030000003oool0oooo00d0oooo001G0?ooo`L00000<P3oool0
+0`000000oooo0?ooo`0Z0?ooo`030000003oool0oooo01H0oooo0P00000a0?ooo`d00000CP3oool0
+0`000000oooo0?ooo`0i0?ooo`030000003oool0oooo00d0oooo001G0?ooo`P00000;`3oool20000
+02h0oooo00<000000?ooo`3oool05@3oool200000340oooo4@00001;0?ooo`030000003oool0oooo
+03P0oooo00<000000?ooo`3oool03@3oool005L0oooo2000000^0?ooo`030000003oool0oooo02h0
+oooo00<000000?ooo`3oool05P3oool00`000000oooo0?ooo`0_0?oooaD00000A`3oool00`000000
+oooo0?ooo`0h0?ooo`030000003oool0oooo00d0oooo001G0?ooo`T00000:`3oool200000340oooo
+00<000000?ooo`3oool05P3ooon@000003T0oooo00<000000?ooo`3oool03@3oool005L0oooo2@00
+000Z0?ooo`030000003oool0oooo0380oooo00<000000?ooo`3oool05@3oool00`000000oooo0?oo
+o`0_0?oooa@00000P`3oool00`000000oooo0?ooo`0=0?ooo`00E`3oool:000002L0oooo0P00000e
+0?ooo`030000003oool0oooo01D0oooo00<000000?ooo`3oool0;`3oool@000008L0oooo00<00000
+0?ooo`3oool03@3oool005L0oooo2`00000U0?ooo`030000003oool0oooo03H0oooo00<000000?oo
+o`3oool0503oool00`000000oooo0?ooo`0_0?ooo``00000R`3oool00`000000oooo0?ooo`0=0?oo
+o`00F03oool:000002<0oooo0P00000i0?ooo`030000003oool0oooo01@0oooo00<000000?ooo`3o
+ool0;`3oool700000900oooo00<000000?ooo`3oool03@3oool005P0oooo2`00000P0?ooo`800000
+?03oool00`000000oooo0?ooo`0C0?ooo`030000003oool0oooo02l0oooo0`00002D0?ooo`030000
+003oool0oooo00d0oooo001H0?ooo`T000008@3oool00`000000oooo0?ooo`0l0?ooo`030000003o
+ool0oooo01<0oooo00<000000?ooo`3oool0aP3oool00`000000oooo0?ooo`0=0?ooo`00F03oool7
+00000240oooo0P0000100?ooo`030000003oool0oooo0180oooo00<000000?ooo`3oool0aP3oool0
+0`000000oooo0?ooo`0=0?ooo`00F03oool400000080oooo00<000000?ooo`3oool07P3oool00`00
+0000oooo0?ooo`100?ooo`030000003oool0oooo0180oooo00<000000?ooo`3oool0aP3oool00`00
+0000oooo0?ooo`0=0?ooo`00F03oool2000000@0oooo00<000000?ooo`3oool0703oool2000004@0
+oooo00<000000?ooo`3oool04@3oool00`000000oooo0?ooo`360?ooo`030000003oool0oooo00d0
+oooo001N0?ooo`030000003oool0oooo01/0oooo00<000000?ooo`3oool0A03oool00`000000oooo
+0?ooo`0A0?ooo`030000003oool0oooo0<H0oooo00<000000?ooo`3oool03@3oool005l0oooo00<0
+00000?ooo`3oool0603oool2000004P0oooo00<000000?ooo`3oool0403oool00`000000oooo0?oo
+o`360?ooo`030000003oool0oooo00d0oooo001O0?ooo`030000003oool0oooo01L0oooo00<00000
+0?ooo`3oool0B03oool00`000000oooo0?ooo`0@0?ooo`030000003oool0oooo0<H0oooo00<00000
+0?ooo`3oool03@3oool005l0oooo00<000000?ooo`3oool05@3oool2000004`0oooo00<000000?oo
+o`3oool03`3oool00`000000oooo0?ooo`360?ooo`030000003oool0oooo00d0oooo001P0?ooo`03
+0000003oool0oooo01<0oooo00<000000?ooo`3oool0C03oool00`000000oooo0?ooo`0?0?ooo`03
+0000003oool0oooo0<H0oooo00<000000?ooo`3oool03@3oool00600oooo00<000000?ooo`3oool0
+4@3oool2000004l0oooo00<000000?ooo`3oool03`3oool00`000000oooo0?ooo`360?ooo`030000
+003oool0oooo00d0oooo001P0?ooo`030000003oool0oooo0100oooo00<000000?ooo`3oool0D03o
+ool00`000000oooo0?ooo`0>0?ooo`030000003oool0oooo0<H0oooo00<000000?ooo`3oool03@3o
+ool00640oooo00<000000?ooo`3oool03@3oool2000005<0oooo00<000000?ooo`3oool03P3oool0
+0`000000oooo0?ooo`360?ooo`030000003oool0oooo00d0oooo001Q0?ooo`030000003oool0oooo
+00`0oooo00<000000?ooo`3oool0E03oool00`000000oooo0?ooo`0=0?ooo`030000003oool0oooo
+0<H0oooo00<000000?ooo`3oool03@3oool00680oooo00<000000?ooo`3oool02@3oool2000005L0
+oooo00<000000?ooo`3oool03@3oool00`000000oooo0?ooo`360?ooo`030000003oool0oooo00d0
+oooo001R0?ooo`030000003oool0oooo00P0oooo00<000000?ooo`3oool0F03oool00`000000oooo
+0?ooo`0<0?ooo`030000003oool0oooo0<H0oooo00<000000?ooo`3oool03@3oool00680oooo00<0
+00000?ooo`3oool01P3oool2000005/0oooo00<000000?ooo`3oool0303oool00`000000oooo0?oo
+o`360?ooo`030000003oool0oooo00d0oooo001S0?ooo`030000003oool0oooo00@0oooo00<00000
+0?ooo`3oool0G03oool00`000000oooo0?ooo`0;0?ooo`030000003oool0oooo0<H0oooo00<00000
+0?ooo`3oool03@3oool006<0oooo00<000000?ooo`3oool00P3oool2000005l0oooo00<000000?oo
+o`3oool02`3oool00`000000oooo0?ooo`280?ooo`030?oo_`1d0000000000@0000000<0M;oo0?oo
+o`3oool0=03oool00`000000oooo0?ooo`0=0?ooo`00H`3oool01@000000oooo0?ooo`3oool00000
+0680oooo00<000000?ooo`3oool02P3oool00`000000oooo0?ooo`290?ooo`030;md000007@0_ooo
+0080oooo00<0giad09cOo`3oool0=@3oool00`000000oooo0?ooo`0=0?ooo`00I03oool3000006<0
+oooo00<000000?ooo`3oool02P3oool00`000000oooo0?ooo`2:0?ooo`030?noM00004P0W=oo03T0
+oooo00<000000?ooo`3oool03@3oool006@0oooo00<000000?ooo`3oool0I03oool00`000000oooo
+0?ooo`090?ooo`030000003oool0oooo08/0oooo00<0omnL04P00018W=l0>03oool00`000000oooo
+0?ooo`0=0?ooo`00b`3oool00`000000oooo0?ooo`090?ooo`030000003oool0oooo08d0oooo00<0
+W4P004RLg`3oool0=P3oool00`000000oooo0?ooo`0=0?ooo`00b`3oool00`000000oooo0?ooo`09
+0?ooo`030000003oool0oooo08h0oooo00<0W4Qd0;ooo`3oool0=@3oool00`000000oooo0?ooo`0=
+0?ooo`00c03oool00`000000oooo0?ooo`080?ooo`030000003oool0oooo08T0oooo00<0gia807Bo
+o`3oool00P3oool00`2oM000M;oo0?ooo`0e0?ooo`030000003oool0oooo00d0oooo003<0?ooo`03
+0000003oool0oooo00P0oooo00<000000?ooo`3oool0R@3oool01`3o_g@0001d0;ooo`3oool0okmd
+0000B02Lgol0=P3oool00`000000oooo0?ooo`0=0?ooo`00c@3oool00`000000oooo0?ooo`070?oo
+o`030000003oool0oooo08X0oooo00D0okmd000000000000001809cOo`0g0?ooo`030000003oool0
+oooo00d0oooo003=0?ooo`030000003oool0oooo00L0oooo00<000000?ooo`3oool0aP3oool00`00
+0000oooo0?ooo`0=0?ooo`00cP3oool00`000000oooo0?ooo`060?ooo`030000003oool0oooo0<H0
+oooo00<000000?ooo`3oool03@3oool00<h0oooo00<000000?ooo`3oool01P3oool00`000000oooo
+0?ooo`360?ooo`030000003oool0oooo00d0oooo003?0?ooo`030000003oool0oooo00D0oooo00<0
+00000?ooo`3oool0aP3oool00`000000oooo0?ooo`0=0?ooo`00c`3oool00`000000oooo0?ooo`05
+0?ooo`030000003oool0oooo0<H0oooo00<000000?ooo`3oool03@3oool00=00oooo00<000000?oo
+o`3oool0103oool00`000000oooo0?ooo`360?ooo`030000003oool0oooo00d0oooo003@0?ooo`03
+0000003oool0oooo00@0oooo00<000000?ooo`3oool0aP3oool00`000000oooo0?ooo`0=0?ooo`00
+d@3oool00`000000oooo0?ooo`030?ooo`030000003oool0oooo0<H0oooo00<000000?ooo`3oool0
+3@3oool00=40oooo00<000000?ooo`3oool00`3oool00`000000oooo0?ooo`360?ooo`030000003o
+ool0oooo00d0oooo003A0?ooo`030000003oool0oooo00<0oooo00<000000?ooo`3oool0aP3oool0
+0`000000oooo0?ooo`0=0?ooo`00dP3oool00`000000oooo0?ooo`020?ooo`030000003oool0oooo
+0<H0oooo00<000000?ooo`3oool03@3oool00=80oooo00<000000?ooo`3oool00P3oool00`000000
+oooo0?ooo`360?ooo`030000003oool0oooo00d0oooo003C0?ooo`050000003oool0oooo0?ooo`00
+0000b03oool00`000000oooo0?ooo`0=0?ooo`00d`3oool01@000000oooo0?ooo`3oool000000<P0
+oooo00<000000?ooo`3oool03@3oool00=@0oooo00@000000?ooo`3oool00000b03oool00`000000
+oooo0?ooo`0=0?ooo`00e03oool010000000oooo0?ooo`0000380?ooo`030000003oool0oooo00d0
+oooo003E0?ooo`030000003oool0000004h0oooo0`00001g0?ooo`030000003oool0oooo00d0oooo
+002L0?ooo`050?oOW018000000000000001d_ol0=03oool00`000000oooo0000001>0?ooo`L00000
+L`3oool00`000000oooo0?ooo`0=0?ooo`00WP3oool00`2oM000M;oo0?ooo`0e0?ooo`800000CP3o
+ool;000006l0oooo00<000000?ooo`3oool03@3oool009h0oooo00<0_g@007Boo`3oool0=@3oool2
+000004h0oooo3`00001[0?ooo`030000003oool0oooo00d0oooo002J0?ooo`030=nLB00000000000
+00<0000000<0M;oo0?ooo`3oool0=03oool00`000000oooo0?ooo`1<0?oooa<00000I`3oool00`00
+0000oooo0?ooo`0=0?ooo`00VP3oool01P3o_g@0001d0;ooo`3oool0_g@007BoocL0oooobP00000?
+0?ooo`00V`3oool01@3OW4P007Bo0?ooo`2oM000M;oo03L0oooo00<000000?ooo`3oool0C03ooolC
+000007L0oooo002L0?ooo`0409a80018W=l0_g@007BoocL0oooo00<000000?ooo`3oool0C03oool?
+000007/0oooo002L0?ooo`040?oOW01804P0B4P007BoocL0oooo00<000000?ooo`3oool0C03oool;
+000007l0oooo002M0?ooo`030?noM0000000M;oo03L0oooo00<000000?ooo`3oool0C03oool70000
+08<0oooo003G0?ooo`030000003oool0oooo04`0oooo0`0000270?ooo`00e`3oool00`000000oooo
+0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F
+0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00
+e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool0
+0`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000
+oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?oo
+o`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?oo
+o`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3o
+ool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`00
+0000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo0?ooo`3F0?ooo`00e`3oool00`000000oooo
+0?ooo`3F0?ooo`00\
+\>"],
+  ImageRangeCache->{{{0, 431}, {265.875, 0}} -> {-7.51406, -5.00005, \
+0.052302, 0.0564177}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(wn[#, poly] &\) /@ pts\)], "Input"],
+
+Cell[BoxData[
+    \({1.`, \(-1.`\), \(-2.0000000000000004`\), 0, 0, \(-1.`\)}\)], "Output"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["OnBoundaryQ", "Subsection"],
+
+Cell["\<\
+Notice that the winding number vanishes for points that are on the boundary \
+but not on any vertex.  For example,\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(wn[\(2  poly\[LeftDoubleBracket]2\[RightDoubleBracket] + 3  poly\
+\[LeftDoubleBracket]3\[RightDoubleBracket]\)\/5, poly]\)], "Input"],
+
+Cell[BoxData[
+    \(0\)], "Output"]
+}, Closed]],
+
+Cell[TextData[{
+  "The following function determines whether there is a solution ",
+  Cell[BoxData[
+      \(TraditionalForm\`0 \[LessEqual] t \[LessEqual] 1\)]],
+  " to the equation"
+}], "Text"],
+
+Cell[BoxData[
+    \(p \[Equal] \ 
+      t\ z\_i + \(\((1 - t)\) \(z\_\(i + 1\)\)\(\ \ \)\)\)], "DisplayFormula",\
+
+  FontFamily->"Times New Roman"],
+
+Cell[TextData[{
+  "for any vertex ",
+  Cell[BoxData[
+      \(TraditionalForm\`1 \[LessEqual] i \[LessEqual] n\)]],
+  ".  The ",
+  StyleBox["Table", "InlineInput"],
+  " produces a list of ",
+  StyleBox["True|False", "InlineInput"],
+  " for each vertex and ",
+  StyleBox["MemberQ", "InlineInput"],
+  " asks whether there is a ",
+  StyleBox["True", "InlineInput"],
+  " in that list."
+}], "Text"],
+
+Cell[BoxData[
+    \(OnBoundaryQ[pt_, poly_] := 
+      Module[{t}, 
+        MemberQ[Table[
+            If[0 \[LessEqual] \((t /. 
+                    Flatten[
+                      Solve[pt \[Equal] 
+                          t*poly\[LeftDoubleBracket]
+                                k\[RightDoubleBracket] + \((1 - t)\)*
+                              poly\[LeftDoubleBracket]k + 
+                                  1\[RightDoubleBracket], t]])\) \[LessEqual] 
+                1, True, False, False], {k, 1, Length[poly] - 1}], 
+          True]]\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(OnBoundaryQ[#, poly] &\) /@ 
+      Join[pts, {poly\[LeftDoubleBracket]2\[RightDoubleBracket], 
+          0.27  poly\[LeftDoubleBracket]2\[RightDoubleBracket] + 
+            0.73  poly\[LeftDoubleBracket]3\[RightDoubleBracket]}]\)], "Input"],
+
+Cell[BoxData[
+    \({False, False, False, False, False, False, True, True}\)], "Output"]
+}, Closed]],
+
+Cell["\<\
+Notice that vertices are on the boundary.  The boundary need not be closed.\
+\>", "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["InPolygonQ", "Subsection"],
+
+Cell[TextData[{
+  "Finally, ",
+  StyleBox["InPolygonQ", "InlineInput"],
+  " combines these functions into a single query that returns ",
+  StyleBox["True", "InlineInput"],
+  " for points enclosed by the polygon or on its boundary and ",
+  StyleBox["False", "InlineInput"],
+  " otherwise.  If given an open curve, it closes the polygon by connecting \
+the first and last points.  The interior and boundary tests are included \
+explicitly so that this function is self-contained."
+}], "Text"],
+
+Cell[BoxData[
+    \(InPolygonQ[pt_, poly_] := 
+      Module[{t, cpoly, n, k}, \[IndentingNewLine] (*\ 
+          Prepare\ closed\ \(\(figure\)\(.\)\)\ *) \[IndentingNewLine]cpoly = 
+          If[Last[poly] \[NotEqual] First[poly], Append[poly, First[poly]], 
+            poly]; \[IndentingNewLine]n = 
+          Length[cpoly] - 1; \[IndentingNewLine]If[\[IndentingNewLine] (*\ 
+            Check\ whether\ point\ is\ on\ the\ \(\(boundary\)\(.\)\)\ \
+*) \[IndentingNewLine]MemberQ[\[IndentingNewLine]Table[
+              If[0 \[LessEqual] \((t /. 
+                      Flatten[
+                        Solve[pt \[Equal] 
+                            t*cpoly\[LeftDoubleBracket]
+                                  k\[RightDoubleBracket] + \((1 - t)\)*
+                                cpoly\[LeftDoubleBracket]
+                                  k + 1\[RightDoubleBracket], 
+                          t]])\) \[LessEqual] 1, True, False, False], {k, 1, 
+                n}], True], 
+          True, \[IndentingNewLine] (*\ 
+            Use\ winding\ number\ to\ test\ whether\ the\ point\ is\ \
+\(\(inside\)\(.\)\)\ *) \[IndentingNewLine]Chop[\(1\/\(2  \[Pi]\)\) 
+                Sum[Arg\ [\((cpoly\[LeftDoubleBracket]k + 1\
+\[RightDoubleBracket] - pt)\) . {1. , \[ImaginaryI]}\/\((cpoly\
+\[LeftDoubleBracket]k\[RightDoubleBracket] - pt)\) . {1. , \[ImaginaryI]}], \
+{k, 1, n}]] \[NotEqual] 0]\[IndentingNewLine]]\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(InPolygonQ[#, poly] &\) /@ 
+      Join[pts, {poly\[LeftDoubleBracket]2\[RightDoubleBracket], 
+          0.27  poly\[LeftDoubleBracket]2\[RightDoubleBracket] + 
+            0.73  poly\[LeftDoubleBracket]3\[RightDoubleBracket]}]\)], "Input"],
+
+Cell[BoxData[
+    \({True, True, True, False, False, True, True, True}\)], "Output"]
+}, Closed]]
+}, Closed]]
+}, Closed]]
+}, Open  ]]
+},
+FrontEndVersion->"5.2 for Microsoft Windows",
+ScreenRectangle->{{0, 1400}, {0, 952}},
+WindowToolbars->"EditBar",
+WindowSize->{1392, 912},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+ShowSelection->True,
+ShowCellLabel->False,
+Magnification->1.5,
+StyleDefinitions -> Notebook[{
+  
+  Cell[CellGroupData[{
+  Cell["Style Definitions", "Subtitle"],
+  
+  Cell["\<\
+Modify the definitions below to change the default appearance of all cells in \
+a given style.  Make modifications to any definition using commands in the \
+Format menu.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Style Environment Names", "Section"],
+  
+  Cell[StyleData[All, "Working"],
+    PageWidth->WindowWidth,
+    ScriptMinSize->9],
+  
+  Cell[StyleData[All, "Presentation"],
+    PageWidth->WindowWidth,
+    ScriptMinSize->12,
+    FontSize->16],
+  
+  Cell[StyleData[All, "Condensed"],
+    PageWidth->PaperWidth,
+    CellBracketOptions->{"Margins"->{1, 1},
+    "Widths"->{0, 5}},
+    ScriptMinSize->7,
+    FontSize->10],
+  
+  Cell[StyleData[All, "Printout"],
+    PageWidth->PaperWidth,
+    ScriptMinSize->7,
+    FontSize->10,
+    PrivateFontOptions->{"FontType"->"Outline"}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Notebook Options", "Section"],
+  
+  Cell["\<\
+The options defined for the style below will be used at the Notebook level.\
+\>", "Text"],
+  
+  Cell[StyleData["Notebook"],
+    PageHeaders->{{Cell[ 
+            TextData[ {
+              CounterBox[ "Page"]}], "PageNumber"], None, Cell[ 
+            TextData[ {
+              ValueBox[ "FileName"]}], "Header"]}, {Cell[ 
+            TextData[ {
+              ValueBox[ "FileName"]}], "Header"], None, Cell[ 
+            TextData[ {
+              CounterBox[ "Page"]}], "PageNumber"]}},
+    PageFooters->{{Cell[ 
+            TextData[ {"Essential Mathematica for Students of Science"}], 
+            "Footer"], None, Cell[ 
+            TextData[ {"\[Copyright] James J. Kelly, 1998"}], "Footer"]}, {
+        Cell[ 
+            TextData[ {"Essential Mathematica for Students of Science"}], 
+            "Footer"], None, Cell[ 
+            TextData[ {"\[Copyright] James J. Kelly, 1998"}], "Footer"]}},
+    PageHeaderLines->{True, True},
+    PageFooterLines->{True, True},
+    PrintingOptions->{"FirstPageHeader"->False,
+    "FacingPages"->True},
+    CellFrameLabelMargins->6,
+    StyleMenuListing->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Headings", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Title"],
+    ShowCellBracket->True,
+    CellMargins->{{0, 0}, {0, 0}},
+    CellGroupingRules->"TitleGrouping",
+    PageBreakBelow->False,
+    LineSpacing->{1, 0},
+    CounterIncrements->"Title",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}, {
+        "Subtitle", 0}, {"Subsubtitle", 0}},
+    FontSize->34,
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Title", "Presentation"],
+    CellMargins->{{0, 0}, {0, 0}},
+    LineSpacing->{1, 0},
+    FontSize->44],
+  
+  Cell[StyleData["Title", "Condensed"],
+    CellMargins->{{0, 0}, {0, 0}},
+    FontSize->24],
+  
+  Cell[StyleData["Title", "Printout"],
+    CellMargins->{{0, 0}, {0, 0}},
+    FontSize->24,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0],
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subtitle"],
+    CellMargins->{{0, 0}, {0, 0}},
+    PageBreakBelow->False,
+    LineSpacing->{1, 3},
+    ParagraphIndent->-96,
+    CounterIncrements->"Subtitle",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}, {
+        "Subsubtitle", 0}},
+    FontFamily->"Helvetica",
+    FontSize->18,
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.2, 0.700008, 0.700008]],
+  
+  Cell[StyleData["Subtitle", "Presentation"],
+    CellMargins->{{0, 0}, {0, 0}},
+    LineSpacing->{1, 6},
+    ParagraphIndent->-157,
+    FontSize->30],
+  
+  Cell[StyleData["Subtitle", "Condensed"],
+    CellMargins->{{0, 0}, {0, 0}},
+    ParagraphIndent->-78,
+    FontSize->14],
+  
+  Cell[StyleData["Subtitle", "Printout"],
+    CellMargins->{{0, 0}, {0, 0}},
+    ParagraphIndent->-85,
+    FontSize->16,
+    FontColor->GrayLevel[0],
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsubtitle"],
+    ShowCellBracket->True,
+    CellMargins->{{10, 4}, {30, 10}},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubtitle",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}},
+    FontFamily->"Helvetica",
+    FontSize->14,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Subsubtitle", "Presentation"],
+    ShowCellBracket->True,
+    CellMargins->{{8, 10}, {40, 20}},
+    LineSpacing->{1, 0},
+    FontSize->24],
+  
+  Cell[StyleData["Subsubtitle", "Condensed"],
+    ShowCellBracket->True,
+    CellMargins->{{8, 10}, {12, 8}},
+    FontSize->12],
+  
+  Cell[StyleData["Subsubtitle", "Printout"],
+    ShowCellBracket->True,
+    CellMargins->{{9, 10}, {50, 10}},
+    FontSize->14]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Section"],
+    CellFrame->{{0, 0}, {0, 1}},
+    CellDingbat->None,
+    CellMargins->{{12, Inherited}, {4, 24}},
+    CellGroupingRules->{"SectionGrouping", 30},
+    PageBreakBelow->False,
+    CellFrameMargins->6,
+    CounterIncrements->"Section",
+    CounterAssignments->{{"Subsection", 0}, {"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->16,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Section", "Presentation"],
+    CellMargins->{{10, 10}, {8, 32}},
+    LineSpacing->{1, 2},
+    FontSize->24,
+    FontTracking->"Condensed"],
+  
+  Cell[StyleData["Section", "Condensed"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14],
+  
+  Cell[StyleData["Section", "Printout"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsection"],
+    CellMargins->{{12, Inherited}, {8, 20}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->13,
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Subsection", "Presentation"],
+    CellMargins->{{11, 10}, {8, 32}},
+    LineSpacing->{1, 0},
+    FontSize->22],
+  
+  Cell[StyleData["Subsection", "Condensed"],
+    CellMargins->{{8, Inherited}, {2, 12}},
+    FontSize->12],
+  
+  Cell[StyleData["Subsection", "Printout"],
+    CellMargins->{{9, 0}, {4, 40}},
+    FontSize->12]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsubsection"],
+    CellDingbat->"\[FilledSquare]",
+    CellMargins->{{25, Inherited}, {8, 12}},
+    CellGroupingRules->{"SectionGrouping", 50},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubsection",
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Subsubsection", "Presentation"],
+    CellMargins->{{29, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Subsubsection", "Condensed"],
+    CellMargins->{{21, 0}, {4, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Subsubsection", "Printout"],
+    CellMargins->{{21, 0}, {4, 20}},
+    FontSize->11]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Body Text", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Text"],
+    CellMargins->{{12, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 12},
+    CounterIncrements->"Text",
+    FontFamily->"Times"],
+  
+  Cell[StyleData["Text", "Presentation"],
+    CellMargins->{{13, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12},
+    FontSize->16],
+  
+  Cell[StyleData["Text", "Condensed"],
+    CellMargins->{{9, 0}, {4, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 6}],
+  
+  Cell[StyleData["Text", "Printout"],
+    CellMargins->{{9, 0}, {4, 4}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["SmallText"],
+    CellMargins->{{12, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 6},
+    CounterIncrements->"SmallText",
+    FontFamily->"Helvetica",
+    FontSize->9],
+  
+  Cell[StyleData["SmallText", "Presentation"],
+    CellMargins->{{13, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    FontSize->12],
+  
+  Cell[StyleData["SmallText", "Condensed"],
+    CellMargins->{{8, 10}, {2, 2}},
+    LineSpacing->{1, 2},
+    FontSize->9],
+  
+  Cell[StyleData["SmallText", "Printout"],
+    CellMargins->{{9, 0}, {4, 4}}]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Input/Output", "Section"],
+  
+  Cell["\<\
+The cells in this section define styles used for input and output to the \
+kernel.  Be careful when modifying, renaming, or removing these styles, \
+because the front end associates special meanings with these style names.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Input"],
+    CellFrame->0.5,
+    CellMargins->{{25, 10}, {8, 8}},
+    Evaluatable->True,
+    CellGroupingRules->"InputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{5, Inherited}, {Inherited, Inherited}},
+    DefaultFormatType->DefaultInputFormatType,
+    FormatType->InputForm,
+    ShowStringCharacters->True,
+    NumberMarks->True,
+    CounterIncrements->"Input",
+    FontWeight->"Bold",
+    Background->RGBColor[1, 0.700008, 0.4]],
+  
+  Cell[StyleData["Input", "Presentation"],
+    CellMargins->{{25, Inherited}, {10, 10}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Input", "Condensed"],
+    CellMargins->{{25, 0}, {6, 6}}],
+  
+  Cell[StyleData["Input", "Printout"],
+    CellFrame->0.5,
+    CellMargins->{{25, 0}, {6, 6}},
+    Background->None]
+  }, Closed]],
+  
+  Cell[StyleData["InlineInput"],
+    CellGroupingRules->"InputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    DefaultFormatType->DefaultInputFormatType,
+    AutoItalicWords->{},
+    FormatType->InputForm,
+    ShowStringCharacters->True,
+    NumberMarks->True,
+    CounterIncrements->"Input",
+    FontWeight->"Bold"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Output"],
+    CellFrame->True,
+    CellMargins->{{25, 10}, {8, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    CellEditDuplicate->True,
+    CellGroupingRules->"OutputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    CellLabelMargins->{{3, Inherited}, {Inherited, Inherited}},
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Output",
+    Background->RGBColor[1, 0.900008, 0.900008]],
+  
+  Cell[StyleData["Output", "Presentation"],
+    CellMargins->{{25, Inherited}, {12, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Output", "Condensed"],
+    CellMargins->{{25, 0}, {6, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4}],
+  
+  Cell[StyleData["Output", "Printout"],
+    CellMargins->{{25, 0}, {6, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Message"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"OutputGrouping",
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Message",
+    StyleMenuListing->None,
+    FontColor->RGBColor[1, 0, 0]],
+  
+  Cell[StyleData["Message", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Message", "Condensed"],
+    CellMargins->{{50, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Message", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}},
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Print"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"OutputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Print",
+    StyleMenuListing->None],
+  
+  Cell[StyleData["Print", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Print", "Condensed"],
+    CellMargins->{{50, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Print", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Graphics"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"GraphicsGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Graphics",
+    StyleMenuListing->None],
+  
+  Cell[StyleData["Graphics", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Graphics", "Condensed"],
+    CellMargins->{{52, Inherited}, {Inherited, Inherited}},
+    ImageSize->{175, 175}],
+  
+  Cell[StyleData["Graphics", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}},
+    ImageSize->{250, 250}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["CellLabel"],
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->11,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["CellLabel", "Presentation"],
+    FontSize->12],
+  
+  Cell[StyleData["CellLabel", "Condensed"],
+    FontSize->8],
+  
+  Cell[StyleData["CellLabel", "Printout"],
+    FontSize->8,
+    FontColor->GrayLevel[0]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Unique Styles", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Author"],
+    CellMargins->{{10, 4}, {2, 10}},
+    FontSize->12,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Author", "Presentation"],
+    CellMargins->{{12, 10}, {2, 12}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12},
+    FontSize->16],
+  
+  Cell[StyleData["Author", "Condensed"],
+    CellMargins->{{8, 10}, {1, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 4},
+    FontSize->9],
+  
+  Cell[StyleData["Author", "Printout"],
+    CellMargins->{{9, 0}, {4, 12}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Copyright"],
+    CellMargins->{{10, 10}, {40, 2}},
+    FontFamily->"Helvetica",
+    FontSize->9],
+  
+  Cell[StyleData["Copyright", "Presentation"],
+    CellMargins->{{12, 10}, {50, 2}},
+    LineSpacing->{1, 5},
+    FontSize->12],
+  
+  Cell[StyleData["Copyright", "Condensed"],
+    CellMargins->{{8, 10}, {12, 1}},
+    LineSpacing->{1, 2},
+    FontSize->9],
+  
+  Cell[StyleData["Copyright", "Printout"],
+    CellMargins->{{9, 0}, {72, 4}},
+    FontSize->7]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Abstract"],
+    CellMargins->{{45, 75}, {Inherited, 30}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Abstract", "Printout"],
+    CellMargins->{{36, 67}, {Inherited, 50}},
+    FontSize->10]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Example"],
+    CellMargins->{{12, 10}, {5, 12}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 12},
+    CounterIncrements->"Example",
+    FontFamily->"Times",
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Example", "Presentation"],
+    CellMargins->{{18, 10}, {8, 20}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12}],
+  
+  Cell[StyleData["Example", "Condensed"],
+    CellMargins->{{8, 10}, {4, 8}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 4}],
+  
+  Cell[StyleData["Example", "Printout"],
+    CellMargins->{{9, 0}, {4, 10}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Definition"],
+    CellFrame->{{3, 0}, {0, 0}},
+    CellMargins->{{52, 10}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Definition",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.2, 0.700008, 0.700008]],
+  
+  Cell[StyleData["Definition", "Presentation"],
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Definition", "Condensed"],
+    CellMargins->{{40, 10}, {1, 4}}],
+  
+  Cell[StyleData["Definition", "Printout"],
+    CellMargins->{{44, 0}, {2, 6}},
+    Background->GrayLevel[0.6]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Theorem"],
+    CellFrame->{{3, 0}, {0, 0}},
+    CellMargins->{{52, 10}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Theorem",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Theorem", "Presentation"],
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Theorem", "Condensed"],
+    CellMargins->{{40, 10}, {1, 4}}],
+  
+  Cell[StyleData["Theorem", "Printout"],
+    CellMargins->{{44, 0}, {2, 6}},
+    Background->GrayLevel[0.4]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Caution"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{52, 25}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Caution",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->GrayLevel[0],
+    Background->RGBColor[0.996109, 0, 0],
+    FontVariations->{"Underline"->False}],
+  
+  Cell[StyleData["Caution", "Presentation"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Caution", "Condensed"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{40, 25}, {1, 4}}],
+  
+  Cell[StyleData["Caution", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{44, 25}, {2, 6}},
+    Background->GrayLevel[0.900008]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Advice"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{52, 25}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Advice",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->GrayLevel[0],
+    Background->RGBColor[0, 1, 0],
+    FontVariations->{"Underline"->False}],
+  
+  Cell[StyleData["Advice", "Presentation"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Advice", "Condensed"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{40, 25}, {1, 4}}],
+  
+  Cell[StyleData["Advice", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{44, 25}, {2, 6}},
+    Background->GrayLevel[0.900008]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Exercise"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->"NormalGrouping",
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubsection",
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0, 0, 0.996109]],
+  
+  Cell[StyleData["Exercise", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Exercise", "Condensed"],
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Exercise", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseMain"],
+    CellFrame->{{6, 0}, {0, 1}},
+    CellMargins->{{12, Inherited}, {4, 20}},
+    CellGroupingRules->{"SectionGrouping", 30},
+    PageBreakBelow->False,
+    CellFrameColor->RGBColor[0.571389, 0.19675, 0.570504],
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->16,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["ExerciseMain", "Presentation"],
+    CellMargins->{{18, 10}, {8, 32}},
+    LineSpacing->{1, 2},
+    FontSize->24,
+    FontTracking->"Condensed"],
+  
+  Cell[StyleData["ExerciseMain", "Condensed"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14],
+  
+  Cell[StyleData["ExerciseMain", "Printout"],
+    CellMargins->{{9, 0}, {2, 50}},
+    CellFrameColor->GrayLevel[0.500008],
+    FontSize->14,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseTitle"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["ExerciseTitle", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["ExerciseTitle", "Condensed"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["ExerciseTitle", "Printout"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseText"],
+    CellMargins->{{32, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 8},
+    CounterIncrements->"ExcersiceText",
+    FontFamily->"Times"],
+  
+  Cell[StyleData["ExerciseText", "Presentation"],
+    CellMargins->{{32, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12}],
+  
+  Cell[StyleData["ExerciseText", "Condensed"],
+    CellMargins->{{32, 0}, {4, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 6}],
+  
+  Cell[StyleData["ExerciseText", "Printout"],
+    CellMargins->{{32, 0}, {4, 4}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Problem"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Plain",
+    FontColor->GrayLevel[0]],
+  
+  Cell[StyleData["Problem", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Problem", "Condensed"],
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Problem", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Formulas and Programming", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["DisplayFormula"],
+    CellMargins->{{62, 10}, {2, 10}},
+    CellHorizontalScrolling->True,
+    DefaultFormatType->DefaultInputFormatType,
+    ScriptLevel->0,
+    SingleLetterItalics->True,
+    UnderoverscriptBoxOptions->{LimitsPositioning->True}],
+  
+  Cell[StyleData["DisplayFormula", "Presentation"],
+    CellMargins->{{74, 10}, {2, 10}}],
+  
+  Cell[StyleData["DisplayFormula", "Condensed"],
+    CellMargins->{{52, 10}, {2, 10}}],
+  
+  Cell[StyleData["DisplayFormula", "Printout"],
+    CellMargins->{{54, 10}, {2, 10}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ChemicalFormula"],
+    CellMargins->{{62, 10}, {2, 10}},
+    DefaultFormatType->DefaultInputFormatType,
+    AutoSpacing->False,
+    ScriptLevel->1,
+    ScriptBaselineShifts->{0.6, Automatic},
+    SingleLetterItalics->False,
+    ZeroWidthTimes->True],
+  
+  Cell[StyleData["ChemicalFormula", "Presentation"],
+    CellMargins->{{74, 10}, {2, 10}},
+    FontSize->10],
+  
+  Cell[StyleData["ChemicalFormula", "Condensed"],
+    CellMargins->{{52, 10}, {2, 10}},
+    FontSize->10],
+  
+  Cell[StyleData["ChemicalFormula", "Printout"],
+    CellMargins->{{54, 10}, {2, 10}},
+    FontSize->10]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Program"],
+    CellMargins->{{12, 10}, {Inherited, 6}},
+    FontFamily->"Courier"],
+  
+  Cell[StyleData["Program", "Presentation"],
+    CellMargins->{{13, 30}, {Inherited, 4}},
+    FontSize->9.5],
+  
+  Cell[StyleData["Program", "Condensed"],
+    CellMargins->{{8, 10}, {Inherited, 4}},
+    FontSize->9.5],
+  
+  Cell[StyleData["Program", "Printout"],
+    CellMargins->{{9, 0}, {Inherited, 4}},
+    FontSize->9.5]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Automatic Numbering", "Section"],
+  
+  Cell["\<\
+The following styles are useful for numbered equations, figures, etc.  They \
+automatically give the cell a FrameLabel containing a reference to a \
+particular counter, and also increment that counter.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedEquation"],
+    CellMargins->{{62, 10}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, Cell[ 
+            TextData[ {"(", 
+              CounterBox[ "NumberedEquation"], ")"}]]}, {None, None}},
+    DefaultFormatType->DefaultInputFormatType,
+    CounterIncrements->"NumberedEquation",
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedEquation", "Presentation"],
+    CellMargins->{{74, 10}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["NumberedEquation", "Condensed"],
+    CellMargins->{{52, 10}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["NumberedEquation", "Printout"],
+    CellMargins->{{54, 0}, {Inherited, Inherited}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedFigure"],
+    CellMargins->{{62, 145}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, None}, {Cell[ 
+            TextData[ {"Figure ", 
+              CounterBox[ "NumberedFigure"]}]], None}},
+    CounterIncrements->"NumberedFigure",
+    ImageMargins->{{43, Inherited}, {Inherited, 0}},
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedFigure", "Presentation"]],
+  
+  Cell[StyleData["NumberedFigure", "Condensed"]],
+  
+  Cell[StyleData["NumberedFigure", "Printout"]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedTable"],
+    CellMargins->{{62, 145}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, None}, {Cell[ 
+            TextData[ {"Table ", 
+              CounterBox[ "NumberedTable"]}]], None}},
+    TextAlignment->Center,
+    CounterIncrements->"NumberedTable",
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedTable", "Presentation"]],
+  
+  Cell[StyleData["NumberedTable", "Condensed"]],
+  
+  Cell[StyleData["NumberedTable", "Printout"]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Headers and Footers", "Section"],
+  
+  Cell[StyleData["Header"],
+    CellMargins->{{0, 0}, {4, 1}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Footer"],
+    CellMargins->{{0, 0}, {0, 4}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["PageNumber"],
+    CellMargins->{{0, 0}, {4, 1}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontWeight->"Bold"]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Hyperlink Styles", "Section"],
+  
+  Cell["\<\
+The cells below define styles useful for making hypertext ButtonBoxes.  The \
+\"Hyperlink\" style is for links within the same Notebook, or between \
+Notebooks.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Hyperlink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`NotebookLocate[ #2]}]&),
+    Active->True,
+    ButtonFrame->"None",
+    ButtonNote->ButtonData}],
+  
+  Cell[StyleData["Hyperlink", "Presentation"]],
+  
+  Cell[StyleData["Hyperlink", "Condensed"]],
+  
+  Cell[StyleData["Hyperlink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell["\<\
+The following styles are for linking automatically to the on-line help \
+system.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["MainBookLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "MainBook", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["MainBookLink", "Presentation"]],
+  
+  Cell[StyleData["MainBookLink", "Condensed"]],
+  
+  Cell[StyleData["MainBookLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["AddOnsLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontFamily->"Courier",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "AddOns", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["AddOnsLink", "Presentation"]],
+  
+  Cell[StyleData["AddOnsLink", "Condensed"]],
+  
+  Cell[StyleData["AddOnLink", "Printout"],
+    FontWeight->"Bold",
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["RefGuideLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontFamily->"Courier",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "RefGuideLink", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["RefGuideLink", "Presentation"]],
+  
+  Cell[StyleData["RefGuideLink", "Condensed"]],
+  
+  Cell[StyleData["RefGuideLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["GettingStartedLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "GettingStarted", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["GettingStartedLink", "Presentation"]],
+  
+  Cell[StyleData["GettingStartedLink", "Condensed"]],
+  
+  Cell[StyleData["GettingStartedLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["OtherInformationLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "OtherInformation", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["OtherInformationLink", "Presentation"]],
+  
+  Cell[StyleData["OtherInformationLink", "Condensed"]],
+  
+  Cell[StyleData["OtherInformationLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]]
+  }, Closed]]
+  }, Open  ]]
+  }]
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 119, 2, 81, "Title"],
+Cell[1898, 57, 455, 15, 85, "Author"],
+
+Cell[CellGroupData[{
+Cell[2378, 76, 33, 0, 83, "Section"],
+Cell[2414, 78, 180, 3, 125, "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[2631, 86, 31, 0, 51, "Section"],
+Cell[2665, 88, 1361, 35, 157, "Text"],
+Cell[4029, 125, 139, 3, 60, "DisplayFormula"],
+Cell[4171, 130, 143, 4, 41, "Text"],
+Cell[4317, 136, 137, 3, 77, "DisplayFormula"],
+Cell[4457, 141, 554, 18, 67, "Text"],
+
+Cell[CellGroupData[{
+Cell[5036, 163, 458, 8, 151, "Input"],
+Cell[5497, 173, 33243, 645, 279, 3826, 277, "GraphicsData", "PostScript", \
+"Graphics"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[38789, 824, 33, 0, 51, "Section"],
+
+Cell[CellGroupData[{
+Cell[38847, 828, 40, 0, 68, "Subsection"],
+Cell[38890, 830, 493, 10, 68, "Text"],
+Cell[39386, 842, 302, 6, 99, "Input"],
+Cell[39691, 850, 476, 7, 93, "Text"],
+Cell[40170, 859, 346, 5, 99, "Input"],
+
+Cell[CellGroupData[{
+Cell[40541, 868, 461, 8, 127, "Input"],
+Cell[41005, 878, 35393, 575, 279, 2737, 167, "GraphicsData", "PostScript", \
+"Graphics"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[76435, 1458, 57, 1, 73, "Input"],
+Cell[76495, 1461, 91, 1, 59, "Output"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[76635, 1468, 33, 0, 68, "Subsection"],
+Cell[76671, 1470, 138, 3, 41, "Text"],
+
+Cell[CellGroupData[{
+Cell[76834, 1477, 153, 2, 96, "Input"],
+Cell[76990, 1481, 35, 1, 59, "Output"]
+}, Closed]],
+Cell[77040, 1485, 194, 5, 41, "Text"],
+Cell[77237, 1492, 147, 4, 41, "DisplayFormula"],
+Cell[77387, 1498, 392, 13, 42, "Text"],
+Cell[77782, 1513, 557, 12, 125, "Input"],
+
+Cell[CellGroupData[{
+Cell[78364, 1529, 262, 4, 73, "Input"],
+Cell[78629, 1535, 88, 1, 59, "Output"]
+}, Closed]],
+Cell[78732, 1539, 99, 2, 41, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[78868, 1546, 32, 0, 68, "Subsection"],
+Cell[78903, 1548, 490, 10, 68, "Text"],
+Cell[79396, 1560, 1421, 24, 400, "Input"],
+
+Cell[CellGroupData[{
+Cell[80842, 1588, 261, 4, 73, "Input"],
+Cell[81106, 1594, 84, 1, 59, "Output"]
+}, Closed]]
+}, Closed]]
+}, Closed]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

@@ -1,0 +1,2798 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     39640,       1309]*)
+(*NotebookOutlinePosition[     73578,       2532]*)
+(*  CellTagsIndexPosition[     73534,       2528]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Writing Packages", "Title",
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell[TextData[{
+  "from ",
+  StyleBox[ButtonBox["Essential Mathematica for Students of Science",
+    Active->False,
+    ButtonData:>{
+      URL[ 
+      "http://www.physics.umd.edu/courses/CourseWare/EssentialMathematica/"], 
+      None},
+    Active->False,
+    ButtonStyle->"Hyperlink"],
+    Active->False],
+  "\n\[Copyright] James J. Kelly, 1998\nLast revised: January, 2006"
+}], "Author",
+  Active->True,
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section"],
+
+Cell[TextData[{
+  "\tYou have by now acquired considerable experience in writing modular ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " programs and have probably written many small programs that would be \
+useful in your major subject of study.  While you could copy these functions \
+from one notebook to another, having multiple copies can lead to headaches.  \
+You probably want improvements in such functions to be implemented in any \
+notebook that uses them, which is difficult when there are many copies \
+evolving independently.  Furthermore, the symbols you define in your current \
+notebook might interfere with those used in the functions that you want to \
+import.  Obviously the solution is to collect your most useful functions into \
+packages of related ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " code that can be loaded any time that it is needed, with the details \
+safely hidden.  Thus, evolution is localized and its benefits shared.  As you \
+know, ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " itself employs the same strategy of packaging its code so that built-in \
+functions evolve uniformly as new capabilities are introduced."
+}], "Text"],
+
+Cell[TextData[{
+  "\tThis lesson will introduce the basic techniques for writing packages \
+consistent with normal ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " conventions.  To illustrate the method, we will develop a prototype \
+package ",
+  StyleBox["Fractals.m",
+    FontWeight->"Bold"],
+  " that includes the functions for the Mandelbrot set, Julia sets, and Koch \
+curves that we wrote earlier this semester.  Although we have become \
+accustomed to developing ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " code using a notebook interface with extensive typesetting and formatting \
+features, packages must be written in ordinary ascii text using only ordinary \
+keyboard characters.  Therefore, we must convert the code from notebook form \
+to package form.  Unfortunately, because ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " does not yet provide effective conversion tools, we must either rewrite \
+the code using an external editor or must employ the somewhat cumbersome \
+procedure outlined below.  If you follow these instructions carefully, you \
+should encounter little difficulty converting between notebook and package \
+formats. "
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Preparing a package file", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["Step 1: open a fresh notebook", "Subsection"],
+
+Cell[TextData[{
+  "Open a new notebook using the default style sheet.  As you enter \
+statements into the fledgeling package, please observe the following rule: ",
+  StyleBox["only one complete statement per cell!",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  "  When copying cells from other notebooks into the new package, you must \
+split any cell containing several statements so that there is only one \
+statement in each cell.  Embedded comments will be removed by the conversion \
+process, but can be replaced later if desired."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Step 2: prepare skeleton", "Subsection"],
+
+Cell[TextData[{
+  "Every ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " package has the same basic format.  Enter the following statements, each \
+in its own cell.  Note that we have disabled the evaluation of the following \
+cells."
+}], "Text"],
+
+Cell[BoxData[
+    \(\(BeginPackage["\<Fractals`\>"];\)\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \( (*\ Load\ required\ packages\ *) \)], "InlineInput",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \( (*\ Usage\ messages\ for\ exported\ symbols\ *) \)], "InlineInput",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \(\(Begin["\<`Private`\>"];\)\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \( (*\ Definitions\ *) \)], "InlineInput",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \( (*\ Options\ for\ exported\ functions\ *) \)], "InlineInput",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \( (*\ Error\ conditions\ *) \)], "InlineInput",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \(\(End[];\)\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \( (*\ Protect\ exported\ functions\ *) \)], "InlineInput",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \(\(Protect[];\)\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \(EndPackage[]\)], "InlineInput",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Step 3: add flesh", "Subsection"],
+
+Cell[TextData[{
+  "Open ",
+  StyleBox["functions.nb",
+    FontWeight->"Bold"],
+  " and copy the usage message for ",
+  StyleBox["mandelbrotRate", "InlineInput",
+    FontWeight->"Bold"],
+  " to the fledgeling package under the \"usage messages\" comment.  Then \
+copy the function definition into the \"definitions\" area.  Each should \
+occupy a single cell."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Open ",
+  StyleBox["Julia.nb",
+    FontWeight->"Bold"],
+  " and copy the usage message for ",
+  StyleBox["juliaRate", "InlineInput",
+    FontWeight->"Bold"],
+  " to the fledgeling package under the \"usage messages\" comment.  Then \
+copy the function definition into the \"definitions\" area.  Each should \
+occupy a single cell."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Open ",
+  StyleBox["Koch.nb",
+    FontWeight->"Bold"],
+  " and copy the usage messages for ",
+  StyleBox["DisplayKoch", "InlineInput",
+    FontWeight->"Bold"],
+  " and its options to the fledgeling package under the \"usage messages\" \
+comment.  Then copy all necessary function definitions into the \"definitions\
+\" area.  Don't forget to include the definitions for all functions used by \
+",
+  StyleBox["DisplayKoch", "InlineInput",
+    FontWeight->"Bold"],
+  ".  Each should occupy a single cell.  Finally, copy the options statement \
+into the appropriate area.  "
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["\<\
+Next write usage messages for any symbols exported by the functions in this \
+package.  The present example does not actually require this step, but many \
+packages would.\
+\>", "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Enter ",
+  StyleBox["Needs[\"Utilities`FilterOptions`\"]", "InlineInput",
+    FontWeight->"Bold"],
+  " under the \"load required packages\" comment."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Insert ",
+  StyleBox["juliaRate", "InlineInput",
+    FontWeight->"Bold"],
+  ",",
+  StyleBox[" ",
+    FontWeight->"Bold"],
+  StyleBox["mandelbrotRate", "InlineInput",
+    FontWeight->"Bold"],
+  ",",
+  StyleBox[" ",
+    FontWeight->"Bold"],
+  StyleBox["DisplayKoch", "InlineInput",
+    FontWeight->"Bold"],
+  " as arguments of ",
+  StyleBox["Protect[]", "InlineInput",
+    FontWeight->"Bold"],
+  "."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Step 4: formatting", "Subsection"],
+
+Cell[TextData[{
+  "Packages must be written in the format for ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " source code using only ordinary characters found on the keyboard, but the \
+cells that you copied into your fledgeling package probably include \
+typesetting and format information that is designed for display by a notebook \
+interface."
+}], "Text"],
+
+Cell[TextData[{
+  "Select the notebook containing the fledgeling package.  Then remove all \
+output cells using ",
+  StyleBox["K",
+    FontVariations->{"Underline"->True}],
+  "ernel \[RightTeeArrow] Delete All Output from the menu bar.  Answer yes."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Select each input cell in turn and convert it to input form either using \
+",
+  StyleBox["C",
+    FontVariations->{"Underline"->True}],
+  "ell \[RightTeeArrow] ",
+  StyleBox["C",
+    FontVariations->{"Underline"->True}],
+  "onvertTo \[RightTeeArrow] ",
+  StyleBox["I",
+    FontVariations->{"Underline"->True}],
+  "nputForm from the menu bar or Shift Control I from the keyboard.  ",
+  StyleBox["Do not try this on comment cells \[LongDash] this operation \
+removes comment lines and converts cells containing only comments to null \
+input",
+    FontSlant->"Italic"],
+  "."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Save this notebook as a notebook file ",
+  StyleBox["FractalsPrototype.nb",
+    FontWeight->"Bold"],
+  "."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Notice that two-dimensional symbols have been converted to longer \
+character sequences, such as \\!\\(z\\^2\\) for ",
+  Cell[BoxData[
+      \(TraditionalForm\`z\^2\)]],
+  ".  Similarly, special characters like \[Rule] are converted to ascii text \
+as well.  Although we could have prepared the code using this type of input, \
+the notebook interface provides much more appealing input and display \
+capabilities."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Step 5: does it work?", "Subsection"],
+
+Cell[TextData[{
+  "Get a fresh start by quitting the local kernel.  Then restart the kernel \
+using ",
+  StyleBox["K",
+    FontVariations->{"Underline"->True}],
+  "ernel \[RightTeeArrow] ",
+  StyleBox["S",
+    FontVariations->{"Underline"->True}],
+  "tart \[RightTeeArrow] Local without executing any other ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " commands."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["Start another new notebook.", "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Check that ",
+  StyleBox["Fractals", "InlineInput",
+    FontWeight->"Bold"],
+  " does not appear on the context path by executing ",
+  StyleBox["Contexts[]", "InlineInput",
+    FontWeight->"Bold"],
+  " or ",
+  StyleBox["Contexts[\"*rac*\"]", "InlineInput",
+    FontWeight->"Bold"],
+  " in your new blank notebook."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Evaluate the notebook containing your fledgeling package.  This can be \
+done using ",
+  StyleBox["K",
+    FontVariations->{"Underline"->True}],
+  "ernel \[RightTeeArrow] ",
+  StyleBox["E",
+    FontVariations->{"Underline"->True}],
+  "valuation  \[RightTeeArrow] Evaluate ",
+  StyleBox["N",
+    FontVariations->{"Underline"->True}],
+  "otebook.  Don't worry about warning messages for spelling."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Check that ",
+  StyleBox["Fractals", "InlineInput",
+    FontWeight->"Bold"],
+  " now appears on the context path.  Then execute ",
+  StyleBox["?",
+    FontWeight->"Bold"],
+  StyleBox["DisplayKoch", "InlineInput",
+    FontWeight->"Bold"],
+  ", read the instructions, and execute ",
+  StyleBox["DisplayKoch[{{0.,0.},{1.,0.}},4]", "InlineInput",
+    FontWeight->"Bold"],
+  "."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["\<\
+If your package is missing essential definitions, copy those into the \
+notebook, quit the kernel, re-evaluate the package, and try again.\
+\>", "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Update ",
+  StyleBox["FractalsPrototype.nb",
+    FontWeight->"Bold"],
+  "."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Step 6: saving the package file ", "Subsection"],
+
+Cell[TextData[{
+  "Assuming that the tests are successful, you are now ready to save the \
+package in a file with the appropriate format.  Unfortunately,  ",
+  StyleBox["F",
+    FontVariations->{"Underline"->True}],
+  "ile \[RightTeeArrow] Sa",
+  StyleBox["v",
+    FontVariations->{"Underline"->True}],
+  "e As Special \[RightTeeArrow] Pac",
+  StyleBox["k",
+    FontVariations->{"Underline"->True}],
+  "age Format does not seem to work as you might hope.  When I try this \
+method, each statement is enclosed by comment characters (* ",
+  StyleBox["statement",
+    FontSlant->"Italic"],
+  " *) which must then be removed using an external editor.  I recommend \
+using ",
+  StyleBox["F",
+    FontVariations->{"Underline"->True}],
+  "ile \[RightTeeArrow] Sa",
+  StyleBox["v",
+    FontVariations->{"Underline"->True}],
+  "e As Special \[RightTeeArrow] ",
+  StyleBox["T",
+    FontVariations->{"Underline"->True}],
+  "ext instead.  "
+}], "Text"],
+
+Cell[TextData[{
+  "Select the notebook containing the fledgeling package.  Then remove all \
+output cells using ",
+  StyleBox["K",
+    FontVariations->{"Underline"->True}],
+  "ernel \[RightTeeArrow] Delete All Output from the menu bar.  Answer yes."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Remove In/Out Names by toggling ",
+  StyleBox["K",
+    FontVariations->{"Underline"->True}],
+  "ernel \[RightTeeArrow] ",
+  StyleBox["S",
+    FontVariations->{"Underline"->True}],
+  "how In/Out Names from the menu bar."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Save the package file using ",
+  StyleBox["F",
+    FontVariations->{"Underline"->True}],
+  "ile \[RightTeeArrow] Sa",
+  StyleBox["v",
+    FontVariations->{"Underline"->True}],
+  "e As Special \[RightTeeArrow] ",
+  StyleBox["T",
+    FontVariations->{"Underline"->True}],
+  "ext with the name ",
+  StyleBox["Fractals.m",
+    FontWeight->"Bold"],
+  ".  You may need to edit the file name externally to ensure that it begins \
+with an uppercase character."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["\<\
+Using a simple external editor, such as Notepad for Windows, insert \
+strategically placed blank lines, tabs, and spaces to enhance readability.  \
+Replace embedded comments, if desired.  \
+\>", "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["Once again quit and restart the kernel.", "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Set the current working directory using ",
+  StyleBox["SetDirectory[", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox["folder", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox["]", "InlineInput",
+    FontWeight->"Bold"],
+  " where ",
+  StyleBox["folder", "InlineInput",
+    FontWeight->"Bold"],
+  " is the name of the folder containing your package.  Verify that the file \
+",
+  StyleBox["Fractals.m",
+    FontWeight->"Bold"],
+  " is seen in this folder using ",
+  StyleBox["FileNames[]", "InlineInput",
+    FontWeight->"Bold"],
+  "."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Execute ",
+  StyleBox["<<", "InlineInput"],
+  StyleBox["Fractals.m", "InlineInput",
+    FontWeight->"Bold"],
+  " in your scratch notebook and verify that ",
+  StyleBox["Fractals", "InlineInput",
+    FontWeight->"Bold"],
+  " is on the context path.  Repeat the tests from preceding section."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[StyleBox[
+"Congratulations! You have successfully written your first package.",
+  FontColor->RGBColor[1, 0, 0]]], "Text"],
+
+Cell["\<\
+We will polish the notebook shortly, but first we discuss how the packaging \
+process works.\
+\>", "Text"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["The madness behind the method", "Section"],
+
+Cell[TextData[{
+  "The specialized commands one finds in packages are designed to manipulate \
+contexts so that symbols that are intended for external use are associated \
+with the ",
+  StyleBox["Package`", "InlineInput"],
+  " context while private symbols that are used by the implementation but are \
+of no concern to the user are placed on the normally invisible context ",
+  StyleBox["Package`Private`", "InlineInput"],
+  ".   For the present example, we expect to find ",
+  StyleBox["juliaRate", "InlineInput",
+    FontWeight->"Bold"],
+  ",",
+  StyleBox[" ",
+    FontWeight->"Bold"],
+  StyleBox["mandelbrotRate", "InlineInput",
+    FontWeight->"Bold"],
+  ",",
+  StyleBox[" ",
+    FontWeight->"Bold"],
+  "and ",
+  StyleBox["DisplayKoch", "InlineInput",
+    FontWeight->"Bold"],
+  " in the ",
+  StyleBox["Fractals`", "InlineInput",
+    FontWeight->"Bold"],
+  " context.  Check by evaluating ",
+  StyleBox["Context[juliaRate]", "InlineInput",
+    FontWeight->"Bold"],
+  ", etc."
+}], "Text"],
+
+Cell[TextData[{
+  "Once again quit and restart the kernel.  Let us return to the prototype \
+notebook ",
+  StyleBox["FractalsPrototype.nb",
+    FontWeight->"Bold"],
+  ".  Save this notebook with a new temporary name so that you can play with \
+it freely.  Execute the following statements one at a time to study how the \
+package works.  Remove the terminal semicolons to see the output produced by \
+each statement."
+}], "Text"],
+
+Cell[BoxData[
+    \(Contexts[]\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[TextData[{
+  "Prints all available contexts.  After restarting the kernel, you should \
+see only those contexts that are established upon start-up.  In particular, \
+",
+  StyleBox["Fractals", "InlineInput",
+    FontWeight->"Bold"],
+  " should be absent from this list."
+}], "Text",
+  TextAlignment->Left],
+
+Cell[BoxData[
+    \($ContextPath\)], "InlineInput",
+  Evaluatable->False],
+
+Cell["\<\
+Prints the current context path used for creating and interpreting symbol \
+names.\
+\>", "Text"],
+
+Cell[BoxData[
+    \(Context[]\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[TextData[{
+  "Prints the current context.  Unless specified otherwise, new symbols are \
+always created in the current context.  Evaluation of ",
+  StyleBox["$Context", "InlineInput",
+    FontWeight->"Bold"],
+  " also reports the current context."
+}], "Text"],
+
+Cell[BoxData[
+    \(BeginPackage["\<Fractals`\>"]\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[TextData[{
+  "Sets the current context to ",
+  StyleBox["Fractals`",
+    FontWeight->"Bold"],
+  "  and modifies the context path \[LongDash] verify by executing $",
+  StyleBox["ContextPath",
+    FontWeight->"Bold"],
+  " and $",
+  StyleBox["Context",
+    FontWeight->"Bold"],
+  " again.  Next,"
+}], "Text"],
+
+Cell[BoxData[
+    \(Needs["\<Utilities`FilterOptions`\>"]\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[TextData[{
+  "adds ",
+  StyleBox["Utilities`FilterOptions`", "InlineInput"],
+  " to the context path without changing the current context (check!)."
+}], "Text"],
+
+Cell[TextData[{
+  "New symbols are then automatically created in the current context.  The \
+usage messages for functions and their options are placed in this section of \
+the package in order to establish symbols in the current context that can be \
+exported to the user who loads the package.  Evaluate the cells containing \
+the usage messages, then execute ",
+  StyleBox["Context[juliaRate] ", "InlineInput"],
+  "to verify that ",
+  StyleBox["juliaRate", "InlineInput",
+    FontWeight->"Bold"],
+  " appears in the ",
+  StyleBox["Fractals`", "InlineInput",
+    FontWeight->"Bold"],
+  " context."
+}], "Text"],
+
+Cell[BoxData[
+    \(Begin["\<`Private`\>"]\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[TextData[{
+  "Sets the current context to ",
+  StyleBox["Fractals`Private`", "InlineInput",
+    FontWeight->"Bold"],
+  "  \[LongDash] verify by executing ",
+  StyleBox["$", "InlineInput"],
+  StyleBox["Context", "InlineInput",
+    FontWeight->"Bold"],
+  ".  New symbols are now automatically created in this private context that \
+is not intended to be visible to the casual user of the package.  In order to \
+access these symbols, the user would have to invoke the full name including \
+context.  Thus, this is the section where the detailed implementation is \
+written hidden from direct view.  The symbols for which usage messages were \
+defined in the export context, ",
+  StyleBox["Fractals`", "InlineInput",
+    FontWeight->"Bold"],
+  ", are available but the intermediate variables, such as ",
+  StyleBox["newpt1", "InlineInput",
+    FontWeight->"Bold"],
+  ", that the user does not need to see are not available without excavation \
+(full context plus symbol).  Evaluate the definitions in this section."
+}], "Text"],
+
+Cell[BoxData[
+    \(End[]\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[TextData[{
+  "Terminates the private context and resets the current context to ",
+  StyleBox["Fractals`", "InlineInput",
+    FontWeight->"Bold"],
+  " \[LongDash] verify by executing ",
+  StyleBox["$", "InlineInput"],
+  StyleBox["Context", "InlineInput",
+    FontWeight->"Bold"],
+  "."
+}], "Text"],
+
+Cell[BoxData[
+    \(Protect[symbol1, symbol2,  ... ]\)], "InlineInput",
+  Evaluatable->False],
+
+Cell["\<\
+Prevents the user from inadvertently modifying the definitions you have \
+established for these symbols.\
+\>", "Text"],
+
+Cell[BoxData[
+    \(EndPackage[]\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[TextData[{
+  "Resets the context and prepends ",
+  StyleBox["Fractals`", "InlineInput",
+    FontWeight->"Bold"],
+  " to the context path.  When you execute ",
+  StyleBox["$ContextPath", "InlineInput",
+    FontWeight->"Bold"],
+  " you should now find ",
+  StyleBox["Fractals`", "InlineInput",
+    FontWeight->"Bold"],
+  " followed by the original context path.  ",
+  StyleBox["?juliaRate", "InlineInput",
+    FontWeight->"Bold"],
+  " should provide information about this exported symbol, while ",
+  StyleBox["?newpt1", "InlineInput",
+    FontWeight->"Bold"],
+  " should not recognize this hidden symbol.  However, nothing is truly \
+hidden.  Executing"
+}], "Text"],
+
+Cell[BoxData[
+    \(\(?Fractals`Private`newpt1\)\)], "InlineInput",
+  Evaluatable->False],
+
+Cell["will reveal its definition.", "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Error messages", "Section"],
+
+Cell["\<\
+Functions defined in terms of appropriately designed patterns do not respond \
+to input that does not match those patterns.  Hence, no result will be \
+returned to a user who calls your function with arguments for which there are \
+no definitions.  This is in fact the desired behavior \[LongDash] it is \
+better to receive no result than to be misled by spurious results.  \
+Nevertheless, it is usually desirable to provide informative error messages \
+when blatantly incorrect input is encountered.  Furthermore, good functions \
+also provide informative messages when an algorithm fails or when the input \
+is numerically unsuitable despite matching the defined patterns.\
+\>", "Text"],
+
+Cell[TextData[{
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " defines error messages using the form "
+}], "Text"],
+
+Cell[TextData[StyleBox["Symbol::tag=\"informative text, perhaps with place \
+holders `1`, `2`, \[CenterEllipsis] for insertion of values\"",
+  FontWeight->"Bold",
+  FontSlant->"Italic"]], "Text"],
+
+Cell[TextData[{
+  "where ",
+  StyleBox["Symbol",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " identifies the symbol and ",
+  StyleBox["tag",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " the type of error encountered.  The error message is then printed by the \
+statement"
+}], "Text"],
+
+Cell[BoxData[
+    \(Message[Symbol::tag, value1, 
+      value2, \[CenterEllipsis]]\)], "InlineInput",
+  Evaluatable->False],
+
+Cell["\<\
+where the optional values are inserted into the place holders.\
+\>", "Text"],
+
+Cell[TextData[{
+  "For example, ",
+  StyleBox["DisplayKoch", "InlineInput",
+    FontWeight->"Bold"],
+  " obviously cannot tolerate negative iteration numbers.  Therefore, add the \
+following statement "
+}], "Text"],
+
+Cell[BoxData[
+    \(\(DisplayKoch::negiter = "\<negative iteration number\>";\)\)], \
+"InlineInput",
+  Evaluatable->False],
+
+Cell["\<\
+to the \"error conditions\" section of the package and the statement\
+\>", "Text"],
+
+Cell[BoxData[
+    \(\(If[n <= 0, Message[DisplayKoch::negiter]; 
+        Abort[]];\)\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[TextData[{
+  "near the beginning of the ",
+  StyleBox["DisplayKoch", "InlineInput",
+    FontWeight->"Bold"],
+  " module.  In order to test these messages, it is useful to ",
+  StyleBox["temporarily",
+    FontSlant->"Italic"],
+  " disable the protection of the export functions by commenting out the ",
+  StyleBox["Protect", "InlineInput",
+    FontWeight->"Bold"],
+  " statement.   If you then execute the ",
+  StyleBox["Unprotect", "InlineInput",
+    FontWeight->"Bold"],
+  " function, re-evaluation of the notebook will establish the desired error \
+messages.  However, do not forget to restore the ",
+  StyleBox["Protect", "InlineInput",
+    FontWeight->"Bold"],
+  " statement before you finish."
+}], "Text"],
+
+Cell[TextData[{
+  "Now try computing a Koch curve with negative iteration index.  The \
+condition in the ",
+  StyleBox["If", "InlineInput",
+    FontWeight->"Bold"],
+  " statement tests ",
+  StyleBox["True", "InlineInput"],
+  " and causes the error message to be printed and further evaluation of the \
+function to be aborted."
+}], "Text"],
+
+Cell[TextData[{
+  "Next, suppose that the user calls ",
+  StyleBox["DisplayKoch", "InlineInput",
+    FontWeight->"Bold"],
+  " with an inappropriate first argument, such as a number rather than a list \
+of coordinate pairs.  Although no output would be produced because the input \
+does not match the pattern specified by the definition, an informative \
+message might be helpful.  Add the message"
+}], "Text"],
+
+Cell[BoxData[
+    \(\(DisplayKoch::notpoly = "\<first argument should be a list of \
+pairs\>";\)\)], "InlineInput",
+  Evaluatable->False],
+
+Cell["and the definition", "Text"],
+
+Cell[BoxData[
+    \(\(DisplayKoch[x_, n_, opts___] := 
+        Message[DisplayKoch::notpoly];\)\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[TextData[{
+  "to the \"error conditions\" section.  This secondary definition will not \
+interfere with the primary definition because ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " searches the definition list for a matching pattern in the order \
+specified by the package and for correct input will find a match at the \
+primary definition first.  Thus, the secondary definitions in the \"error \
+conditions\" section are examined only when inappropriate input is given.  \
+Re-evaluate the package and test the functioning of this message."
+}], "Text"],
+
+Cell["\<\
+Finally, suppose that the number of arguments is incorrect.  The statements\
+\>", "Text"],
+
+Cell[BoxData[
+    \(\(DisplayKoch::badarg = "\<`1` arguments given where 2 were \
+expected\>";\)\)], "InlineInput",
+  Evaluatable->False],
+
+Cell[BoxData[
+    \(\(DisplayKoch[x_] := 
+        Message[DisplayKoch::badarg, 1];\)\)], "InlineInput",
+  Evaluatable->False],
+
+Cell["\<\
+will handle the situation in which too few arguments are given and can be \
+generalized easily.\
+\>", "Text"],
+
+Cell["\<\
+Add and test error messages for the Julia and Mandelbrot functions which \
+handle several classes of inappropriate arguments (too many, too few, \
+iteration limits not being positive integers, etc).\
+\>", "Exercise"],
+
+Cell["\<\
+You have just discovered a problem with DisplayKoch \[LongDash] integer or \
+rational coordinates burden the computation excessively.  Demonstrate and \
+then correct this problem.  \
+\>", "Exercise"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["File locations", "Section"],
+
+Cell[TextData[{
+  "In order to use our package, we have found it necessary to specify its \
+directory explicitly, but directory names can become quite long and \
+cumbersome.  It would be much better to move our package to a location that \
+is readily accessible by any notebook using a ",
+  StyleBox["Needs", "InlineInput",
+    FontWeight->"Bold"],
+  " statement rather than loading the package from a specified directory and \
+file name.  "
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " searches for files using a path variable.  Evaluate ",
+  StyleBox["$Path", "InlineInput",
+    FontWeight->"Bold"],
+  " to view the path defined for your system.  Somewhere in the middle you \
+will probably find a simple disk name amidst the various folders associated \
+with the operating system and the ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " program.  If so, the following procedure should make your package visible \
+to ",
+  StyleBox["Needs", "InlineInput",
+    FontWeight->"Bold"],
+  " without explicit directory information."
+}], "Text"],
+
+Cell[TextData[{
+  "Create a new folder with a name like ",
+  StyleBox["MyPackages", "InlineInput",
+    FontWeight->"Bold"],
+  ", on the appropriate disk."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Move ",
+  StyleBox["Fractals.m", "InlineInput",
+    FontWeight->"Bold"],
+  " to this location."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}},
+  TextAlignment->Left],
+
+Cell[TextData[{
+  "Change ",
+  StyleBox["Begin[\"`Fractals`\"]", "InlineInput",
+    FontWeight->"Bold"],
+  " to ",
+  StyleBox["Begin[\"MyPackages`Fractals`\"]", "InlineInput",
+    FontWeight->"Bold"],
+  ". "
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Restart the kernel.  Evaluate ",
+  StyleBox["Needs[\"MyPackages`Fractals`\"]", "InlineInput",
+    FontWeight->"Bold"],
+  " and inspect the context path \[LongDash] you should find ",
+  StyleBox["MyPackages`Fractals`", "InlineInput"],
+  " present.  Verify that the functions in ",
+  StyleBox["Fractals.m", "InlineInput",
+    FontWeight->"Bold"],
+  " are available and working."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "If your ",
+  StyleBox["$Path", "InlineInput",
+    FontWeight->"Bold"],
+  " does not provide a suitable location, you have two choices: either move \
+your package to a subdirectory on the path or augment ",
+  StyleBox["$Path", "InlineInput",
+    FontWeight->"Bold"],
+  ".  For the former we recommend creating a subdirectory of ",
+  StyleBox["AddOns\\ExtraPackages", "InlineInput",
+    FontWeight->"Bold"],
+  ".  For the latter, one must either use the Option Inspector or edit the \
+file that specifies the path, but both methods are system dependent."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Additional features of context commands", "Section"],
+
+Cell["\<\
+Several additional features of the context-manipulation commands are worth \
+discussing briefly.  \
+\>", "Text"],
+
+Cell[TextData[{
+  StyleBox["BeginPackage[", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox["\"context\",{need1,need2,\[CenterEllipsis]}", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox["]", "InlineInput",
+    FontWeight->"Bold"],
+  " can take an optional second argument which specifies a list of required \
+packages.  If used in this manner, each of these packages will be entered on \
+the context path as well as the new package being defined.  Sometimes this is \
+a desirable side effect of your package definition, sometimes not.  If you \
+prefer not having the subsidiary packages used in the private implementation \
+become part of the context path returned when your package is loaded, then \
+use a ",
+  StyleBox["Needs", "InlineInput",
+    FontWeight->"Bold"],
+  " or ",
+  StyleBox["Get", "InlineInput",
+    FontWeight->"Bold"],
+  " statement following ",
+  StyleBox["BeginPackage", "InlineInput",
+    FontWeight->"Bold"],
+  ", as we did above."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "In order to avoid any confusion between contexts that might occur when \
+errors cause premature termination of package evaluation, it is often useful \
+to omit or comment out the context-manipulation commands during the \
+development phase.  Similarly, it is also useful to inactivate the ",
+  StyleBox["Protect", "InlineInput",
+    FontWeight->"Bold"],
+  " statement during the development phase."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  StyleBox["Begin[\"", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox["NewContext`", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox["\"]", "InlineInput",
+    FontWeight->"Bold"],
+  " sets the current context to ",
+  StyleBox["NewContext", "InlineInput",
+    FontWeight->"Bold"],
+  ", but does not add the new context to the context path."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \($Context\)], "Input"],
+
+Cell[BoxData[
+    \("Global`"\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(ClearAll["\<Global`*\>"];\)\), "\n", 
+    \(\(Begin["\<Junk`\>"];\)\), "\n", 
+    \($Context\)}], "Input"],
+
+Cell[BoxData[
+    \("Junk`"\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?x\)\)], "Input"],
+
+Cell[BoxData[
+    \(Information::"notfound" \(\(:\)\(\ \)\) 
+      "Symbol \!\(\"x\"\) not found."\)], "Message"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(x = "\<stuff\>";\)\), "\n", 
+    \(\(?x\)\)}], "Input"],
+
+Cell[BoxData[
+    \("Junk`x"\)], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[GridBox[{
+          {GridBox[{
+                {\(x = "stuff"\)}
+                },
+              GridBaseline->{Baseline, {1, 1}},
+              ColumnWidths->0.999,
+              ColumnAlignments->{Left}]}
+          },
+        GridBaseline->{Baseline, {1, 1}},
+        ColumnAlignments->{Left}],
+      Definition[ x],
+      Editable->False]], "Print"]
+}, Closed]],
+
+Cell[TextData[{
+  StyleBox["Begin[\"", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox["`Subcontext`", "InlineInput"],
+  StyleBox["\"]", "InlineInput",
+    FontWeight->"Bold"],
+  " appends ",
+  StyleBox["Subcontext", "InlineInput",
+    FontWeight->"Bold"],
+  " to the current context."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Begin["\<`MoreJunk`\>"]\)], "Input"],
+
+Cell[BoxData[
+    \("Junk`MoreJunk`"\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?x\)\)], "Input"],
+
+Cell[BoxData[
+    \(Information::"notfound" \(\(:\)\(\ \)\) 
+      "Symbol \!\(\"x\"\) not found."\)], "Message"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(y = "\<other stuff\>"\)], "Input"],
+
+Cell[BoxData[
+    \("other stuff"\)], "Output"]
+}, Closed]],
+
+Cell[TextData[{
+  StyleBox["End[]", "InlineInput"],
+  StyleBox[" returns ",
+    FontWeight->"Plain"],
+  StyleBox["$Context", "InlineInput"],
+  StyleBox[" to its previous value (before the most recent ",
+    FontWeight->"Plain"],
+  StyleBox["Begin", "InlineInput"],
+  StyleBox[").",
+    FontWeight->"Plain"]
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}},
+  FontWeight->"Bold"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(End[]; \ $Context\)], "Input"],
+
+Cell[BoxData[
+    \("Junk`"\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?y\)\)], "Input"],
+
+Cell[BoxData[
+    \(Information::"notfound" \(\(:\)\(\ \)\) 
+      "Symbol \!\(\"y\"\) not found."\)], "Message"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?x\)\)], "Input"],
+
+Cell[BoxData[
+    \("Junk`x"\)], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[GridBox[{
+          {GridBox[{
+                {\(x = "stuff"\)}
+                },
+              GridBaseline->{Baseline, {1, 1}},
+              ColumnWidths->0.999,
+              ColumnAlignments->{Left}]}
+          },
+        GridBaseline->{Baseline, {1, 1}},
+        ColumnAlignments->{Left}],
+      Definition[ x],
+      Editable->False]], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Junk`MoreJunk`y\)], "Input"],
+
+Cell[BoxData[
+    \("other stuff"\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(End[]; \ $Context\)], "Input"],
+
+Cell[BoxData[
+    \("Global`"\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(x = "\<global stuff\>"\)], "Input"],
+
+Cell[BoxData[
+    \("global stuff"\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Junk`x\)], "Input"],
+
+Cell[BoxData[
+    \("stuff"\)], "Output"]
+}, Closed]]
+}, Closed]]
+}, Open  ]]
+},
+FrontEndVersion->"5.2 for Microsoft Windows",
+ScreenRectangle->{{0, 1400}, {0, 952}},
+WindowToolbars->{"RulerBar", "EditBar"},
+WindowSize->{1392, 912},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+ShowCellLabel->False,
+Magnification->1.5,
+StyleDefinitions -> Notebook[{
+  
+  Cell[CellGroupData[{
+  Cell["Style Definitions", "Subtitle"],
+  
+  Cell["\<\
+Modify the definitions below to change the default appearance of all cells in \
+a given style.  Make modifications to any definition using commands in the \
+Format menu.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Style Environment Names", "Section"],
+  
+  Cell[StyleData[All, "Working"],
+    PageWidth->WindowWidth,
+    ScriptMinSize->9],
+  
+  Cell[StyleData[All, "Presentation"],
+    PageWidth->WindowWidth,
+    ScriptMinSize->12,
+    FontSize->16],
+  
+  Cell[StyleData[All, "Condensed"],
+    PageWidth->PaperWidth,
+    CellBracketOptions->{"Margins"->{1, 1},
+    "Widths"->{0, 5}},
+    ScriptMinSize->7,
+    FontSize->10],
+  
+  Cell[StyleData[All, "Printout"],
+    PageWidth->PaperWidth,
+    ScriptMinSize->7,
+    FontSize->10,
+    PrivateFontOptions->{"FontType"->"Outline"}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Notebook Options", "Section"],
+  
+  Cell["\<\
+The options defined for the style below will be used at the Notebook level.\
+\>", "Text"],
+  
+  Cell[StyleData["Notebook"],
+    PageHeaders->{{Cell[ 
+            TextData[ {
+              CounterBox[ "Page"]}], "PageNumber"], None, Cell[ 
+            TextData[ {
+              ValueBox[ "FileName"]}], "Header"]}, {Cell[ 
+            TextData[ {
+              ValueBox[ "FileName"]}], "Header"], None, Cell[ 
+            TextData[ {
+              CounterBox[ "Page"]}], "PageNumber"]}},
+    PageFooters->{{Cell[ 
+            TextData[ {"Essential Mathematica for Students of Science"}], 
+            "Footer"], None, Cell[ 
+            TextData[ {"\[Copyright] James J. Kelly, 1998"}], "Footer"]}, {
+        Cell[ 
+            TextData[ {"Essential Mathematica for Students of Science"}], 
+            "Footer"], None, Cell[ 
+            TextData[ {"\[Copyright] James J. Kelly, 1998"}], "Footer"]}},
+    PageHeaderLines->{True, True},
+    PageFooterLines->{True, True},
+    PrintingOptions->{"FirstPageHeader"->False,
+    "FacingPages"->True},
+    CellFrameLabelMargins->6,
+    StyleMenuListing->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Headings", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Title"],
+    ShowCellBracket->True,
+    CellMargins->{{0, 0}, {0, 0}},
+    CellGroupingRules->"TitleGrouping",
+    PageBreakBelow->False,
+    LineSpacing->{1, 0},
+    CounterIncrements->"Title",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}, {
+        "Subtitle", 0}, {"Subsubtitle", 0}},
+    FontSize->34,
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Title", "Presentation"],
+    CellMargins->{{0, 0}, {0, 0}},
+    LineSpacing->{1, 0},
+    FontSize->44],
+  
+  Cell[StyleData["Title", "Condensed"],
+    CellMargins->{{0, 0}, {0, 0}},
+    FontSize->24],
+  
+  Cell[StyleData["Title", "Printout"],
+    CellMargins->{{0, 0}, {0, 0}},
+    FontSize->24,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0],
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subtitle"],
+    CellMargins->{{0, 0}, {0, 0}},
+    PageBreakBelow->False,
+    LineSpacing->{1, 3},
+    ParagraphIndent->-96,
+    CounterIncrements->"Subtitle",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}, {
+        "Subsubtitle", 0}},
+    FontFamily->"Helvetica",
+    FontSize->18,
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.2, 0.700008, 0.700008]],
+  
+  Cell[StyleData["Subtitle", "Presentation"],
+    CellMargins->{{0, 0}, {0, 0}},
+    LineSpacing->{1, 6},
+    ParagraphIndent->-157,
+    FontSize->30],
+  
+  Cell[StyleData["Subtitle", "Condensed"],
+    CellMargins->{{0, 0}, {0, 0}},
+    ParagraphIndent->-78,
+    FontSize->14],
+  
+  Cell[StyleData["Subtitle", "Printout"],
+    CellMargins->{{0, 0}, {0, 0}},
+    ParagraphIndent->-85,
+    FontSize->16,
+    FontColor->GrayLevel[0],
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsubtitle"],
+    ShowCellBracket->True,
+    CellMargins->{{10, 4}, {30, 10}},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubtitle",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}},
+    FontFamily->"Helvetica",
+    FontSize->14,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Subsubtitle", "Presentation"],
+    ShowCellBracket->True,
+    CellMargins->{{8, 10}, {40, 20}},
+    LineSpacing->{1, 0},
+    FontSize->24],
+  
+  Cell[StyleData["Subsubtitle", "Condensed"],
+    ShowCellBracket->True,
+    CellMargins->{{8, 10}, {12, 8}},
+    FontSize->12],
+  
+  Cell[StyleData["Subsubtitle", "Printout"],
+    ShowCellBracket->True,
+    CellMargins->{{9, 10}, {50, 10}},
+    FontSize->14]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Section"],
+    CellFrame->{{0, 0}, {0, 1}},
+    CellDingbat->None,
+    CellMargins->{{12, Inherited}, {4, 24}},
+    CellGroupingRules->{"SectionGrouping", 30},
+    PageBreakBelow->False,
+    CellFrameMargins->6,
+    CounterIncrements->"Section",
+    CounterAssignments->{{"Subsection", 0}, {"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->16,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Section", "Presentation"],
+    CellMargins->{{10, 10}, {8, 32}},
+    LineSpacing->{1, 2},
+    FontSize->24,
+    FontTracking->"Condensed"],
+  
+  Cell[StyleData["Section", "Condensed"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14],
+  
+  Cell[StyleData["Section", "Printout"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsection"],
+    CellMargins->{{12, Inherited}, {8, 20}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->13,
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Subsection", "Presentation"],
+    CellMargins->{{11, 10}, {8, 32}},
+    LineSpacing->{1, 0},
+    FontSize->22],
+  
+  Cell[StyleData["Subsection", "Condensed"],
+    CellMargins->{{8, Inherited}, {2, 12}},
+    FontSize->12],
+  
+  Cell[StyleData["Subsection", "Printout"],
+    CellMargins->{{9, 0}, {4, 40}},
+    FontSize->12]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsubsection"],
+    CellDingbat->"\[FilledSquare]",
+    CellMargins->{{25, Inherited}, {8, 12}},
+    CellGroupingRules->{"SectionGrouping", 50},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubsection",
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Subsubsection", "Presentation"],
+    CellMargins->{{29, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Subsubsection", "Condensed"],
+    CellMargins->{{21, 0}, {4, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Subsubsection", "Printout"],
+    CellMargins->{{21, 0}, {4, 20}},
+    FontSize->11]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Body Text", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Text"],
+    CellMargins->{{12, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 12},
+    CounterIncrements->"Text",
+    FontFamily->"Times"],
+  
+  Cell[StyleData["Text", "Presentation"],
+    CellMargins->{{13, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12},
+    FontSize->16],
+  
+  Cell[StyleData["Text", "Condensed"],
+    CellMargins->{{9, 0}, {4, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 6}],
+  
+  Cell[StyleData["Text", "Printout"],
+    CellMargins->{{9, 0}, {4, 4}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["SmallText"],
+    CellMargins->{{12, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 6},
+    CounterIncrements->"SmallText",
+    FontFamily->"Helvetica",
+    FontSize->9],
+  
+  Cell[StyleData["SmallText", "Presentation"],
+    CellMargins->{{13, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    FontSize->12],
+  
+  Cell[StyleData["SmallText", "Condensed"],
+    CellMargins->{{8, 10}, {2, 2}},
+    LineSpacing->{1, 2},
+    FontSize->9],
+  
+  Cell[StyleData["SmallText", "Printout"],
+    CellMargins->{{9, 0}, {4, 4}}]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Input/Output", "Section"],
+  
+  Cell["\<\
+The cells in this section define styles used for input and output to the \
+kernel.  Be careful when modifying, renaming, or removing these styles, \
+because the front end associates special meanings with these style names.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Input"],
+    CellFrame->0.5,
+    CellMargins->{{25, 10}, {8, 8}},
+    Evaluatable->True,
+    CellGroupingRules->"InputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{5, Inherited}, {Inherited, Inherited}},
+    DefaultFormatType->DefaultInputFormatType,
+    FormatType->InputForm,
+    ShowStringCharacters->True,
+    NumberMarks->True,
+    CounterIncrements->"Input",
+    FontWeight->"Bold",
+    Background->RGBColor[1, 0.700008, 0.4]],
+  
+  Cell[StyleData["Input", "Presentation"],
+    CellMargins->{{25, Inherited}, {10, 10}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Input", "Condensed"],
+    CellMargins->{{25, 0}, {6, 6}}],
+  
+  Cell[StyleData["Input", "Printout"],
+    CellFrame->0.5,
+    CellMargins->{{25, 0}, {6, 6}},
+    Background->None]
+  }, Closed]],
+  
+  Cell[StyleData["InlineInput"],
+    CellGroupingRules->"InputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    DefaultFormatType->DefaultInputFormatType,
+    AutoItalicWords->{},
+    FormatType->InputForm,
+    ShowStringCharacters->True,
+    NumberMarks->True,
+    CounterIncrements->"Input",
+    FontWeight->"Bold"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Output"],
+    CellFrame->True,
+    CellMargins->{{25, 10}, {8, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    CellEditDuplicate->True,
+    CellGroupingRules->"OutputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    CellLabelMargins->{{3, Inherited}, {Inherited, Inherited}},
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Output",
+    Background->RGBColor[1, 0.900008, 0.900008]],
+  
+  Cell[StyleData["Output", "Presentation"],
+    CellMargins->{{25, Inherited}, {12, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Output", "Condensed"],
+    CellMargins->{{25, 0}, {6, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4}],
+  
+  Cell[StyleData["Output", "Printout"],
+    CellMargins->{{25, 0}, {6, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Message"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"OutputGrouping",
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Message",
+    StyleMenuListing->None,
+    FontColor->RGBColor[1, 0, 0]],
+  
+  Cell[StyleData["Message", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Message", "Condensed"],
+    CellMargins->{{50, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Message", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}},
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Print"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"OutputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Print",
+    StyleMenuListing->None],
+  
+  Cell[StyleData["Print", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Print", "Condensed"],
+    CellMargins->{{50, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Print", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Graphics"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"GraphicsGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Graphics",
+    StyleMenuListing->None],
+  
+  Cell[StyleData["Graphics", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Graphics", "Condensed"],
+    CellMargins->{{52, Inherited}, {Inherited, Inherited}},
+    ImageSize->{175, 175}],
+  
+  Cell[StyleData["Graphics", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}},
+    ImageSize->{250, 250}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["CellLabel"],
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->11,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["CellLabel", "Presentation"],
+    FontSize->12],
+  
+  Cell[StyleData["CellLabel", "Condensed"],
+    FontSize->8],
+  
+  Cell[StyleData["CellLabel", "Printout"],
+    FontSize->8,
+    FontColor->GrayLevel[0]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Unique Styles", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Author"],
+    CellMargins->{{10, 4}, {2, 10}},
+    FontSize->12,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Author", "Presentation"],
+    CellMargins->{{12, 10}, {2, 12}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12},
+    FontSize->16],
+  
+  Cell[StyleData["Author", "Condensed"],
+    CellMargins->{{8, 10}, {1, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 4},
+    FontSize->9],
+  
+  Cell[StyleData["Author", "Printout"],
+    CellMargins->{{9, 0}, {4, 12}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Copyright"],
+    CellMargins->{{10, 10}, {40, 2}},
+    FontFamily->"Helvetica",
+    FontSize->9],
+  
+  Cell[StyleData["Copyright", "Presentation"],
+    CellMargins->{{12, 10}, {50, 2}},
+    LineSpacing->{1, 5},
+    FontSize->12],
+  
+  Cell[StyleData["Copyright", "Condensed"],
+    CellMargins->{{8, 10}, {12, 1}},
+    LineSpacing->{1, 2},
+    FontSize->9],
+  
+  Cell[StyleData["Copyright", "Printout"],
+    CellMargins->{{9, 0}, {72, 4}},
+    FontSize->7]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Abstract"],
+    CellMargins->{{45, 75}, {Inherited, 30}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Abstract", "Printout"],
+    CellMargins->{{36, 67}, {Inherited, 50}},
+    FontSize->10]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Example"],
+    CellMargins->{{12, 10}, {5, 12}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 12},
+    CounterIncrements->"Example",
+    FontFamily->"Times",
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Example", "Presentation"],
+    CellMargins->{{18, 10}, {8, 20}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12}],
+  
+  Cell[StyleData["Example", "Condensed"],
+    CellMargins->{{8, 10}, {4, 8}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 4}],
+  
+  Cell[StyleData["Example", "Printout"],
+    CellMargins->{{9, 0}, {4, 10}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Definition"],
+    CellFrame->{{3, 0}, {0, 0}},
+    CellMargins->{{52, 10}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Definition",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.2, 0.700008, 0.700008]],
+  
+  Cell[StyleData["Definition", "Presentation"],
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Definition", "Condensed"],
+    CellMargins->{{40, 10}, {1, 4}}],
+  
+  Cell[StyleData["Definition", "Printout"],
+    CellMargins->{{44, 0}, {2, 6}},
+    Background->GrayLevel[0.6]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Theorem"],
+    CellFrame->{{3, 0}, {0, 0}},
+    CellMargins->{{52, 10}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Theorem",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Theorem", "Presentation"],
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Theorem", "Condensed"],
+    CellMargins->{{40, 10}, {1, 4}}],
+  
+  Cell[StyleData["Theorem", "Printout"],
+    CellMargins->{{44, 0}, {2, 6}},
+    Background->GrayLevel[0.4]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Caution"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{52, 25}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Caution",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->GrayLevel[0],
+    Background->RGBColor[0.996109, 0, 0],
+    FontVariations->{"Underline"->False}],
+  
+  Cell[StyleData["Caution", "Presentation"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Caution", "Condensed"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{40, 25}, {1, 4}}],
+  
+  Cell[StyleData["Caution", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{44, 25}, {2, 6}},
+    Background->GrayLevel[0.900008]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Advice"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{52, 25}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Advice",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->GrayLevel[0],
+    Background->RGBColor[0, 1, 0],
+    FontVariations->{"Underline"->False}],
+  
+  Cell[StyleData["Advice", "Presentation"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Advice", "Condensed"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{40, 25}, {1, 4}}],
+  
+  Cell[StyleData["Advice", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{44, 25}, {2, 6}},
+    Background->GrayLevel[0.900008]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Exercise"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->"NormalGrouping",
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubsection",
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0, 0, 0.996109]],
+  
+  Cell[StyleData["Exercise", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Exercise", "Condensed"],
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Exercise", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseMain"],
+    CellFrame->{{6, 0}, {0, 1}},
+    CellMargins->{{12, Inherited}, {4, 20}},
+    CellGroupingRules->{"SectionGrouping", 30},
+    PageBreakBelow->False,
+    CellFrameColor->RGBColor[0.571389, 0.19675, 0.570504],
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->16,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["ExerciseMain", "Presentation"],
+    CellMargins->{{18, 10}, {8, 32}},
+    LineSpacing->{1, 2},
+    FontSize->24,
+    FontTracking->"Condensed"],
+  
+  Cell[StyleData["ExerciseMain", "Condensed"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14],
+  
+  Cell[StyleData["ExerciseMain", "Printout"],
+    CellMargins->{{9, 0}, {2, 50}},
+    CellFrameColor->GrayLevel[0.500008],
+    FontSize->14,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseTitle"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["ExerciseTitle", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["ExerciseTitle", "Condensed"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["ExerciseTitle", "Printout"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseText"],
+    CellMargins->{{32, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 8},
+    CounterIncrements->"ExcersiceText",
+    FontFamily->"Times"],
+  
+  Cell[StyleData["ExerciseText", "Presentation"],
+    CellMargins->{{32, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12}],
+  
+  Cell[StyleData["ExerciseText", "Condensed"],
+    CellMargins->{{32, 0}, {4, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 6}],
+  
+  Cell[StyleData["ExerciseText", "Printout"],
+    CellMargins->{{32, 0}, {4, 4}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Problem"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Plain",
+    FontColor->GrayLevel[0]],
+  
+  Cell[StyleData["Problem", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Problem", "Condensed"],
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Problem", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Formulas and Programming", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["DisplayFormula"],
+    CellMargins->{{62, 10}, {2, 10}},
+    CellHorizontalScrolling->True,
+    DefaultFormatType->DefaultInputFormatType,
+    ScriptLevel->0,
+    SingleLetterItalics->True,
+    UnderoverscriptBoxOptions->{LimitsPositioning->True}],
+  
+  Cell[StyleData["DisplayFormula", "Presentation"],
+    CellMargins->{{74, 10}, {2, 10}}],
+  
+  Cell[StyleData["DisplayFormula", "Condensed"],
+    CellMargins->{{52, 10}, {2, 10}}],
+  
+  Cell[StyleData["DisplayFormula", "Printout"],
+    CellMargins->{{54, 10}, {2, 10}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ChemicalFormula"],
+    CellMargins->{{62, 10}, {2, 10}},
+    DefaultFormatType->DefaultInputFormatType,
+    AutoSpacing->False,
+    ScriptLevel->1,
+    ScriptBaselineShifts->{0.6, Automatic},
+    SingleLetterItalics->False,
+    ZeroWidthTimes->True],
+  
+  Cell[StyleData["ChemicalFormula", "Presentation"],
+    CellMargins->{{74, 10}, {2, 10}},
+    FontSize->10],
+  
+  Cell[StyleData["ChemicalFormula", "Condensed"],
+    CellMargins->{{52, 10}, {2, 10}},
+    FontSize->10],
+  
+  Cell[StyleData["ChemicalFormula", "Printout"],
+    CellMargins->{{54, 10}, {2, 10}},
+    FontSize->10]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Program"],
+    CellMargins->{{12, 10}, {Inherited, 6}},
+    FontFamily->"Courier"],
+  
+  Cell[StyleData["Program", "Presentation"],
+    CellMargins->{{13, 30}, {Inherited, 4}},
+    FontSize->9.5],
+  
+  Cell[StyleData["Program", "Condensed"],
+    CellMargins->{{8, 10}, {Inherited, 4}},
+    FontSize->9.5],
+  
+  Cell[StyleData["Program", "Printout"],
+    CellMargins->{{9, 0}, {Inherited, 4}},
+    FontSize->9.5]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Automatic Numbering", "Section"],
+  
+  Cell["\<\
+The following styles are useful for numbered equations, figures, etc.  They \
+automatically give the cell a FrameLabel containing a reference to a \
+particular counter, and also increment that counter.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedEquation"],
+    CellMargins->{{62, 10}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, Cell[ 
+            TextData[ {"(", 
+              CounterBox[ "NumberedEquation"], ")"}]]}, {None, None}},
+    DefaultFormatType->DefaultInputFormatType,
+    CounterIncrements->"NumberedEquation",
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedEquation", "Presentation"],
+    CellMargins->{{74, 10}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["NumberedEquation", "Condensed"],
+    CellMargins->{{52, 10}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["NumberedEquation", "Printout"],
+    CellMargins->{{54, 0}, {Inherited, Inherited}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedFigure"],
+    CellMargins->{{62, 145}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, None}, {Cell[ 
+            TextData[ {"Figure ", 
+              CounterBox[ "NumberedFigure"]}]], None}},
+    CounterIncrements->"NumberedFigure",
+    ImageMargins->{{43, Inherited}, {Inherited, 0}},
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedFigure", "Presentation"]],
+  
+  Cell[StyleData["NumberedFigure", "Condensed"]],
+  
+  Cell[StyleData["NumberedFigure", "Printout"]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedTable"],
+    CellMargins->{{62, 145}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, None}, {Cell[ 
+            TextData[ {"Table ", 
+              CounterBox[ "NumberedTable"]}]], None}},
+    TextAlignment->Center,
+    CounterIncrements->"NumberedTable",
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedTable", "Presentation"]],
+  
+  Cell[StyleData["NumberedTable", "Condensed"]],
+  
+  Cell[StyleData["NumberedTable", "Printout"]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Headers and Footers", "Section"],
+  
+  Cell[StyleData["Header"],
+    CellMargins->{{0, 0}, {4, 1}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Footer"],
+    CellMargins->{{0, 0}, {0, 4}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["PageNumber"],
+    CellMargins->{{0, 0}, {4, 1}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontWeight->"Bold"]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Hyperlink Styles", "Section"],
+  
+  Cell["\<\
+The cells below define styles useful for making hypertext ButtonBoxes.  The \
+\"Hyperlink\" style is for links within the same Notebook, or between \
+Notebooks.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Hyperlink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`NotebookLocate[ #2]}]&),
+    Active->True,
+    ButtonFrame->"None",
+    ButtonNote->ButtonData}],
+  
+  Cell[StyleData["Hyperlink", "Presentation"]],
+  
+  Cell[StyleData["Hyperlink", "Condensed"]],
+  
+  Cell[StyleData["Hyperlink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell["\<\
+The following styles are for linking automatically to the on-line help \
+system.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["MainBookLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "MainBook", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["MainBookLink", "Presentation"]],
+  
+  Cell[StyleData["MainBookLink", "Condensed"]],
+  
+  Cell[StyleData["MainBookLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["AddOnsLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontFamily->"Courier",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "AddOns", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["AddOnsLink", "Presentation"]],
+  
+  Cell[StyleData["AddOnsLink", "Condensed"]],
+  
+  Cell[StyleData["AddOnLink", "Printout"],
+    FontWeight->"Bold",
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["RefGuideLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontFamily->"Courier",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "RefGuideLink", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["RefGuideLink", "Presentation"]],
+  
+  Cell[StyleData["RefGuideLink", "Condensed"]],
+  
+  Cell[StyleData["RefGuideLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["GettingStartedLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "GettingStarted", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["GettingStartedLink", "Presentation"]],
+  
+  Cell[StyleData["GettingStartedLink", "Condensed"]],
+  
+  Cell[StyleData["GettingStartedLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["OtherInformationLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "OtherInformation", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["OtherInformationLink", "Presentation"]],
+  
+  Cell[StyleData["OtherInformationLink", "Condensed"]],
+  
+  Cell[StyleData["OtherInformationLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]]
+  }, Closed]]
+  }, Open  ]]
+  }]
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 82, 2, 81, "Title"],
+Cell[1861, 57, 455, 15, 85, "Author"],
+
+Cell[CellGroupData[{
+Cell[2341, 76, 31, 0, 83, "Section"],
+Cell[2375, 78, 1206, 22, 171, "Text"],
+Cell[3584, 102, 1199, 25, 171, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[4820, 132, 43, 0, 51, "Section"],
+
+Cell[CellGroupData[{
+Cell[4888, 136, 51, 0, 68, "Subsection"],
+Cell[4942, 138, 555, 10, 94, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[5534, 153, 46, 0, 68, "Subsection"],
+Cell[5583, 155, 257, 7, 41, "Text"],
+Cell[5843, 164, 95, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[5941, 168, 95, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[6039, 172, 110, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[6152, 176, 88, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[6243, 180, 82, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[6328, 184, 104, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[6435, 188, 88, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[6526, 192, 71, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[6600, 196, 99, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[6702, 200, 75, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[6780, 204, 73, 2, 36, "InlineInput",
+  Evaluatable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[6890, 211, 39, 0, 68, "Subsection"],
+Cell[6932, 213, 468, 12, 68, "Text"],
+Cell[7403, 227, 459, 12, 68, "Text"],
+Cell[7865, 241, 699, 17, 95, "Text"],
+Cell[8567, 260, 292, 6, 41, "Text"],
+Cell[8862, 268, 277, 7, 42, "Text"],
+Cell[9142, 277, 525, 20, 42, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[9704, 302, 40, 0, 68, "Subsection"],
+Cell[9747, 304, 370, 8, 67, "Text"],
+Cell[10120, 314, 358, 8, 41, "Text"],
+Cell[10481, 324, 700, 19, 67, "Text"],
+Cell[11184, 345, 234, 7, 41, "Text"],
+Cell[11421, 354, 445, 9, 67, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[11903, 368, 43, 0, 68, "Subsection"],
+Cell[11949, 370, 485, 14, 41, "Text"],
+Cell[12437, 386, 140, 2, 41, "Text"],
+Cell[12580, 390, 442, 13, 42, "Text"],
+Cell[13025, 405, 523, 14, 67, "Text"],
+Cell[13551, 421, 501, 15, 42, "Text"],
+Cell[14055, 438, 259, 5, 41, "Text"],
+Cell[14317, 445, 203, 7, 41, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[14557, 457, 54, 0, 68, "Subsection"],
+Cell[14614, 459, 940, 26, 93, "Text"],
+Cell[15557, 487, 358, 8, 41, "Text"],
+Cell[15918, 497, 347, 10, 41, "Text"],
+Cell[16268, 509, 580, 17, 67, "Text"],
+Cell[16851, 528, 309, 6, 67, "Text"],
+Cell[17163, 536, 152, 2, 41, "Text"],
+Cell[17318, 540, 669, 21, 69, "Text"],
+Cell[17990, 563, 418, 11, 42, "Text"],
+Cell[18411, 576, 135, 2, 41, "Text"],
+Cell[18549, 580, 116, 3, 41, "Text"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[18714, 589, 48, 0, 51, "Section"],
+Cell[18765, 591, 992, 29, 96, "Text"],
+Cell[19760, 622, 429, 9, 67, "Text"],
+Cell[20192, 633, 71, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[20266, 637, 309, 8, 68, "Text"],
+Cell[20578, 647, 73, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[20654, 651, 106, 3, 41, "Text"],
+Cell[20763, 656, 70, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[20836, 660, 264, 6, 42, "Text"],
+Cell[21103, 668, 90, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[21196, 672, 310, 11, 41, "Text"],
+Cell[21509, 685, 98, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[21610, 689, 165, 4, 42, "Text"],
+Cell[21778, 695, 610, 14, 95, "Text"],
+Cell[22391, 711, 83, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[22477, 715, 1029, 21, 122, "Text"],
+Cell[23509, 738, 66, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[23578, 742, 301, 9, 42, "Text"],
+Cell[23882, 753, 93, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[23978, 757, 128, 3, 41, "Text"],
+Cell[24109, 762, 73, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[24185, 766, 669, 18, 69, "Text"],
+Cell[24857, 786, 89, 2, 36, "InlineInput",
+  Evaluatable->False],
+Cell[24949, 790, 43, 0, 41, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[25029, 795, 33, 0, 51, "Section"],
+Cell[25065, 797, 698, 10, 119, "Text"],
+Cell[25766, 809, 123, 4, 41, "Text"],
+Cell[25892, 815, 195, 3, 42, "Text"],
+Cell[26090, 820, 301, 11, 42, "Text"],
+Cell[26394, 833, 123, 3, 36, "InlineInput",
+  Evaluatable->False],
+Cell[26520, 838, 86, 2, 41, "Text"],
+Cell[26609, 842, 214, 6, 42, "Text"],
+Cell[26826, 850, 122, 3, 36, "InlineInput",
+  Evaluatable->False],
+Cell[26951, 855, 92, 2, 41, "Text"],
+Cell[27046, 859, 125, 3, 36, "InlineInput",
+  Evaluatable->False],
+Cell[27174, 864, 715, 18, 96, "Text"],
+Cell[27892, 884, 338, 9, 68, "Text"],
+Cell[28233, 895, 409, 8, 68, "Text"],
+Cell[28645, 905, 137, 3, 36, "InlineInput",
+  Evaluatable->False],
+Cell[28785, 910, 34, 0, 41, "Text"],
+Cell[28822, 912, 136, 3, 36, "InlineInput",
+  Evaluatable->False],
+Cell[28961, 917, 571, 10, 93, "Text"],
+Cell[29535, 929, 99, 2, 41, "Text"],
+Cell[29637, 933, 137, 3, 36, "InlineInput",
+  Evaluatable->False],
+Cell[29777, 938, 125, 3, 36, "InlineInput",
+  Evaluatable->False],
+Cell[29905, 943, 119, 3, 41, "Text"],
+Cell[30027, 948, 226, 4, 83, "Exercise"],
+Cell[30256, 954, 209, 4, 83, "Exercise"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[30502, 963, 33, 0, 51, "Section"],
+Cell[30538, 965, 453, 9, 68, "Text"],
+Cell[30994, 976, 633, 16, 95, "Text"],
+Cell[31630, 994, 263, 7, 42, "Text"],
+Cell[31896, 1003, 246, 8, 42, "Text"],
+Cell[32145, 1013, 316, 10, 42, "Text"],
+Cell[32464, 1025, 504, 12, 69, "Text"],
+Cell[32971, 1039, 583, 13, 95, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[33591, 1057, 58, 0, 51, "Section"],
+Cell[33652, 1059, 122, 3, 41, "Text"],
+Cell[33777, 1064, 1070, 25, 122, "Text"],
+Cell[34850, 1091, 526, 10, 68, "Text"],
+Cell[35379, 1103, 471, 13, 42, "Text"],
+
+Cell[CellGroupData[{
+Cell[35875, 1120, 41, 1, 73, "Input"],
+Cell[35919, 1123, 43, 1, 59, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[35999, 1129, 129, 3, 125, "Input"],
+Cell[36131, 1134, 41, 1, 59, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[36209, 1140, 39, 1, 73, "Input"],
+Cell[36251, 1143, 113, 2, 35, "Message"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[36401, 1150, 78, 2, 99, "Input"],
+Cell[36482, 1154, 41, 1, 35, "Print"],
+Cell[36526, 1157, 389, 12, 35, "Print"]
+}, Closed]],
+Cell[36930, 1172, 397, 12, 42, "Text"],
+
+Cell[CellGroupData[{
+Cell[37352, 1188, 56, 1, 73, "Input"],
+Cell[37411, 1191, 50, 1, 59, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[37498, 1197, 39, 1, 73, "Input"],
+Cell[37540, 1200, 113, 2, 35, "Message"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[37690, 1207, 54, 1, 73, "Input"],
+Cell[37747, 1210, 47, 1, 59, "Output"]
+}, Closed]],
+Cell[37809, 1214, 437, 13, 42, "Text"],
+
+Cell[CellGroupData[{
+Cell[38271, 1231, 50, 1, 73, "Input"],
+Cell[38324, 1234, 41, 1, 59, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[38402, 1240, 39, 1, 73, "Input"],
+Cell[38444, 1243, 113, 2, 35, "Message"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[38594, 1250, 39, 1, 73, "Input"],
+Cell[38636, 1253, 41, 1, 35, "Print"],
+Cell[38680, 1256, 389, 12, 35, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[39106, 1273, 48, 1, 73, "Input"],
+Cell[39157, 1276, 47, 1, 59, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[39241, 1282, 50, 1, 73, "Input"],
+Cell[39294, 1285, 43, 1, 59, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[39374, 1291, 55, 1, 73, "Input"],
+Cell[39432, 1294, 48, 1, 59, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[39517, 1300, 39, 1, 73, "Input"],
+Cell[39559, 1303, 41, 1, 59, "Output"]
+}, Closed]]
+}, Closed]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

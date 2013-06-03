@@ -1,0 +1,6 @@
+ 2 2 3.14 4.1e-5 -6.27*^5
+ supercalifragilisticexpialodocious Mary Poppins!
+Have a nice day!
+ q abc
+Sqrt[4] 
+Sqrt[4]

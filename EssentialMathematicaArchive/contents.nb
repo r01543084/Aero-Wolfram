@@ -1,0 +1,2903 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     48764,       1433]*)
+(*NotebookOutlinePosition[     82958,       2667]*)
+(*  CellTagsIndexPosition[     82883,       2661]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+  "Essential ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " for Students of Science"
+}], "Title",
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell[TextData[{
+  "Tutorial Approach to Mastery of ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"]
+}], "Subtitle",
+  ShowCellBracket->True,
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell[TextData[{
+  ButtonBox["James J. Kelly",
+    ButtonData:>{
+      URL[ "www2.physics.umd.edu/~jjkelly"], None},
+    ButtonStyle->"Hyperlink"],
+  "\nDepartment of Physics\nUniversity of Maryland\nCollege Park, MD 20742"
+}], "Author",
+  ShowCellBracket->True,
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell["\<\
+\[Copyright] James J. Kelly, 1998
+Last revised: January, 2007\
+\>", "Copyright",
+  ShowCellBracket->True,
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell[TextData[{
+  "Click ",
+  ButtonBox["here",
+    ButtonData:>"contents",
+    ButtonStyle->"Hyperlink"],
+  " to jump to the notebook listings."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Preface", "Section"],
+
+Cell[TextData[{
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  StyleBox[
+  " is a fully integrated system for technical computing.  Among the \
+capabilities it offers are:"]
+}], "Text"],
+
+Cell["an interactive front end with notebook interface", "Text",
+  CellDingbat->"\[FilledDiamond]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["\<\
+numerical calculations with (practically) unlimited precision\
+\>", "Text",
+  CellDingbat->"\[FilledDiamond]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["symbolic manipulation", "Text",
+  CellDingbat->"\[FilledDiamond]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["special functions", "Text",
+  CellDingbat->"\[FilledDiamond]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["graphics", "Text",
+  CellDingbat->"\[FilledDiamond]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["typesetting", "Text",
+  CellDingbat->"\[FilledDiamond]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["extensibility", "Text",
+  CellDingbat->"\[FilledDiamond]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Within a ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " notebook you can develop solutions to complex problems that combine \
+symbolic derivations, numerical calculations, and graphical displays in an \
+interactive document.  The tools provided by ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " will help you focus more on conceptual development and visualization than \
+on details of algebra or procedural programming.  Your solution can be \
+documented and presented in a very appealing format using the typesetting \
+tools provided by the front end interface.  "
+}], "Text"],
+
+Cell[TextData[{
+  "Once you have acquired mastery of the basic tools, you will probably find \
+yourself using ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " for an ever increasing share of the work you used to perform by hand or \
+with the aid of several separate software tools.  For example, I once had a \
+very bright student who performed some very complex derivations by hand, \
+using thousands of pages of scrap paper and many drafts of his final report, \
+over a period of about 2 years.  When several years later I had to verify \
+some of his results and extend his work to other applications, it would have \
+taken me as long or longer to verify that derivation by hand.  Fortunately, I \
+had learned ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " in the meantime and with it was able to reproduce and extend that \
+derivation in a period of about a week.  Instead of consuming reams of scrap \
+paper and repeating many steps whenever errors were found, I developed a set \
+of live documents in which changes and corrections propagate with computer \
+assistance.  The computer requires human guidance, but executes mathematical \
+and numerical operations much more efficiently and without the trivial but \
+critical errors to which humans are prone.  These living notebooks evolve as \
+new results are developed and can be transmitted to colleagues without \
+further transcription.  \n",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " has made many of the tedious derivations and calculations required for my \
+research much more efficient, and I am sure that it will do the same for you, \
+whether you use it for research, course work, or business.  Although for many \
+numerical computations it still cannot compete in sheer speed with programs \
+using compiled languages, I use it for development and testing of symbolic \
+derivations and numerical methods before writing such programs.  Furthermore, \
+as ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " continues to improve in speed for both numerical and symbolic \
+calculation, I expect that it (and programs like it) will replace traditional \
+programming languages for all but the most computationally intensive tasks.  \
+"
+}], "Text"],
+
+Cell[TextData[{
+  "The purpose of this course is to provide mastery of the ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " tools and techniques most relevant to scientists and engineers.  No prior \
+familiarity with ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " is needed. The course consists of a collection of tutorials that present \
+concepts and practical techniques  in a systematic fashion.  Many people, \
+including many faculty, attempt to learn ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " in a very haphazard fashion, learning just enough of the basic syntax to \
+evaluate a few integrals, perform simple numerical calculations, and make \
+some basic graphs, without ever understanding how the system works.  \
+Unfortunately, this method often leads to frustration because it provides no \
+basis for interpreting errors or unexpected output.  It also tends to produce \
+rather inefficient and clumsy code.  Effective use of ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " requires training the mind to formulate problems in new ways, not just to \
+apply new syntax to old methods.  If you take the time to work through the \
+tutorials and exercises, you will understand the system well enough to use it \
+both efficiently and creatively.  You will be amazed at how much you can \
+accomplish with so little code, especially if you are a veteran programmer in \
+traditional languages."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Course materials"]], "Section"],
+
+Cell[TextData[{
+  "The materials for this course are organized into two types of notebooks.  \
+",
+  StyleBox["Language",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " notebooks present the basic concepts and techniques of the ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " language using relatively simple examples.  Exercises within the body of \
+these notebooks should be done in class, while some of the more challenging \
+exercises at the end of the notebooks will be assigned for homework.  ",
+  StyleBox["Application",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " notebooks present solutions to more interesting problems at considerably \
+greater depth.  These notebooks are intended to illustrate the use of ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " for research in the form of polished documents which introduce a problem, \
+outline the strategy for its solution, implement that solution, discuss \
+interesting examples, and draw conclusions.  Many of these notebooks include \
+exercises also.  "
+}], "Text"],
+
+Cell[TextData[{
+  "The language notebooks are designed to present ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " in a nearly linear fashion, building an edifice one block at a time, \
+whereas the application notebooks use whatever tools are needed to solve a \
+particular problem or class of problems.  Therefore, applications may use \
+features of ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " before they are covered in the course, but links to related course \
+material or to on-line documentation are provided where appropriate.  After \
+all, in research one does not choose problems according to the tools at hand, \
+but rather acquires the tools needed for a problem as those needs are \
+realized!  The student, and the instructor, are encouraged to jump back and \
+forth between application and language notebooks.  The style of reading from \
+page 1 to the end is ",
+  StyleBox["pass\[EAcute].",
+    FontSlant->"Italic"]
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Hyperlinks to course materials", "Section"],
+
+Cell["\<\
+You will probably find it helpful to open this notebook at the beginning of a \
+session and to use the hyperlinks listed below to navigate among the \
+available notebooks.  Unfortunately, these hyperlinks may not work properly \
+if you open the notebooks directly instead of accessing them through the \
+links in this table of contents.  I find it helpful to create a shortcut to \
+this notebook on the desktop.\
+\>", "Text"],
+
+Cell[TextData[{
+  "Related material may be found through the course home page ",
+  ButtonBox["EssentialMathematica",
+    ButtonData:>{
+      URL[ "www.physics.umd.edu/courses/CourseWare/EssentialMathematica"], 
+      None},
+    ButtonStyle->"Hyperlink"],
+  "."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Contents", "Section",
+  CellTags->"contents"],
+
+Cell[CellGroupData[{
+
+Cell["Primary language concepts and techniques", "Subsection"],
+
+Cell[TextData[{
+  ButtonBox["Getting started",
+    ButtonData:>{"Primary topics/getting started.nb", None},
+    ButtonStyle->"Hyperlink"],
+  StyleBox[" : introduces the front end, help sources, input conventions, and \
+some important functions.",
+    FontWeight->"Plain"]
+}], "Text",
+  FontWeight->"Bold"],
+
+Cell[TextData[{
+  ButtonBox["Functions",
+    ButtonData:>{"Primary topics/functions.nb", None},
+    ButtonStyle->"Hyperlink"],
+  StyleBox[" : techniques for constructing ",
+    FontWeight->"Plain"],
+  StyleBox["Mathematica",
+    FontWeight->"Plain",
+    FontSlant->"Italic"],
+  StyleBox[" functions.  Includes implicit and explicit functions, pure and \
+skeletal functions, recursive techniques, scoping commands, loop commands, \
+conditionals, etc.",
+    FontWeight->"Plain"]
+}], "Text",
+  FontWeight->"Bold"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Expressions",
+    ButtonData:>{"Primary topics/expressions.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  "  : presents the central concepts of the ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " language and its internal representation of expressions."
+}], "Text"],
+
+Cell[TextData[{
+  ButtonBox["Lists",
+    ButtonData:>{"Primary topics/lists.nb", None},
+    ButtonStyle->"Hyperlink"],
+  StyleBox[" : manipulation of the basic data structure and efficient \
+programming.",
+    FontWeight->"Plain"]
+}], "Text",
+  FontWeight->"Bold"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Plotting",
+    ButtonData:>{"Primary topics/plotting.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : the basic visualization tools are presented."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Algebra",
+    ButtonData:>{"Primary topics/algebra.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : simplification of algebraic expressions, solution of equations, \
+eigensystems."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Calculus",
+    ButtonData:>{"Primary topics/calculus.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : differentiation, integration, Taylor series."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Differential equations",
+    ButtonData:>{"Primary topics/diffeq.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : symbolic and numerical solutions to ordinary differential equations."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Additional language topics and tools", "Subsection"],
+
+Cell[TextData[{
+  ButtonBox["Dimensional Analysis",
+    ButtonData:>{"Additional topics/dimensional analysis.nb", None},
+    ButtonStyle->"Hyperlink"],
+  " : symbolic and numerical computations involving dimensioned quantities \
+and their units."
+}], "Text"],
+
+Cell[TextData[{
+  ButtonBox["Files",
+    ButtonData:>{"Additional topics/files.nb", None},
+    ButtonStyle->"Hyperlink"],
+  StyleBox[" : storing and retrieving information from files.",
+    FontWeight->"Plain"]
+}], "Text",
+  FontWeight->"Bold"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Complex",
+    ButtonData:>{"Additional topics/complex.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : subtleties of algebra with complex variables."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Recurrence relations",
+    ButtonData:>{"Additional topics/recurrence relations.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : recursive functions, dynamic programming, and stability of recurrence \
+relations."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["InPolygonQ",
+    ButtonData:>{"Additional topics/InPolygonQ.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : develops a query for determining whether a point is within a closed \
+polygon."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Packaging",
+    ButtonData:>{"Additional topics/packaging.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : the strategy and mechanics of developing packages is illustrated with a \
+specific example based upon earlier exercises about fractals."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Applications", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell["Algebra", "Subsubsection"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["cicada",
+    ButtonData:>{"Applications/cicada.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : presents a model describing the synchronized emergence of some insect \
+populations"
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["collisions",
+    ButtonData:>{"Applications/collisions.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : studies kinematics of nonrelativistic binary collisions, including \
+inelasticity and mass transfer, and makes useful vector diagrams."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Paschen",
+    ButtonData:>{"Applications/Paschen.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : investigates the effects of magnetic interactions between the electron \
+and proton in hydrogen and their interactions with an external magnetic \
+field, known as the Zeeman effect for weak fields or Paschen-Back effect for \
+strong fields."
+}], "Text"],
+
+Cell[TextData[{
+  ButtonBox["Markov",
+    ButtonData:>{"Applications/markov.nb", None},
+    ButtonStyle->"Hyperlink"],
+  " : presents a program for computing the equilibrium state of Markov \
+processes in which the evolution of a system is governed by a transition \
+probability matrix."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Fractals and deterministic chaos", "Subsubsection"],
+
+Cell[TextData[{
+  ButtonBox["logistic map",
+    ButtonData:>{"Applications/logistic map.nb", None},
+    ButtonStyle->"Hyperlink"],
+  " : a nonlinear discrete model for the population of species with \
+nonoverlapping generations that illustrates the phenomena of stable cycles, \
+chaos, and order within chaos.  Entropy and Lyapunov exponents are \
+introduced."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["cobweb",
+    ButtonData:>{"Applications/cobweb.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : functional programming is used to produce cobwebbing diagrams for \
+iterated function systems, such as the logistic map."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Koch",
+    ButtonData:>{"Applications/Koch.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : fractal properties of Koch curves"
+}], "Text"],
+
+Cell[TextData[{
+  ButtonBox["Henon",
+    ButtonData:>{"Applications/henon.nb", None},
+    ButtonStyle->"Hyperlink"],
+  " : the two-dimensional H\[EAcute]non map produces a strange attractor."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Julia",
+    ButtonData:>{"Applications/Julia.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : escape-time algorithm for Julia and Mandelbrot sets"
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["JuliaIIM",
+    ButtonData:>{"Applications/JuliaIIM.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : inverse iteration methods for Julia sets"
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["frequency analysis",
+    ButtonData:>{"Applications/frequency analysis.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : discrete Fourier analysis of time series.  General properties are \
+discussed and applications are made to the van der Pol oscillator and to the \
+logistic map."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Differential equations", "Subsubsection"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["home run",
+    ButtonData:>{"Applications/home run.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : uses numerical integration of a differential equation to investigate \
+projectile motion with air resistance"
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["pendulum",
+    ButtonData:>{"Applications/pendulum.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : phase diagrams for driven pendulum with nonlinear restoring force and \
+linear damping."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Duffing",
+    ButtonData:>{"Applications/Duffing.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : phase diagrams for driven anharmonic oscillator with linear damping.  \
+The Poincar\[EAcute] map is used to study patterns within apparently chaotic \
+behavior."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Volterra",
+    ButtonData:>{"Applications/Volterra.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : uses predator-prey models to introduce linear stability analysis.  We \
+begin with the simple Lotka-Volterra model, a conservative system with \
+periodic orbits, then study a more realistic model with limit-cycle \
+oscillations."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["van der Pol",
+    ButtonData:>{"Applications/van der Pol.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : limit cycle oscillation in nonlinear differential equation using linear \
+stability analysis."
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["FN model for BZ reaction",
+    ButtonData:>{"Applications/FN model for BZ reaction.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  " : Belousov-Zhabotinskii reaction, the prototypical chemical oscillator"
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Data analysis", "Subsubsection"],
+
+Cell[TextData[{
+  ButtonBox["MathLite",
+    ButtonData:>{"Data analysis/MathLite.nb", None},
+    ButtonStyle->"Hyperlink"],
+  " : enough ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " for data analysis in an introductory physics lab.  This is an abbreviated \
+version of ",
+  StyleBox["getting started",
+    FontSlant->"Italic"],
+  ", ",
+  StyleBox["functions",
+    FontSlant->"Italic"],
+  ", and ",
+  StyleBox["files",
+    FontSlant->"Italic"],
+  "."
+}], "Text"],
+
+Cell[TextData[{
+  ButtonBox["DataAnalysis",
+    ButtonData:>{"Data analysis/DataAnalysis.nb", None},
+    ButtonStyle->"Hyperlink"],
+  " : introduces the theory of linear and nonlinear least-squares fitting and \
+develops several useful programs.  These are also compared to the built-in \
+function ",
+  StyleBox["NonlinearRegress", "InlineInput"],
+  ".  "
+}], "Text"],
+
+Cell[TextData[{
+  ButtonBox["Curfit",
+    ButtonData:>{"Data analysis/Curfit.m", None},
+    ButtonStyle->"Hyperlink"],
+  " : a package that provides improved versions of the ",
+  StyleBox["Linfit", "InlineInput"],
+  " and ",
+  StyleBox["Curfit", "InlineInput"],
+  " programs developed in ",
+  StyleBox["DataAnalysis",
+    FontSlant->"Italic"],
+  "."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Physics problems", "Subsubsection"],
+
+Cell[TextData[{
+  ButtonBox["PDE relaxation",
+    ButtonData:>{"Physics problems/pde relaxation.nb", None},
+    ButtonStyle->"Hyperlink"],
+  " : relaxation method is used to compute electrostatic potential near \
+systems of electrodes in two-dimensions.  Major example: fringe fields, \
+surface charge density, and capacitance for parallel-plate capacitor."
+}], "Text"],
+
+Cell[TextData[{
+  ButtonBox["bswf",
+    ButtonData:>{"Physics problems/bswf.nb", None},
+    ButtonStyle->"Hyperlink"],
+  " : shooting methods are used to find bound-state energies and wave \
+functions for Schr\[ODoubleDot]dinger equation.  Major example: symmetric \
+double-well potential.  Exercises extend the method to central potentials and \
+study hydrogen atom, nuclear shell model, mexican hat potential, etc."
+}], "Text"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Note to students", "Section"],
+
+Cell[TextData[{
+  "The notebooks which comprise this book are intended to teach ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " by example and by practice.  Ideally the course should be studied in a \
+tutorial format in which an instructor guides students through a progression \
+of exercises which develop skill and understanding through practice.  \
+However, if you are studying ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " independently, please work the exercises \[LongDash] do not just read the \
+text and skip the exercises.  Do not be discouraged if you have had negative \
+experiences in the past with an instructor in one of your courses who \
+expected you to learn ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " after just one or two lectures.  It is only through practice that one can \
+train the mind to approach problem solving in new ways and this takes time \
+and patience.  ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " provides many tools which will help you to solve and visualize problems \
+in new ways, and these tools are well worth the effort needed to master them. \
+ The notebooks in this book will guide you toward mastery of the most \
+important tools in ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " slowly, with exercises you can work at your own pace.  By the time you \
+complete the two core notebooks, ",
+  StyleBox["getting started",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " and ",
+  StyleBox[" functions",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  ", you will have acquired a solid foundation that will allow you to easily \
+learn and apply the particular tools most appropriate to your needs.  Take \
+the time needed to understand the material presented in these notebooks \
+well."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Note to instructors", "Section"],
+
+Cell["\<\
+This book arose from a course that I teach at the University of Maryland.  \
+Although I am a professor of physics, the course is intended for advanced \
+undergraduate and beginning graduate students in any field of science, \
+engineering, or mathematics.  Thus, although many of the examples are \
+naturally from physics, many examples are also drawn from mathematics \
+(iterated functions and fractals), biology (population dynamics), and \
+chemistry (chemical oscillators).  The prerequisites are calculus and \
+introductory physics.\
+\>", "Text"],
+
+Cell[TextData[{
+  "Too often students receive their first introduction to ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " in just one or two class periods of a course which uses ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " as one of the tools employed in the presentation of its primary subject.  \
+The unfortunate student is then expected to master new concepts, syntax, and \
+programming techniques in a couple of hours.  This impossible burden often \
+alienates the student so completely that he or she abandons ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " once that course is finished.  If any of your students have suffered \
+through that experience, please reassure them that the tools provided by ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " are worth a considerable investment of effort and that your course will \
+offer sufficient time and practice to acquire mastery of them.  Mastery of ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " is like mastery of a second language \[LongDash] it requires time, \
+patience, practice, immersion, repetition, and more patience.  Any second \
+language becomes much easier when a person begins to think in that language \
+without having to translate every thought.  Languages cannot be learned by \
+passively listening to lectures, but require active immersion and practice."
+}], "Text"],
+
+Cell[TextData[{
+  "My course was taught in a teaching theater using a tutorial format.  The \
+teaching theater provides each student with a computer and the instructor \
+with equipment to project the instructor's monitor, transmit the instructor's \
+screen to each student monitor, and to view and/or project any monitor in the \
+room.  Networking software permits communication or collaboration between \
+students and the instructor.  Assignments were distributed and collected \
+electronically.  All materials for the course were presented in the form of ",
+  
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " notebooks."
+}], "Text"],
+
+Cell["\<\
+Most classes began with a brief introduction to the lesson of the day, with \
+the instructor's monitor transmitted to the students.  I would work through \
+and discuss the appropriate section of a notebook, and then the students \
+would work some of the exercises in that notebook as I circulated through the \
+room offering help and suggestions where needed.  If several students were \
+experiencing similar problems, I might give hints to the entire class or \
+might return to my computer and show how a particular problem might be \
+solved.  Occasionally, I would project the solution produced by a student and \
+comment on it or allow the student to present it.  After students have \
+completed the exercises for one topic, a new topic would be introduced by the \
+instructor and then the students would perform the exercises for that \
+section.\
+\>", "Text"],
+
+Cell[TextData[{
+  "I found that it was very important to allow students to work through the \
+materials for themselves as much as possible.  Students are very anxious to \
+place their hands on the keyboard and to dive right in; students tend to have \
+relatively little patience for dry lectures.  Most students learn relatively \
+little from listening, but learn a lot from working the embedded exercises \
+and discussing strategies for the solution of specific problems.  The \
+tutorial format requires more time than lecturing, but is much more \
+effective.  Do not try to go too fast!  It is more important for students to \
+begin to think in ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " style than to hear or read the syntax for thousands of functions."
+}], "Text"],
+
+Cell[TextData[{
+  "This book contains much more material than can be covered in a one \
+semester course.  In fact, I anticipate dividing this material into two \
+volumes in an expanded next edition.  The first volume will concentrate upon \
+the ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " language and is intended for the general student of science, while the \
+second will present mathematical methods intended primarily for students of \
+physics."
+}], "Text"],
+
+Cell[TextData[{
+  "The essential core of an introductory course in ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " is contained within the two notebooks ",
+  StyleBox["getting started",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " and",
+  StyleBox[" functions",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  ", each of which requires approximately three weeks to cover.  The student \
+who has mastered these lessons is already quite proficient in the use of ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " and should be able to identify and learn the additional tools needed for \
+his/her purposes with relatively little help from the instructor.  Therefore, \
+the selection of topics for the remainder of a standard one semester course \
+permits flexibility to meet the needs of the class.  A sample curriculum is \
+given below with estimated times."
+}], "Text"],
+
+Cell[TextData[Cell[BoxData[GridBox[{
+        {
+          StyleBox["notebook",
+            "Text"], 
+          StyleBox[\(\(weeks\)\(\ \)\),
+            "Text"], 
+          StyleBox["comments",
+            "Text"]},
+        {
+          StyleBox[\(getting\ started\),
+            "Text"], 
+          StyleBox["3",
+            FontFamily->"Times New Roman"], "\[Placeholder]"},
+        {
+          StyleBox["functions",
+            "Text"], 
+          StyleBox["3",
+            FontFamily->"Times New Roman"], 
+          StyleBox[\(examples : \ cicada, logistic\ map, Julia\),
+            "Text"]},
+        {
+          StyleBox["plotting",
+            "Text"], 
+          StyleBox["1",
+            FontFamily->"Times New Roman"], 
+          StyleBox[\(can\ be\ homework\ instead\ of\ in\ class\),
+            "Text"]},
+        {
+          StyleBox["expressions",
+            "Text"], 
+          StyleBox["1",
+            FontFamily->"Times New Roman"], "\[Placeholder]"},
+        {
+          StyleBox["algebra",
+            "Text"], 
+          StyleBox["2",
+            FontFamily->"Times New Roman"], "\[Placeholder]"},
+        {
+          StyleBox["calculus",
+            "Text"], 
+          StyleBox["1",
+            FontFamily->"Times New Roman"], "\[Placeholder]"},
+        {
+          StyleBox[\(differential\ equations\),
+            "Text"], 
+          StyleBox["2.5",
+            FontFamily->"Times New Roman"], 
+          RowBox[{
+            StyleBox[\(examples : \ van\ der\ Pol\ takes\ 2\ classes\),
+              "Text"], 
+            StyleBox[",",
+              "Text"], "\n", 
+            StyleBox[\(problem\ on\ BZ\ reaction\ takes\ 1\ class\),
+              "Text"]}]},
+        {
+          StyleBox[\(frequency\ analysis\),
+            "Text"], 
+          StyleBox["1",
+            FontFamily->"Times New Roman"], "\[Placeholder]"},
+        {
+          StyleBox["packaging",
+            "Text"], 
+          StyleBox["0.5",
+            FontFamily->"Times New Roman"], "\[Placeholder]"}
+        },
+      ColumnAlignments->{Left},
+      GridFrame->True]],
+  GridBoxOptions->{GridFrame->True}]], "NumberedTable",
+  CellFrame->False,
+  CellMargins->{{Inherited, Inherited}, {5, Inherited}},
+  TextAlignment->Center,
+  TextJustification->0,
+  GridBoxOptions->{GridFrame->False,
+  RowLines->{True, False},
+  GridDefaultElement:>""}],
+
+Cell[TextData[{
+  "The notebook on ",
+  StyleBox["dimensional analysis",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  ", or parts of it, can be assigned as homework soon after completion of ",
+  StyleBox["getting started",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  ".  Within ",
+  StyleBox["functions",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " is a problem on Julia sets that is easy and fun; I assigned it between \
+two classes and then presented ",
+  StyleBox["julia.nb",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " as an example of modular programming after the students turned in their \
+solutions.  Depending upon the pace of the class, ",
+  StyleBox["plotting",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " can either be covered in class or parts of it assigned as homework; I \
+used the diffraction problem as a homework assignment that reinforced \
+techniques of modular programming as well as covering plotting features.  I \
+chose to omit ",
+  StyleBox["lists",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " to permit more time for ",
+  StyleBox["differential equations",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  ".  I also used ",
+  StyleBox["frequency analysis",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " to shed additional insight upon limit cycles (van der Pol oscillator) and \
+the logistic map.  A miniproject based upon ",
+  StyleBox["Koch",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " was also a lot of fun."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Version dependencies", "Section"],
+
+Cell[TextData[{
+  "These notebooks employ ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " ",
+  StyleBox["Version 5.2",
+    FontWeight->"Bold"],
+  ", but can be viewed using Version 4 with only a few minor formatting \
+problems; simply ignore warning messages if you open a notebook with an \
+earlier version.  Although Version 5 provides some new features, most of the \
+code presented here will work properly under Version 4 also.  However, there \
+are some version dependencies:"
+}], "Text"],
+
+Cell[TextData[{
+  "Prior to Version 5.1, master packages are accessed with statements like ",
+  StyleBox["Needs[\"Graphics`Master`'\"]", "InlineInput",
+    FontWeight->"Bold"],
+  ", but after Version 5.0 one uses just ",
+  StyleBox["Needs[\"Graphics`\"]", "InlineInput",
+    FontWeight->"Bold"],
+  " for the same purpose.  Similar abbreviations are used for other families \
+of packages. "
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["\<\
+Occasionally simplification functions produce version-dependent results and \
+it may be necessary to rearrange those functions to obtain the desired \
+output.\
+\>", "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell["\<\
+The ordering of roots also varies by version, so it may be necessary to \
+adjust references to specific solutions from a list.\
+\>", "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Changes in ",
+  StyleBox["FindRoot", "InlineInput"],
+  " and ",
+  StyleBox["FindMinimum", "InlineInput"],
+  " around Version 5.1 affect equations based upon user-written functions.  \
+It is now necessary to express arguments in explicitly numerical form using \
+patterns like ",
+  StyleBox["x_?NumericQ", "InlineInput"],
+  "."
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}],
+
+Cell[TextData[{
+  "Symbolic integration is probably the most difficult task performed by ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  ".  Unfortunately, some integrals that are performed correctly in one \
+version become incorrect in a later version, and then may be corrected again \
+in the next version.  I maintain a small list of problematic integrals, but \
+the user must be aware that it is important to check symbolic integration \
+whenever possible \[LongDash] no software is perfect!"
+}], "Text",
+  CellDingbat->"\[FilledSmallCircle]",
+  CellMargins->{{30, Inherited}, {Inherited, Inherited}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Style sheet", "Section"],
+
+Cell[TextData[{
+  "To create notebooks with the style sheet designed for this course, copy \
+the style-sheet notebook ",
+  StyleBox["TutorialJJK",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " to your working directory.  Then select this style using the Format \
+\[RightTeeArrow] StyleSheet menu.  Alternatively, the standard ",
+  StyleBox["Classroom",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " style sheet, upon which this was based, gives a similar appearance.  If \
+you would like to modify this style sheet or to use it for notebooks in many \
+directories, you may prefer to copy it into the \
+Configuration\\FrontEnd\\StyleSheets subdirectory of the ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " folder.  ",
+  StyleBox["TutorialJJK",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " should then appear in the list of standard style sheets."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Selected bibliography", "Section"],
+
+Cell[TextData[{
+  "There are many good books on ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " and on mathematical and computational methods.  A selection of useful \
+references is listed below with brief descriptions. "
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " references"
+}], "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "S. Wolfram, ",
+  StyleBox["The Mathematica Book",
+    FontSlant->"Italic"],
+  ", (Wolfram Media and Cambridge University Press, Cambridge, 1996)"
+}], "Subsubsection"],
+
+Cell[TextData[{
+  "The bible according to Wolfram is the definitive reference for the \
+language and philosophy of ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  ".  Although designed primarily as a reference book rather than a textbook, \
+it includes much practical advice and many instructive examples.  The entire \
+contents is available on-line with standard installations of ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " 3.0."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "W.M. MacDonald, ",
+  StyleBox["Mathematica for Scientists and Engineers",
+    FontSlant->"Italic"],
+  ", (University of Maryland, 1996, unpublished)"
+}], "Subsubsection"],
+
+Cell["\<\
+Prof. MacDonald taught an earlier version of this course at the University of \
+Maryland and prepared an extensive collection of notebooks and other course \
+materials.  I have drawn heavily upon these materials  during the preparation \
+of my course and this book.\
+\>", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "P.T. Tam, ",
+  StyleBox["A Physicist's Guide to Mathematica, ",
+    FontSlant->"Italic"],
+  "(Academic Press, San Diego, 1997)"
+}], "Subsubsection"],
+
+Cell[TextData[{
+  "This is a ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " textbook designed primarily for physicists and advanced students of \
+physics.  The first part contains a comprehensive presentation of the \
+language, while the second presents selected applications to a wide variety \
+of problems in physics.  The book comes with a CD, but the notebooks do not \
+take full advantage of the front end.  The applications are often insightful, \
+but I would not accept these notebooks from my students.  Nevertheless, I \
+still find the detailed presentation of syntax and built-in functions to be \
+well organized and quite useful. "
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "R. Gass, ",
+  StyleBox["Mathematica for Scientists and Engineers",
+    FontSlant->"Italic"],
+  ", (Prentice Hall, Upper Saddle River, 1998)"
+}], "Subsubsection"],
+
+Cell[TextData[{
+  "Here the features of the language are introduced as interesting and \
+challenging problems are solved.  The book concentrates upon the use of ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " without attempting to present the language as comprehensively as Tam.  \
+This book assumes a rather high level of mathematical sophistication that \
+seems to be most appropriate for graduate students of physics or mathematics. \
+ Despite the title, I doubt that it would appeal to engineering students or \
+to students of life sciences.  A disk is included and makes better use of the \
+notebook interface than Tam."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "J.W. Gray, ",
+  StyleBox["Mastering Mathematica",
+    FontSlant->"Italic"],
+  ", (Academic Press, San Diego, 1998)."
+}], "Subsubsection"],
+
+Cell[TextData[{
+  "Presents a comprehensive course in programming using ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " that is designed primarily for graduate students of mathematics and \
+computer science.  The complete book is on the accompanying CD and can be \
+linked into the Help browser.  Topics such as objected-oriented programming, \
+pattern analysis and graph theory, and differential mapping are covered in \
+considerable depth."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "T.B. Bahder, ",
+  StyleBox["Mathematica for Scientists and Engineers",
+    FontSlant->"Italic"],
+  ", (Addison-Wesley, Reading MA, 1995)"
+}], "Subsubsection"],
+
+Cell[TextData[{
+  "This is an early book on ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " Version 2 that remains quite useful despite recent advances in ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  ".  It features a truly comprehensive presentation of the language elements \
+and the internal workings of the patterns, rules, and expressions.  This is \
+the best book available for understanding how ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " works, not just how to use it."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "R.L. Zimmerman and F.I. Olness, ",
+  StyleBox["Mathematica for Physicists",
+    FontSlant->"Italic"],
+  " (Addison-Wesley, Reading MA, second edition 2002)"
+}], "Subsubsection"],
+
+Cell[TextData[{
+  "After a brief introduction to ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  ", the undergraduate physics curriculum is reviewed using ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " to solve a wide variety of problems with greater insight and depth than \
+is possible with chalkboard techniques.  The ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " language and techniques are learned along the way, including a full range \
+of both symbolic and numerical methods. Many interesting exercises are \
+given."
+}], "Text"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Mathematical and computational references", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "J.D. Murray, ",
+  StyleBox["Mathematical Biology",
+    FontSlant->"Italic"],
+  ", (Springer-Verlag, Berlin, 1989)"
+}], "Subsubsection"],
+
+Cell[TextData[{
+  "This textbook on mathematical biology covers a wide variety of topics in \
+population biology, linear stability analysis, biological and chemical \
+oscillators, diffusion, pattern formation, etc.  I used this reference to \
+develop several ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " applications."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "H.-O. Peitgen and P.H. Richter, ",
+  StyleBox["The Beauty of Fractals",
+    FontSlant->"Italic"],
+  ", (Springer-Verlag, Berlin, 1986)"
+}], "Subsubsection"],
+
+Cell["\<\
+This book presents a series of articles on fractals that arise from iterated \
+function systems and is a useful reference for the material presented in this \
+course on the logistic map, Mandelbrot and Julia sets, and Koch curves.  It \
+is also filled with lovely pictures.\
+\>", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "W.H. Press, B.P. Flannery, S.A. Teukolsky, and W.T. Vetterling, ",
+  StyleBox["Numerical Recipes \[LongDash] The Art of Scientific Computing",
+    FontSlant->"Italic"],
+  ", (Cambridge University Press, Cambridge, 1989). "
+}], "Subsubsection"],
+
+Cell[TextData[{
+  "This compendium of numerical methods and algorithms is a valuable \
+reference for anyone who does scientific computation, whether using the \
+compiled languages considered by its authors or an interpreted language like \
+",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  "."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "B. Carnahan, H.A. Luther, and J.O. Wilkes, ",
+  StyleBox["Applied Numerical Methods",
+    FontSlant->"Italic"],
+  ", (Wiley, New York, 1969). "
+}], "Subsubsection"],
+
+Cell["\<\
+An insightful survey of numerical methods complete with Fortran programs, \
+test cases, and examples.  Each chapter includes many instructive exercises.  \
+Although the programming style is a little dated, the discussions and \
+examples are among the best available.\
+\>", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "S. H. Strogatz, ",
+  StyleBox["Nonlinear Dynamics and Chaos",
+    FontSlant->"Italic"],
+  ", (Perseus Books,  Reading MA, 1994)."
+}], "Subsubsection"],
+
+Cell["\<\
+Covers many topics in nonlinear science with applications to physics and life \
+sciences.  This is a good place to look to more background material and \
+greater depth for some of the examples considered in this course.\
+\>", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "A. Gray, M. Mezzino, and M.A. Pinsky, ",
+  StyleBox["Introduction to Ordinary Differential Equations with Mathematica",
+    
+    FontSlant->"Italic"],
+  ", (Springer-Verlag, New York, 1997)."
+}], "Subsubsection"],
+
+Cell[TextData[{
+  "This book provides a comprehensive introduction to both symbolic and \
+numerical solution of ordinary differential equations.  Although also \
+suitable for a traditional mathematics course, it uses the symbolic, \
+numerical, and graphical features of ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " quite effectively to enhance both conceptual understanding and practical \
+skills.  The collection of methods implemented in the package ",
+  StyleBox["ode",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " is worth the price of the book by itself.   "
+}], "Text"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Acknowlegments", "Section"],
+
+Cell[TextData[{
+  "I was first introduced to ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " in 1994 by William M. ",
+  ButtonBox["MacDonald",
+    ButtonData:>{
+      URL[ "www.physics.umd.edu/rgroups/ripe/wmm/wmm.html"], None},
+    ButtonStyle->"Hyperlink"],
+  ", Emeritus Professor of Physics at the University of Maryland, who taught \
+a workshop for faculty.  Bill also developed the first version of the course \
+that I now teach after his retirement.  Although I redesigned the course \
+around a tutorial approach, I have benefitted considerably from the material \
+that Bill developed for his version of the course and from his insight and \
+guidance during my development of the present tutorial approach.  I have \
+retained much of his organization of the language concepts, including his \
+classification of functions into implicit, explicit, and skeletal forms.  The \
+notebooks ",
+  StyleBox["files",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " and ",
+  StyleBox["lists",
+    FontWeight->"Bold",
+    FontSlant->"Italic"],
+  " remain very similar to his versions.  "
+}], "Text"],
+
+Cell["\<\
+I would also like to thank all of the students who have patiently road-tested \
+these materials.\
+\>", "Text"]
+}, Open  ]]
+}, Open  ]]
+},
+FrontEndVersion->"5.2 for Microsoft Windows",
+ScreenRectangle->{{0, 1400}, {0, 952}},
+AutoGeneratedPackage->Automatic,
+ScreenStyleEnvironment->"Working",
+WindowToolbars->"EditBar",
+WindowSize->{1392, 912},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+PrintingCopies->1,
+PrintingPageRange->{Automatic, Automatic},
+ShowCellLabel->False,
+Magnification->1.5,
+StyleDefinitions -> Notebook[{
+  
+  Cell[CellGroupData[{
+  Cell["Style Definitions", "Subtitle"],
+  
+  Cell["\<\
+Modify the definitions below to change the default appearance of all cells in \
+a given style.  Make modifications to any definition using commands in the \
+Format menu.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Style Environment Names", "Section"],
+  
+  Cell[StyleData[All, "Working"],
+    PageWidth->WindowWidth,
+    ScriptMinSize->9],
+  
+  Cell[StyleData[All, "Presentation"],
+    PageWidth->WindowWidth,
+    ScriptMinSize->12,
+    FontSize->16],
+  
+  Cell[StyleData[All, "Condensed"],
+    PageWidth->PaperWidth,
+    CellBracketOptions->{"Margins"->{1, 1},
+    "Widths"->{0, 5}},
+    ScriptMinSize->7,
+    FontSize->10],
+  
+  Cell[StyleData[All, "Printout"],
+    PageWidth->PaperWidth,
+    ScriptMinSize->7,
+    FontSize->10,
+    PrivateFontOptions->{"FontType"->"Outline"}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Notebook Options", "Section"],
+  
+  Cell["\<\
+The options defined for the style below will be used at the Notebook level.\
+\>", "Text"],
+  
+  Cell[StyleData["Notebook"],
+    PageHeaders->{{Cell[ 
+            TextData[ {
+              CounterBox[ "Page"]}], "PageNumber"], None, Cell[ 
+            TextData[ {
+              ValueBox[ "FileName"]}], "Header"]}, {Cell[ 
+            TextData[ {
+              ValueBox[ "FileName"]}], "Header"], None, Cell[ 
+            TextData[ {
+              CounterBox[ "Page"]}], "PageNumber"]}},
+    PageFooters->{{Cell[ 
+            TextData[ {"Essential Mathematica for Students of Science"}], 
+            "Footer"], None, Cell[ 
+            TextData[ {"\[Copyright] James J. Kelly, 1998"}], "Footer"]}, {
+        Cell[ 
+            TextData[ {"Essential Mathematica for Students of Science"}], 
+            "Footer"], None, Cell[ 
+            TextData[ {"\[Copyright] James J. Kelly, 1998"}], "Footer"]}},
+    PageHeaderLines->{True, True},
+    PageFooterLines->{True, True},
+    PrintingOptions->{"FirstPageHeader"->False,
+    "FacingPages"->True},
+    CellFrameLabelMargins->6,
+    StyleMenuListing->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Headings", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Title"],
+    ShowCellBracket->True,
+    CellMargins->{{0, 0}, {0, 0}},
+    CellGroupingRules->"TitleGrouping",
+    PageBreakBelow->False,
+    LineSpacing->{1, 0},
+    CounterIncrements->"Title",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}, {
+        "Subtitle", 0}, {"Subsubtitle", 0}},
+    FontSize->34,
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Title", "Presentation"],
+    CellMargins->{{0, 0}, {0, 0}},
+    LineSpacing->{1, 0},
+    FontSize->44],
+  
+  Cell[StyleData["Title", "Condensed"],
+    CellMargins->{{0, 0}, {0, 0}},
+    FontSize->24],
+  
+  Cell[StyleData["Title", "Printout"],
+    CellMargins->{{0, 0}, {0, 0}},
+    FontSize->24,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0],
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subtitle"],
+    CellMargins->{{0, 0}, {0, 0}},
+    PageBreakBelow->False,
+    LineSpacing->{1, 3},
+    ParagraphIndent->-96,
+    CounterIncrements->"Subtitle",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}, {
+        "Subsubtitle", 0}},
+    FontFamily->"Helvetica",
+    FontSize->18,
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.2, 0.700008, 0.700008]],
+  
+  Cell[StyleData["Subtitle", "Presentation"],
+    CellMargins->{{0, 0}, {0, 0}},
+    LineSpacing->{1, 6},
+    ParagraphIndent->-157,
+    FontSize->30],
+  
+  Cell[StyleData["Subtitle", "Condensed"],
+    CellMargins->{{0, 0}, {0, 0}},
+    ParagraphIndent->-78,
+    FontSize->14],
+  
+  Cell[StyleData["Subtitle", "Printout"],
+    CellMargins->{{0, 0}, {0, 0}},
+    ParagraphIndent->-85,
+    FontSize->16,
+    FontColor->GrayLevel[0],
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsubtitle"],
+    ShowCellBracket->True,
+    CellMargins->{{10, 4}, {30, 10}},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubtitle",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}},
+    FontFamily->"Helvetica",
+    FontSize->14,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Subsubtitle", "Presentation"],
+    ShowCellBracket->True,
+    CellMargins->{{8, 10}, {40, 20}},
+    LineSpacing->{1, 0},
+    FontSize->24],
+  
+  Cell[StyleData["Subsubtitle", "Condensed"],
+    ShowCellBracket->True,
+    CellMargins->{{8, 10}, {12, 8}},
+    FontSize->12],
+  
+  Cell[StyleData["Subsubtitle", "Printout"],
+    ShowCellBracket->True,
+    CellMargins->{{9, 10}, {50, 10}},
+    FontSize->14]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Section"],
+    CellFrame->{{0, 0}, {0, 1}},
+    CellDingbat->None,
+    CellMargins->{{12, Inherited}, {4, 24}},
+    CellGroupingRules->{"SectionGrouping", 30},
+    PageBreakBelow->False,
+    CellFrameMargins->6,
+    CounterIncrements->"Section",
+    CounterAssignments->{{"Subsection", 0}, {"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->16,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Section", "Presentation"],
+    CellMargins->{{10, 10}, {8, 32}},
+    LineSpacing->{1, 2},
+    FontSize->24,
+    FontTracking->"Condensed"],
+  
+  Cell[StyleData["Section", "Condensed"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14],
+  
+  Cell[StyleData["Section", "Printout"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsection"],
+    CellMargins->{{12, Inherited}, {8, 20}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->13,
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Subsection", "Presentation"],
+    CellMargins->{{11, 10}, {8, 32}},
+    LineSpacing->{1, 0},
+    FontSize->22],
+  
+  Cell[StyleData["Subsection", "Condensed"],
+    CellMargins->{{8, Inherited}, {2, 12}},
+    FontSize->12],
+  
+  Cell[StyleData["Subsection", "Printout"],
+    CellMargins->{{9, 0}, {4, 40}},
+    FontSize->12]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsubsection"],
+    CellDingbat->"\[FilledSquare]",
+    CellMargins->{{25, Inherited}, {8, 12}},
+    CellGroupingRules->{"SectionGrouping", 50},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubsection",
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Subsubsection", "Presentation"],
+    CellMargins->{{29, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Subsubsection", "Condensed"],
+    CellMargins->{{21, 0}, {4, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Subsubsection", "Printout"],
+    CellMargins->{{21, 0}, {4, 20}},
+    FontSize->11]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Body Text", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Text"],
+    CellMargins->{{12, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 12},
+    CounterIncrements->"Text",
+    FontFamily->"Times"],
+  
+  Cell[StyleData["Text", "Presentation"],
+    CellMargins->{{13, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12}],
+  
+  Cell[StyleData["Text", "Condensed"],
+    CellMargins->{{9, 0}, {4, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 6}],
+  
+  Cell[StyleData["Text", "Printout"],
+    CellMargins->{{9, 0}, {4, 4}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["SmallText"],
+    CellMargins->{{12, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 6},
+    CounterIncrements->"SmallText",
+    FontFamily->"Helvetica",
+    FontSize->9],
+  
+  Cell[StyleData["SmallText", "Presentation"],
+    CellMargins->{{13, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    FontSize->12],
+  
+  Cell[StyleData["SmallText", "Condensed"],
+    CellMargins->{{8, 10}, {2, 2}},
+    LineSpacing->{1, 2},
+    FontSize->9],
+  
+  Cell[StyleData["SmallText", "Printout"],
+    CellMargins->{{9, 0}, {4, 4}},
+    FontSize->7]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Input/Output", "Section"],
+  
+  Cell["\<\
+The cells in this section define styles used for input and output to the \
+kernel.  Be careful when modifying, renaming, or removing these styles, \
+because the front end associates special meanings with these style names.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Input"],
+    CellFrame->0.5,
+    CellMargins->{{25, 10}, {8, 8}},
+    Evaluatable->True,
+    CellGroupingRules->"InputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{5, Inherited}, {Inherited, Inherited}},
+    DefaultFormatType->DefaultInputFormatType,
+    FormatType->InputForm,
+    ShowStringCharacters->True,
+    NumberMarks->True,
+    CounterIncrements->"Input",
+    FontWeight->"Bold",
+    Background->RGBColor[1, 0.700008, 0.4]],
+  
+  Cell[StyleData["Input", "Presentation"],
+    CellMargins->{{25, Inherited}, {10, 10}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Input", "Condensed"],
+    CellMargins->{{25, 0}, {6, 6}}],
+  
+  Cell[StyleData["Input", "Printout"],
+    CellFrame->0.5,
+    CellMargins->{{25, 0}, {6, 6}},
+    Background->None]
+  }, Closed]],
+  
+  Cell[StyleData["InlineInput"],
+    CellGroupingRules->"InputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    DefaultFormatType->DefaultInputFormatType,
+    AutoItalicWords->{},
+    FormatType->InputForm,
+    ShowStringCharacters->True,
+    NumberMarks->True,
+    CounterIncrements->"Input",
+    FontWeight->"Bold"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Output"],
+    CellFrame->True,
+    CellMargins->{{25, 10}, {8, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    CellEditDuplicate->True,
+    CellGroupingRules->"OutputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    CellLabelMargins->{{3, Inherited}, {Inherited, Inherited}},
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Output",
+    Background->RGBColor[1, 0.900008, 0.900008]],
+  
+  Cell[StyleData["Output", "Presentation"],
+    CellMargins->{{25, Inherited}, {12, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Output", "Condensed"],
+    CellMargins->{{25, 0}, {6, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4}],
+  
+  Cell[StyleData["Output", "Printout"],
+    CellMargins->{{25, 0}, {6, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Message"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"OutputGrouping",
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Message",
+    StyleMenuListing->None,
+    FontColor->RGBColor[1, 0, 0]],
+  
+  Cell[StyleData["Message", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Message", "Condensed"],
+    CellMargins->{{50, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Message", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}},
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Print"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"OutputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Print",
+    StyleMenuListing->None],
+  
+  Cell[StyleData["Print", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Print", "Condensed"],
+    CellMargins->{{50, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Print", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Graphics"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"GraphicsGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Graphics",
+    StyleMenuListing->None],
+  
+  Cell[StyleData["Graphics", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Graphics", "Condensed"],
+    CellMargins->{{52, Inherited}, {Inherited, Inherited}},
+    ImageSize->{175, 175}],
+  
+  Cell[StyleData["Graphics", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}},
+    ImageSize->{250, 250}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["CellLabel"],
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->11,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["CellLabel", "Presentation"],
+    FontSize->12],
+  
+  Cell[StyleData["CellLabel", "Condensed"],
+    FontSize->8],
+  
+  Cell[StyleData["CellLabel", "Printout"],
+    FontSize->8,
+    FontColor->GrayLevel[0]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Unique Styles", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Author"],
+    CellMargins->{{10, 4}, {2, 10}},
+    FontSize->16,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Author", "Presentation"],
+    CellMargins->{{12, 10}, {2, 12}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12},
+    FontSize->20],
+  
+  Cell[StyleData["Author", "Condensed"],
+    CellMargins->{{8, 10}, {1, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 4},
+    FontSize->12],
+  
+  Cell[StyleData["Author", "Printout"],
+    CellMargins->{{9, 0}, {4, 12}},
+    ParagraphSpacing->{0, 6},
+    FontSize->14]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Copyright"],
+    CellMargins->{{10, 10}, {40, 2}},
+    FontFamily->"Helvetica",
+    FontSize->9],
+  
+  Cell[StyleData["Copyright", "Presentation"],
+    CellMargins->{{12, 10}, {50, 2}},
+    LineSpacing->{1, 5},
+    FontSize->12],
+  
+  Cell[StyleData["Copyright", "Condensed"],
+    CellMargins->{{8, 10}, {12, 1}},
+    LineSpacing->{1, 2},
+    FontSize->9],
+  
+  Cell[StyleData["Copyright", "Printout"],
+    CellMargins->{{9, 0}, {72, 4}},
+    FontSize->7]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Abstract"],
+    CellMargins->{{45, 75}, {Inherited, 30}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Abstract", "Printout"],
+    CellMargins->{{36, 67}, {Inherited, 50}},
+    FontSize->10]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Example"],
+    CellMargins->{{12, 10}, {5, 12}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 12},
+    CounterIncrements->"Example",
+    FontFamily->"Times",
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Example", "Presentation"],
+    CellMargins->{{18, 10}, {8, 20}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12}],
+  
+  Cell[StyleData["Example", "Condensed"],
+    CellMargins->{{8, 10}, {4, 8}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 4}],
+  
+  Cell[StyleData["Example", "Printout"],
+    CellMargins->{{9, 0}, {4, 10}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Definition"],
+    CellFrame->{{3, 0}, {0, 0}},
+    CellMargins->{{52, 10}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Definition",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.2, 0.700008, 0.700008]],
+  
+  Cell[StyleData["Definition", "Presentation"],
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Definition", "Condensed"],
+    CellMargins->{{40, 10}, {1, 4}}],
+  
+  Cell[StyleData["Definition", "Printout"],
+    CellMargins->{{44, 0}, {2, 6}},
+    Background->GrayLevel[0.6]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Theorem"],
+    CellFrame->{{3, 0}, {0, 0}},
+    CellMargins->{{52, 10}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Theorem",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Theorem", "Presentation"],
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Theorem", "Condensed"],
+    CellMargins->{{40, 10}, {1, 4}}],
+  
+  Cell[StyleData["Theorem", "Printout"],
+    CellMargins->{{44, 0}, {2, 6}},
+    Background->GrayLevel[0.4]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Caution"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{52, 25}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Caution",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->GrayLevel[0],
+    Background->RGBColor[0.996109, 0, 0],
+    FontVariations->{"Underline"->False}],
+  
+  Cell[StyleData["Caution", "Presentation"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Caution", "Condensed"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{40, 25}, {1, 4}}],
+  
+  Cell[StyleData["Caution", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{44, 25}, {2, 6}},
+    Background->GrayLevel[0.900008]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Advice"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{52, 25}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Advice",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->GrayLevel[0],
+    Background->RGBColor[0, 1, 0],
+    FontVariations->{"Underline"->False}],
+  
+  Cell[StyleData["Advice", "Presentation"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Advice", "Condensed"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{40, 25}, {1, 4}}],
+  
+  Cell[StyleData["Advice", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{44, 25}, {2, 6}},
+    Background->GrayLevel[0.900008]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Exercise"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->"NormalGrouping",
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubsection",
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0, 0, 0.996109]],
+  
+  Cell[StyleData["Exercise", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Exercise", "Condensed"],
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Exercise", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseMain"],
+    CellFrame->{{6, 0}, {0, 1}},
+    CellMargins->{{12, Inherited}, {4, 20}},
+    CellGroupingRules->{"SectionGrouping", 30},
+    PageBreakBelow->False,
+    CellFrameColor->RGBColor[0.571389, 0.19675, 0.570504],
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->16,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["ExerciseMain", "Presentation"],
+    CellMargins->{{18, 10}, {8, 32}},
+    LineSpacing->{1, 2},
+    FontSize->24,
+    FontTracking->"Condensed"],
+  
+  Cell[StyleData["ExerciseMain", "Condensed"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14],
+  
+  Cell[StyleData["ExerciseMain", "Printout"],
+    CellMargins->{{9, 0}, {2, 50}},
+    CellFrameColor->GrayLevel[0.500008],
+    FontSize->14,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseTitle"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["ExerciseTitle", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["ExerciseTitle", "Condensed"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["ExerciseTitle", "Printout"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseText"],
+    CellMargins->{{32, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 8},
+    CounterIncrements->"ExcersiceText",
+    FontFamily->"Times"],
+  
+  Cell[StyleData["ExerciseText", "Presentation"],
+    CellMargins->{{32, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12}],
+  
+  Cell[StyleData["ExerciseText", "Condensed"],
+    CellMargins->{{32, 0}, {4, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 6}],
+  
+  Cell[StyleData["ExerciseText", "Printout"],
+    CellMargins->{{32, 0}, {4, 4}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Problem"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Plain",
+    FontColor->GrayLevel[0]],
+  
+  Cell[StyleData["Problem", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Problem", "Condensed"],
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Problem", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Formulas and Programming", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["DisplayFormula"],
+    CellMargins->{{62, 10}, {2, 10}},
+    CellHorizontalScrolling->True,
+    DefaultFormatType->DefaultInputFormatType,
+    ScriptLevel->0,
+    SingleLetterItalics->True,
+    UnderoverscriptBoxOptions->{LimitsPositioning->True}],
+  
+  Cell[StyleData["DisplayFormula", "Presentation"],
+    CellMargins->{{74, 10}, {2, 10}}],
+  
+  Cell[StyleData["DisplayFormula", "Condensed"],
+    CellMargins->{{52, 10}, {2, 10}}],
+  
+  Cell[StyleData["DisplayFormula", "Printout"],
+    CellMargins->{{54, 10}, {2, 10}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ChemicalFormula"],
+    CellMargins->{{62, 10}, {2, 10}},
+    DefaultFormatType->DefaultInputFormatType,
+    AutoSpacing->False,
+    ScriptLevel->1,
+    ScriptBaselineShifts->{0.6, Automatic},
+    SingleLetterItalics->False,
+    ZeroWidthTimes->True],
+  
+  Cell[StyleData["ChemicalFormula", "Presentation"],
+    CellMargins->{{74, 10}, {2, 10}},
+    FontSize->10],
+  
+  Cell[StyleData["ChemicalFormula", "Condensed"],
+    CellMargins->{{52, 10}, {2, 10}},
+    FontSize->10],
+  
+  Cell[StyleData["ChemicalFormula", "Printout"],
+    CellMargins->{{54, 10}, {2, 10}},
+    FontSize->10]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Program"],
+    CellMargins->{{12, 10}, {Inherited, 6}},
+    FontFamily->"Courier"],
+  
+  Cell[StyleData["Program", "Presentation"],
+    CellMargins->{{13, 30}, {Inherited, 4}},
+    FontSize->9.5],
+  
+  Cell[StyleData["Program", "Condensed"],
+    CellMargins->{{8, 10}, {Inherited, 4}},
+    FontSize->9.5],
+  
+  Cell[StyleData["Program", "Printout"],
+    CellMargins->{{9, 0}, {Inherited, 4}},
+    FontSize->9.5]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Automatic Numbering", "Section"],
+  
+  Cell["\<\
+The following styles are useful for numbered equations, figures, etc.  They \
+automatically give the cell a FrameLabel containing a reference to a \
+particular counter, and also increment that counter.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedEquation"],
+    CellMargins->{{62, 10}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, Cell[ 
+            TextData[ {"(", 
+              CounterBox[ "NumberedEquation"], ")"}]]}, {None, None}},
+    DefaultFormatType->DefaultInputFormatType,
+    CounterIncrements->"NumberedEquation",
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedEquation", "Presentation"],
+    CellMargins->{{74, 10}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["NumberedEquation", "Condensed"],
+    CellMargins->{{52, 10}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["NumberedEquation", "Printout"],
+    CellMargins->{{54, 0}, {Inherited, Inherited}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedFigure"],
+    CellMargins->{{62, 145}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, None}, {Cell[ 
+            TextData[ {"Figure ", 
+              CounterBox[ "NumberedFigure"]}]], None}},
+    CounterIncrements->"NumberedFigure",
+    ImageMargins->{{43, Inherited}, {Inherited, 0}},
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedFigure", "Presentation"]],
+  
+  Cell[StyleData["NumberedFigure", "Condensed"]],
+  
+  Cell[StyleData["NumberedFigure", "Printout"]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedTable"],
+    CellMargins->{{62, 145}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, None}, {Cell[ 
+            TextData[ {"Table ", 
+              CounterBox[ "NumberedTable"]}]], None}},
+    TextAlignment->Center,
+    CounterIncrements->"NumberedTable",
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedTable", "Presentation"]],
+  
+  Cell[StyleData["NumberedTable", "Condensed"]],
+  
+  Cell[StyleData["NumberedTable", "Printout"]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Headers and Footers", "Section"],
+  
+  Cell[StyleData["Header"],
+    CellMargins->{{0, 0}, {4, 1}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Footer"],
+    CellMargins->{{0, 0}, {0, 4}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["PageNumber"],
+    CellMargins->{{0, 0}, {4, 1}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontWeight->"Bold"]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Hyperlink Styles", "Section"],
+  
+  Cell["\<\
+The cells below define styles useful for making hypertext ButtonBoxes.  The \
+\"Hyperlink\" style is for links within the same Notebook, or between \
+Notebooks.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Hyperlink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`NotebookLocate[ #2]}]&),
+    Active->True,
+    ButtonFrame->"None",
+    ButtonNote->ButtonData}],
+  
+  Cell[StyleData["Hyperlink", "Presentation"]],
+  
+  Cell[StyleData["Hyperlink", "Condensed"]],
+  
+  Cell[StyleData["Hyperlink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell["\<\
+The following styles are for linking automatically to the on-line help \
+system.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["MainBookLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "MainBook", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["MainBookLink", "Presentation"]],
+  
+  Cell[StyleData["MainBookLink", "Condensed"]],
+  
+  Cell[StyleData["MainBookLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["AddOnsLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontFamily->"Courier",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "AddOns", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["AddOnsLink", "Presentation"]],
+  
+  Cell[StyleData["AddOnsLink", "Condensed"]],
+  
+  Cell[StyleData["AddOnLink", "Printout"],
+    FontWeight->"Bold",
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["RefGuideLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontFamily->"Courier",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "RefGuideLink", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["RefGuideLink", "Presentation"]],
+  
+  Cell[StyleData["RefGuideLink", "Condensed"]],
+  
+  Cell[StyleData["RefGuideLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["GettingStartedLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "GettingStarted", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["GettingStartedLink", "Presentation"]],
+  
+  Cell[StyleData["GettingStartedLink", "Condensed"]],
+  
+  Cell[StyleData["GettingStartedLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["OtherInformationLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "OtherInformation", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["OtherInformationLink", "Presentation"]],
+  
+  Cell[StyleData["OtherInformationLink", "Condensed"]],
+  
+  Cell[StyleData["OtherInformationLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]]
+  }, Closed]]
+  }, Open  ]]
+  }]
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{
+  "contents"->{
+    Cell[11294, 303, 51, 1, 83, "Section",
+      CellTags->"contents"]}
+  }
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{
+  {"contents", 82785, 2654}
+  }
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 174, 7, 82, "Title"],
+Cell[1953, 62, 194, 7, 62, "Subtitle"],
+Cell[2150, 71, 310, 9, 135, "Author"],
+Cell[2463, 82, 164, 6, 99, "Copyright"],
+Cell[2630, 90, 157, 6, 42, "Text"],
+
+Cell[CellGroupData[{
+Cell[2812, 100, 26, 0, 83, "Section"],
+Cell[2841, 102, 192, 6, 41, "Text"],
+Cell[3036, 110, 157, 2, 41, "Text"],
+Cell[3196, 114, 178, 4, 41, "Text"],
+Cell[3377, 120, 130, 2, 41, "Text"],
+Cell[3510, 124, 126, 2, 41, "Text"],
+Cell[3639, 128, 117, 2, 41, "Text"],
+Cell[3759, 132, 120, 2, 41, "Text"],
+Cell[3882, 136, 122, 2, 41, "Text"],
+Cell[4007, 140, 620, 13, 93, "Text"],
+Cell[4630, 155, 2246, 39, 339, "Text"],
+Cell[6879, 196, 1454, 27, 197, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[8370, 228, 55, 0, 83, "Section"],
+Cell[8428, 230, 1062, 23, 147, "Text"],
+Cell[9493, 255, 965, 19, 145, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[10495, 279, 49, 0, 83, "Section"],
+Cell[10547, 281, 435, 7, 93, "Text"],
+Cell[10985, 290, 272, 8, 42, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[11294, 303, 51, 1, 83, "Section",
+  CellTags->"contents"],
+
+Cell[CellGroupData[{
+Cell[11370, 308, 62, 0, 68, "Subsection"],
+Cell[11435, 310, 305, 8, 42, "Text"],
+Cell[11743, 320, 510, 14, 68, "Text"],
+Cell[12256, 336, 337, 9, 42, "Text"],
+Cell[12596, 347, 264, 8, 42, "Text"],
+Cell[12863, 357, 222, 6, 42, "Text"],
+Cell[13088, 365, 255, 7, 42, "Text"],
+Cell[13346, 374, 222, 6, 42, "Text"],
+Cell[13571, 382, 258, 6, 42, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[13866, 393, 58, 0, 68, "Subsection"],
+Cell[13927, 395, 258, 6, 42, "Text"],
+Cell[14188, 403, 244, 7, 42, "Text"],
+Cell[14435, 412, 224, 6, 42, "Text"],
+Cell[14662, 420, 287, 7, 42, "Text"],
+Cell[14952, 429, 263, 7, 42, "Text"],
+Cell[15218, 438, 318, 7, 42, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[15573, 450, 34, 0, 68, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[15632, 454, 32, 0, 55, "Subsubsection"],
+Cell[15667, 456, 255, 7, 42, "Text"],
+Cell[15925, 465, 314, 7, 42, "Text"],
+Cell[16242, 474, 414, 9, 68, "Text"],
+Cell[16659, 485, 299, 7, 42, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[16995, 497, 57, 0, 55, "Subsubsection"],
+Cell[17055, 499, 372, 8, 68, "Text"],
+Cell[17430, 509, 292, 7, 42, "Text"],
+Cell[17725, 518, 201, 6, 42, "Text"],
+Cell[17929, 526, 203, 5, 42, "Text"],
+Cell[18135, 533, 221, 6, 42, "Text"],
+Cell[18359, 541, 216, 6, 42, "Text"],
+Cell[18578, 549, 356, 8, 42, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[18971, 562, 47, 0, 55, "Subsubsection"],
+Cell[19021, 564, 284, 7, 42, "Text"],
+Cell[19308, 573, 263, 7, 42, "Text"],
+Cell[19574, 582, 334, 8, 42, "Text"],
+Cell[19911, 592, 404, 9, 68, "Text"],
+Cell[20318, 603, 275, 7, 42, "Text"],
+Cell[20596, 612, 276, 6, 42, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[20909, 623, 38, 0, 55, "Subsubsection"],
+Cell[20950, 625, 475, 18, 42, "Text"],
+Cell[21428, 645, 367, 9, 69, "Text"],
+Cell[21798, 656, 361, 12, 42, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[22196, 673, 41, 0, 55, "Subsubsection"],
+Cell[22240, 675, 369, 7, 68, "Text"],
+Cell[22612, 684, 429, 8, 68, "Text"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[23102, 699, 35, 0, 83, "Section"],
+Cell[23140, 701, 1813, 40, 224, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[24990, 746, 38, 0, 83, "Section"],
+Cell[25031, 748, 559, 9, 93, "Text"],
+Cell[25593, 759, 1398, 26, 197, "Text"],
+Cell[26994, 787, 642, 12, 119, "Text"],
+Cell[27639, 801, 873, 13, 145, "Text"],
+Cell[28515, 816, 784, 13, 119, "Text"],
+Cell[29302, 831, 476, 10, 93, "Text"],
+Cell[29781, 843, 900, 21, 120, "Text"],
+Cell[30684, 866, 2340, 74, 323, "NumberedTable"],
+Cell[33027, 942, 1528, 44, 150, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[34592, 991, 39, 0, 83, "Section"],
+Cell[34634, 993, 504, 12, 93, "Text"],
+Cell[35141, 1007, 498, 11, 68, "Text"],
+Cell[35642, 1020, 279, 6, 41, "Text"],
+Cell[35924, 1028, 247, 5, 41, "Text"],
+Cell[36174, 1035, 454, 12, 69, "Text"],
+Cell[36631, 1049, 614, 11, 93, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[37282, 1065, 30, 0, 83, "Section"],
+Cell[37315, 1067, 895, 22, 122, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[38247, 1094, 40, 0, 83, "Section"],
+Cell[38290, 1096, 244, 6, 41, "Text"],
+
+Cell[CellGroupData[{
+Cell[38559, 1106, 101, 4, 68, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[38685, 1114, 185, 5, 56, "Subsubsection"],
+Cell[38873, 1121, 466, 11, 67, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[39376, 1137, 189, 5, 56, "Subsubsection"],
+Cell[39568, 1144, 289, 5, 67, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[39894, 1154, 167, 5, 56, "Subsubsection"],
+Cell[40064, 1161, 666, 12, 119, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[40767, 1178, 180, 5, 56, "Subsubsection"],
+Cell[40950, 1185, 648, 11, 119, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[41635, 1201, 156, 5, 56, "Subsubsection"],
+Cell[41794, 1208, 465, 9, 93, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[42296, 1222, 177, 5, 56, "Subsubsection"],
+Cell[42476, 1229, 527, 13, 67, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[43040, 1247, 196, 5, 56, "Subsubsection"],
+Cell[43239, 1254, 569, 14, 93, "Text"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[43857, 1274, 63, 0, 68, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[43945, 1278, 154, 5, 56, "Subsubsection"],
+Cell[44102, 1285, 344, 8, 67, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[44483, 1298, 175, 5, 56, "Subsubsection"],
+Cell[44661, 1305, 297, 5, 67, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[44995, 1315, 262, 5, 81, "Subsubsection"],
+Cell[45260, 1322, 312, 8, 67, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[45609, 1335, 183, 5, 56, "Subsubsection"],
+Cell[45795, 1342, 290, 5, 67, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[46122, 1352, 169, 5, 56, "Subsubsection"],
+Cell[46294, 1359, 243, 4, 67, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[46574, 1368, 231, 6, 56, "Subsubsection"],
+Cell[46808, 1376, 598, 13, 94, "Text"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[47467, 1396, 33, 0, 83, "Section"],
+Cell[47503, 1398, 1110, 26, 147, "Text"],
+Cell[48616, 1426, 120, 3, 41, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

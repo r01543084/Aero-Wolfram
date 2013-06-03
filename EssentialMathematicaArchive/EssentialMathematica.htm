@@ -1,0 +1,603 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Essential Mathematica for Students of Science</title>
+</head>
+
+<body>
+
+<h1 align="center">Essential <i>Mathematica</i> for Students of Science</h1>
+<h2 align="center" style="line-height: 100%">Tutorial Approach to Mastery of <i>
+Mathematica</i></h2>
+<p align="center">
+<address align="center">
+  <a href="http://www2.physics.umd.edu/~jjkelly">
+  James J. Kelly</a>
+</address>
+<address align="center">
+  Department of Physics
+</address>
+<address align="center">
+  University of Maryland
+</address>
+<address align="center">
+  College Park, MD 20742
+</address>
+<address align="center">
+  email: <a href="mailto:jjkelly@physics.umd.edu">jjkelly@umd.edu</a>
+</address>
+</p>
+<p align="left"><i>&nbsp;&nbsp;&nbsp; Mathematica</i> is a fully integrated
+system for technical computing.&nbsp; Among the capabilities it offers are:</p>
+<ul>
+  <li>
+    <p align="left">an interactive front end with notebook interface</li>
+  <li>
+    <p align="left">numerical calculations with (practically) unlimited
+    precision</li>
+  <li>
+    <p align="left">symbolic manipulation</li>
+  <li>
+    <p align="left">special functions</li>
+  <li>
+    <p align="left">graphics</li>
+  <li>
+    <p align="left">typesetting</li>
+  <li>
+    <p align="left">extensibility</li>
+</ul>
+<p align="left">Within a <i>Mathematica</i> notebook you can develop solutions
+to complex problems that combine symbolic derivations, numerical calculations,
+and graphical displays in an interactive document.&nbsp; The tools provided by <i>Mathematica</i>
+will help you focus more on conceptual development and visualization than on
+details of algebra or procedural programming.&nbsp; Your solution can be
+documented and presented in a very appealing format using the typesetting tools
+provided by the front end interface.</p>
+<p align="left">&nbsp;&nbsp;&nbsp; The materials provided here are based upon a
+course, <a href="http://www.physics.umd.edu/courses/Phys426">PHYS426</a>,
+that I have taught at the University of Maryland several times during the last
+few years.&nbsp; The purpose of this course is to provide
+mastery of the <i>Mathematica</i> tools and techniques most relevant to
+scientists and engineers.&nbsp; No prior familiarity with <i>Mathematica</i> is
+needed.&nbsp; The course consists of a collection of tutorials that present concepts and
+practical techniques in a systematic fashion.&nbsp; Many people, including many
+faculty, attempt to learn <i>Mathematica</i> in a very haphazard fashion,
+learning just enough of the basic syntax to evaluate a few integrals, perform
+simple numerical calculations, and make some basic graphs, without ever
+understanding how the system works.&nbsp; Unfortunately, this approach often
+leads to frustration because it provides no basis for interpreting errors or
+unexpected output.&nbsp; It also tends to produce rather inefficient and clumsy
+code.&nbsp; Effective use of <i>Mathematica</i> requires training the mind to
+formulate problems in new ways, not just to apply new syntax to old
+methods.&nbsp; If you take the time to work through the tutorials and exercises,
+you will understand the system well enough to use it both efficiently and
+creatively.&nbsp; You will be amazed at how much you can accomplish with so
+little code, especially if you are a veteran programmer in traditional
+languages.&nbsp; I now find <i>Mathematica</i> indispensable to my research
+productivity and am confident that you soon will also.</p>
+<p align="left">&nbsp;&nbsp;&nbsp; The materials for this course consist of two types of notebooks.&nbsp; <b><i>Language</i></b> notebooks present the
+basic concepts and techniques of the <i>Mathematica</i> system using relatively
+simple exercises.&nbsp; <b><i>Application</i></b> notebooks present solutions to
+more interesting problems at considerably greater depth.&nbsp; These notebooks
+are intended to illustrate the use of <i>Mathematica</i> for research in the
+form of polished documents which introduce a problem, outline the strategy for
+its solution, implement that solution, discuss interesting examples, and draw
+conclusions.&nbsp; The language notebooks are designed to present <i>Mathematica</i>
+in a nearly linear fashion, building an edifice one block at a time, whereas
+application notebooks use whatever tools are needed to solve a particular
+problem or class of problems.&nbsp; Therefore, applications may use features of <i>Mathematica</i>
+before they are covered in the course, but links to related course materials or
+to on-line documentation are provided where appropriate.&nbsp; After all, in
+research one does not choose problems according to the tools at hand, but rather
+acquires the tools needed for a problem as those needs are recognized!&nbsp; You
+are encouraged to jump back and forth between application and language
+notebooks.&nbsp; The style of reading from page 1 to the end is <i>passé.</i></p>
+<p align="left">&nbsp;&nbsp;&nbsp;<i> </i>The notebooks may be accessed using
+the hyperlinks below.&nbsp; To view the files directly, you must configure your
+web browser to launch either <i>Mathematica</i> or <i>MathReader</i> for files
+with the <i>nb</i> extension.&nbsp; <i><a href="http://www.wolfram.com/products/mathreader/">MathReader</a></i> 
+is a free program that
+will display or print a <i>Mathematica </i>notebook, but it cannot evaluate or
+edit notebooks.&nbsp;
+Alternatively, you may download files to your computer and launch the
+application manually.&nbsp; To ensure that the hyperlinks between notebook files
+work correctly, you must reproduce my file structure for the course.&nbsp;&nbsp;</p>
+<ol>
+  <li>
+    <p align="left">Create a top directory for the course, such as <i>c:\My Notebooks\tutorial course</i>.&nbsp;
+    Save the file <i><a href="contents.nb">contents</a> </i>here.</li>
+  <li>
+    <p align="left">Create the subdirectories <i>Primary topics</i>, <i>Additional
+    topics</i>, <i>Applications</i>, and <i>Solutions</i>.</li>
+  <li>
+    <p align="left">Save files below in the indicated directories.</li>
+</ol>
+<p align="left">The entire directory tree can be downloaded from <i>
+<a href="EssentialMathematicaArchive.zip">EssentialMathematicaArchive</a></i> or 
+individual files can be obtained using the links tabulated below.&nbsp; After 
+downloading, the table of <i><a href="contents.nb">contents</a></i>
+provides the simplest means of accessing course materials.&nbsp; I recommend
+creating a shortcut to this file on your desktop.&nbsp; If you open this file first
+and then use its hyperlinks to open other notebooks, the hyperlinks between
+notebooks should work properly.&nbsp; Although you can open notebooks directly,
+hyperlinks between notebooks may not work properly that way.&nbsp; Nor will
+these hyperlinks work if you open files from your browser without downloading
+them.&nbsp; Nevertheless, you should be able to view and evaluate these
+notebooks if your browser has been configured properly.</p>
+<p align="left">&nbsp;&nbsp;&nbsp; Most of the course materials originated in
+1997, but undergo frequent revision as both <i>Mathematica</i> and the
+course evolve.&nbsp; Dates for the last revision of each notebook are included
+in the listings for your convenience.&nbsp; <b>The most recent major revision 
+was in January 2006, updating the notebooks for Version 5.2.&nbsp; </b></p>
+<h3>Primary language concepts and techniques</h3>
+<p>Store these files in subdirectory <i>Primary topics</i>.</p>
+<table border="1" width="91%">
+  <tr>
+    <td width="13%"><b>notebook</b></td>
+    <td width="75%"><b>description</b></td>
+    <td width="11%"><b>last revision</b></td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="Primary%20topics/getting%20started.nb"><i>getting
+    started</i></a></td>
+    <td width="75%">Introduces the front end, help sources, input conventions, and some important
+    functions.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="Primary%20topics/functions.nb"><i>functions</i></a></td>
+    <td width="75%">Basic programming tools and techniques.&nbsp; Includes
+    implicit and explicit functions, recursive techniques, scoping and loop
+      commands, conditionals, etc.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="Primary%20topics/expressions.nb"><i>expressions</i></a></td>
+    <td width="75%">Central concepts of the <i>Mathematica</i> language and its
+    internal representation of expressions.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="Primary%20topics/lists.nb"><i>lists</i></a></td>
+    <td width="75%">Manipulation of the basic data structure and efficient programming.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="Primary%20topics/plotting.nb"><i>plotting</i></a></td>
+    <td width="75%">Basic visualization tools and embellishments.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="Primary%20topics/algebra.nb"><i>algebra</i></a></td>
+    <td width="75%">Manipulation and simplification of algebraic expressions, solutions to equations,
+    eigensystems, etc.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="Primary%20topics/calculus.nb"><i>calculus</i></a></td>
+    <td width="75%">Differentiation, integration, Taylor series</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="Primary%20topics/diffeq.nb"><i>diffeq</i></a></td>
+    <td width="75%">Symbolic and numerical solutions to ordinary differential equations.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  </table>
+<h3>Additional language topics and tools</h3>
+<p>Store these files in subdirectory <i>Additional topics</i>.</p>
+<table border="1" width="91%">
+  <tr>
+    <td width="19%"><b>notebook</b></td>
+    <td width="69%"><b>description</b></td>
+    <td width="10%"><b>last revision</b></td>
+  </tr>
+  <tr>
+    <td width="19%"><a href="Additional%20topics/dimensional%20analysis.nb"><i>dimensional
+      analysis</i></a></td>
+    <td width="69%">Symbolic and numerical computations involving dimensioned quantities and
+    their units.</td>
+    <td width="10%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="19%"><a href="Additional%20topics/files.nb"><i>files</i></a></td>
+    <td width="69%">Storing and retrieving information from files.&nbsp; Uses <a href="Additional%20topics/sample%20data%20types.txt"><i>sample
+      data types</i></a>, <a href="Additional%20topics/popclock.txt"><i>popclock</i></a>,
+      <a href="Additional%20topics/worldpop.txt"><i>worldpop</i></a>, <a href="Additional%20topics/worldhis.txt"><i>worldhis</i></a>,
+	<i><a href="Additional%20topics/jjk.jpg">jjk</a></i></td>
+    <td width="10%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="19%"><a href="Additional%20topics/complex.nb"><i>complex</i></a></td>
+    <td width="69%">Subtleties of algebra with complex variables.</td>
+    <td width="10%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="19%"><a href="Additional%20topics/recurrence%20relations.nb"><i>recurrence
+      relations</i></a></td>
+    <td width="69%">Recursive functions, dynamic programming, and stability of recurrence
+    relations.</td>
+    <td width="10%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="19%"><i><a href="Additional%20topics/InPolygonQ.nb">InPolygonQ</a></i></td>
+    <td width="69%">Develops a query to determine whether a point is within a 
+	closed polygon.</td>
+    <td width="10%">Jan., 2007</td>
+  </tr>
+  <tr>
+    <td width="19%"><i><a href="Additional%20topics/packaging.nb">packaging</a></i></td>
+    <td width="69%">The strategy and mechanics of developing packages is illustrated with a
+    specific example based upon earlier exercises about fractals.&nbsp; Uses <i>
+	<a href="Additional%20topics/FractalsPrototype.nb">FractalsPrototype</a></i> 
+	and <i><a href="Additional%20topics/Fractals.m">Fractals</a></i>.</td>
+    <td width="10%">Jan., 2006</td>
+  </tr>
+</table>
+<h3>Applications</h3>
+<p>The files in this category should all be saved in the subdirectory <i>Applications</i>.&nbsp;
+The tables below classify the notebooks further by topic or technique.</p>
+<h4>Algebra</h4>
+<table border="1" width="91%">
+  <tr>
+    <td width="11%"><b>notebook</b></td>
+    <td width="77%"><b>description</b></td>
+    <td width="11%"><b>last revision</b></td>
+  </tr>
+  <tr>
+    <td width="11%"><a href="Applications/cicada.nb"><i>cicada</i></a></td>
+    <td width="77%">A model describing the synchronized emergence of some insect
+    populations.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="11%"><a href="Applications/collisions.nb"><i>collisions</i></a></td>
+    <td width="77%">Studies kinematics of nonrelativistic binary collisions, including
+    inelasticity and mass transfer, and makes useful vector diagrams.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="11%"><a href="Applications/Paschen.nb"><i>Paschen</i></a></td>
+    <td width="77%">Investigates the effects of magnetic interactions between the electron and
+    proton in hydrogen and their interactions with an external magnetic field,
+    known as the Zeeman effect for weak fields or Paschen-Back effect for strong
+    fields.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="11%"><a href="Applications/markov.nb"><i>Markov</i></a></td>
+    <td width="77%">A program for computing the equilibrium state of Markov processes
+    in which the evolution of a system is governed by a transition probability
+    matrix.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+</table>
+<h4>Fractals and deterministic chaos</h4>
+<table border="1" width="91%">
+  <tr>
+    <td width="18%"><b>notebook</b></td>
+    <td width="71%"><b>description</b></td>
+    <td width="10%"><b>last revision</b></td>
+  </tr>
+  <tr>
+    <td width="18%"><a href="Applications/logistic%20map.nb"><i>logistic map</i></a></td>
+    <td width="71%">A nonlinear discrete model for the population of species with
+    nonoverlapping generations that illustrates the phenomena of stable cycles,
+    chaos, and order within chaos.&nbsp; Introduces entropy and Lyapunov 
+	exponents.</td>
+    <td width="10%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="18%">
+<dl>
+  <dt><a href="Applications/cobweb.nb"><i>cobweb</i></a></dt>
+</dl>
+    </td>
+    <td width="71%">Functional programming is used to produce cobwebbing diagrams for iterated
+    function systems, such as the logistic map.</td>
+    <td width="10%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="18%"><a href="Applications/Koch.nb"><i>Koch</i></a></td>
+    <td width="71%">Fractal properties of Koch curves.</td>
+    <td width="10%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="18%"><a href="Applications/henon.nb"><i>Henon</i></a></td>
+    <td width="71%">The two-dimensional Hénon map produces a strange attractor.</td>
+    <td width="10%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="18%"><a href="Applications/Julia.nb"><i>Julia</i></a></td>
+    <td width="71%">Escape-time algorithm for Julia and Mandelbrot sets.</td>
+    <td width="10%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="18%"><a href="Applications/JuliaIIM.nb"><i>JuliaIIM</i></a></td>
+    <td width="71%">Inverse iteration methods for Julia sets.</td>
+    <td width="10%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="18%"><a href="Applications/frequency%20analysis.nb"><i>frequency analysis</i></a></td>
+    <td width="71%">Discrete Fourier analysis of time series. General properties are discussed
+    and applications are made to the van der Pol oscillator and to the logistic
+    map.</td>
+    <td width="10%">Jan., 2006</td>
+  </tr>
+</table>
+<h4>Differential equations</h4>
+<table border="1" width="91%">
+  <tr>
+    <td width="23%"><b>notebook</b></td>
+    <td width="65%"><b>description</b></td>
+    <td width="11%"><b>last revision</b></td>
+  </tr>
+  <tr>
+    <td width="23%"><i><a href="Applications/Home%20Run.nb">home run</a></i></td>
+    <td width="65%">Uses numerical integration of a differential equation to investigate
+    projectile motion with air resistance.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="23%"><a href="Applications/pendulum.nb"><i>pendulum</i></a></td>
+    <td width="65%">Phase diagrams for driven pendulum with nonlinear restoring force and
+    linear damping.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="23%"><a href="Applications/duffing.nb"><i>Duffing</i></a></td>
+    <td width="65%">Phase diagrams for driven anharmonic oscillator with linear damping.&nbsp; 
+	The Poincar<font face="Times New Roman">é map is used to study patterns 
+	within chaos.</font></td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="23%"><i><a href="Applications/Volterra.nb">Volterra</a></i></td>
+    <td width="65%">Uses predator-prey models to introduce linear stability 
+	analysis and limit cycles. </td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="23%"><a href="Applications/van%20der%20Pol.nb"><i>van der Pol</i></a></td>
+    <td width="65%">Limit cycle oscillation in nonlinear differential equation using linear
+    stability analysis.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="23%"><a href="Applications/FN%20model%20for%20BZ%20reaction.nb"><i>FN
+    model for BZ reaction</i></a></td>
+    <td width="65%">Belousov-Zhabotinskii reaction, the prototypical chemical oscillator.</td>
+    <td width="11%">Jan., 2006</td>
+  </tr>
+  </table>
+
+<h3>Data analysis</h3>
+<p>The following files should be saved in the subdirectory <i>Data analysis</i>
+and constitute a minicourse in data analysis using <i>Mathematica</i>.&nbsp; The
+<i>MathLite</i> notebook provides a very brief introduction to some of the
+features needed to use <i>Mathematica </i>in an introductory physics laboratory
+that can be covered in one lab period of about 3 hours.&nbsp; The <i>DataAnalysis</i>
+notebook presents methods of linear and nonlinear least-squares and develops
+some simple programs that should be useful for such a course.&nbsp;&nbsp;Improved 
+versions of these programs are supplied in the package <i>Curfit</i>.</p>
+<p>Store these files in subdirectory <i>Data analysis</i>.</p>
+<table border="1" width="91%">
+  <tr>
+    <td width="18%"><b>notebook</b></td>
+    <td width="68%"><b>description</b></td>
+    <td width="12%"><b>last revision</b></td>
+  </tr>
+  <tr>
+    <td width="18%"><i><a href="Data%20analysis/MathLite.nb">MathLite</a></i></td>
+    <td width="68%">Brief <i>Mathematica</i> introduction for physics
+      laboratory.</td>
+    <td width="12%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="18%"><a href="Data%20analysis/DataAnalysis.nb"><i>DataAnalysis</i></a></td>
+    <td width="68%">Methods and code development for linear and nonlinear least-squares
+      fitting. </td>
+    <td width="12%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="18%"><a href="Data%20analysis/gep.dat"><i>gep.dat</i></a></td>
+    <td width="68%">A sample data file.</td>
+    <td width="12%">Jan., 2006</td>
+  </tr>
+  <tr>
+    <td width="18%"><i><a href="Data%20analysis/Curfit.m">Curfit.m</a></i></td>
+    <td width="68%">Package containing improved versions of Linfit and Curfit 
+	for least-squares fitting.</td>
+    <td width="12%">Jan., 2006</td>
+  </tr>
+  </table>
+
+<h3>Physics problems</h3>
+<p>This is a small collection of solutions to assorted physics problems that 
+illustrate a variety of numerical methods implemented within <i>Mathematica</i>.&nbsp; 
+A few more are under development but are not ready for posting.</p>
+<p>Store these files in subdirectory <i>Physics problems</i>.</p>
+<table border="1" width="91%" id="table1">
+  <tr>
+    <td width="18%"><b>notebook</b></td>
+    <td width="66%"><b>description</b></td>
+    <td width="10%"><b>last revision</b></td>
+  </tr>
+  <tr>
+    <td width="23%"><i><a href="Physics%20problems/pde%20relaxation.nb">pde relaxation</a></i></td>
+    <td width="66%">Relaxation method used for electrostatic potential near 
+	systems of electrodes in two dimensions. Major example: fringe fields, 
+	surface charge density, and capacitance for parallel-plate capacitor.</td>
+    <td width="10%">Jan., 2007</td>
+  </tr>
+  <tr>
+    <td width="18%"><i><a href="Physics%20problems/bswf.nb">bswf</a></i></td>
+    <td width="66%">Shooting methods are used to find bound-state energies and 
+	wave functions for Schr<font face="Times New Roman">ödinger equation.</font></td>
+    <td width="10%">Jan., 2007</td>
+  </tr>
+  </table>
+
+<p>&nbsp;</p>
+<h2>Advice for students</h2>
+<p>The notebooks which comprise this book are intended to teach <i>Mathematica</i>
+by example and by practice. Ideally the course should be studied in a tutorial
+format in which an instructor guides students through a progression of exercises
+which develop skill and understanding through practice. However, if you are
+studying <i>Mathematica</i> independently, please work the exercises — do not
+just read the text and skip the exercises. Do not be discouraged if you have had
+negative experiences in the past with an instructor in one of your courses who
+expected you to learn <i>Mathematica</i> after just one or two lectures. It is
+only through practice that one can train the mind to approach problem solving in
+new ways and this takes time and patience. <i>Mathematica</i> provides many
+tools which will help you to solve and visualize problems in new ways, and these
+tools are well worth the effort needed to master them. The notebooks in this
+book will guide you toward mastery of the most important tools in <i>Mathematica</i>
+slowly, with exercises you can work at your own pace. By the time you complete
+the two core notebooks, <b><i>getting started</i></b> and <b><i>functions</i></b>,
+you will have acquired a solid foundation that will allow you to easily learn
+and apply the particular tools most appropriate to your needs. Take the time
+needed to understand the material presented in these notebooks well.</p>
+<h2>Advice for instructors</h2>
+<p>&nbsp;&nbsp;&nbsp; This book arose from a course that I teach at the
+University of Maryland. Although I am a professor of physics, the course is
+intended for advanced undergraduate and beginning graduate students in any field
+of science, engineering, or mathematics. Thus, although many of the examples are
+naturally from physics, many examples are also drawn from mathematics (iterated
+functions and fractals), biology (population dynamics), and chemistry (chemical
+oscillators). The prerequisites are calculus and introductory physics.</p>
+<p>&nbsp;&nbsp;&nbsp; Too often students receive their first introduction to <i>Mathematica</i>
+in just one or two class periods of a course which uses <i>Mathematica</i> as
+one of the tools employed in the presentation of its primary subject. The
+unfortunate student is then expected to master new concepts, syntax, and
+programming techniques in a couple of hours. This impossible burden often
+alienates the student so completely that he or she abandons <i>Mathematica</i>
+once that course is finished. If any of your students have suffered through that
+experience, please reassure them that the tools provided by <i>Mathematica</i>
+are worth a considerable investment of effort and that your course will offer
+sufficient time and practice to acquire mastery of them. Mastery of <i>Mathematica</i>
+is like mastery of a second language — it requires time, patience, practice,
+immersion, repetition, and more patience. Any second language becomes much
+easier when a person begins to think in that language without having to
+translate every thought. Languages cannot be learned by passively listening to
+lectures, but require active immersion and practice.</p>
+<p>&nbsp;&nbsp;&nbsp; My course was taught in a teaching theater using a
+tutorial format. The teaching theater provides each student with a computer and
+the instructor with equipment to project the instructor's monitor, transmit the
+instructor's screen to each student monitor, and to view and/or project any
+monitor in the room. Networking software permits communication or collaboration
+between students and the instructor. Assignments were distributed and collected
+electronically. All materials for the course were presented in the form of <i>Mathematica</i>
+notebooks.&nbsp; Most classes began with a brief introduction to the lesson of
+the day, with the instructor's monitor transmitted to the students. I would work
+through and discuss the appropriate section of a notebook, and then the students
+would work some of the exercises in that notebook as I circulated through the
+room offering help and suggestions where needed. If several students were
+experiencing similar problems, I might give hints to the entire class or might
+return to my computer and show how a particular problem might be solved.
+Occasionally, I would project the solution produced by a student and comment on
+it or allow the student to present it. After students have completed the
+exercises for one topic, a new topic would be introduced by the instructor and
+then the students would perform the exercises for that section.</p>
+<p>&nbsp;&nbsp;&nbsp; I found that it was very important to allow students to
+work through the materials for themselves as much as possible. Students are very
+anxious to place their hands on the keyboard and to dive right in; students tend
+to have relatively little patience for dry lectures. Most students learn
+relatively little from listening, but learn a lot from working the embedded
+exercises and discussing strategies for the solution of specific problems. The
+tutorial format requires more time than lecturing, but is much more effective.
+Do not try to go too fast! It is more important for students to begin to think
+in <i>Mathematica</i> style than to hear or read the syntax for thousands of
+functions.</p>
+<p>&nbsp;&nbsp;&nbsp; The essential core of an introductory course in <i>Mathematica</i>
+is contained within the two notebooks <b><i>getting started</i></b> and<b><i>
+functions</i></b>, each of which requires approximately three weeks to cover.
+The student who has mastered these lessons is already quite proficient in the
+use of <i>Mathematica</i> and should be able to identify and learn the
+additional tools needed for his/her purposes with relatively little help from
+the instructor. Therefore, the selection of topics for the remainder of a
+standard one semester course permits flexibility to meet the needs of the class.
+A sample curriculum is given below with estimated times.</p>
+<table border="1" width="92%">
+  <tr>
+    <td width="19%"><b>notebook</b></td>
+    <td width="7%"><b>weeks</b></td>
+    <td width="74%"><b>comments</b></td>
+  </tr>
+  <tr>
+    <td width="19%">getting started</td>
+    <td width="7%">3</td>
+    <td width="74%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="19%">functions</td>
+    <td width="7%">3</td>
+    <td width="74%">examples: cicada, logistic map, cobweb, Julia</td>
+  </tr>
+  <tr>
+    <td width="19%">plotting</td>
+    <td width="7%">1</td>
+    <td width="74%">can be homework instead of in class</td>
+  </tr>
+  <tr>
+    <td width="19%">expressions</td>
+    <td width="7%">1</td>
+    <td width="74%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="19%">algebra</td>
+    <td width="7%">2</td>
+    <td width="74%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="19%">calculus</td>
+    <td width="7%">1</td>
+    <td width="74%">&nbsp;&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="19%">differential equations</td>
+    <td width="7%">2.5</td>
+    <td width="74%">examples: Volterra and van der Pol take 2 classes, a problem on 
+	the BZ reaction
+      takes 1 class</td>
+  </tr>
+  <tr>
+    <td width="19%">frequency analysis</td>
+    <td width="7%">1</td>
+    <td width="74%">&nbsp;</td>
+  </tr>
+  </table>
+<p>&nbsp;&nbsp;&nbsp; The notebook on <b><i>dimensional analysis</i></b>, or
+parts of it, should be assigned as homework soon after completion of <b><i>getting
+started</i></b>. Within <b><i>functions</i></b> is a problem on Julia sets that
+is easy and fun; I assigned it between two classes and then presented <b><i>julia.nb</i></b>
+as an example of modular programming after the students turned in their
+solutions. Depending upon the pace of the class, <b><i>plotting</i></b> can
+either be covered in class or parts of it assigned as homework; I used the
+diffraction problem as a homework assignment that reinforced techniques of
+modular programming as well as covering plotting features. I chose to omit <b><i>lists</i></b>
+to permit more time for <b><i>differential equations</i></b>. I also used <b><i>frequency
+analysis</i></b> to shed additional insight upon limit cycles (van der Pol
+oscillator) and the logistic map. A miniproject based upon <b><i>Koch</i></b>
+was also a lot of fun.</p>
+
+<h2>Style sheet</h2>
+<p>&nbsp;&nbsp;&nbsp; If&nbsp; you would like to prepare notebooks with the
+style used for these course materials, you will need the style sheet <i><a href="TutorialJJK.nb">TutorialJJK.nb</a></i>.</p>
+<h2>Solutions to exercises</h2>
+<p>&nbsp;&nbsp;&nbsp; Detailed solutions to all of the exercises in <i><b>getting
+started</b></i> and <b><i>functions</i></b> and to many of the exercises in
+other notebooks are available to qualified instructors upon request.&nbsp; These
+solutions have not been made public so that instructors can assign homework
+without the solutions being in general circulation.</p>
+<h2>Feedback</h2>
+<p>&nbsp;&nbsp;&nbsp; Please notify me of any errors you find.&nbsp; Comments
+and suggestions are welcome.&nbsp; My e-mail address is&nbsp; <a href="mailto:jjkelly@physics.umd.edu">jjkelly@umd.edu</a>.</p>
+
+</body>
+
+</html>

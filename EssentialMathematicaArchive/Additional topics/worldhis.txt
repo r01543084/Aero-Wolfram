@@ -1,0 +1,76 @@
+Historical Estimates of World Population
+
+(Population in millions.  When lower and upper estimates are the same they are shown
+under "Lower.")
+-------------------------------------------------------------------------------------
+                                           McEv-
+                                             edy
+       --Summary-- Bira- --Durand---         and Thomlinson- -UN, 1973--   UN,
+Year   Lower Upper   ben Lower Upper  Haub Jones Lower Upper Lower Upper  1995  USBC
+-------------------------------------------------------------------------------------
+-10000     1    10                             4     1    10
+ -8000     5                             5
+ -6500     5    10                                               5    10
+ -5000     5    20                             5     5    20
+ -4000     7                                   7
+ -3000    14                                  14
+ -2000    27                                  27
+ -1000    50                                  50
+  -500   100                                 100
+  -400   162         162
+  -200   150   231   231                     150
+     1   170   400   255   270   330   300   170   200         200   400   300
+   200   190   256   256                     190
+   400   190   206   206                     190
+   500   190   206   206                     190
+   600   200   206   206                     200
+   700   207   210   207                     210
+   800   220   224   224                     220
+   900   226   240   226                     240
+  1000   254   345   254   275   345         265                           310
+  1100   301   320   301                     320
+  1200   360   450   400               450   360
+  1250   400   416   416                                                   400
+  1300   360   432   432                     360   400
+  1340   443         443
+  1400   350   374   374                     350
+  1500   425   540   460   440   540         425                           500
+  1600   545   579   579                     545
+  1650   470   545                     500   545   500         470   545
+  1700   600   679   679                     610   600
+  1750   629   961   770   735   805   795   720   700         629   961   790
+  1800   813 1,125   954                     900   900         813 1,125   980
+  1850 1,128 1,402 1,241             1,265 1,200 1,200       1,128 1,402 1,260
+  1900 1,550 1,762 1,633 1,650 1,710 1,656 1,625 1,600       1,550 1,762 1,650
+  1910 1,750                                                             1,750
+  1920 1,860                                                             1,860
+  1930 2,070                                                             2,070
+  1940 2,300                                                             2,300
+  1950 2,400 2,556 2,527             2,516 2,500 2,400       2,486       2,520 2,556
+-------------------------------------------------------------------------------------
+Sources:
+Biraben, Jean-Noel, 1980, An Essay Concerning Mankind's Evolution,
+     Population, Selected Papers, December, table 2.
+
+Durand, John D., 1974, "Historical Estimates of World Population:
+     An Evaluation,"  University of Pennsylvania, Population Center,
+     Analytical and Technical Reports, Number 10, table 2.
+
+Haub, Carl, 1995, "How Many People Have Ever Lived on Earth?" Population
+     Today, February, p. 5.
+
+McEvedy, Colin and Richard Jones, 1978, "Atlas of World Population
+     History," Facts on File, New York, pp. 342-351.
+
+Thomlinson, Ralph, 1975, "Demographic Problems, Controversy
+     Over Population Control,"  Second Edition, Table 1.
+
+United Nations (UN), 1973, The Determinants and Consequences of
+     Population Trends, Population Studies, No. 50., p.10.
+
+United Nations, 1996, "World Population From Year 0 to Stabilization",
+     gopher://gopher.undp.org:70/00/ungophers/popin/wdtrends/histor
+
+U.S. Bureau of the Census (USBC), 1995, "Total Midyear Population for
+     the World:  1950-2050", Data updated 2-28-96,
+     http://www.census.gov/ipc/www/worldpop.html

@@ -1,0 +1,3166 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     62365,       1702]*)
+(*NotebookOutlinePosition[     96721,       2938]*)
+(*  CellTagsIndexPosition[     96589,       2931]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Recurrence Relations", "Title",
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell[TextData[{
+  "from ",
+  StyleBox[ButtonBox["Essential Mathematica for Students of Science",
+    Active->False,
+    ButtonData:>{
+      URL[ 
+      "http://www.physics.umd.edu/courses/CourseWare/EssentialMathematica/"], 
+      None},
+    Active->False,
+    ButtonStyle->"Hyperlink"],
+    Active->False],
+  "\n\[Copyright] James J. Kelly, 1998\nLast revised: January, 2006"
+}], "Author",
+  Active->True,
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section"],
+
+Cell["\<\
+\tMany functions which arise as solutions to second-order differential \
+equations satisfy recurrence relations of the form\
+\>", "Text"],
+
+Cell[BoxData[
+    \(TraditionalForm\`f\_n[
+        x]\  \[Equal] \ \[Alpha][n, x] f\_\(n - 1\)[x]\  + \ \[Beta][n, x] 
+          f\_\(n - 2\)[x]\)], "DisplayFormula",
+  Evaluatable->False,
+  TextAlignment->Left,
+  TextJustification->0],
+
+Cell[TextData[{
+  "where ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Alpha][n, x]\)]],
+  " and ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Beta][n, x]\)]],
+  " are simple coefficients that depend upon the form of the underlying \
+differential equation.  For example, the associated Legendre functions ",
+  Cell[BoxData[
+      \(TraditionalForm\`P\_\(\[ScriptL]\[InvisibleComma]m\)[x]\)]],
+  " satisfy the three-term recurrence relation"
+}], "Text"],
+
+Cell[BoxData[
+    \(TraditionalForm\`\((\[ScriptL] - m)\) 
+        P\_\(\[ScriptL], m\)[x]\  \[Equal] \ \(x(2  \[ScriptL] - 1)\) 
+          P\_\(\[ScriptL] - 1, m\)[x]\  - \ \((\[ScriptL] + m - 1)\) 
+          P\_\(\[ScriptL] - 2, m\)[x]\)], "DisplayFormula",
+  Evaluatable->False,
+  TextAlignment->Left,
+  TextJustification->0],
+
+Cell[TextData[
+"with respect to \[ScriptL].  Thus. given the closed-form initial values:"], 
+  "Text"],
+
+Cell[BoxData[{
+    \(TraditionalForm\`P\_\(m, m\)[
+        x]\  = \ \(\((\(-1\))\)\^m\) \(\((2  m - 
+              1)\)!!\)\ \((1 - x\^2)\)\^\(m/2\)\), "\n", 
+    \(TraditionalForm\`P\_\(m + 1, m\)[
+        x]\  = \ \(x(2  m + 1)\)\ P\_\(m, m\)[x]\)}], "DisplayFormula",
+  Evaluatable->False,
+  TextAlignment->Left,
+  TextJustification->0],
+
+Cell[TextData[{
+  "we can compute ",
+  Cell[BoxData[
+      \(TraditionalForm\`P\_\(\[ScriptL], m\)\)]],
+  " for ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[ScriptL] > m + 1\)]],
+  " by applying the recursion relation ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[ScriptL] - m - 1\)]],
+  " times beginning with the initial values ",
+  Cell[BoxData[
+      \(TraditionalForm\`P\_\(m, m\)\)]],
+  " and ",
+  Cell[BoxData[
+      \(TraditionalForm\`P\_\(m + 1, m\)\)]],
+  ".   This method can be used to obtain either symbolic or numerical values \
+of the function."
+}], "Text"],
+
+Cell[TextData[{
+  "\tTraditional procedural programming languages, such as Fortran or C, rely \
+on recurrence relations for numerical evaluation of many functions.  The \
+implementation of this type algorithm always involves some form of loop \
+statement.  ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " provides similar tools, but also provides more transparent recursive \
+methods which appear to be closer to the more elegant formal statement of the \
+algorithm.  In this notebook we compare several methods for implementing \
+recursive algorithms for Legendre functions.  We also investigate the speed, \
+stability, and accuracy of these methods."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Section"],
+
+Cell[BoxData[{
+    \(\(ClearAll["\<Global`*\>"];\)\), "\n", 
+    \(\(Off[General::spell, \ General::spell1];\)\)}], "Input"],
+
+Cell[TextData[{
+  "In order to compare our results for associated Legendre functions with the \
+built-in function ",
+  ButtonBox["SphericalHarmonicY",
+    ButtonStyle->"RefGuideLink"],
+  ", it is useful to define a normalization function as follows."
+}], "Text"],
+
+Cell[BoxData[
+    \(norm[l_, 
+        m_]\  := \ \ Sqrt[\ \(2  l + 1\)\/\(4  \[Pi]\)\ \(\((l - \
+m)\)!\)\/\(\((l + m)\)!\)]\)], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Loop method", "Section"],
+
+Cell[TextData[{
+  "\tRecurrence relations can be implemented in several ways.  We begin by \
+presenting a Legendre function ",
+  StyleBox["pleg", "InlineInput",
+    FontWeight->"Bold"],
+  " based upon a ",
+  ButtonBox["Do",
+    ButtonStyle->"RefGuideLink"],
+  " loop.  This implementation should look quite familiar to anyone with \
+experience programming in C or Fortran.  The procedure begins by evaluating \
+two starting values.  If ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[ScriptL] = m\)]],
+  " or ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[ScriptL] = m + 1\)]],
+  " it simply returns one of the starting values; otherwise, the recursion \
+relation is developed in a ",
+  StyleBox["Do", "InlineInput",
+    FontWeight->"Bold"],
+  " loop. "
+}], "Text"],
+
+Cell["\<\
+Note: it is good practice to document your functions and to check for legal \
+arguments.  In this case, no values are returned for illegal arguments.\
+\>", "Example"],
+
+Cell[BoxData[
+    \(ClearAll[pleg]\)], "Input"],
+
+Cell[BoxData[{
+    \(\(\(pleg::usage\  = \n\t\*"\"\<pleg[\[ScriptL],m,x] computes the \
+Legendre polynomial \!\(P\_\(\[ScriptL], m\)\)[x] using the two-term \
+recursion relation.\>\"";\)\(\n\)
+    \)\), "\n", 
+    \(\(pleg[\[ScriptL]_Integer\  /; \[ScriptL] \[GreaterEqual] 0, \ 
+          m_Integer\  /; m \[GreaterEqual] 0, \ x_]\  := \ 
+        Block[{pm2, pm1, pm, 
+            k}, \[IndentingNewLine]pm2\  = \ \(\((\(-1\))\)\^m\) \(\((2  m - 
+                    1)\)!!\)\ \((1 - x\^2)\)\^\(m/2\); \[IndentingNewLine]pm1\
+\  = \ x\ \((2  m + 
+                  1)\)\ pm2; \
+\[IndentingNewLine]Which[\[IndentingNewLine]NumberQ[x]\  && \ Abs[x] > 1, \ 
+            Return[], \[IndentingNewLine]m > \[ScriptL], \ 
+            Return[], \ \[IndentingNewLine]\[ScriptL] \[Equal] m, \ 
+            Return[pm2], \ \[IndentingNewLine]\[ScriptL] \[Equal] m + 1, 
+            Return[pm1], \[IndentingNewLine]\[ScriptL] > 
+              m + 1, \ \[IndentingNewLine]Do[\ \[IndentingNewLine]pm\  = \ \
+\((x\ \((2  k - 1)\)\ pm1\  - \ \((k + m - 1)\) pm2)\)\ /\ \((k - 
+                      m)\); \[IndentingNewLine]pm2\  = \ 
+                pm1; \[IndentingNewLine]pm1\  = \ pm, {k, 
+                m + 2, \ \[ScriptL]}]; Return[pm]];];\)\), "\n", 
+    \(pleg[\[ScriptL]_Integer\  /; \[ScriptL] \[GreaterEqual] 
+            0, \ \ m_Integer\  /; m < 0, \ 
+        x_]\  := \ \(\((\(-1\))\)\^m\) \(\((\[ScriptL] + m)\)!\)\/\(\((\
+\[ScriptL] - m)\)!\)\ pleg[\[ScriptL], \(-m\), x]\)}], "Input"],
+
+Cell[TextData[{
+  "Note that although this ",
+  StyleBox["pleg", "InlineInput",
+    FontWeight->"Bold"],
+  " can be used for either symbolic or numerical values of ",
+  StyleBox["x",
+    FontSlant->"Italic"],
+  ", we anticipate that it is most useful for numerical arguments and decline \
+to require simplification, which would inflate the evaluation time \
+considerably.  However, to compare ",
+  StyleBox["pleg", "InlineInput",
+    FontWeight->"Bold"],
+  " and ",
+  StyleBox["SphericalHarmonicY", "InlineInput",
+    FontWeight->"Bold"],
+  " symbolically, it is helpful to simplify first; that step is superfluous \
+for numerical evaluation."
+}], "Text"],
+
+Cell[BoxData[
+    \(compare[f_, l_, x_]\  := \ 
+      Table[{\ f[l, m, Cos[x]] // Simplify, 
+            SphericalHarmonicY[\ l, m, x, 0]/norm[l, m]}, {m, \(-l\), l}]\  // 
+        TableForm\)], "Input"],
+
+Cell[TextData[{
+  "First, we verify that ",
+  StyleBox["pleg", "InlineInput",
+    FontWeight->"Bold"],
+  " reproduces the symbolic expressions for spherical harmonics."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(\(compare[pleg, 4, x]\)\(\ \)\)\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {\(Sin[x]\^4\/384\), \(Sin[x]\^4\/384\)},
+          {\(1\/48\ Cos[x]\ \((Sin[x]\^2)\)\^\(3/2\)\), \(1\/48\ Cos[
+                x]\ Sin[x]\^3\)},
+          {\(1\/96\ \((5 + 7\ Cos[2\ x])\)\ Sin[x]\^2\), \(1\/48\ \((\(-1\) + 
+                  7\ Cos[x]\^2)\)\ Sin[x]\^2\)},
+          {\(1\/32\ \((9\ Cos[x] + 
+                  7\ Cos[3\ x])\)\ \@Sin[x]\^2\), \(1\/8\ \((\(-3\)\ Cos[x] + 
+                  7\ Cos[x]\^3)\)\ Sin[x]\)},
+          {\(1\/64\ \((9 + 20\ Cos[2\ x] + 35\ Cos[4\ x])\)\), \(1\/8\ \((3 - 
+                  30\ Cos[x]\^2 + 35\ Cos[x]\^4)\)\)},
+          {\(\(-\(5\/8\)\)\ \((9\ Cos[x] + 
+                  7\ Cos[3\ x])\)\ \@Sin[x]\^2\), \(\(-\(5\/2\)\)\ \((\(-3\)\ \
+Cos[x] + 7\ Cos[x]\^3)\)\ Sin[x]\)},
+          {\(15\/4\ \((5 + 7\ Cos[2\ x])\)\ Sin[x]\^2\), \(15\/2\ \((\(-1\) + 
+                  7\ Cos[x]\^2)\)\ Sin[x]\^2\)},
+          {\(\(-105\)\ Cos[x]\ \((Sin[x]\^2)\)\^\(3/2\)\), \(\(-105\)\ Cos[
+                x]\ Sin[x]\^3\)},
+          {\(105\ Sin[x]\^4\), \(105\ Sin[x]\^4\)}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Output"]
+}, Closed]],
+
+Cell[TextData[{
+  "Next, we compare numerical values with ",
+  StyleBox["SphericalHarmonicY", "InlineInput",
+    FontWeight->"Bold"],
+  "."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(compare[pleg, 20, 0.1]\  // N[#, 16] &\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {
+            "3.7913524461666766`*^-45", \(3.791352446167091`*^-45 + 
+              0``60.57172083927979\ \[ImaginaryI]\)},
+          {
+            "1.5114824685679036`*^-42", \(1.51148246856806`*^-42 + 
+              0``57.97111188359788\ \[ImaginaryI]\)},
+          {
+            "5.722958619179998`*^-40", \(5.72295861918056`*^-40 + 
+              0``55.392894392151895\ \[ImaginaryI]\)},
+          {
+            "2.052214013504701`*^-37", \(2.0522140135048924`*^-37 + 
+              0``52.838292348976175\ \[ImaginaryI]\)},
+          {
+            "6.947729527204746`*^-35", \(6.947729527205352`*^-35 + 
+              0``50.30867209466727\ \[ImaginaryI]\)},
+          {
+            "2.212820315152144`*^-32", \(2.2128203151523264`*^-32 + 
+              0``47.80556884793821\ \[ImaginaryI]\)},
+          {
+            "6.603812062956827`*^-30", \(6.603812062957334`*^-30 + 
+              0``45.330720292596475\ \[ImaginaryI]\)},
+          {
+            "1.838252784084771`*^-27", \(1.838252784084903`*^-27 + 
+              0``42.88610976543666\ \[ImaginaryI]\)},
+          {
+            "4.747798010640395`*^-25", \(4.747798010640706`*^-25 + 
+              0``40.474022763693114\ \[ImaginaryI]\)},
+          {
+            "1.1308177622222715`*^-22", \(1.1308177622223406`*^-22 + 
+              0``38.09712237631786\ \[ImaginaryI]\)},
+          {
+            "2.4658272213158907`*^-20", \(2.4658272213160264`*^-20 + 
+              0``35.75855235519835\ \[ImaginaryI]\)},
+          {
+            "4.880149274180904`*^-18", \(4.880149274181148`*^-18 + 
+              0``33.46208189141091\ \[ImaginaryI]\)},
+          {
+            "8.673595960370424`*^-16", \(8.673595960370793`*^-16 + 
+              0``31.212315810163165\ \[ImaginaryI]\)},
+          {
+            "1.3661634294543328`*^-13", \(1.3661634294543818`*^-13 + 
+              0``29.015012342216558\ \[ImaginaryI]\)},
+          {
+            "1.8746772282647057`*^-11", \(1.874677228264763`*^-11 + 
+              0``26.877588493795123\ \[ImaginaryI]\)},
+          {
+            "2.190467983466101`*^-9", \(2.1904679834662597`*^-9 + 
+              0``24.80997808804916\ \[ImaginaryI]\)},
+          {
+            "2.1100491392717196`*^-7", \(2.1100491392718003`*^-7 + 
+              0``22.82622242847454\ \[ImaginaryI]\)},
+          {
+            "0.00001594790039599398`", \(\(\(0.000015947900395992755`\)\(\
+\[InvisibleSpace]\)\) + 0``20.947811483257347\ \[ImaginaryI]\)},
+          {
+            "0.0008675923103842848`", \(\(\(0.0008675923103840401`\)\(\
+\[InvisibleSpace]\)\) + 0``19.21219930369751\ \[ImaginaryI]\)},
+          {
+            "0.027985505483875024`", \(\(\(0.027985505483908792`\)\(\
+\[InvisibleSpace]\)\) + 0``17.7035818421408\ \[ImaginaryI]\)},
+          {"0.19518957858528396`", "0.1951895785459783`"},
+          {\(-11.753912303227509`\), \(\(-11.753912303241695`\) + 
+              0``15.080332551742899\ \[ImaginaryI]\)},
+          {
+            "152.31450601106505`", \(\(\(152.31450601102208`\)\(\
+\[InvisibleSpace]\)\) + 0``13.967773731524575\ \[ImaginaryI]\)},
+          {\(-1159.1227449175713`\), \(\(-1159.1227449174821`\) + 
+              0``13.086385569963513\ \[ImaginaryI]\)},
+          {
+            "6257.179960453541`", \(\(\(6257.179960453781`\)\(\
+\[InvisibleSpace]\)\) + 0``12.354136352090826\ \[ImaginaryI]\)},
+          {\(-25982.622139103027`\), \(\(-25982.622139104904`\) + 
+              0``11.735832020337481\ \[ImaginaryI]\)},
+          {
+            "86723.57626202799`", \(\(\(86723.57626203062`\)\(\
+\[InvisibleSpace]\)\) + 0``11.212377819056943\ \[ImaginaryI]\)},
+          {\(-238893.93835434198`\), \(\(-238893.93835435054`\) + 
+              0``10.772309867641155\ \[ImaginaryI]\)},
+          {
+            "552081.3112499388`", \(\(\(552081.3112499623`\)\(\
+\[InvisibleSpace]\)\) + 0``10.40851195193871\ \[ImaginaryI]\)},
+          {\(-1.0809763902975467`*^6\), \(\(-1.0809763902976005`*^6\) + 
+              0``10.11669878923987\ \[ImaginaryI]\)},
+          {
+            "1.8024353016335664`*^6", \(1.8024353016336658`*^6 + 
+              0``9.894655313149414\ \[ImaginaryI]\)},
+          {\(-2.5624261480468125`*^6\), \(\(-2.5624261480469694`*^6\) + 
+              0``9.741863640434664\ \[ImaginaryI]\)},
+          {
+            "3.098442619374832`*^6", \(3.098442619375035`*^6 + 
+              0``9.659371540050678\ \[ImaginaryI]\)},
+          {\(-3.167089838863749`*^6\), \(\(-3.1670898388639763`*^6\) + 
+              0``9.649854614924397\ \[ImaginaryI]\)},
+          {
+            "2.7078637773308977`*^6", \(2.7078637773311054`*^6 + 
+              0``9.717888185027698\ \[ImaginaryI]\)},
+          {\(-1.9054499782910272`*^6\), \(\(-1.9054499782911837`*^6\) + 
+              0``9.870517445635514\ \[ImaginaryI]\)},
+          {
+            "1.0768787585255504`*^6", \(1.0768787585256442`*^6 + 
+              0``10.118348187261269\ \[ImaginaryI]\)},
+          {\(-470769.44953722256`\), \(\(-470769.4495372665`\) + 
+              0``10.477706726175215\ \[ImaginaryI]\)},
+          {
+            "149661.83983282838`", \(\(\(149661.83983284308`\)\(\
+\[InvisibleSpace]\)\) + 0``10.975403918014464\ \[ImaginaryI]\)},
+          {\(-30831.04116164532`\), \(\(-30831.041161648514`\) + 
+              0``11.661526806769972\ \[ImaginaryI]\)},
+          {
+            "3093.4224050066937`", \(\(\(3093.422405007032`\)\(\
+\[InvisibleSpace]\)\) + 0``12.660075771123916\ \[ImaginaryI]\)}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Output"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Recursive implementation", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["Direct recursion", "Subsection"],
+
+Cell[TextData[{
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " permits recursive definitions to be made directly.  Thus, expressing the \
+recurrence relation in terms of ",
+  ButtonBox["SetDelayed",
+    ButtonStyle->"RefGuideLink"],
+  " functions, the recurrence relation can be implemented without using loop \
+counters.  Hence, the recursive implementation is much more compact.   \
+However, it remains good practice to verify that the arguments are legal."
+}], "Text"],
+
+Cell[BoxData[
+    \(ClearAll[\ pleg2\ ]\)], "Input"],
+
+Cell[BoxData[{
+    \(\(pleg2::usage\  = \*"\"\<pleg2[\[ScriptL],m,x] computes the Legendre \
+polynomial \!\(P\_\(\[ScriptL], m\)\)[x] using the two-term recursion \
+relation in a recursive procedure.\>\"";\)\n\), "\n", 
+    \(\(pleg2[\[ScriptL]_Integer\  /; \[ScriptL] \[GreaterEqual] 0, 
+          m_Integer\  /; m \[GreaterEqual] 0, x_]\  := \ 
+        Which[\[IndentingNewLine]NumberQ[x]\  && \ Abs[x] > 1, \ 
+          Return[], \[IndentingNewLine]m > \[ScriptL], \ 
+          Return[], \[IndentingNewLine]\[ScriptL] \[Equal] 
+            m, \(\((\(-1\))\)\^m\) \(\((2  m - 
+                  1)\)!!\)\ \((1 - x\^2)\)\^\(m/2\), \[IndentingNewLine]\
+\[ScriptL] \[Equal] m + 1, \ 
+          x\ \((2  m + 1)\)\ pleg2[m, m, x], \[IndentingNewLine]\[ScriptL] > 
+            m + 1, \((x\ \((2  \[ScriptL] - 1)\)\ pleg2[\[ScriptL] - 1, m, 
+                    x]\  - \ \((\[ScriptL] + m - 1)\) 
+                  pleg2[\[ScriptL] - 2, m, x])\)\ /\ \((\[ScriptL] - 
+                m)\)];\)\), "\n", 
+    \(pleg2[\[ScriptL]_Integer\  /; \[ScriptL] \[GreaterEqual] 
+            0, \ \ m_Integer\  /; m < 0, \ 
+        x_]\  := \ \(\((\(-1\))\)\^m\) \(\((\[ScriptL] + m)\)!\)\/\(\((\
+\[ScriptL] - m)\)!\)\ pleg2[\[ScriptL], \(-m\), x]\)}], "Input"],
+
+Cell["\<\
+Once again we check this version of the Legendre function for both symbolic \
+and numerical accuracy.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LegendreP[20, \(-10\), x]\  // Simplify\)], "Input"],
+
+Cell[BoxData[
+    \(\(-\(\(\((\(-1\) + x\^2)\)\^5\ \((\(-3\) + 465\ x\^2 - 10230\ x\^4 + 
+                71610\ x\^6 - 189255\ x\^8 + 
+                164021\ x\^10)\)\)\/136031345049600\)\)\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(pleg2[20, \(-10\), x] // Simplify\)], "Input"],
+
+Cell[BoxData[
+    \(\(-\(\(\((\(-1\) + x\^2)\)\^5\ \((\(-3\) + 465\ x\^2 - 10230\ x\^4 + 
+                71610\ x\^6 - 189255\ x\^8 + 
+                164021\ x\^10)\)\)\/136031345049600\)\)\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(compare[pleg2, 20, 0.1]\  // N[#, 16] &\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {
+            "3.7913524461666766`*^-45", \(3.791352446167091`*^-45 + 
+              0``60.57172083927979\ \[ImaginaryI]\)},
+          {
+            "1.5114824685679036`*^-42", \(1.51148246856806`*^-42 + 
+              0``57.97111188359788\ \[ImaginaryI]\)},
+          {
+            "5.722958619179998`*^-40", \(5.72295861918056`*^-40 + 
+              0``55.392894392151895\ \[ImaginaryI]\)},
+          {
+            "2.052214013504701`*^-37", \(2.0522140135048924`*^-37 + 
+              0``52.838292348976175\ \[ImaginaryI]\)},
+          {
+            "6.947729527204746`*^-35", \(6.947729527205352`*^-35 + 
+              0``50.30867209466727\ \[ImaginaryI]\)},
+          {
+            "2.212820315152144`*^-32", \(2.2128203151523264`*^-32 + 
+              0``47.80556884793821\ \[ImaginaryI]\)},
+          {
+            "6.603812062956827`*^-30", \(6.603812062957334`*^-30 + 
+              0``45.330720292596475\ \[ImaginaryI]\)},
+          {
+            "1.838252784084771`*^-27", \(1.838252784084903`*^-27 + 
+              0``42.88610976543666\ \[ImaginaryI]\)},
+          {
+            "4.747798010640395`*^-25", \(4.747798010640706`*^-25 + 
+              0``40.474022763693114\ \[ImaginaryI]\)},
+          {
+            "1.1308177622222715`*^-22", \(1.1308177622223406`*^-22 + 
+              0``38.09712237631786\ \[ImaginaryI]\)},
+          {
+            "2.4658272213158907`*^-20", \(2.4658272213160264`*^-20 + 
+              0``35.75855235519835\ \[ImaginaryI]\)},
+          {
+            "4.880149274180904`*^-18", \(4.880149274181148`*^-18 + 
+              0``33.46208189141091\ \[ImaginaryI]\)},
+          {
+            "8.673595960370424`*^-16", \(8.673595960370793`*^-16 + 
+              0``31.212315810163165\ \[ImaginaryI]\)},
+          {
+            "1.3661634294543328`*^-13", \(1.3661634294543818`*^-13 + 
+              0``29.015012342216558\ \[ImaginaryI]\)},
+          {
+            "1.8746772282647057`*^-11", \(1.874677228264763`*^-11 + 
+              0``26.877588493795123\ \[ImaginaryI]\)},
+          {
+            "2.190467983466101`*^-9", \(2.1904679834662597`*^-9 + 
+              0``24.80997808804916\ \[ImaginaryI]\)},
+          {
+            "2.1100491392717196`*^-7", \(2.1100491392718003`*^-7 + 
+              0``22.82622242847454\ \[ImaginaryI]\)},
+          {
+            "0.00001594790039599398`", \(\(\(0.000015947900395992755`\)\(\
+\[InvisibleSpace]\)\) + 0``20.947811483257347\ \[ImaginaryI]\)},
+          {
+            "0.0008675923103842848`", \(\(\(0.0008675923103840401`\)\(\
+\[InvisibleSpace]\)\) + 0``19.21219930369751\ \[ImaginaryI]\)},
+          {
+            "0.027985505483875024`", \(\(\(0.027985505483908792`\)\(\
+\[InvisibleSpace]\)\) + 0``17.7035818421408\ \[ImaginaryI]\)},
+          {"0.19518957858528396`", "0.1951895785459783`"},
+          {\(-11.753912303227509`\), \(\(-11.753912303241695`\) + 
+              0``15.080332551742899\ \[ImaginaryI]\)},
+          {
+            "152.31450601106505`", \(\(\(152.31450601102208`\)\(\
+\[InvisibleSpace]\)\) + 0``13.967773731524575\ \[ImaginaryI]\)},
+          {\(-1159.1227449175713`\), \(\(-1159.1227449174821`\) + 
+              0``13.086385569963513\ \[ImaginaryI]\)},
+          {
+            "6257.179960453541`", \(\(\(6257.179960453781`\)\(\
+\[InvisibleSpace]\)\) + 0``12.354136352090826\ \[ImaginaryI]\)},
+          {\(-25982.622139103027`\), \(\(-25982.622139104904`\) + 
+              0``11.735832020337481\ \[ImaginaryI]\)},
+          {
+            "86723.57626202799`", \(\(\(86723.57626203062`\)\(\
+\[InvisibleSpace]\)\) + 0``11.212377819056943\ \[ImaginaryI]\)},
+          {\(-238893.93835434198`\), \(\(-238893.93835435054`\) + 
+              0``10.772309867641155\ \[ImaginaryI]\)},
+          {
+            "552081.3112499388`", \(\(\(552081.3112499623`\)\(\
+\[InvisibleSpace]\)\) + 0``10.40851195193871\ \[ImaginaryI]\)},
+          {\(-1.0809763902975467`*^6\), \(\(-1.0809763902976005`*^6\) + 
+              0``10.11669878923987\ \[ImaginaryI]\)},
+          {
+            "1.8024353016335664`*^6", \(1.8024353016336658`*^6 + 
+              0``9.894655313149414\ \[ImaginaryI]\)},
+          {\(-2.5624261480468125`*^6\), \(\(-2.5624261480469694`*^6\) + 
+              0``9.741863640434664\ \[ImaginaryI]\)},
+          {
+            "3.098442619374832`*^6", \(3.098442619375035`*^6 + 
+              0``9.659371540050678\ \[ImaginaryI]\)},
+          {\(-3.167089838863749`*^6\), \(\(-3.1670898388639763`*^6\) + 
+              0``9.649854614924397\ \[ImaginaryI]\)},
+          {
+            "2.7078637773308977`*^6", \(2.7078637773311054`*^6 + 
+              0``9.717888185027698\ \[ImaginaryI]\)},
+          {\(-1.9054499782910272`*^6\), \(\(-1.9054499782911837`*^6\) + 
+              0``9.870517445635514\ \[ImaginaryI]\)},
+          {
+            "1.0768787585255504`*^6", \(1.0768787585256442`*^6 + 
+              0``10.118348187261269\ \[ImaginaryI]\)},
+          {\(-470769.44953722256`\), \(\(-470769.4495372665`\) + 
+              0``10.477706726175215\ \[ImaginaryI]\)},
+          {
+            "149661.83983282838`", \(\(\(149661.83983284308`\)\(\
+\[InvisibleSpace]\)\) + 0``10.975403918014464\ \[ImaginaryI]\)},
+          {\(-30831.04116164532`\), \(\(-30831.041161648514`\) + 
+              0``11.661526806769972\ \[ImaginaryI]\)},
+          {
+            "3093.4224050066937`", \(\(\(3093.422405007032`\)\(\
+\[InvisibleSpace]\)\) + 0``12.660075771123916\ \[ImaginaryI]\)}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Output"]
+}, Closed]],
+
+Cell[TextData[{
+  "Although this algorithm is quite simple to state, it appears to be \
+prohibitively slow \[LongDash] much slower than the direct do loop.  To \
+verify this observation, we use the ",
+  ButtonBox["Timing",
+    ButtonStyle->"RefGuideLink"],
+  " function."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Timing[pleg[20, 2, 0.99]]\)], "Input"],
+
+Cell[BoxData[
+    \({0.`\ Second, 202.76104979459018`}\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Timing[pleg2[20, 2, 0.99]]\)], "Input"],
+
+Cell[BoxData[
+    \({0.4059999999999997`\ Second, 202.76104979459018`}\)], "Output"]
+}, Closed]],
+
+Cell["\<\
+The problem is that recursive evaluation can require many function calls.  \
+Fortunately, there is a simple solution to this problem.\
+\>", "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Dynamic programming", "Subsection"],
+
+Cell[TextData[{
+  "An improved algorithm for recursive functions uses the construction\n\t",
+  StyleBox["f[x_] := f[x] = rhs", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox["\n",
+    FontWeight->"Bold"],
+  "known as dynamic programming.  With this procedure each evaluation of the \
+function is stored as a rule associated with the function.  Therefore, the \
+recursive algorithm needs to evaluate each occurrence of the same function \
+call only once rather than every time that it is encountered, which often \
+produces dramatic improvements in speed."
+}], "Text"],
+
+Cell[BoxData[
+    \(ClearAll[pleg3]\)], "Input"],
+
+Cell[BoxData[{
+    \(\(pleg3::usage\  = \*"\"\<pleg3[\[ScriptL],m,x] computes the Legendre \
+polynomial \!\(P\_\(\[ScriptL], m\)\)[x] using the two-term recursion \
+relation in a recursive procedure.\>\"";\)\n\), "\n", 
+    \(\(pleg3[\[ScriptL]_Integer\  /; \[ScriptL] \[GreaterEqual] 0, 
+          m_Integer\  /; m \[GreaterEqual] 0, 
+          x_]\  := \ \(pleg3[\[ScriptL], m, x]\  = 
+          Which[\n\tNumberQ[x]\  && \ Abs[x] > 1, \ Return[], \n\t
+            m > \[ScriptL], \ 
+            Return[], \n\t\[ScriptL] \[Equal] 
+              m, \(\((\(-1\))\)\^m\) \(\((2  m - 
+                    1)\)!!\)\ \((1 - x\^2)\)\^\(m/2\), \n\t\[ScriptL] \
+\[Equal] m + 1, \ 
+            x\ \((2  m + 1)\)\ pleg3[m, m, x], \n\t\[ScriptL] > 
+              m + 1, \((x\ \((2  \[ScriptL] - 1)\)\ pleg3[\[ScriptL] - 1, m, 
+                      x]\  - \ \((\[ScriptL] + m - 1)\) 
+                    pleg3[\[ScriptL] - 2, m, x])\)\ /\ \((\[ScriptL] - 
+                  m)\)]\);\)\), "\n", 
+    \(pleg3[\[ScriptL]_Integer\  /; \[ScriptL] \[GreaterEqual] 
+            0, \ \ m_Integer\  /; m < 0, \ 
+        x_]\  := \ \(\((\(-1\))\)\^m\) \(\((\[ScriptL] + m)\)!\)\/\(\((\
+\[ScriptL] - m)\)!\)\ pleg3[\[ScriptL], \(-m\), x]\)}], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?pleg3\)\)], "Input"],
+
+Cell[BoxData[
+    \("pleg3[\[ScriptL],m,x] computes the Legendre polynomial \!\(P\_\(\
+\[ScriptL],\ m\)\)[x] using the two-term recursion relation in a recursive \
+procedure."\)], "Print",
+  CellTags->"Info3351103004-7200962"]
+}, Closed]],
+
+Cell[TextData[{
+  "The evaluation of this function requires a time intermediate between ",
+  StyleBox["pleg", "InlineInput",
+    FontWeight->"Bold"],
+  " and ",
+  StyleBox["pleg2", "InlineInput",
+    FontWeight->"Bold"],
+  "."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(\(Timing[pleg3[20, 2, 0.99]]\)\(\ \)\)\)], "Input"],
+
+Cell[BoxData[
+    \({0.`\ Second, 202.76104979459018`}\)], "Output"]
+}, Closed]],
+
+Cell[TextData[{
+  "The second evaluation of the same function is practically instantaneous \
+because ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " remembers its previous result and does not repeat the work that was \
+needed to generate it."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Timing[pleg3[20, 2, 0.99]]\)], "Input"],
+
+Cell[BoxData[
+    \({0.`\ Second, 202.76104979459018`}\)], "Output"]
+}, Closed]],
+
+Cell["\<\
+Actually, not only does it remember the result we requested, it also \
+remembers all of its intermediate results as well.  Therefore, any of those \
+can be recalled without computational effort.  Of course, one now trades \
+memory against speed and may find that the kernel eventually exits due to \
+lack of memory.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(?? pleg3\)], "Input"],
+
+Cell[BoxData[
+    \("pleg3[\[ScriptL],m,x] computes the Legendre polynomial \!\(P\_\(\
+\[ScriptL],\ m\)\)[x] using the two-term recursion relation in a recursive \
+procedure."\)], "Print",
+  CellTags->"Info3351103054-8957447"],
+
+Cell[BoxData[
+    InterpretationBox[GridBox[{
+          {GridBox[{
+                {\(pleg3[2, 2, 0.99`] = 0.059700000000000086`\)},
+                {" "},
+                {\(pleg3[3, 2, 0.99`] = 0.2955150000000004`\)},
+                {" "},
+                {\(pleg3[4, 2, 0.99`] = 0.8747094750000012`\)},
+                {" "},
+                {\(pleg3[5, 2, 0.99`] = 2.0068571407500024`\)},
+                {" "},
+                {\(pleg3[6, 2, 0.99`] = 3.93292698444188`\)},
+                {" "},
+                {\(pleg3[7, 2, 0.99`] = 6.9123826327533955`\)},
+                {" "},
+                {\(pleg3[8, 2, 0.99`] = 11.208756539401833`\)},
+                {" "},
+                {\(pleg3[9, 2, 0.99`] = 17.074220890085556`\)},
+                {" "},
+                {\(pleg3[10, 2, 0.99`] = 24.73372162613615`\)},
+                {" "},
+                {\(pleg3[11, 2, 0.99`] = 34.3692691029271`\)},
+                {" "},
+                {\(pleg3[12, 2, 0.99`] = 46.10498763338802`\)},
+                {" "},
+                {\(pleg3[13, 2, 0.99`] = 59.99351604412491`\)},
+                {" "},
+                {\(pleg3[14, 2, 0.99`] = 76.0043224465532`\)},
+                {" "},
+                {\(pleg3[15, 2, 0.99`] = 94.01444928727261`\)},
+                {" "},
+                {\(pleg3[16, 2, 0.99`] = 113.80214050249941`\)},
+                {" "},
+                {\(pleg3[17, 2, 0.99`] = 135.04372286971656`\)},
+                {" "},
+                {\(pleg3[18, 2, 0.99`] = 157.3140204930119`\)},
+                {" "},
+                {\(pleg3[19, 2, 0.99`] = 180.09047725086438`\)},
+                {" "},
+                {\(pleg3[20, 2, 0.99`] = 202.76104979459018`\)},
+                {" "},
+                {\(pleg3[\[ScriptL]_Integer /; \[ScriptL] \[GreaterEqual] 0, 
+                      m_Integer /; m \[GreaterEqual] 0, 
+                      x_] := \(pleg3[\[ScriptL], m, x] = 
+                      Which[NumberQ[x] && Abs[x] > 1, Return[], 
+                        m > \[ScriptL], 
+                        Return[], \[ScriptL] \[Equal] 
+                          m, \((\(-1\))\)\^m\ \(\((2\ m - 
+                                1)\)!!\)\ \((1 - x\^2)\)\^\(m/2\), \[ScriptL] \
+\[Equal] m + 1, x\ \((2\ m + 1)\)\ pleg3[m, m, x], \[ScriptL] > 
+                          m + 1, \(x\ \((2\ \[ScriptL] - 1)\)\ pleg3[\
+\[ScriptL] - 1, m, x] - \((\[ScriptL] + m - 1)\)\ pleg3[\[ScriptL] - 2, m, x]\
+\)\/\(\[ScriptL] - m\)]\)\)},
+                {" "},
+                {\(pleg3[\[ScriptL]_Integer /; \[ScriptL] \[GreaterEqual] 0, 
+                      m_Integer /; m < 0, 
+                      x_] := \(\((\(-1\))\)\^m\ \(\((\[ScriptL] + m)\)!\)\ \
+pleg3[\[ScriptL], \(-m\), x]\)\/\(\((\[ScriptL] - m)\)!\)\)}
+                },
+              GridBaseline->{Baseline, {1, 1}},
+              ColumnWidths->0.999,
+              ColumnAlignments->{Left}]}
+          },
+        GridBaseline->{Baseline, {1, 1}},
+        ColumnAlignments->{Left}],
+      Definition[ "pleg3"],
+      Editable->False]], "Print",
+  CellTags->"Info3351103054-8957447"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(Timing[\ 
+        pleg[20, 2, 
+          x]\ ]\)\[LeftDoubleBracket]1\[RightDoubleBracket]\)], "Input"],
+
+Cell[BoxData[
+    \(0.031000000000000583`\ Second\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(Timing[\ 
+        pleg2[20, 2, 
+          x]\ ]\)\[LeftDoubleBracket]1\[RightDoubleBracket]\)], "Input"],
+
+Cell[BoxData[
+    \(0.391`\ Second\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(Timing[\ 
+        pleg3[20, 2, 
+          x]\ ]\)\[LeftDoubleBracket]1\[RightDoubleBracket]\)], "Input"],
+
+Cell[BoxData[
+    \(0.016000000000000014`\ Second\)], "Output"]
+}, Closed]],
+
+Cell["\<\
+Direct iteration is clearly the fastest method, and nondynamic recursion the \
+slowest, with dynamic programming providing intermediate speed and better \
+clarity.  Obviously, when speed is at a premium, the traditional algorithms \
+are often best.\
+\>", "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Counting recursive function calls", "Subsection"],
+
+Cell[TextData[{
+  "The function ",
+  ButtonBox["Trace",
+    ButtonStyle->"RefGuideLink"],
+  " can be used to investigate how an expression is evaluated by ",
+  StyleBox["Mathematica.",
+    FontSlant->"Italic"],
+  "  When used with a single argument ",
+  StyleBox["expr",
+    FontSlant->"Italic"],
+  ", it produces a nested list of the expressions it encountered during the \
+evaluation of ",
+  StyleBox["expr",
+    FontSlant->"Italic"],
+  ".  Each of these intermediate expression is wrapped in ",
+  ButtonBox["HoldForm",
+    ButtonStyle->"RefGuideLink"],
+  " to prevent further evaluation of the result of ",
+  StyleBox["Trace", "InlineInput",
+    FontWeight->"Bold"],
+  ".  For example, a trace for the simple recursive evaluation of ",
+  StyleBox["pleg2", "InlineInput",
+    FontWeight->"Bold"],
+  " gives the following result."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(stuff\  = \ Trace[pleg2[3, 2, x]]\)], "Input"],
+
+Cell[BoxData[
+    RowBox[{"{", 
+      RowBox[{
+        TagBox[\(pleg2[3, 2, x]\),
+          HoldForm], ",", 
+        RowBox[{"{", 
+          RowBox[{
+            TagBox[\(3 \[GreaterEqual] 0\),
+              HoldForm], ",", 
+            TagBox["True",
+              HoldForm]}], "}"}], ",", 
+        RowBox[{"{", 
+          RowBox[{
+            TagBox[\(2 \[GreaterEqual] 0\),
+              HoldForm], ",", 
+            TagBox["True",
+              HoldForm]}], "}"}], ",", 
+        TagBox[\(Which[NumberQ[x] && Abs[x] > 1, Return[], 2 > 3, Return[], 
+            3 \[Equal] 
+              2, \((\(-1\))\)\^2\ \(\((2\ 2 - 
+                    1)\)!!\)\ \((1 - x\^2)\)\^\(2/2\), 3 \[Equal] 2 + 1, 
+            x\ \((2\ 2 + 1)\)\ pleg2[2, 2, x], 
+            3 > 2 + 1, \(x\ \((2\ 3 - 1)\)\ pleg2[3 - 1, 2, x] - \((3 + 2 - \
+1)\)\ pleg2[3 - 2, 2, x]\)\/\(3 - 2\)]\),
+          HoldForm], ",", 
+        RowBox[{"{", 
+          RowBox[{
+            TagBox[\(NumberQ[x] && Abs[x] > 1\),
+              HoldForm], ",", 
+            RowBox[{"{", 
+              RowBox[{
+                TagBox[\(NumberQ[x]\),
+                  HoldForm], ",", 
+                TagBox["False",
+                  HoldForm]}], "}"}], ",", 
+            TagBox["False",
+              HoldForm]}], "}"}], ",", 
+        RowBox[{"{", 
+          RowBox[{
+            TagBox[\(2 > 3\),
+              HoldForm], ",", 
+            TagBox["False",
+              HoldForm]}], "}"}], ",", 
+        RowBox[{"{", 
+          RowBox[{
+            TagBox[\(3 \[Equal] 2\),
+              HoldForm], ",", 
+            TagBox["False",
+              HoldForm]}], "}"}], ",", 
+        RowBox[{"{", 
+          RowBox[{
+            RowBox[{"{", 
+              RowBox[{
+                TagBox[\(2 + 1\),
+                  HoldForm], ",", 
+                TagBox["3",
+                  HoldForm]}], "}"}], ",", 
+            TagBox[\(3 \[Equal] 3\),
+              HoldForm], ",", 
+            TagBox["True",
+              HoldForm]}], "}"}], ",", 
+        TagBox[\(x\ \((2\ 2 + 1)\)\ pleg2[2, 2, x]\),
+          HoldForm], ",", 
+        RowBox[{"{", 
+          RowBox[{
+            RowBox[{"{", 
+              RowBox[{
+                TagBox[\(2\ 2\),
+                  HoldForm], ",", 
+                TagBox["4",
+                  HoldForm]}], "}"}], ",", 
+            TagBox[\(4 + 1\),
+              HoldForm], ",", 
+            TagBox["5",
+              HoldForm]}], "}"}], ",", 
+        RowBox[{"{", 
+          RowBox[{
+            TagBox[\(pleg2[2, 2, x]\),
+              HoldForm], ",", 
+            RowBox[{"{", 
+              RowBox[{
+                TagBox[\(2 \[GreaterEqual] 0\),
+                  HoldForm], ",", 
+                TagBox["True",
+                  HoldForm]}], "}"}], ",", 
+            RowBox[{"{", 
+              RowBox[{
+                TagBox[\(2 \[GreaterEqual] 0\),
+                  HoldForm], ",", 
+                TagBox["True",
+                  HoldForm]}], "}"}], ",", 
+            
+            TagBox[\(Which[NumberQ[x] && Abs[x] > 1, Return[], 2 > 2, 
+                Return[], 
+                2 \[Equal] 
+                  2, \((\(-1\))\)\^2\ \(\((2\ 2 - 
+                        1)\)!!\)\ \((1 - x\^2)\)\^\(2/2\), 2 \[Equal] 2 + 1, 
+                x\ \((2\ 2 + 1)\)\ pleg2[2, 2, x], 
+                2 > 2 + 
+                    1, \(x\ \((2\ 2 - 1)\)\ pleg2[2 - 1, 2, x] - \((2 + 2 - \
+1)\)\ pleg2[2 - 2, 2, x]\)\/\(2 - 2\)]\),
+              HoldForm], ",", 
+            RowBox[{"{", 
+              RowBox[{
+                TagBox[\(NumberQ[x] && Abs[x] > 1\),
+                  HoldForm], ",", 
+                RowBox[{"{", 
+                  RowBox[{
+                    TagBox[\(NumberQ[x]\),
+                      HoldForm], ",", 
+                    TagBox["False",
+                      HoldForm]}], "}"}], ",", 
+                TagBox["False",
+                  HoldForm]}], "}"}], ",", 
+            RowBox[{"{", 
+              RowBox[{
+                TagBox[\(2 > 2\),
+                  HoldForm], ",", 
+                TagBox["False",
+                  HoldForm]}], "}"}], ",", 
+            RowBox[{"{", 
+              RowBox[{
+                TagBox[\(2 \[Equal] 2\),
+                  HoldForm], ",", 
+                TagBox["True",
+                  HoldForm]}], "}"}], ",", 
+            
+            TagBox[\(\((\(-1\))\)\^2\ \(\((2\ 2 - 
+                      1)\)!!\)\ \((1 - x\^2)\)\^\(2/2\)\),
+              HoldForm], ",", 
+            RowBox[{"{", 
+              RowBox[{
+                TagBox[\(\((\(-1\))\)\^2\),
+                  HoldForm], ",", 
+                TagBox["1",
+                  HoldForm]}], "}"}], ",", 
+            RowBox[{"{", 
+              RowBox[{
+                RowBox[{"{", 
+                  RowBox[{
+                    RowBox[{"{", 
+                      RowBox[{
+                        TagBox[\(2\ 2\),
+                          HoldForm], ",", 
+                        TagBox["4",
+                          HoldForm]}], "}"}], ",", 
+                    TagBox[\(4 - 1\),
+                      HoldForm], ",", 
+                    TagBox["3",
+                      HoldForm]}], "}"}], ",", 
+                TagBox[\(3!!\),
+                  HoldForm], ",", 
+                TagBox["3",
+                  HoldForm]}], "}"}], ",", 
+            RowBox[{"{", 
+              RowBox[{
+                RowBox[{"{", 
+                  RowBox[{
+                    RowBox[{"{", 
+                      RowBox[{
+                        TagBox[\(1\/2\),
+                          HoldForm], ",", 
+                        TagBox[\(1\/2\),
+                          HoldForm]}], "}"}], ",", 
+                    TagBox[\(2\/2\),
+                      HoldForm], ",", 
+                    TagBox["1",
+                      HoldForm]}], "}"}], ",", 
+                TagBox[\(\((1 - x\^2)\)\^1\),
+                  HoldForm], ",", 
+                TagBox[\(1 - x\^2\),
+                  HoldForm]}], "}"}], ",", 
+            TagBox[\(3\ \((1 - x\^2)\)\),
+              HoldForm], ",", 
+            TagBox[\(3\ \((1 - x\^2)\)\),
+              HoldForm]}], "}"}], ",", 
+        TagBox[\(x\ 5\ \((3\ \((1 - x\^2)\))\)\),
+          HoldForm], ",", 
+        TagBox[\(x\ 5\ 3\ \((1 - x\^2)\)\),
+          HoldForm], ",", 
+        TagBox[\(3\ 5\ x\ \((1 - x\^2)\)\),
+          HoldForm], ",", 
+        TagBox[\(15\ x\ \((1 - x\^2)\)\),
+          HoldForm]}], "}"}]], "Output"]
+}, Closed]],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["FullForm",
+    Active->True,
+    Active->True,
+    ButtonStyle->"RefGuideLink"],
+    Active->True],
+  StyleBox[" ",
+    FontWeight->"Bold"],
+  "shows that ",
+  StyleBox["HoldForm", "InlineInput",
+    FontWeight->"Bold"],
+  " prevents the various expressions in this trace from being evaluated \
+themselves."
+}], "Text",
+  FontWeight->"Plain"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(stuff // FullForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      StyleBox[\(List[HoldForm[pleg2[3, 2, x]], 
+          List[HoldForm[GreaterEqual[3, 0]], HoldForm[True]], 
+          List[HoldForm[GreaterEqual[2, 0]], HoldForm[True]], 
+          HoldForm[
+            Which[And[NumberQ[x], Greater[Abs[x], 1]], Return[], 
+              Greater[2, 3], Return[], Equal[3, 2], 
+              Times[Power[\(-1\), 2], Factorial2[Plus[Times[2, 2], \(-1\)]], 
+                Power[Plus[1, Times[\(-1\), Power[x, 2]]], 
+                  Times[2, Power[2, \(-1\)]]]], Equal[3, Plus[2, 1]], 
+              Times[x, Plus[Times[2, 2], 1], pleg2[2, 2, x]], 
+              Greater[3, Plus[2, 1]], 
+              Times[Plus[
+                  Times[x, Plus[Times[2, 3], \(-1\)], 
+                    pleg2[Plus[3, \(-1\)], 2, x]], 
+                  Times[\(-1\), 
+                    Times[Plus[3, 2, \(-1\)], 
+                      pleg2[Plus[3, \(-2\)], 2, x]]]], 
+                Power[Plus[3, Times[\(-1\), 2]], \(-1\)]]]], 
+          List[HoldForm[And[NumberQ[x], Greater[Abs[x], 1]]], 
+            List[HoldForm[NumberQ[x]], HoldForm[False]], HoldForm[False]], 
+          List[HoldForm[Greater[2, 3]], HoldForm[False]], 
+          List[HoldForm[Equal[3, 2]], HoldForm[False]], 
+          List[List[HoldForm[Plus[2, 1]], HoldForm[3]], 
+            HoldForm[Equal[3, 3]], HoldForm[True]], 
+          HoldForm[Times[x, Plus[Times[2, 2], 1], pleg2[2, 2, x]]], 
+          List[List[HoldForm[Times[2, 2]], HoldForm[4]], 
+            HoldForm[Plus[4, 1]], HoldForm[5]], 
+          List[HoldForm[pleg2[2, 2, x]], 
+            List[HoldForm[GreaterEqual[2, 0]], HoldForm[True]], 
+            List[HoldForm[GreaterEqual[2, 0]], HoldForm[True]], 
+            HoldForm[
+              Which[And[NumberQ[x], Greater[Abs[x], 1]], Return[], 
+                Greater[2, 2], Return[], Equal[2, 2], 
+                Times[Power[\(-1\), 2], 
+                  Factorial2[Plus[Times[2, 2], \(-1\)]], 
+                  Power[Plus[1, Times[\(-1\), Power[x, 2]]], 
+                    Times[2, Power[2, \(-1\)]]]], Equal[2, Plus[2, 1]], 
+                Times[x, Plus[Times[2, 2], 1], pleg2[2, 2, x]], 
+                Greater[2, Plus[2, 1]], 
+                Times[Plus[
+                    Times[x, Plus[Times[2, 2], \(-1\)], 
+                      pleg2[Plus[2, \(-1\)], 2, x]], 
+                    Times[\(-1\), 
+                      Times[Plus[2, 2, \(-1\)], 
+                        pleg2[Plus[2, \(-2\)], 2, x]]]], 
+                  Power[Plus[2, Times[\(-1\), 2]], \(-1\)]]]], 
+            List[HoldForm[And[NumberQ[x], Greater[Abs[x], 1]]], 
+              List[HoldForm[NumberQ[x]], HoldForm[False]], HoldForm[False]], 
+            List[HoldForm[Greater[2, 2]], HoldForm[False]], 
+            List[HoldForm[Equal[2, 2]], HoldForm[True]], 
+            HoldForm[
+              Times[Power[\(-1\), 2], Factorial2[Plus[Times[2, 2], \(-1\)]], 
+                Power[Plus[1, Times[\(-1\), Power[x, 2]]], 
+                  Times[2, Power[2, \(-1\)]]]]], 
+            List[HoldForm[Power[\(-1\), 2]], HoldForm[1]], 
+            List[List[List[HoldForm[Times[2, 2]], HoldForm[4]], 
+                HoldForm[Plus[4, \(-1\)]], HoldForm[3]], 
+              HoldForm[Factorial2[3]], HoldForm[3]], 
+            List[List[
+                List[HoldForm[Power[2, \(-1\)]], HoldForm[Rational[1, 2]]], 
+                HoldForm[Times[2, Rational[1, 2]]], HoldForm[1]], 
+              HoldForm[Power[Plus[1, Times[\(-1\), Power[x, 2]]], 1]], 
+              HoldForm[Plus[1, Times[\(-1\), Power[x, 2]]]]], 
+            HoldForm[Times[1, 3, Plus[1, Times[\(-1\), Power[x, 2]]]]], 
+            HoldForm[Times[3, Plus[1, Times[\(-1\), Power[x, 2]]]]]], 
+          HoldForm[
+            Times[x, 5, Times[3, Plus[1, Times[\(-1\), Power[x, 2]]]]]], 
+          HoldForm[Times[x, 5, 3, Plus[1, Times[\(-1\), Power[x, 2]]]]], 
+          HoldForm[Times[3, 5, x, Plus[1, Times[\(-1\), Power[x, 2]]]]], 
+          HoldForm[Times[15, x, Plus[1, Times[\(-1\), Power[x, 2]]]]]]\),
+        ShowSpecialCharacters->False,
+        ShowStringCharacters->True,
+        NumberMarks->True],
+      FullForm]], "Output"]
+}, Closed]],
+
+Cell[TextData[{
+  "Although the complete trace is instructive, it is also rather \
+indigestible.  We can determine the total number of times that ",
+  StyleBox["pleg2", "InlineInput",
+    FontWeight->"Bold"],
+  " is evaluating by giving a second argument to ",
+  StyleBox["Trace[", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox["expr,pattern", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox["]", "InlineInput",
+    FontWeight->"Bold"],
+  ", which provides a list of all expressions involving ",
+  StyleBox["pattern", "InlineInput",
+    FontWeight->"Bold"],
+  " encountered during the evaluation of ",
+  StyleBox["expr", "InlineInput",
+    FontWeight->"Bold"],
+  "."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(\(\ \)\(stuff\  = \ 
+      Trace[\ pleg2[3, 2, x], \ pleg2[__]\ ] // Flatten\)\)\)], "Input"],
+
+Cell[BoxData[
+    RowBox[{"{", 
+      RowBox[{
+        TagBox[\(pleg2[3, 2, x]\),
+          HoldForm], ",", 
+        TagBox[\(pleg2[2, 2, x]\),
+          HoldForm]}], "}"}]], "Output"]
+}, Closed]],
+
+Cell[TextData[{
+  "Therefore, the following function counts the total number of calls to ",
+  StyleBox["pleg2", "InlineInput",
+    FontWeight->"Bold"],
+  " needed for a particular recursive evaluation."
+}], "Text"],
+
+Cell[BoxData[
+    \(totalCalls2[\[ScriptL]_, m_]\  := \ 
+      Length[\ Trace[pleg2[\[ScriptL], m, x], \ pleg2[__]] // 
+          Flatten\ ]\)], "Input"],
+
+Cell["\<\
+We now find that the total number of function calls can become quite large \
+for recursive evaluations.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(totalCalls2[20, 2]\)], "Input"],
+
+Cell[BoxData[
+    \(10945\)], "Output"]
+}, Closed]],
+
+Cell["\<\
+By contrast, the number of calls used with dynamic programming is much \
+smaller.\
+\>", "Text"],
+
+Cell[BoxData[
+    \(totalCalls3[\[ScriptL]_, m_]\  := \ 
+      Length[\ Trace[pleg3[\[ScriptL], m, x], \ pleg3[__]] // 
+          Flatten\ ]\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(totalCalls3[30, 2]\)], "Input"],
+
+Cell[BoxData[
+    \(21\)], "Output"]
+}, Closed]],
+
+Cell[TextData[{
+  "It is also instructive to tabulate the calls to functions of various \
+degree.  For this we use a replacement rule in the argument list of ",
+  StyleBox["Trace", "InlineInput",
+    FontWeight->"Bold"],
+  " to produce a simple list of degree values."
+}], "Text"],
+
+Cell[BoxData[
+    \(partialCalls2[\[ScriptL]_, m_]\  := \ 
+      Block[{k, kList}, 
+        kList\  = \ 
+          Flatten[Trace[pleg2[\[ScriptL], m, x], \ 
+                pleg2[k_, __] \[Rule] k\ ] /. HoldForm \[Rule] List]; 
+        Table[{k, Count[kList, k]}, {k, 0, \[ScriptL]}]]\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(partialCalls2[20, 2]\  // TableForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"0", "0"},
+          {"1", "0"},
+          {"2", "4181"},
+          {"3", "2584"},
+          {"4", "1597"},
+          {"5", "987"},
+          {"6", "610"},
+          {"7", "377"},
+          {"8", "233"},
+          {"9", "144"},
+          {"10", "89"},
+          {"11", "55"},
+          {"12", "34"},
+          {"13", "21"},
+          {"14", "13"},
+          {"15", "8"},
+          {"16", "5"},
+          {"17", "3"},
+          {"18", "2"},
+          {"19", "1"},
+          {"20", "1"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Output"]
+}, Closed]],
+
+Cell[TextData[{
+  "Similarly, we can produce a list of partial calls for ",
+  StyleBox["pleg3", "InlineInput",
+    FontWeight->"Bold"],
+  ".  However, to obtain a nontrivial result, it is necessary to clear all of \
+the rules associated with ",
+  StyleBox["pleg3", "InlineInput",
+    FontWeight->"Bold"],
+  " and to execute again its definition cell."
+}], "Text"],
+
+Cell[BoxData[
+    \(partialCalls3[\[ScriptL]_, m_]\  := \ 
+      Block[{k, kList}, 
+        kList\  = \ 
+          Flatten[Trace[pleg3[\[ScriptL], m, x], \ 
+                pleg3[k_, __] \[Rule] k\ ] /. HoldForm \[Rule] List]; 
+        Table[{k, Count[kList, k]}, {k, 0, \[ScriptL]}]]\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(partialCalls3[20, 2]\  // TableForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"0", "0"},
+          {"1", "0"},
+          {"2", "0"},
+          {"3", "0"},
+          {"4", "0"},
+          {"5", "0"},
+          {"6", "0"},
+          {"7", "0"},
+          {"8", "0"},
+          {"9", "0"},
+          {"10", "0"},
+          {"11", "0"},
+          {"12", "0"},
+          {"13", "0"},
+          {"14", "0"},
+          {"15", "0"},
+          {"16", "0"},
+          {"17", "0"},
+          {"18", "0"},
+          {"19", "0"},
+          {"20", "1"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Output"]
+}, Closed]]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Stability", "Section"],
+
+Cell[TextData[{
+  "\tIn general one must carefully consider the stability  of recursion \
+relations.  Consider a three-term linear recurrence relation with respect to \
+a degree parameter ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  ", such as the one used above to generate associated Legendre polynomials \
+(with ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  " represented by ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[ScriptL]\)]],
+  " above).  Such a relation will have two linearly independent solutions, \
+corresponding to the two solutions to the second-order differential equation, \
+but only one of those solutions corresponds to the desired function while the \
+other may be described as spurious.  Suppose that we propose to employ the \
+recursion relation in the direction of increasing ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  ".  Given that machine numbers have finite precision, the starting values \
+are not truly exact but rather can be represented as two linear combinations \
+of the true solution with a small admixture of the spurious solution that \
+originates due to truncation.  In the best of all possible worlds, the \
+spurious solution will be exponentially damped as the recursion relation is \
+applied so that only the true solution emerges and we obtain an accurate \
+result.  However, Murphy's Law dictates that it is likely that the spurious \
+admixture grows exponentially as the recurrence relation is applied so that \
+soon roundoff error is amplified and overwhelms the true solution we seek.  \
+Under those unfortunate circumstances the recurrence relation cannot be \
+applied in that direction.  Fortunately, if we apply the relation in the \
+opposite direction instead, the spurious solution will be exponentially \
+damped and the method will succeed.\n\tThus, we can classify recurrence \
+relations as either stable, unstable, or neutral with respect to increasing \
+",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  " according to the behavior of roundoff errors as the relation is iterated. \
+ The relation is stable if the spurious solution is exponentially damped or \
+unstable if it grows exponentially.  The relation is considered neutral if \
+the spurious solution has a power-law behavior, which is sometimes described \
+as exponentially neutral.  The behavior of many common recurrence relations \
+can be found in standard references, such as Abramowitz and Stegun, which \
+report that upward recursion is stable for Legendre functions ",
+  Cell[BoxData[
+      \(TraditionalForm\`P\_n[x]\)]],
+  " but unstable for Bessel functions ",
+  Cell[BoxData[
+      \(TraditionalForm\`J\_n[x]\)]],
+  ".  Conversely, upward recursion is unstable for ",
+  Cell[BoxData[
+      \(TraditionalForm\`Q\_n[x]\)]],
+  " and stable for ",
+  Cell[BoxData[
+      \(TraditionalForm\`Y\_n[x]\)]],
+  ", which are the complementary solutions to the Legendre or Bessel \
+equations.  Hence, we can confidently employ upward recursion for Legendre \
+functions of type ",
+  Cell[BoxData[
+      \(TraditionalForm\`P\_n\)]],
+  ", as done herein, but must use downward recursion for Bessel functions of \
+type ",
+  Cell[BoxData[
+      \(TraditionalForm\`J\_n\)]],
+  ".  However, downward recursion is a little more complicated because \
+starting values are not immediately available."
+}], "Text"],
+
+Cell["\<\
+\tWe can easily show that starting errors remain small as the Legendre \
+recurrence relation is iterated by comparing results with and without \
+deliberately introducing a small error term.\
+\>", "Text"],
+
+Cell[BoxData[{
+    \(\(ClearAll[testLegendre];\)\), "\n", 
+    \(\(testLegendre[0, x_, eps_]\  := \ 1\  + \ eps;\)\), "\n", 
+    \(\(testLegendre[1, x_, eps_]\  := \ x;\)\), "\n", 
+    \(testLegendre[n_Integer\  /; n > 1, x_, 
+        eps_]\  := \(testLegendre[n, x, 
+          eps]\  = \((\ \((2  n - 1)\) 
+                x\ testLegendre[n - 1, x, 
+                  eps]\  - \ \((n - 1)\)\ testLegendre[n - 2, x, 
+                  eps\ ])\)\ /\ n\)\)}], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Table[{k, \((testLegendre[k, 0.99, 0. ]\  - \ 
+              testLegendre[k, 0.99, 10*$MachineEpsilon])\)}, \ {k, 0, 20}]\  // 
+      TableForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"0", \(-2.220446049250313`*^-15\)},
+          {"1", "0.`"},
+          {"2", "1.1102230246251565`*^-15"},
+          {"3", "2.1094237467877974`*^-15"},
+          {"4", "2.9976021664879227`*^-15"},
+          {"5", "4.107825191113079`*^-15"},
+          {"6", "5.218048215738236`*^-15"},
+          {"7", "5.88418203051333`*^-15"},
+          {"8", "6.328271240363392`*^-15"},
+          {"9", "6.661338147750939`*^-15"},
+          {"10", "6.994405055138486`*^-15"},
+          {"11", "7.16093850883226`*^-15"},
+          {"12", "7.271960811294775`*^-15"},
+          {"13", "7.16093850883226`*^-15"},
+          {"14", "6.966649479522857`*^-15"},
+          {"15", "6.661338147750939`*^-15"},
+          {"16", "6.2450045135165055`*^-15"},
+          {"17", "5.738465258531278`*^-15"},
+          {"18", "5.1486592766991635`*^-15"},
+          {"19", "4.468647674116255`*^-15"},
+          {"20", "3.7192471324942744`*^-15"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Output"]
+}, Closed]],
+
+Cell[TextData[{
+  "Upward recursion is clearly stable for Legendre functions.  By contrast, \
+upward recurrence for Bessel functions is unstable.  Although it is not \
+immediately obvious how we should generate starting values, we can use the \
+built-in function for this purpose.  We also check below that our recurrence \
+method reproduces the built-in function for relatively small ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  ".  However, the errors grow as ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  " increases.  Fortunately, ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " provides superior algorithms for evaluating Bessel functions.  \
+Nevertheless, the distinction between stable and unstable recursion should \
+now be clear."
+}], "Text"],
+
+Cell[BoxData[{
+    \(\(ClearAll[testBessel];\)\), "\n", 
+    \(\(testBessel[0, x_, eps_]\  := \ BesselJ[0, x]\  + \ eps;\)\), "\n", 
+    \(\(testBessel[1, x_, eps_]\  := \ BesselJ[1, x];\)\), "\n", 
+    \(testBessel[n_Integer\  /; n > 1, x_, 
+        eps_]\  := \ \(testBessel[n, x, 
+          eps]\  = \ \(2  n - 2\)\/x\ testBessel[n - 1, x, eps]\  - \ 
+          testBessel[n - 2, x, eps\ ]\)\)}], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Table[{k, \((testBessel[k, 0.99, 0. ]\  - \ 
+              BesselJ[k, 0.99])\), \((testBessel[k, 0.99, 0. ]\  - \ 
+              testBessel[k, 0.99, 10*$MachineEpsilon])\)}, {k, 0, 20}]\  // 
+      TableForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"0", "0.`", \(-2.220446049250313`*^-15\)},
+          {"1", "0.`", "0.`"},
+          {"2", "6.938893903907228`*^-17", "2.220446049250313`*^-15"},
+          {"3", "2.220446049250313`*^-16", "8.93729534823251`*^-15"},
+          {"4", "1.2559397966072083`*^-15", "5.194455976464951`*^-14"},
+          {"5", "9.930370328120608`*^-15", "4.108137441338755`*^-13"},
+          {"6", "9.90511621020481`*^-14", "4.097689201842947`*^-12"},
+          {"7", "1.1906898474307192`*^-12", "4.9258146281490334`*^-11"},
+          {"8", "1.6738987078564272`*^-11", "6.924821572011543`*^-10"},
+          {"9", "2.693383942506366`*^-10", "1.1142372677171456`*^-8"},
+          {"10", "4.880322726569413`*^-9", "2.0189611197318898`*^-7"},
+          {"11", "9.832303992028296`*^-8", "4.067566960114526`*^-6"},
+          {"12", "2.1800761199463857`*^-6", "0.00009018848077946073`"},
+          {"13", "0.00005275200714059815`", "0.0021823198458752967`"},
+          {"14", "0.0013832261720169749`", "0.057223262016955614`"},
+          {"15", "0.0390687962923294`", "1.6162533735629703`"},
+          {"16", "1.182519691777359`", "48.92015169443669`"},
+          {"17", "38.18378992782433`", "1579.6411751334817`"},
+          {"18", "1310.1799626779473`", "54201.38283268777`"},
+          {"19", "47604.72394381572`", "1.9693797345589676`*^6"},
+          {"20", "1.8259418502039863`*^6", "7.553815206488527`*^7"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Output"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Exercises", "ExerciseMain"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Miller's algorithm"]], "ExerciseTitle"],
+
+Cell[TextData[{
+  "Miller's algorithm uses downward recursion to generate a series of \
+functions ",
+  Cell[BoxData[
+      \(TraditionalForm\`f\_n[x]\)]],
+  " starting from arbitrary initial values ",
+  Cell[BoxData[
+      \(TraditionalForm\`f\_N\)]],
+  " and ",
+  Cell[BoxData[
+      \(TraditionalForm\`f\_\(N - 1\)\)]],
+  " where ",
+  Cell[BoxData[
+      \(TraditionalForm\`N\)]],
+  " is large.  The idea is that if ",
+  Cell[BoxData[
+      \(TraditionalForm\`N\)]],
+  " is large enough and the recursion relation is known to be stable in the \
+downward direction for the desired series of functions, then even if we do \
+not have accurate starting values the error in the these starting values will \
+decrease exponentially until the spurious solution is annihilated and the \
+series converges upon the correct solutions for ",
+  Cell[BoxData[
+      \(TraditionalForm\`n = 1, \ k\)]],
+  " with ",
+  Cell[BoxData[
+      \(TraditionalForm\`k < N\)]],
+  " times an unknown but constant normalization factor.  Therefore, if we \
+have an independent means of determining the normalization factor, we can \
+obtain the series of values ",
+  Cell[BoxData[
+      \(TraditionalForm\`{f\_0[1], \ 
+        f\_1[x], \ \(\(...\)\(\ \)\(f\_k[x]\)\)}\)]],
+  ".  The trick of course is knowing how large ",
+  Cell[BoxData[
+      \(TraditionalForm\`N\)]],
+  " must be to achieve sufficient accuracy for the largest ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  " we need.  Although we do not expect to produce a completely general \
+algorithm in this exercise, it is instructive to investigate the basic idea \
+as applied to the Bessel functions ",
+  Cell[BoxData[
+      \(TraditionalForm\`J\_n[x]\)]],
+  ".\n(a) Write a procedure that uses downward recursion beginning with ",
+  StyleBox["nstart",
+    FontWeight->"Plain",
+    FontSlant->"Italic"],
+  " to produce Bessel functions for ",
+  Cell[BoxData[
+      \(TraditionalForm\`k = 0, n\)]],
+  ".  Obtain the normalization by assuming that ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " provides acceptable accuracy for ",
+  Cell[BoxData[
+      \(TraditionalForm\`J\_0[x]\)]],
+  ".\n(b) Write a procedure which compares your series of Bessel functions \
+with those produced by ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " for specified ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\)]],
+  ".\n(c) Show that ",
+  Cell[BoxData[
+      FormBox[
+        RowBox[{
+          StyleBox["nstart",
+            FontSlant->"Italic"], 
+          StyleBox[" ",
+            FontSlant->"Italic"], "\[TildeTilde]", 
+          " ", \(n\  + \ \@\(p\ n\)\)}], TraditionalForm]]],
+  " where ",
+  Cell[BoxData[
+      \(TraditionalForm\`p\)]],
+  " is the desired precision expressed as the number of significant decimal \
+digits is generally sufficient."
+}], "ExerciseText"]
+}, Closed]]
+}, Closed]]
+}, Open  ]]
+},
+FrontEndVersion->"5.2 for Microsoft Windows",
+ScreenRectangle->{{0, 1400}, {0, 952}},
+WindowToolbars->"EditBar",
+WindowSize->{1392, 912},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+ShowSelection->True,
+ShowCellLabel->False,
+Magnification->1.5,
+StyleDefinitions -> Notebook[{
+  
+  Cell[CellGroupData[{
+  Cell["Style Definitions", "Subtitle"],
+  
+  Cell["\<\
+Modify the definitions below to change the default appearance of all cells in \
+a given style.  Make modifications to any definition using commands in the \
+Format menu.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Style Environment Names", "Section"],
+  
+  Cell[StyleData[All, "Working"],
+    PageWidth->WindowWidth,
+    ScriptMinSize->9],
+  
+  Cell[StyleData[All, "Presentation"],
+    PageWidth->WindowWidth,
+    ScriptMinSize->12,
+    FontSize->16],
+  
+  Cell[StyleData[All, "Condensed"],
+    PageWidth->PaperWidth,
+    CellBracketOptions->{"Margins"->{1, 1},
+    "Widths"->{0, 5}},
+    ScriptMinSize->7,
+    FontSize->10],
+  
+  Cell[StyleData[All, "Printout"],
+    PageWidth->PaperWidth,
+    ScriptMinSize->7,
+    FontSize->10,
+    PrivateFontOptions->{"FontType"->"Outline"}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Notebook Options", "Section"],
+  
+  Cell["\<\
+The options defined for the style below will be used at the Notebook level.\
+\>", "Text"],
+  
+  Cell[StyleData["Notebook"],
+    PageHeaders->{{Cell[ 
+            TextData[ {
+              CounterBox[ "Page"]}], "PageNumber"], None, Cell[ 
+            TextData[ {
+              ValueBox[ "FileName"]}], "Header"]}, {Cell[ 
+            TextData[ {
+              ValueBox[ "FileName"]}], "Header"], None, Cell[ 
+            TextData[ {
+              CounterBox[ "Page"]}], "PageNumber"]}},
+    PageFooters->{{Cell[ 
+            TextData[ {"Essential Mathematica for Students of Science"}], 
+            "Footer"], None, Cell[ 
+            TextData[ {"\[Copyright] James J. Kelly, 1998"}], "Footer"]}, {
+        Cell[ 
+            TextData[ {"Essential Mathematica for Students of Science"}], 
+            "Footer"], None, Cell[ 
+            TextData[ {"\[Copyright] James J. Kelly, 1998"}], "Footer"]}},
+    PageHeaderLines->{True, True},
+    PageFooterLines->{True, True},
+    PrintingOptions->{"FirstPageHeader"->False,
+    "FacingPages"->True},
+    CellFrameLabelMargins->6,
+    StyleMenuListing->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Headings", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Title"],
+    ShowCellBracket->True,
+    CellMargins->{{0, 0}, {0, 0}},
+    CellGroupingRules->"TitleGrouping",
+    PageBreakBelow->False,
+    LineSpacing->{1, 0},
+    CounterIncrements->"Title",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}, {
+        "Subtitle", 0}, {"Subsubtitle", 0}},
+    FontSize->34,
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Title", "Presentation"],
+    CellMargins->{{0, 0}, {0, 0}},
+    LineSpacing->{1, 0},
+    FontSize->44],
+  
+  Cell[StyleData["Title", "Condensed"],
+    CellMargins->{{0, 0}, {0, 0}},
+    FontSize->24],
+  
+  Cell[StyleData["Title", "Printout"],
+    CellMargins->{{0, 0}, {0, 0}},
+    FontSize->24,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0],
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subtitle"],
+    CellMargins->{{0, 0}, {0, 0}},
+    PageBreakBelow->False,
+    LineSpacing->{1, 3},
+    ParagraphIndent->-96,
+    CounterIncrements->"Subtitle",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}, {
+        "Subsubtitle", 0}},
+    FontFamily->"Helvetica",
+    FontSize->18,
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.2, 0.700008, 0.700008]],
+  
+  Cell[StyleData["Subtitle", "Presentation"],
+    CellMargins->{{0, 0}, {0, 0}},
+    LineSpacing->{1, 6},
+    ParagraphIndent->-157,
+    FontSize->30],
+  
+  Cell[StyleData["Subtitle", "Condensed"],
+    CellMargins->{{0, 0}, {0, 0}},
+    ParagraphIndent->-78,
+    FontSize->14],
+  
+  Cell[StyleData["Subtitle", "Printout"],
+    CellMargins->{{0, 0}, {0, 0}},
+    ParagraphIndent->-85,
+    FontSize->16,
+    FontColor->GrayLevel[0],
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsubtitle"],
+    ShowCellBracket->True,
+    CellMargins->{{10, 4}, {30, 10}},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubtitle",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}},
+    FontFamily->"Helvetica",
+    FontSize->14,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Subsubtitle", "Presentation"],
+    ShowCellBracket->True,
+    CellMargins->{{8, 10}, {40, 20}},
+    LineSpacing->{1, 0},
+    FontSize->24],
+  
+  Cell[StyleData["Subsubtitle", "Condensed"],
+    ShowCellBracket->True,
+    CellMargins->{{8, 10}, {12, 8}},
+    FontSize->12],
+  
+  Cell[StyleData["Subsubtitle", "Printout"],
+    ShowCellBracket->True,
+    CellMargins->{{9, 10}, {50, 10}},
+    FontSize->14]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Section"],
+    CellFrame->{{0, 0}, {0, 1}},
+    CellDingbat->None,
+    CellMargins->{{12, Inherited}, {4, 24}},
+    CellGroupingRules->{"SectionGrouping", 30},
+    PageBreakBelow->False,
+    CellFrameMargins->6,
+    CounterIncrements->"Section",
+    CounterAssignments->{{"Subsection", 0}, {"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->16,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Section", "Presentation"],
+    CellMargins->{{10, 10}, {8, 32}},
+    LineSpacing->{1, 2},
+    FontSize->24,
+    FontTracking->"Condensed"],
+  
+  Cell[StyleData["Section", "Condensed"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14],
+  
+  Cell[StyleData["Section", "Printout"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsection"],
+    CellMargins->{{12, Inherited}, {8, 20}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->13,
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Subsection", "Presentation"],
+    CellMargins->{{11, 10}, {8, 32}},
+    LineSpacing->{1, 0},
+    FontSize->22],
+  
+  Cell[StyleData["Subsection", "Condensed"],
+    CellMargins->{{8, Inherited}, {2, 12}},
+    FontSize->12],
+  
+  Cell[StyleData["Subsection", "Printout"],
+    CellMargins->{{9, 0}, {4, 40}},
+    FontSize->12]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsubsection"],
+    CellDingbat->"\[FilledSquare]",
+    CellMargins->{{25, Inherited}, {8, 12}},
+    CellGroupingRules->{"SectionGrouping", 50},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubsection",
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Subsubsection", "Presentation"],
+    CellMargins->{{29, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Subsubsection", "Condensed"],
+    CellMargins->{{21, 0}, {4, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Subsubsection", "Printout"],
+    CellMargins->{{21, 0}, {4, 20}},
+    FontSize->11]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Body Text", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Text"],
+    CellMargins->{{12, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 12},
+    CounterIncrements->"Text",
+    FontFamily->"Times"],
+  
+  Cell[StyleData["Text", "Presentation"],
+    CellMargins->{{13, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12},
+    FontSize->16],
+  
+  Cell[StyleData["Text", "Condensed"],
+    CellMargins->{{9, 0}, {4, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 6}],
+  
+  Cell[StyleData["Text", "Printout"],
+    CellMargins->{{9, 0}, {4, 4}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["SmallText"],
+    CellMargins->{{12, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 6},
+    CounterIncrements->"SmallText",
+    FontFamily->"Helvetica",
+    FontSize->9],
+  
+  Cell[StyleData["SmallText", "Presentation"],
+    CellMargins->{{13, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    FontSize->12],
+  
+  Cell[StyleData["SmallText", "Condensed"],
+    CellMargins->{{8, 10}, {2, 2}},
+    LineSpacing->{1, 2},
+    FontSize->9],
+  
+  Cell[StyleData["SmallText", "Printout"],
+    CellMargins->{{9, 0}, {4, 4}}]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Input/Output", "Section"],
+  
+  Cell["\<\
+The cells in this section define styles used for input and output to the \
+kernel.  Be careful when modifying, renaming, or removing these styles, \
+because the front end associates special meanings with these style names.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Input"],
+    CellFrame->0.5,
+    CellMargins->{{25, 10}, {8, 8}},
+    Evaluatable->True,
+    CellGroupingRules->"InputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{5, Inherited}, {Inherited, Inherited}},
+    DefaultFormatType->DefaultInputFormatType,
+    FormatType->InputForm,
+    ShowStringCharacters->True,
+    NumberMarks->True,
+    CounterIncrements->"Input",
+    FontWeight->"Bold",
+    Background->RGBColor[1, 0.700008, 0.4]],
+  
+  Cell[StyleData["Input", "Presentation"],
+    CellMargins->{{25, Inherited}, {10, 10}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Input", "Condensed"],
+    CellMargins->{{25, 0}, {6, 6}}],
+  
+  Cell[StyleData["Input", "Printout"],
+    CellFrame->0.5,
+    CellMargins->{{25, 0}, {6, 6}},
+    Background->None]
+  }, Closed]],
+  
+  Cell[StyleData["InlineInput"],
+    CellGroupingRules->"InputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    DefaultFormatType->DefaultInputFormatType,
+    AutoItalicWords->{},
+    FormatType->InputForm,
+    ShowStringCharacters->True,
+    NumberMarks->True,
+    CounterIncrements->"Input",
+    FontWeight->"Bold"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Output"],
+    CellFrame->True,
+    CellMargins->{{25, 10}, {8, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    CellEditDuplicate->True,
+    CellGroupingRules->"OutputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    CellLabelMargins->{{3, Inherited}, {Inherited, Inherited}},
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Output",
+    Background->RGBColor[1, 0.900008, 0.900008]],
+  
+  Cell[StyleData["Output", "Presentation"],
+    CellMargins->{{25, Inherited}, {12, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Output", "Condensed"],
+    CellMargins->{{25, 0}, {6, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4}],
+  
+  Cell[StyleData["Output", "Printout"],
+    CellMargins->{{25, 0}, {6, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Message"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"OutputGrouping",
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Message",
+    StyleMenuListing->None,
+    FontColor->RGBColor[1, 0, 0]],
+  
+  Cell[StyleData["Message", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Message", "Condensed"],
+    CellMargins->{{50, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Message", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}},
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Print"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"OutputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Print",
+    StyleMenuListing->None],
+  
+  Cell[StyleData["Print", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Print", "Condensed"],
+    CellMargins->{{50, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Print", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Graphics"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"GraphicsGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Graphics",
+    StyleMenuListing->None],
+  
+  Cell[StyleData["Graphics", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Graphics", "Condensed"],
+    CellMargins->{{52, Inherited}, {Inherited, Inherited}},
+    ImageSize->{175, 175}],
+  
+  Cell[StyleData["Graphics", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}},
+    ImageSize->{250, 250}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["CellLabel"],
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->11,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["CellLabel", "Presentation"],
+    FontSize->12],
+  
+  Cell[StyleData["CellLabel", "Condensed"],
+    FontSize->8],
+  
+  Cell[StyleData["CellLabel", "Printout"],
+    FontSize->8,
+    FontColor->GrayLevel[0]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Unique Styles", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Author"],
+    CellMargins->{{10, 4}, {2, 10}},
+    FontSize->12,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Author", "Presentation"],
+    CellMargins->{{12, 10}, {2, 12}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12},
+    FontSize->16],
+  
+  Cell[StyleData["Author", "Condensed"],
+    CellMargins->{{8, 10}, {1, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 4},
+    FontSize->9],
+  
+  Cell[StyleData["Author", "Printout"],
+    CellMargins->{{9, 0}, {4, 12}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Copyright"],
+    CellMargins->{{10, 10}, {40, 2}},
+    FontFamily->"Helvetica",
+    FontSize->9],
+  
+  Cell[StyleData["Copyright", "Presentation"],
+    CellMargins->{{12, 10}, {50, 2}},
+    LineSpacing->{1, 5},
+    FontSize->12],
+  
+  Cell[StyleData["Copyright", "Condensed"],
+    CellMargins->{{8, 10}, {12, 1}},
+    LineSpacing->{1, 2},
+    FontSize->9],
+  
+  Cell[StyleData["Copyright", "Printout"],
+    CellMargins->{{9, 0}, {72, 4}},
+    FontSize->7]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Abstract"],
+    CellMargins->{{45, 75}, {Inherited, 30}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Abstract", "Printout"],
+    CellMargins->{{36, 67}, {Inherited, 50}},
+    FontSize->10]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Example"],
+    CellMargins->{{12, 10}, {5, 12}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 12},
+    CounterIncrements->"Example",
+    FontFamily->"Times",
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Example", "Presentation"],
+    CellMargins->{{18, 10}, {8, 20}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12}],
+  
+  Cell[StyleData["Example", "Condensed"],
+    CellMargins->{{8, 10}, {4, 8}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 4}],
+  
+  Cell[StyleData["Example", "Printout"],
+    CellMargins->{{9, 0}, {4, 10}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Definition"],
+    CellFrame->{{3, 0}, {0, 0}},
+    CellMargins->{{52, 10}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Definition",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.2, 0.700008, 0.700008]],
+  
+  Cell[StyleData["Definition", "Presentation"],
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Definition", "Condensed"],
+    CellMargins->{{40, 10}, {1, 4}}],
+  
+  Cell[StyleData["Definition", "Printout"],
+    CellMargins->{{44, 0}, {2, 6}},
+    Background->GrayLevel[0.6]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Theorem"],
+    CellFrame->{{3, 0}, {0, 0}},
+    CellMargins->{{52, 10}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Theorem",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Theorem", "Presentation"],
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Theorem", "Condensed"],
+    CellMargins->{{40, 10}, {1, 4}}],
+  
+  Cell[StyleData["Theorem", "Printout"],
+    CellMargins->{{44, 0}, {2, 6}},
+    Background->GrayLevel[0.4]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Caution"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{52, 25}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Caution",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->GrayLevel[0],
+    Background->RGBColor[0.996109, 0, 0],
+    FontVariations->{"Underline"->False}],
+  
+  Cell[StyleData["Caution", "Presentation"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Caution", "Condensed"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{40, 25}, {1, 4}}],
+  
+  Cell[StyleData["Caution", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{44, 25}, {2, 6}},
+    Background->GrayLevel[0.900008]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Advice"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{52, 25}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Advice",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->GrayLevel[0],
+    Background->RGBColor[0, 1, 0],
+    FontVariations->{"Underline"->False}],
+  
+  Cell[StyleData["Advice", "Presentation"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Advice", "Condensed"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{40, 25}, {1, 4}}],
+  
+  Cell[StyleData["Advice", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{44, 25}, {2, 6}},
+    Background->GrayLevel[0.900008]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Exercise"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->"NormalGrouping",
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubsection",
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0, 0, 0.996109]],
+  
+  Cell[StyleData["Exercise", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Exercise", "Condensed"],
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Exercise", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseMain"],
+    CellFrame->{{6, 0}, {0, 1}},
+    CellMargins->{{12, Inherited}, {4, 20}},
+    CellGroupingRules->{"SectionGrouping", 30},
+    PageBreakBelow->False,
+    CellFrameColor->RGBColor[0.571389, 0.19675, 0.570504],
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->16,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["ExerciseMain", "Presentation"],
+    CellMargins->{{18, 10}, {8, 32}},
+    LineSpacing->{1, 2},
+    FontSize->24,
+    FontTracking->"Condensed"],
+  
+  Cell[StyleData["ExerciseMain", "Condensed"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14],
+  
+  Cell[StyleData["ExerciseMain", "Printout"],
+    CellMargins->{{9, 0}, {2, 50}},
+    CellFrameColor->GrayLevel[0.500008],
+    FontSize->14,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseTitle"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["ExerciseTitle", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["ExerciseTitle", "Condensed"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["ExerciseTitle", "Printout"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseText"],
+    CellMargins->{{32, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 8},
+    CounterIncrements->"ExcersiceText",
+    FontFamily->"Times"],
+  
+  Cell[StyleData["ExerciseText", "Presentation"],
+    CellMargins->{{32, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12}],
+  
+  Cell[StyleData["ExerciseText", "Condensed"],
+    CellMargins->{{32, 0}, {4, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 6}],
+  
+  Cell[StyleData["ExerciseText", "Printout"],
+    CellMargins->{{32, 0}, {4, 4}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Problem"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Plain",
+    FontColor->GrayLevel[0]],
+  
+  Cell[StyleData["Problem", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Problem", "Condensed"],
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Problem", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Formulas and Programming", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["DisplayFormula"],
+    CellMargins->{{62, 10}, {2, 10}},
+    CellHorizontalScrolling->True,
+    DefaultFormatType->DefaultInputFormatType,
+    ScriptLevel->0,
+    SingleLetterItalics->True,
+    UnderoverscriptBoxOptions->{LimitsPositioning->True}],
+  
+  Cell[StyleData["DisplayFormula", "Presentation"],
+    CellMargins->{{74, 10}, {2, 10}}],
+  
+  Cell[StyleData["DisplayFormula", "Condensed"],
+    CellMargins->{{52, 10}, {2, 10}}],
+  
+  Cell[StyleData["DisplayFormula", "Printout"],
+    CellMargins->{{54, 10}, {2, 10}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ChemicalFormula"],
+    CellMargins->{{62, 10}, {2, 10}},
+    DefaultFormatType->DefaultInputFormatType,
+    AutoSpacing->False,
+    ScriptLevel->1,
+    ScriptBaselineShifts->{0.6, Automatic},
+    SingleLetterItalics->False,
+    ZeroWidthTimes->True],
+  
+  Cell[StyleData["ChemicalFormula", "Presentation"],
+    CellMargins->{{74, 10}, {2, 10}},
+    FontSize->10],
+  
+  Cell[StyleData["ChemicalFormula", "Condensed"],
+    CellMargins->{{52, 10}, {2, 10}},
+    FontSize->10],
+  
+  Cell[StyleData["ChemicalFormula", "Printout"],
+    CellMargins->{{54, 10}, {2, 10}},
+    FontSize->10]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Program"],
+    CellMargins->{{12, 10}, {Inherited, 6}},
+    FontFamily->"Courier"],
+  
+  Cell[StyleData["Program", "Presentation"],
+    CellMargins->{{13, 30}, {Inherited, 4}},
+    FontSize->9.5],
+  
+  Cell[StyleData["Program", "Condensed"],
+    CellMargins->{{8, 10}, {Inherited, 4}},
+    FontSize->9.5],
+  
+  Cell[StyleData["Program", "Printout"],
+    CellMargins->{{9, 0}, {Inherited, 4}},
+    FontSize->9.5]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Automatic Numbering", "Section"],
+  
+  Cell["\<\
+The following styles are useful for numbered equations, figures, etc.  They \
+automatically give the cell a FrameLabel containing a reference to a \
+particular counter, and also increment that counter.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedEquation"],
+    CellMargins->{{62, 10}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, Cell[ 
+            TextData[ {"(", 
+              CounterBox[ "NumberedEquation"], ")"}]]}, {None, None}},
+    DefaultFormatType->DefaultInputFormatType,
+    CounterIncrements->"NumberedEquation",
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedEquation", "Presentation"],
+    CellMargins->{{74, 10}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["NumberedEquation", "Condensed"],
+    CellMargins->{{52, 10}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["NumberedEquation", "Printout"],
+    CellMargins->{{54, 0}, {Inherited, Inherited}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedFigure"],
+    CellMargins->{{62, 145}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, None}, {Cell[ 
+            TextData[ {"Figure ", 
+              CounterBox[ "NumberedFigure"]}]], None}},
+    CounterIncrements->"NumberedFigure",
+    ImageMargins->{{43, Inherited}, {Inherited, 0}},
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedFigure", "Presentation"]],
+  
+  Cell[StyleData["NumberedFigure", "Condensed"]],
+  
+  Cell[StyleData["NumberedFigure", "Printout"]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedTable"],
+    CellMargins->{{62, 145}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, None}, {Cell[ 
+            TextData[ {"Table ", 
+              CounterBox[ "NumberedTable"]}]], None}},
+    TextAlignment->Center,
+    CounterIncrements->"NumberedTable",
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedTable", "Presentation"]],
+  
+  Cell[StyleData["NumberedTable", "Condensed"]],
+  
+  Cell[StyleData["NumberedTable", "Printout"]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Headers and Footers", "Section"],
+  
+  Cell[StyleData["Header"],
+    CellMargins->{{0, 0}, {4, 1}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Footer"],
+    CellMargins->{{0, 0}, {0, 4}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["PageNumber"],
+    CellMargins->{{0, 0}, {4, 1}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontWeight->"Bold"]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Hyperlink Styles", "Section"],
+  
+  Cell["\<\
+The cells below define styles useful for making hypertext ButtonBoxes.  The \
+\"Hyperlink\" style is for links within the same Notebook, or between \
+Notebooks.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Hyperlink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`NotebookLocate[ #2]}]&),
+    Active->True,
+    ButtonFrame->"None",
+    ButtonNote->ButtonData}],
+  
+  Cell[StyleData["Hyperlink", "Presentation"]],
+  
+  Cell[StyleData["Hyperlink", "Condensed"]],
+  
+  Cell[StyleData["Hyperlink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell["\<\
+The following styles are for linking automatically to the on-line help \
+system.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["MainBookLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "MainBook", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["MainBookLink", "Presentation"]],
+  
+  Cell[StyleData["MainBookLink", "Condensed"]],
+  
+  Cell[StyleData["MainBookLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["AddOnsLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontFamily->"Courier",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "AddOns", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["AddOnsLink", "Presentation"]],
+  
+  Cell[StyleData["AddOnsLink", "Condensed"]],
+  
+  Cell[StyleData["AddOnLink", "Printout"],
+    FontWeight->"Bold",
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["RefGuideLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontFamily->"Courier",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "RefGuideLink", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["RefGuideLink", "Presentation"]],
+  
+  Cell[StyleData["RefGuideLink", "Condensed"]],
+  
+  Cell[StyleData["RefGuideLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["GettingStartedLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "GettingStarted", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["GettingStartedLink", "Presentation"]],
+  
+  Cell[StyleData["GettingStartedLink", "Condensed"]],
+  
+  Cell[StyleData["GettingStartedLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["OtherInformationLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "OtherInformation", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["OtherInformationLink", "Presentation"]],
+  
+  Cell[StyleData["OtherInformationLink", "Condensed"]],
+  
+  Cell[StyleData["OtherInformationLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]]
+  }, Closed]]
+  }, Open  ]]
+  }]
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{
+  "Info3351103004-7200962"->{
+    Cell[27986, 728, 226, 4, 60, "Print",
+      CellTags->"Info3351103004-7200962"]},
+  "Info3351103054-8957447"->{
+    Cell[29492, 785, 226, 4, 60, "Print",
+      CellTags->"Info3351103054-8957447"],
+    Cell[29721, 791, 3074, 67, 1000, "Print",
+      CellTags->"Info3351103054-8957447"]}
+  }
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{
+  {"Info3351103004-7200962", 96273, 2919},
+  {"Info3351103054-8957447", 96389, 2922}
+  }
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 86, 2, 81, "Title"],
+Cell[1865, 57, 455, 15, 85, "Author"],
+
+Cell[CellGroupData[{
+Cell[2345, 76, 31, 0, 83, "Section"],
+Cell[2379, 78, 147, 3, 41, "Text"],
+Cell[2529, 83, 235, 6, 41, "DisplayFormula",
+  Evaluatable->False],
+Cell[2767, 91, 452, 12, 67, "Text"],
+Cell[3222, 105, 328, 7, 43, "DisplayFormula",
+  Evaluatable->False],
+Cell[3553, 114, 102, 2, 41, "Text"],
+Cell[3658, 118, 339, 8, 73, "DisplayFormula",
+  Evaluatable->False],
+Cell[4000, 128, 573, 18, 67, "Text"],
+Cell[4576, 148, 675, 12, 119, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[5288, 165, 33, 0, 51, "Section"],
+Cell[5324, 167, 124, 2, 99, "Input"],
+Cell[5451, 171, 262, 6, 42, "Text"],
+Cell[5716, 179, 136, 3, 99, "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[5889, 187, 30, 0, 51, "Section"],
+Cell[5922, 189, 762, 21, 95, "Text"],
+Cell[6687, 212, 176, 3, 51, "Example"],
+Cell[6866, 217, 47, 1, 73, "Input"],
+Cell[6916, 220, 1487, 25, 525, "Input"],
+Cell[8406, 247, 655, 17, 95, "Text"],
+Cell[9064, 266, 203, 4, 99, "Input"],
+Cell[9270, 272, 180, 5, 42, "Text"],
+
+Cell[CellGroupData[{
+Cell[9475, 281, 66, 1, 73, "Input"],
+Cell[9544, 284, 1269, 26, 344, "Output"]
+}, Closed]],
+Cell[10828, 313, 151, 5, 42, "Text"],
+
+Cell[CellGroupData[{
+Cell[11004, 322, 71, 1, 73, "Input"],
+Cell[11078, 325, 5650, 119, 1134, "Output"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[16777, 450, 43, 0, 51, "Section"],
+
+Cell[CellGroupData[{
+Cell[16845, 454, 38, 0, 68, "Subsection"],
+Cell[16886, 456, 480, 10, 68, "Text"],
+Cell[17369, 468, 52, 1, 73, "Input"],
+Cell[17424, 471, 1242, 20, 344, "Input"],
+Cell[18669, 493, 125, 3, 41, "Text"],
+
+Cell[CellGroupData[{
+Cell[18819, 500, 72, 1, 73, "Input"],
+Cell[18894, 503, 205, 3, 81, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[19136, 511, 66, 1, 73, "Input"],
+Cell[19205, 514, 205, 3, 81, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[19447, 522, 72, 1, 73, "Input"],
+Cell[19522, 525, 5650, 119, 1134, "Output"]
+}, Closed]],
+Cell[25187, 647, 283, 7, 42, "Text"],
+
+Cell[CellGroupData[{
+Cell[25495, 658, 58, 1, 73, "Input"],
+Cell[25556, 661, 68, 1, 59, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[25661, 667, 59, 1, 73, "Input"],
+Cell[25723, 670, 84, 1, 59, "Output"]
+}, Closed]],
+Cell[25822, 674, 157, 3, 41, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[26016, 682, 41, 0, 68, "Subsection"],
+Cell[26060, 684, 571, 11, 144, "Text"],
+Cell[26634, 697, 48, 1, 73, "Input"],
+Cell[26685, 700, 1230, 21, 344, "Input"],
+
+Cell[CellGroupData[{
+Cell[27940, 725, 43, 1, 73, "Input"],
+Cell[27986, 728, 226, 4, 60, "Print",
+  CellTags->"Info3351103004-7200962"]
+}, Closed]],
+Cell[28227, 735, 238, 8, 42, "Text"],
+
+Cell[CellGroupData[{
+Cell[28490, 747, 73, 1, 73, "Input"],
+Cell[28566, 750, 68, 1, 59, "Output"]
+}, Closed]],
+Cell[28649, 754, 265, 7, 67, "Text"],
+
+Cell[CellGroupData[{
+Cell[28939, 765, 59, 1, 73, "Input"],
+Cell[29001, 768, 68, 1, 59, "Output"]
+}, Closed]],
+Cell[29084, 772, 339, 6, 67, "Text"],
+
+Cell[CellGroupData[{
+Cell[29448, 782, 41, 1, 73, "Input"],
+Cell[29492, 785, 226, 4, 60, "Print",
+  CellTags->"Info3351103054-8957447"],
+Cell[29721, 791, 3074, 67, 1000, "Print",
+  CellTags->"Info3351103054-8957447"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[32832, 863, 125, 3, 73, "Input"],
+Cell[32960, 868, 63, 1, 59, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[33060, 874, 126, 3, 73, "Input"],
+Cell[33189, 879, 48, 1, 59, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[33274, 885, 126, 3, 73, "Input"],
+Cell[33403, 890, 63, 1, 59, "Output"]
+}, Closed]],
+Cell[33481, 894, 272, 5, 67, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[33790, 904, 55, 0, 68, "Subsection"],
+Cell[33848, 906, 843, 24, 96, "Text"],
+
+Cell[CellGroupData[{
+Cell[34716, 934, 66, 1, 73, "Input"],
+Cell[34785, 937, 6395, 183, 368, "Output"]
+}, Closed]],
+Cell[41195, 1123, 380, 14, 42, "Text"],
+
+Cell[CellGroupData[{
+Cell[41600, 1141, 50, 1, 73, "Input"],
+Cell[41653, 1144, 4125, 75, 859, "Output"]
+}, Closed]],
+Cell[45793, 1222, 686, 19, 69, "Text"],
+
+Cell[CellGroupData[{
+Cell[46504, 1245, 115, 2, 73, "Input"],
+Cell[46622, 1249, 184, 6, 59, "Output"]
+}, Closed]],
+Cell[46821, 1258, 214, 5, 42, "Text"],
+Cell[47038, 1265, 153, 3, 73, "Input"],
+Cell[47194, 1270, 127, 3, 41, "Text"],
+
+Cell[CellGroupData[{
+Cell[47346, 1277, 51, 1, 73, "Input"],
+Cell[47400, 1280, 39, 1, 59, "Output"]
+}, Closed]],
+Cell[47454, 1284, 105, 3, 41, "Text"],
+Cell[47562, 1289, 153, 3, 73, "Input"],
+
+Cell[CellGroupData[{
+Cell[47740, 1296, 51, 1, 73, "Input"],
+Cell[47794, 1299, 36, 1, 59, "Output"]
+}, Closed]],
+Cell[47845, 1303, 280, 6, 42, "Text"],
+Cell[48128, 1311, 297, 6, 99, "Input"],
+
+Cell[CellGroupData[{
+Cell[48450, 1321, 68, 1, 73, "Input"],
+Cell[48521, 1324, 736, 29, 494, "Output"]
+}, Closed]],
+Cell[49272, 1356, 363, 9, 68, "Text"],
+Cell[49638, 1367, 297, 6, 99, "Input"],
+
+Cell[CellGroupData[{
+Cell[49960, 1377, 68, 1, 73, "Input"],
+Cell[50031, 1380, 712, 29, 494, "Output"]
+}, Closed]]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[50804, 1416, 28, 0, 51, "Section"],
+Cell[50835, 1418, 3343, 66, 443, "Text"],
+Cell[54181, 1486, 213, 4, 67, "Text"],
+Cell[54397, 1492, 466, 9, 177, "Input"],
+
+Cell[CellGroupData[{
+Cell[54888, 1505, 176, 3, 73, "Input"],
+Cell[55067, 1510, 1160, 29, 594, "Output"]
+}, Closed]],
+Cell[56242, 1542, 777, 17, 119, "Text"],
+Cell[57022, 1561, 408, 7, 203, "Input"],
+
+Cell[CellGroupData[{
+Cell[57455, 1572, 240, 4, 99, "Input"],
+Cell[57698, 1578, 1634, 29, 564, "Output"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[59381, 1613, 33, 0, 54, "ExerciseMain"],
+
+Cell[CellGroupData[{
+Cell[59439, 1617, 63, 0, 58, "ExerciseTitle"],
+Cell[59505, 1619, 2820, 78, 299, "ExerciseText"]
+}, Closed]]
+}, Closed]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

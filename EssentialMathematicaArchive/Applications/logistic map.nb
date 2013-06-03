@@ -1,0 +1,2747 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     49195,       1359]*)
+(*NotebookOutlinePosition[     83140,       2583]*)
+(*  CellTagsIndexPosition[     83096,       2579]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Logistic map", "Title",
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell[TextData[{
+  "from ",
+  StyleBox[ButtonBox["Essential Mathematica for Students of Science",
+    Active->False,
+    ButtonData:>{
+      URL[ 
+      "http://www.physics.umd.edu/courses/CourseWare/EssentialMathematica/"], 
+      None},
+    Active->False,
+    ButtonStyle->"Hyperlink"],
+    Active->False],
+  "\n\[Copyright] James J. Kelly, 1998\nLast revised: January, 2006"
+}], "Author",
+  Active->True,
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section"],
+
+Cell[TextData[{
+  "\tThe logistic equation provides a simple model of the evolution of a \
+population for which successive generations do not overlap, which is a \
+characteristic of many insect species.  For example, if eggs are laid in the \
+fall and hatch in the spring, each generation is distinct and the population \
+dynamics may be analyzed using discrete models.  Suppose that there is a \
+maximum population that can be supported by a habitat, called its carrying \
+capacity, and let ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_n\)]],
+  " be the fraction of that carrying capacity that is present in generation \
+",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  ".  If ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_n\)]],
+  " is relatively small, it is reasonable to assume that the size of the next \
+generation will be directly proportional to the size of the present \
+generation with a species-dependent growth factor designated as ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]\)]],
+  ".  However, if the population approaches saturation of the habitat, \
+competition for resources suppresses growth and may lead to a decline in the \
+size of the next generation.  In the mid-1840's, the Belgian mathematician \
+Pierre Verhulst proposed that this behavior can be represented using the \
+one-parameter nonlinear recursive equation"
+}], "Text"],
+
+Cell[BoxData[
+    \(TraditionalForm\`x\_n\  \[Equal] \ \[Mu]\ x\_\(n - 1\)\ \((1\  - \ 
+            x\_\(n - 1\))\)\)], "DisplayFormula",
+  Evaluatable->False,
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell["\<\
+known as the logistic equation.  The logistic equation is an example of a \
+quadratic map in which successive iterates are obtained by recursive \
+substitution into a quadratic expression.  The logistic equation provides a \
+simple but insightful illustration of many characteristics of models of \
+nonlinear phenomena.\
+\>", "Text"],
+
+Cell[TextData[{
+  "\tThe fate of the species is determined primarily by its growth parameter. \
+ Clearly if ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] < 1\)]],
+  " the species fails to replace itself and eventually dies out.  Thus,"
+}], "Text"],
+
+Cell[BoxData[
+    \(TraditionalForm\`\[Mu] < 
+        1\ \ \[DoubleLongRightArrow]\ \ \ \(lim\+\(n \[Rule] \[Infinity]\)\ 
+            x\_n\) = \ 0\)], "DisplayFormula",
+  Evaluatable->False,
+  TextAlignment->Center,
+  TextJustification->0],
+
+Cell[TextData[{
+  "and we describe this situation by saying that the population reaches a \
+fixed point, ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_\[Infinity] = 0\)]],
+  " for ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] < 1\)]],
+  ".  For ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]\)]],
+  " exactly 1, the fixed point is the initial population itself, such that ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] = \(1\ \[DoubleLongRightArrow]\ 
+            x\_\[Infinity] = x\_0\)\)]],
+  ".  A more successful species will have ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] > 1\)]],
+  ", but not too large, so that the species grows slowly without immediately \
+saturating its habitat.  Under those happy circumstances, one might expect \
+the population to reach a stable fixed point which depends primarily upon ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]\)]],
+  " but which may be larger or smaller than ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_0\)]],
+  " depending upon the initial population.  However, for very large ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]\)]],
+  ", we might anticipate an unstable situation in which the population \
+oscillates wildly from one generation to the next.  Suppose that the initial \
+population is small but the growth parameter is so large that the next \
+generation nearly saturates its environment.  There will then be a population \
+crash with a very small third generation.  Freed from competitive pressures, \
+the third generation will sire a very large fourth generation, producing \
+another crash at the fifth.  Under these conditions it becomes difficult to \
+predict whether or not a stable situation is ever reached.  This notebook and \
+",
+  ButtonBox["cobweb.nb",
+    ButtonData:>{"Applications/cobweb.nb", None},
+    ButtonStyle->"Hyperlink"],
+  " investigate the periodic and chaotic regimes of the discrete logistic \
+equation in considerable detail."
+}], "Text"],
+
+Cell[TextData[{
+  "Note: the output for this notebook was omitted to reduce the file size.  \
+Evaluation of the entire notebook only takes a few minutes with current \
+versions of ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " on modern PCs."
+}], "Text",
+  FontColor->RGBColor[1, 0, 0]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Section"],
+
+Cell[BoxData[{
+    \(\(ClearAll["\<Global`*\>"];\)\), "\n", 
+    \(\(Off[General::spell, \ General::spell1, General::ovfl];\)\), "\n", 
+    \(\($TextStyle = {FontFamily \[Rule] "\<Times\>", 
+          FontSize \[Rule] 12};\)\)}], "Input"],
+
+Cell[BoxData[{
+    \(\(Needs["\<Graphics`\>"];\)\), "\[IndentingNewLine]", 
+    \(Needs["\<Statistics`\>"]\)}], "Input"],
+
+Cell["\<\
+To enhance computation speed, it is useful to define compiled functions which \
+iterate either scalar or list arguments.\
+\>", "Text"],
+
+Cell[BoxData[{
+    \(\(\(Verhulst::usage = "\<Verhulst[\[Mu],x] = \[Mu] x (1-x) computes the \
+next iterate of the logistic equation.\>";\)\(\n\)
+    \)\), "\n", 
+    \(\(Verhulst = 
+        Compile[{\[Mu], x}, \ \[Mu]\ x\ \((1 - x)\)];\)\)}], "Input"],
+
+Cell[BoxData[{
+    \(\(\(VerhulstList::usage = "\<VerhulstList[\[Mu],x] = \[Mu] x (1-x) \
+produces a list of iterates of the logistic equation given lists \[Mu] and x \
+of equal length.\>";\)\(\n\)
+    \)\), "\n", 
+    \(\(VerhulstList = 
+        Compile[{{\[Mu], _Real, 1}, {x, _Real, 
+              1}}, \ \[Mu]\ x\ \((1 - x)\)];\)\)}], "Input"],
+
+Cell[TextData[{
+  "Notice that ",
+  StyleBox["VerhulstList", "InlineInput",
+    FontWeight->"Bold"],
+  " uses a declaration syntax ",
+  Cell[BoxData[
+      \(TraditionalForm\`{x\_i, t\_i, n\_i}\)]],
+  " within ",
+  ButtonBox["Compile",
+    ButtonStyle->"RefGuideLink"],
+  "  in which variable ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_i\)]],
+  " is declared to be list of rank ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\_i\)]],
+  " containing elements of type ",
+  Cell[BoxData[
+      \(TraditionalForm\`t\_i\)]],
+  ".  Thus, ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\_i = 1\)]],
+  " indicates a vector (one-dimensional list), ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\_i = 2\)]],
+  " indicates a matrix, etc., where each element of list ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_i\)]],
+  " has type ",
+  Cell[BoxData[
+      \(TraditionalForm\`t\_i\)]],
+  "."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Fixed points", "Section"],
+
+Cell[TextData[{
+  "\tWe begin our study of the logistic equation by searching for conditions \
+under which a stable final population is achieved.  This can be done using \
+the function ",
+  ButtonBox["FixedPoint",
+    ButtonStyle->"RefGuideLink"],
+  ".  ",
+  StyleBox["FixedPoint[", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox["f,expr", "InlineInput"],
+  StyleBox["]", "InlineInput",
+    FontWeight->"Bold"],
+  " starts with ",
+  StyleBox["expr", "InlineInput"],
+  ", then applies ",
+  StyleBox["f", "InlineInput"],
+  " repeatedly until the result no longer changes.  ",
+  StyleBox["FixedPoint[", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox["f", "InlineInput",
+    FontSlant->"Plain"],
+  StyleBox[",", "InlineInput"],
+  StyleBox["expr", "InlineInput",
+    FontSlant->"Plain"],
+  StyleBox[",", "InlineInput"],
+  StyleBox["n", "InlineInput",
+    FontSlant->"Plain"],
+  StyleBox["]", "InlineInput",
+    FontWeight->"Bold"],
+  " stops after at most ",
+  StyleBox["n", "InlineInput",
+    FontSlant->"Plain"],
+  " steps.  However, because ",
+  StyleBox["FixedPoint", "InlineInput",
+    FontWeight->"Bold"],
+  " always returns its last result whether or not it is a true fixed point, \
+we use a slightly more sophisticated function which tests the output of ",
+  StyleBox["FixedPoint", "InlineInput",
+    FontWeight->"Bold"],
+  " for constancy and returns \"none\" if constancy is not actually \
+achieved."
+}], "Text"],
+
+Cell[BoxData[
+    \(finalPopulation[\[Mu]_, x0_, nmax_]\  := \ 
+      Module[{test, \ result}, 
+        test\  = \ FixedPoint[\ \[Mu]\ #\ \((1 - #)\) &, \ x0, \ nmax]; 
+        result\  = \ \(\[Mu]\ #\ \((1 - #)\) &\)\ @\ test; 
+        Which[result < $MachineEpsilon, 0. , 
+          Abs[test - result] < 10*$MachineEpsilon, \ result, 
+          True, \ "\<none\>"]]\)], "Input"],
+
+Cell[BoxData[
+    \(TableForm[\ 
+      Table[{\[Mu], finalPopulation[\[Mu], 0.5, 1000]}, {\[Mu], 0, 4, 0.1}], 
+      TableHeadings \[Rule] {None, {"\<\[Mu]\>", "\<fixed point\>"}}]\)], \
+"Input"],
+
+Cell[TextData[{
+  "Thus, we find that the population tends to die out when ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] < 1\)]],
+  ", but reaches stable final values for ",
+  Cell[BoxData[
+      \(TraditionalForm\`1\  < \ \[Mu]\  < \ 3\)]],
+  ".  The maximum stable population is approximately 0.6552.  The behavior of \
+this model becomes more interesting for ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] > 3\)]],
+  ".  For example, \[Mu]=3.2 produces a sequence in which two values \
+alternate after some initial transients die out.  As \[Mu] increases further, \
+the 2-cycle splits into a 4-cycle, then an 8-cycle, with subsequent period \
+doublings occuring ever more rapidly until a chaotic regime is reached.  \
+Surprisingly, this chaotic regime is interrupted for some narrow ranges of ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]\)]],
+  " in which islands of periodic behavior emerge.  Finally, for ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] > 4\)]],
+  " iteration can lead to infinite values of ",
+  StyleBox["x",
+    FontSlant->"Italic"],
+  "; although the logistic equation for ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] > 4\)]],
+  " ",
+  "ceases to be represent a viable model for population dynamics, it still \
+offers phenomena of mathematical interest.  The table above does not \
+distinguish between periodic or chaotic behavior, for which we require more \
+sophisticated tools."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Stable cycles", "Section"],
+
+Cell[TextData[{
+  "\tThe evolution of the system for growth parameters in the range that \
+promotes stable cycles can be illustrated by plotting successive generations \
+in the form of a list plot.  For example, with ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] \[TildeTilde] 3.2\)]],
+  " one finds a stable 2-cycle."
+}], "Text"],
+
+Cell[BoxData[
+    \(\(ListPlot[NestList[\ 3.2\ #\ \((1 - #)\) &, \ 0.1, \ 100]\ , 
+        PlotRange \[Rule] {Automatic, {0, 1}}];\)\)], "Input"],
+
+Cell["\<\
+For somewhat larger \[Mu] one finds a 4-cycle.\
+\>", "Text"],
+
+Cell[BoxData[
+    \(\(ListPlot[NestList[\ 3.5\ #\ \((1 - #)\) &, \ 0.1, \ 100], \ 
+        PlotRange \[Rule] {Automatic, {0, 1}}];\)\)], "Input"],
+
+Cell[TextData[{
+  "This phenomenon is known as period doubling and a value of ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]\)]],
+  " at which the period suddenly doubles is called a bifurcation point."
+}], "Text"],
+
+Cell[TextData[{
+  "\tA convenient method for determining the length and values of a stable \
+cycle is to use the ",
+  ButtonBox["Union",
+    ButtonStyle->"RefGuideLink"],
+  " function to produce an ordered list of unique elements after allowing \
+transients to decay.  The following function performs ",
+  StyleBox["nstart", "InlineInput",
+    FontWeight->"Bold"],
+  " initial iterations of the mapping function ",
+  StyleBox["f", "InlineInput",
+    FontWeight->"Bold"],
+  " to suppress transients.  This result initializes the ",
+  StyleBox["NestList", "InlineInput",
+    FontWeight->"Bold"],
+  " command, which then produces a list of ",
+  StyleBox["nmax", "InlineInput",
+    FontWeight->"Bold"],
+  " iterates.  Finally, the unique elements are selected by ",
+  StyleBox["Union", "InlineInput",
+    FontWeight->"Bold"],
+  StyleBox[" ",
+    FontWeight->"Bold"],
+  "where we use the ",
+  StyleBox["SameTest", "InlineInput",
+    FontWeight->"Bold"],
+  " option to specify the numerical precision for nominally identical \
+elements."
+}], "Text"],
+
+Cell[BoxData[{
+    \(\(\(FindCycle::usage = "\<produces a cycle of maximum length nmax given \
+a mapping function f[\[Mu],x], growth parameter \[Mu], and initial value x0.  \
+The first nstart iterations are discarded to allow transients to decay.\>";\)\
+\(\n\)
+    \)\), "\n", 
+    \(\(FindCycle[f_, \[Mu]_, x0_, nstart_, nmax_] := 
+        Union[NestList[f[\[Mu], #] &, Nest[f[\[Mu], #] &, x0, nstart], nmax], 
+          SameTest \[Rule] \((Abs[#2 - #1] < 
+                  10\ $MachineEpsilon &)\)];\)\[IndentingNewLine]\), "\
+\[IndentingNewLine]", 
+    \(CycleLength[f_, \[Mu]_, nstart_, nmax_] := 
+      Length[FindCycle[f, \[Mu], Random[], nstart, nmax]]\)}], "Input"],
+
+Cell["\<\
+Thus, we isolate a 2-cycle for \[Mu]=3.2\
+\>", "Text"],
+
+Cell[BoxData[
+    \(FindCycle[Verhulst, 3.2, 0.5, 100, 1000]\)], "Input"],
+
+Cell["or a 4-cycle for \[Mu]=3.5", "Text"],
+
+Cell[BoxData[
+    \(FindCycle[Verhulst, 3.5, 0.5, 100, 1000]\)], "Input"],
+
+Cell["but for \[Mu]=3.6", "Text"],
+
+Cell[BoxData[
+    \(CycleLength[Verhulst, 3.6, 100, 1000]\)], "Input"],
+
+Cell["\<\
+we find that there is no stable cycle shorter than the 1000 iterations \
+attempted.  It is important to recognize that stable cycles are independent \
+of starting values.\
+\>", "Text"],
+
+Cell[BoxData[
+    \(FindCycle[Verhulst, 3.5, Random[], 100, 1000] - 
+      FindCycle[Verhulst, 3.5, Random[], 100, 1000]\)], "Input"],
+
+Cell[TextData[{
+  "Of course, this method may break down when the period approaches ",
+  StyleBox["nmax", "InlineInput",
+    FontWeight->"Bold"],
+  ".  For large periods or for \[Mu] very close to a bifurcation point where \
+convergence becomes very slow, it may be necessary to increase ",
+  StyleBox["nstart", "InlineInput",
+    FontWeight->"Bold"],
+  " and/or the numerical precision of the calculations."
+}], "Text"],
+
+Cell[TextData[{
+  "\tMore insight into the emergence of stable cycles can be obtained using a \
+cobweb diagram of the iteration process.  Because the procedure for producing \
+cobweb diagrams is itself an interesting ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " application, it is presented in a separate notebook ",
+  StyleBox[ButtonBox["cobweb.nb",
+    ButtonData:>{"Applications/cobweb.nb", None},
+    ButtonStyle->"Hyperlink"],
+    FontSlant->"Italic"],
+  " to which we invite you to refer now or after finishing this notebook."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Order within chaos", "Section"],
+
+Cell[TextData[{
+  "\tA more complete picture of the behavior of the logistic equation is \
+provided by the function ",
+  StyleBox["CycleList", "InlineInput",
+    FontWeight->"Bold"],
+  " that is defined below.  For efficient operation we use a mapping function \
+",
+  StyleBox["f", "InlineInput",
+    FontWeight->"Bold"],
+  " that is a compiled function whose inputs are lists of equal length.  \
+Thus, ",
+  StyleBox["CycleList", "InlineInput",
+    FontWeight->"Bold"],
+  " accepts a list \[Mu] specifying the growth parameters and constructs a \
+corresponding list of initial conditions, which are all taken to be 0.5 \
+because initial transients are suppressed during the first ",
+  StyleBox["nstart", "InlineInput",
+    FontWeight->"Bold"],
+  " iterations anyway.  The ",
+  StyleBox["Nest", "InlineInput",
+    FontWeight->"Bold"],
+  " and ",
+  StyleBox["NestList", "InlineInput",
+    FontWeight->"Bold"],
+  " functions are applied to all elements of these lists in parallel, which \
+is much more efficient than sequential processing of loop structures like ",
+  StyleBox["Do", "InlineInput",
+    FontWeight->"Bold"],
+  ".  A list of cycles is then obtained by mapping the ",
+  StyleBox["Union", "InlineInput",
+    FontWeight->"Bold"],
+  " function onto the two-dimensional list of iterates.  The ",
+  StyleBox["Thread", "InlineInput",
+    FontWeight->"Bold"],
+  " and ",
+  StyleBox["MapThread", "InlineInput",
+    FontWeight->"Bold"],
+  " functions are used to associate the proper element of the \[Mu] list with \
+each member of each cycle so that the final result is suitable for display \
+using ",
+  StyleBox["ListPlot", "InlineInput",
+    FontWeight->"Bold"],
+  ".  Note that it is not necessary to eliminate duplicated points from the \
+data passed to ",
+  StyleBox["ListPlot", "InlineInput",
+    FontWeight->"Bold"],
+  ".  To understand how these steps work, I suggest that you take this \
+function apart, examine each step, and reassemble it from the inside out."
+}], "Text"],
+
+Cell[BoxData[
+    \(CycleList[f_, \[Mu]_List, nstart_, nmax_] := 
+      Module[{temp, x0}, \[IndentingNewLine]x0 = Table[0.5, {Length[\[Mu]]}]; 
+        temp = Nest[f[\[Mu], #] &, x0, nstart]; 
+        temp = NestList[f[\[Mu], #] &, temp, nmax]; 
+        Flatten[MapThread[
+            Thread[{#1, #2}] &, {\[Mu], Union /@ Transpose[temp]}], 
+          1]]\)], "Input"],
+
+Cell["\<\
+The figure below illustrates the behavior of the logistic equation for a wide \
+range of growth parameters.\
+\>", "Text"],
+
+Cell[BoxData[{
+    \(\(\(data = 
+        CycleList[VerhulstList, Range[2.5, 4.0, 0.001], 5000, 1000];\)\(\n\)
+    \)\), "\n", 
+    \(\(ListPlot[data, Frame \[Rule] True, \ 
+        FrameLabel \[Rule] {"\<\[Mu]\>", \ "\<x\>"}, 
+        PlotLabel \[Rule] "\<Bifurcation Diagram for Logistic Map\>", 
+        PlotStyle \[Rule] AbsolutePointSize[0.1]];\)\)}], "Input"],
+
+Cell[TextData[{
+  "This figure reveals some of the most important characteristics of \
+nonlinear phenomena in which order yields to chaos but retains domains of \
+dominance.  In this case, as \[Mu] increases there is a transition from \
+stable deterministic behavior to a simple but less easily predictable \
+two-cycle for  ",
+  Cell[BoxData[
+      \(TraditionalForm\`3 \[LessTilde] \[Mu] \[LessTilde] 3.4\)]],
+  ".   A second period doubling occurs for ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]~3.4\)]],
+  " and a third for ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]~3.5\)]],
+  ".  Eventually the bifurcation points are so closely spaced that the plot \
+fills in.  Surprisingly, however, there are regions of \[Mu] for which \
+low-period cycles emerge again as order stakes out some territory within \
+chaos!"
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Self-similarity", "Section"],
+
+Cell["\<\
+You might notice that one of the branches extends into the chaotic region as \
+a long sweeping arc toward the lower-right corner.  As that branch crosses a \
+relatively wide white region, there appears another bifurcation structure.  \
+Using the cursor to identify the corners of a box centered upon that region, \
+we can zoom in and observe that a small region appears qualitatively similar \
+to the entire map.  This phenomenon of self-similarity at various scales is a \
+common feature of fractal phenomena.\
+\>", "Text"],
+
+Cell[BoxData[{
+    \(\(\(data = 
+        CycleList[VerhulstList, Range[3.825, 3.855, 0.00002], 10000, 
+          1000];\)\(\n\)
+    \)\), "\n", 
+    \(\(ListPlot[data, PlotRange \[Rule] {All, {0.44, 0.52}}, 
+        Frame \[Rule] True, \ FrameLabel \[Rule] {"\<\[Mu]\>", \ "\<x\>"}, 
+        PlotLabel \[Rule] "\<Self-Similarity within Logistic Map\>", 
+        PlotStyle \[Rule] AbsolutePointSize[0.5]];\)\)}], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Entropy", "Section"],
+
+Cell["\tEntropy is defined by", "Text"],
+
+Cell[BoxData[
+    \(TraditionalForm\`S\  = \ \(-\ \(\[Sum]\+k\( p\_k\) 
+            Log[p\_k]\)\)\)], "DisplayFormula"],
+
+Cell[TextData[{
+  "where ",
+  Cell[BoxData[
+      \(TraditionalForm\`p\_k\)]],
+  " is the probability with which a system is found in state ",
+  Cell[BoxData[
+      \(TraditionalForm\`k\)]],
+  ".  Thus, for our system we divide the allowed range ",
+  Cell[BoxData[
+      \(TraditionalForm\`0 \[LessEqual] x \[LessEqual] 1\)]],
+  " into bins and compute the frequencies with which the system visits each \
+bin.  Recognizing that ",
+  Cell[BoxData[
+      \(TraditionalForm\`p\ Log[p] \[Rule] 0\)]],
+  " in the limit ",
+  Cell[BoxData[
+      \(TraditionalForm\`p \[Rule] 0\)]],
+  ", the function"
+}], "Text"],
+
+Cell[BoxData[
+    \(entropy[prob_?VectorQ] := 
+      Module[{p}, \[IndentingNewLine]p = 
+          Select[prob, Positive]; \[IndentingNewLine]\(-p . 
+            Log[p]\)]\)], "Input"],
+
+Cell[TextData[{
+  "uses ",
+  StyleBox["Select", "InlineInput",
+    FontWeight->"Bold"],
+  " to eliminate empty bins and thereby to avoid numerical errors in \
+evaluation of the entropy.  The following function evaluates entropy for the \
+logistic map given ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]\)]],
+  ", the total number of iterations, the number of bins.  We also drop \
+initial iterations to suppress transients."
+}], "Text"],
+
+Cell[BoxData[
+    \(VerhulstEntropy[\[Mu]_, nmax_, ndrop_, nbins_] := 
+      Module[{prob, data}, \[IndentingNewLine]data = 
+          Drop[NestList[\[Mu]  # \((1 - #)\) &, 0.5, nmax], 
+            ndrop]; \[IndentingNewLine]prob = \(1. \/Length[data]\) 
+            BinCounts[
+              data, {0. , 1. , 1. \/nbins}]; \[IndentingNewLine]entropy[
+          prob]]\)], "Input"],
+
+Cell[TextData[{
+  "The dependence of logistic entropy upon ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]\)]],
+  " is examined below with fairly high resolution (small spacing in ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]\)]],
+  ")."
+}], "Text"],
+
+Cell[BoxData[
+    \(\(sdata = 
+        Table[{\[Mu], VerhulstEntropy[\[Mu], 10\^5, 10\^3, 10\^3]}, {\[Mu], 
+            2.9, 4, 0.001}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(EntropyPlot = 
+        ListPlot[sdata, PlotJoined \[Rule] True, Frame \[Rule] True, 
+          FrameLabel \[Rule] {"\<\[Mu]\>", "\<entropy\>"}];\)\)], "Input"],
+
+Cell[TextData[{
+  "The upward steps for ",
+  Cell[BoxData[
+      \(TraditionalForm\`3 < \[Mu] \[LessTilde] 3.58\)]],
+  " represent bifurcations that increase the length of periodic cycles and \
+thereby the entropy of the system.  The relatively broad dips, such as the \
+one centered near 3.83, represent windows of smaller entropy that are easily \
+visible in preceding population diagrams.  Are the sharp spikes also \
+meaningful or are they numerical artifacts of the binning used to compute \
+entropy?  Let's look closer at the first narrow dip.  The feature that \
+appears as a downward spike in the figure above is shown below to have \
+considerable substructure both in entropy and in the population data.  The \
+broader dips within the entropy substructure are visible as windows in the \
+population diagram.  Even the bifurcations near ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] = 3.583\)]],
+  " are visible as steps in the entropy diagram."
+}], "Text"],
+
+Cell[BoxData[
+    \(\(sdata1 = 
+        Table[{\[Mu], VerhulstEntropy[\[Mu], 10\^5, 10\^3, 10\^3]}, {\[Mu], 
+            3.575, 3.59, 0.00002}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(ListPlot[sdata1, PlotJoined \[Rule] True, PlotRange \[Rule] All, 
+        Frame \[Rule] True, 
+        FrameLabel \[Rule] {"\<\[Mu]\>", "\<entropy\>"}];\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(data = 
+        CycleList[VerhulstList, Range[3.575, 3.59, 0.00002], 5000, 
+          1000];\)\), "\[IndentingNewLine]", 
+    \(\(ListPlot[data, Frame \[Rule] True, \ 
+        FrameLabel \[Rule] {"\<\[Mu]\>", \ "\<x\>"}];\)\)}], "Input"],
+
+Cell[TextData[{
+  "Looking even closer, the sharp entropy dip near ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] = 3.5863\)]],
+  " is visible in the population diagram if we use sufficient resolution.  \
+Therefore, we conclude that most, if not all, of the sharp structures in the \
+entropy diagram are real features of the logistic map; there is no evidence \
+for serious numerical artifacts."
+}], "Text"],
+
+Cell[BoxData[{
+    \(\(data = 
+        CycleList[VerhulstList, Range[3.585, 3.589, 0.000002], 5000, 
+          1000];\)\), "\[IndentingNewLine]", 
+    \(\(ListPlot[data, Frame \[Rule] True, \ 
+        FrameLabel \[Rule] {"\<\[Mu]\>", \ "\<x\>"}];\)\)}], "Input"],
+
+Cell[TextData[{
+  "\tOne defect of this definition of entropy is its dependence upon bin \
+size.  Unlike systems with a denumerable set of distinct states, there is no \
+natural bin size for the continuous variable ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\)]],
+  ".  Suppose that we scale the bin size ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[CapitalDelta]\[VeryThinSpace]x \[Rule] \
+\[CapitalDelta]\[VeryThinSpace]x/m\)]],
+  " such that the total number of bins increases ",
+  Cell[BoxData[
+      \(TraditionalForm\`n \[Rule] n\ m\)]],
+  " by the factor ",
+  Cell[BoxData[
+      \(TraditionalForm\`m\)]],
+  ".  Then "
+}], "Text"],
+
+Cell[BoxData[
+    \(TraditionalForm\`\(\(\ \)\(\[Sum]\+\(k = 1\)\%n\( p\_k\) 
+          Log[p\_k]\ \[LongRightArrow]\ \(\[Sum]\+\(k = 1\)\%\(n\ \
+m\)\(p\_k\/m\) Log[p\_k\/m]\)\  \[TildeTilde] \ 
+      1\/m\ \(\(\[Sum]\+\(k = 1\)\%\(n\ m\)\)\((\(p\_k\) Log[p\_k] - \(p\_k\) 
+                Log[m])\)\(\ \)\)\)\)\)], "DisplayFormula"],
+
+Cell["shows that the entropy is increased according to", "Text"],
+
+Cell[BoxData[
+    \(TraditionalForm\`\[CapitalDelta]\[VeryThinSpace]x \[Rule] \(\
+\[CapitalDelta]\[VeryThinSpace]x/
+            m\ \ \[DoubleLongRightArrow]\ \ \ S\  \[Rule] 
+        S\  + \ Log[m]\)\)], "DisplayFormula"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Lyapunov exponent", "Section"],
+
+Cell[TextData[{
+  "\tPerhaps the most important characteristic of a chaotic system is its \
+sensitivity to initial conditions \[LongDash] if we start two identical \
+systems from slightly different initial conditions, ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\)]],
+  " and ",
+  Cell[BoxData[
+      \(TraditionalForm\`x + \[CurlyEpsilon]\)]],
+  ", their states after ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  " iterations, ",
+  Cell[BoxData[
+      \(TraditionalForm\`f\_n[x]\)]],
+  " and ",
+  Cell[BoxData[
+      \(TraditionalForm\`f\_n[x + \[CurlyEpsilon]]\)]],
+  ", will eventually diverge and their subsequent histories will appear \
+unrelated.  The rate of divergence between these orbits is measured by the ",
+  StyleBox["Lyapunov exponent",
+    FontSlant->"Italic"],
+  " ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Lambda]\)]],
+  " defined by the asymptotic behavior"
+}], "Text"],
+
+Cell[BoxData[
+    \(TraditionalForm\`lim\+\(\[CurlyEpsilon] \[Rule] 0\)\ \
+\[LeftBracketingBar]\(f\_n[x + \[CurlyEpsilon]] - f\_n[x]\)\/\[CurlyEpsilon]\
+\[RightBracketingBar] \[TildeEqual] \ \[ExponentialE]\^\(n\ \[Lambda]\)\)], \
+"DisplayFormula"],
+
+Cell[TextData[{
+  "for large ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  ".  The orbits converge when ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Lambda] < 0\)]],
+  " and are insensitive to initial conditions, whereas when ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Lambda] > 0\)]],
+  " the orbits diverge exponentially and are extremely sensitive to initial \
+conditions.  The special case of ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Lambda] = 0\)]],
+  " can be described as metastability or neutral equilibrium, but is very \
+difficult to realize in practice."
+}], "Text"],
+
+Cell[TextData[{
+  "\tTo estimate ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Lambda]\)]],
+  ", first consider finite ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  " for which"
+}], "Text"],
+
+Cell[BoxData[
+    \(TraditionalForm\`\[Lambda]\_n\  = \ 
+      1\/n\ \[LeftBracketingBar]\[DifferentialD]f\_n[x]\/\[DifferentialD]x\
+\[RightBracketingBar]\)], "DisplayFormula"],
+
+Cell[TextData[{
+  "The asymptotic limit for large ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  " can then be evaluated using"
+}], "Text"],
+
+Cell[BoxData[
+    \(TraditionalForm\`\[Lambda]\  = \ 
+      lim\+\(n \[Rule] \[Infinity]\)1\/n\ \(\[Sum]\+\(k = 0\)\%\(n - 1\)Log \
+\[LeftBracketingBar]\[DifferentialD]f\_k[x]\/\[DifferentialD]x\
+\[RightBracketingBar]\)\)], "DisplayFormula"],
+
+Cell[TextData[{
+  "In practice we evaluate the right-hand side for a large fixed value of ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  " and may compare several values of ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  " to test for convergence, but usually we do not attempt to compute a \
+rigorous limit.  The result should be nearly independent of the initial \
+conditions, provided that we avoid vanishing derivatives, and its accuracy \
+should improve as ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  " increases.  The function below employs this algorithm for the logistic \
+map."
+}], "Text"],
+
+Cell[BoxData[
+    \(VerhulstLyapunov[\[Mu]_, x0_, nmax_] := 
+      Module[{data}, \[IndentingNewLine]data = \((\[Mu]\ \((1 - 
+                      2  #)\) &)\) /@ \ 
+            NestList[\[Mu]  # \((1 - #)\) &, x0, 
+              nmax]; \[IndentingNewLine]\(1. \/Length[data]\) 
+          Plus @@ Log[Abs[data]]]\)], "Input"],
+
+Cell[BoxData[
+    \(\(LyapunovPlot = 
+        ListPlot[
+          Table[{\[Mu], VerhulstLyapunov[\[Mu], 0.1, 10000]}, {\[Mu], 2.5, 4, 
+              0.001}], PlotJoined \[Rule] True, Frame \[Rule] True, 
+          FrameLabel \[Rule] {"\<\[Mu]\>", "\<\[Lambda]\>"}, 
+          PlotLabel \[Rule] "\<Lyapunov exponent\>"];\)\)], "Input"],
+
+Cell[TextData[{
+  "\tThe figure below compares the entropy and the Lyapunov exponent for the \
+logistic map.  The next two figures for ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Lambda]\)]],
+  " examine a couple of interesting parameter ranges with higher resolution.  \
+The pitchfork bifurcations appear as upward steps in entropy or points where \
+",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Lambda]\)]],
+  " is tangent to the line ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Lambda] = 0\)]],
+  " with ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Lambda] < 0\)]],
+  " nearby.  The strong dips in ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Lambda]\)]],
+  " can be described as superstable orbits about midway between bifurcations. \
+ Beyond ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] \[GreaterTilde] 3.57\)]],
+  " we observe ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Lambda]\)]],
+  " is mostly positive, and increasing, except for narrow windows of \
+stability.  The relatively broad window around ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] = 3.83\)]],
+  " is observed in both ",
+  Cell[BoxData[
+      \(TraditionalForm\`S\)]],
+  " and ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Lambda]\)]],
+  " with similar substructure.  Self-similarity is observed as we view \
+transition regions with higher resolution."
+}], "Text"],
+
+Cell[BoxData[
+    \(\(DisplayTogether[\[IndentingNewLine]ListPlot[
+          Table[{\[Mu], VerhulstEntropy[\[Mu], 10\^4, 10\^3, 10\^2]}, {\[Mu], 
+              2.5, 4, 0.001}], PlotJoined \[Rule] True, 
+          PlotStyle \[Rule] RGBColor[1, 0, 0]], \[IndentingNewLine]ListPlot[
+          Table[{\[Mu], VerhulstLyapunov[\[Mu], 0.1, 10000]}, {\[Mu], 2.5, 4, 
+              0.001}], PlotJoined \[Rule] True, 
+          PlotStyle \[Rule] 
+            RGBColor[0, 0, 1]], \[IndentingNewLine]Frame \[Rule] True, 
+        FrameLabel \[Rule] {"\<\[Mu]\>", "\<entropy, Lyapunov\>"}, 
+        Epilog \[Rule] {{RGBColor[1, 0, 0], 
+              Text["\<entropy\>", {2.6, 3}, {\(-1\), 0}]}, {RGBColor[0, 0, 
+                1], Text["\<Lyapunov exponent\>", {2.6, 2.5}, {\(-1\), 
+                  0}]}}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(ListPlot[
+        Table[{\[Mu], VerhulstLyapunov[\[Mu], 0.1, 10000]}, {\[Mu], 3.57, 
+            3.6, 0.0001}], PlotJoined \[Rule] True, Frame \[Rule] True, 
+        FrameLabel \[Rule] {"\<\[Mu]\>", "\<\[Lambda]\>"}, 
+        PlotLabel \[Rule] "\<Lyapunov exponent\>"];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(ListPlot[
+        Table[{\[Mu], VerhulstLyapunov[\[Mu], 0.1, 10000]}, {\[Mu], 3.82, 
+            3.86, 0.0001}], PlotJoined \[Rule] True, Frame \[Rule] True, 
+        FrameLabel \[Rule] {"\<\[Mu]\>", "\<\[Lambda]\>"}, 
+        PlotLabel \[Rule] "\<Lyapunov exponent\>"];\)\)], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Logistic Cantor sets", "Section"],
+
+Cell[TextData[{
+  "\tSo far we have confined ourselves to ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] \[LessEqual] 4\)]],
+  " for which all of the action can be confined to the unit square, such that \
+",
+  Cell[BoxData[
+      \(TraditionalForm\`0 \[LessEqual] x\_n \[LessEqual] 
+        1\ \[DoubleLongRightArrow]\ 0 \[LessEqual] x\_\(n + 1\) \[LessEqual] 
+        1\)]],
+  ", as befitting a population model.  Interesting new dynamics emerges for \
+larger ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]\)]],
+  ".  One interesting question concerns the fate of points ",
+  Cell[BoxData[
+      \(TraditionalForm\`0 < x\_0 < 1\)]],
+  " subject to the iteration ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_\(n + 1\) = \[Mu]\ \(\(x\_n\)(1 - x\_n)\)\)]],
+  " \[LongDash] which points are confined to a limited range of ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\)]],
+  " and which escape to infinity?  Clearly, any ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_n\)]],
+  " which strays outside the interval ",
+  Cell[BoxData[
+      \(TraditionalForm\`\((0, 1)\)\)]],
+  " will soon be driven to ",
+  Cell[BoxData[
+      \(TraditionalForm\`\(\[PlusMinus]\[Infinity]\)\)]],
+  " by further iteration.  The ",
+  StyleBox["prisoner set",
+    FontSlant->"Italic"],
+  " ",
+  Cell[BoxData[
+      \(TraditionalForm\`P\_\[Mu] = {\(x\_0\) : 
+            0 \[LessEqual] x\_\[Infinity] \[LessEqual] 1}\)]],
+  " is defined as the set of points which remain in the unit interval as the \
+number of iterations approaches infinity.  An obvious but inefficient method \
+to construct an approximation to a prisoner set is to choose a large number \
+of points within the unit interval and to iterate the logistic mapping for \
+each point until either it escapes or until an iteration limit is reached.  \
+However, we shall soon observe that prisoner sets for ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] > 4\)]],
+  " contain an infinite number of disconnected points, making it rather \
+unlikely that we would select points that would remain after many iterations. \
+ "
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox["\tInverse iteration",
+    FontSlant->"Italic"],
+  " offers a more efficient algorithm for approximating prisoner sets.  \
+First, we construct a set ",
+  Cell[BoxData[
+      \(TraditionalForm\`Q\_\[Mu]\%\((0)\)\)]],
+  " ",
+  "containing seeds ",
+  Cell[BoxData[
+      \(TraditionalForm\`0 < x\_0 < 1\)]],
+  " within the unit interval.  Then, for each member of ",
+  Cell[BoxData[
+      \(TraditionalForm\`Q\_\[Mu]\%\((0)\)\)]],
+  " we determine two solutions to the inverse mapping"
+}], "Text"],
+
+Cell[BoxData[
+    \(Solve[x\_\(n + 1\) \[Equal] \[Mu]\ \(x\_n\) \((1 - x\_n)\), x\_n] // 
+      Simplify[#, \[Mu] > 0] &\)], "Input"],
+
+Cell[TextData[{
+  "The ",
+  StyleBox["pre-image",
+    FontSlant->"Italic"],
+  " of ",
+  Cell[BoxData[
+      \(TraditionalForm\`Q\_\[Mu]\%\((\(-1\))\)\)]],
+  " is then constructed by retaining the points ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_\(-1\)\)]],
+  " that remain within the unit interval.  Repeated application of inverse \
+mapping and pruning produces a sequence of pre-images ",
+  Cell[BoxData[
+      \(TraditionalForm\`Q\_\[Mu]\%\((\(-k\))\)\)]],
+  ".  The inverted tree structure shown below illustrates a sequence of \
+pre-images that might be obtained from a single seed, assuming that no \
+branches need pruning."
+}], "Text"],
+
+Cell[GraphicsData["PostScript", "\<\
+%!
+%%Creator: Mathematica
+%%AspectRatio: .61803 
+MathPictureStart
+/Mabs {
+Mgmatrix idtransform
+Mtmatrix dtransform
+} bind def
+/Mabsadd { Mabs
+3 -1 roll add
+3 1 roll add
+exch } bind def
+%% Graphics
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 12  scalefont  setfont
+% Scaling calculations
+0.5 0.228571 0.603319 0.147151 [
+[ 0 0 0 0 ]
+[ 1 .61803 0 0 ]
+] MathScale
+% Start of Graphics
+1 setlinecap
+1 setlinejoin
+newpath
+0 0 m
+1 0 L
+1 .61803 L
+0 .61803 L
+closepath
+clip
+newpath
+0 g
+4 Mabswid
+.5 .60332 Mdot
+.27143 .45617 Mdot
+.72857 .45617 Mdot
+.15714 .30902 Mdot
+.38571 .30902 Mdot
+.61429 .30902 Mdot
+.84286 .30902 Mdot
+.08095 .16187 Mdot
+.23333 .16187 Mdot
+.30952 .16187 Mdot
+.4619 .16187 Mdot
+.5381 .16187 Mdot
+.69048 .16187 Mdot
+.76667 .16187 Mdot
+.91905 .16187 Mdot
+.02381 .01472 Mdot
+.1381 .01472 Mdot
+.17619 .01472 Mdot
+.29048 .01472 Mdot
+.25238 .01472 Mdot
+.36667 .01472 Mdot
+.40476 .01472 Mdot
+.51905 .01472 Mdot
+.48095 .01472 Mdot
+.59524 .01472 Mdot
+.63333 .01472 Mdot
+.74762 .01472 Mdot
+.70952 .01472 Mdot
+.82381 .01472 Mdot
+.8619 .01472 Mdot
+.97619 .01472 Mdot
+% End of Graphics
+MathPictureEnd
+\
+\>"], "Graphics",
+  ImageSize->{233.563, 144.25},
+  ImageMargins->{{43, 0}, {0, 0}},
+  ImageRegion->{{0, 1}, {0, 1}},
+  ImageCache->GraphicsData["Bitmap", "\<\
+CF5dJ6E]HGAYHf4PAg9QL6QYHg<PAVmbKF5d0`40004S0000]1P00`40o`000?l0003oooooobCoool0
+0?oooolToooo0006oooo0`0001koool300002?ooo`<0000Coooo0`0000Soool300004oooo`<00008
+oooo0`0001?oool300002?ooo`<0000Doooo0`0000Soool300004oooo`<00008oooo0`0001?oool3
+00002?ooo`<0000Noooo0`0000Koool000Goool500007?ooo`D00006oooo1@00017oool500001_oo
+o`D0000Aoooo1@0000Koool500004Oooo`D00006oooo1@0001;oool500001_ooo`D0000Aoooo1@00
+00Koool500004Oooo`D00006oooo1@0001coool500001Oooo`001Oooo`D0000Loooo1@0000Koool5
+00004Oooo`D00006oooo1@00017oool500001_ooo`D0000Aoooo1@0000Koool500004_ooo`D00006
+oooo1@00017oool500001_ooo`D0000Aoooo1@0000Koool500007?ooo`D00005oooo0005oooo1@00
+01coool500001_ooo`D0000Aoooo1@0000Koool500004Oooo`D00006oooo1@00017oool500001_oo
+o`D0000Boooo1@0000Koool500004Oooo`D00006oooo1@00017oool500001_ooo`D0000Loooo1@00
+00Goool000Koool300007_ooo`<00008oooo0`0001?oool300002?ooo`<0000Coooo0`0000Soool3
+00004oooo`<00008oooo0`0001Coool300002?ooo`<0000Coooo0`0000Soool300004oooo`<00008
+oooo0`0001koool300001_ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo000Foooo0`0002[oool300004ooo
+o`<0000Yoooo0`0001?oool30000:Oooo`<0000Coooo0`0002[oool300005_ooo`005Oooo`D0000X
+oooo1@00017oool500009oooo`D0000Aoooo1@0002Ooool500004Oooo`D0000Xoooo1@0001Goool0
+01Goool50000:?ooo`D0000Aoooo1@0002Ooool500004Oooo`D0000Woooo1@00017oool50000:?oo
+o`D0000Eoooo000Eoooo1@0002Soool500004Oooo`D0000Woooo1@00017oool500009oooo`D0000A
+oooo1@0002Soool500005Oooo`005_ooo`<0000Zoooo0`0001?oool30000:Oooo`<0000Coooo0`00
+02Woool300004oooo`<0000Zoooo0`0001Koool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00;?ooo`<00010
+oooo0`0003ooool30000?oooo`<0000]oooo000[oooo1@0003koool50000?Oooo`D0000moooo1@00
+02coool002_oool50000?_ooo`D0000moooo1@0003goool50000;?ooo`00:oooo`D0000noooo1@00
+03goool50000?Oooo`D0000/oooo000/oooo0`00043oool30000?oooo`<0000ooooo0`0002goool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00C_ooo`<00021oooo0`0004koool004goool50000Ooooo`D0001=
+oooo001=oooo1@0007ooool50000COooo`00COooo`D0001ooooo1@0004goool004koool30000POoo
+o`<0001>oooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00ooooobCoool00?oooolToooo003ooooo9?ooo`00ooooobCoool0
+0?oooolToooo003ooooo9?ooo`00T?ooo`<0002@oooo002?oooo1@0008ooool008ooool50000Sooo
+o`00Soooo`D0002?oooo002@oooo0`00093oool00?oooolToooo003ooooo9?ooo`00\
+\>"],
+  ImageRangeCache->{{{0, 290.938}, {179.313, 0}} -> {-2.19357, -4.10002, \
+0.0188492, 0.0292786}}],
+
+Cell[TextData[{
+  "The principle underlying this algorithm is that one can be certain that \
+every member ",
+  Cell[BoxData[
+      \(TraditionalForm\`Q\_\[Mu]\%\((\(-k\))\)\)]],
+  " will remain within the unit interval after ",
+  Cell[BoxData[
+      \(TraditionalForm\`k\)]],
+  " forward iterations.  Therefore, as ",
+  Cell[BoxData[
+      \(TraditionalForm\`k \[Rule] \[Infinity]\)]],
+  ", the pre-image of any seed set approaches the prisoner set, such that ",
+  Cell[BoxData[
+      \(TraditionalForm\`Q\_\[Mu]\%\((\(-k\))\) \[Rule] P\_\[Mu]\)]],
+  "."
+}], "Text"],
+
+Cell["\<\
+The following functions use inverse iteration to construct the preimage of a \
+seed set\
+\>", "Text"],
+
+Cell[BoxData[
+    \(\(InverseMap[\[Mu]_] = {1\/2\ \((1 - \@\(1 - \(4\ #\)\/\[Mu]\))\), 
+            1\/2\ \((1 + \@\(1 - \(4\ #\)\/\[Mu]\))\)} &;\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(Preimage[\[Mu]_, x_, n_] := 
+        Cases[Flatten[Nest[InverseMap[\[Mu]], x, n]], 
+          y_Real /; \((0 < y < 1)\)];\)\)], "Input"],
+
+Cell["while", "Text"],
+
+Cell[BoxData[
+    \(\(DisplayPreimage[set_, {xmin_, xmax_}, opts___Rule] := 
+        ListPlot[\({#, 0} &\) /@ set, opts, Axes \[Rule] False, 
+          PlotRange \[Rule] {{xmin, xmax}, Automatic}, 
+          AspectRatio \[Rule] 0.2, PlotStyle \[Rule] {PointSize[0.001]}, 
+          Prolog \[Rule] {Line[{{xmin, \(-0.1\)}, {xmin, 0.1}}], 
+              Text[ToString[xmin], {xmin, \(-0.3\)}, {\(-1\), 0}], 
+              Line[{{xmax, \(-0.1\)}, {xmax, 0.1}}], 
+              Text[ToString[xmax], {xmax, \(-0.3\)}, {1, 0}]}];\)\)], "Input"],
+
+Cell["displays a portion of the set.  ", "Text"],
+
+Cell[TextData[{
+  "\tBelow we illustrate this procedure using a suitable choice of ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] > 4\)]],
+  ".  To avoid any possible bias due to the seed set, we select random \
+numbers in the unit interval.  The figure displays our approximation to the \
+prisoner set using several steps of magnification by factors of 10."
+}], "Text"],
+
+Cell[BoxData[
+    \(\(set1 = Preimage[5. , Table[Random[], {100}], 10];\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(plot1 = 
+        DisplayPreimage[set1, {0, 1}, 
+          DisplayFunction \[Rule] Identity];\)\), "\[IndentingNewLine]", 
+    \(\(plot2 = 
+        DisplayPreimage[set1, {0, 0.1}, 
+          DisplayFunction \[Rule] Identity];\)\), "\[IndentingNewLine]", 
+    \(\(plot3 = 
+        DisplayPreimage[set1, {0, 0.01}, 
+          DisplayFunction \[Rule] Identity];\)\), "\[IndentingNewLine]", 
+    \(\(plot4 = 
+        DisplayPreimage[set1, {0, 0.001}, 
+          DisplayFunction \[Rule] Identity];\)\), "\[IndentingNewLine]", 
+    \(\(Show[GraphicsArray[{{plot1}, {plot2}, {plot3}, {plot4}}], 
+        DisplayFunction \[Rule] $DisplayFunction];\)\)}], "Input"],
+
+Cell[TextData[{
+  "At unit magnification ",
+  Cell[BoxData[
+      \(TraditionalForm\`P\_\[Mu]\)]],
+  " appears to consist of a sprinkling of small line segments, but each \
+successive magnification reveals that subsets which looked like line segments \
+are actually populated rather sparsely, resembling the entire set.  Thus, the \
+prisoner set resembles the famous Cantor set constructed by infinite \
+iteration of removal of the middle third of any line segment.  The Cantor set \
+is strictly self-similar at any magnification scale, while logistic prisoner \
+sets ",
+  Cell[BoxData[
+      \(TraditionalForm\`P\_\[Mu]\)]],
+  " for ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] > 4\)]],
+  " display structural self-similarity.  Our choice of seeds and iteration \
+depth do not significantly affect the appearance of these sets \[LongDash] \
+their similarity to the Cantor set is an intrinsic property of the logistic \
+map for ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] > 4\)]],
+  "."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Exercises", "ExerciseMain"],
+
+Cell[CellGroupData[{
+
+Cell["Tent map", "ExerciseTitle"],
+
+Cell[TextData[{
+  "The tent map is given by the one-parameter recursive equation\n\t",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_n = \ \[Mu]\ \((\ 1 - 2  Abs[x - 1\/2])\)\)]],
+  "\nwhere ",
+  Cell[BoxData[
+      \(TraditionalForm\`0\  \[LessEqual] \[Mu] \[LessEqual] 1\)]],
+  ".  \na) Show that ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] < \(1\/2\)\ \[DoubleLongRightArrow]\ 
+            x\_\[Infinity] = 0\)]],
+  " is a stable fixed point.  \nb) Show that there are two fixed points for \
+",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu] > 1\/2\)]],
+  " and that neither is stable."
+}], "ExerciseText"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Cycle length", "ExerciseTitle"],
+
+Cell[TextData[{
+  "Consider the logistic equation for conditions in which the population \
+oscillates between ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  " distinct fixed points, called an ",
+  Cell[BoxData[
+      \(TraditionalForm\`n\)]],
+  "-cycle with members ",
+  Cell[BoxData[
+      \(TraditionalForm\`{x\_1, \ x\_2, \ \(\(...\)\(\ \)\(x\_n\)\)}\)]],
+  ".  Write a procedure which determines the length and members of a logistic \
+cycle given ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Mu]\)]],
+  ".  Determine whether the members of the cycle depend upon ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_0\)]],
+  "."
+}], "ExerciseText"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Bifurcation diagrams for typical population models", "ExerciseTitle"],
+
+Cell[TextData[{
+  "Produce and describe bifurcation diagrams for the following maps:\na) ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_n\  \[Equal] \ x\_\(n - 1\)\%2\  - \ \[Mu]\)]],
+  "\nb) ",
+  Cell[BoxData[
+      \(TraditionalForm\`x\_n\  \[Equal] \ 
+        x\_\(n - 1\)\ Exp[\[Mu](1\  - \ x\_\(n - 1\))]\)]]
+}], "ExerciseText"]
+}, Closed]]
+}, Closed]]
+}, Open  ]]
+},
+FrontEndVersion->"5.2 for Microsoft Windows",
+ScreenRectangle->{{0, 1400}, {0, 952}},
+WindowToolbars->"EditBar",
+WindowSize->{1392, 912},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+ShowSelection->True,
+ShowCellLabel->False,
+Magnification->1.5,
+StyleDefinitions -> Notebook[{
+  
+  Cell[CellGroupData[{
+  Cell["Style Definitions", "Subtitle"],
+  
+  Cell["\<\
+Modify the definitions below to change the default appearance of all cells in \
+a given style.  Make modifications to any definition using commands in the \
+Format menu.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Style Environment Names", "Section"],
+  
+  Cell[StyleData[All, "Working"],
+    PageWidth->WindowWidth,
+    ScriptMinSize->9],
+  
+  Cell[StyleData[All, "Presentation"],
+    PageWidth->WindowWidth,
+    ScriptMinSize->12,
+    FontSize->16],
+  
+  Cell[StyleData[All, "Condensed"],
+    PageWidth->PaperWidth,
+    CellBracketOptions->{"Margins"->{1, 1},
+    "Widths"->{0, 5}},
+    ScriptMinSize->7,
+    FontSize->10],
+  
+  Cell[StyleData[All, "Printout"],
+    PageWidth->PaperWidth,
+    ScriptMinSize->7,
+    FontSize->10,
+    PrivateFontOptions->{"FontType"->"Outline"}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Notebook Options", "Section"],
+  
+  Cell["\<\
+The options defined for the style below will be used at the Notebook level.\
+\>", "Text"],
+  
+  Cell[StyleData["Notebook"],
+    PageHeaders->{{Cell[ 
+            TextData[ {
+              CounterBox[ "Page"]}], "PageNumber"], None, Cell[ 
+            TextData[ {
+              ValueBox[ "FileName"]}], "Header"]}, {Cell[ 
+            TextData[ {
+              ValueBox[ "FileName"]}], "Header"], None, Cell[ 
+            TextData[ {
+              CounterBox[ "Page"]}], "PageNumber"]}},
+    PageFooters->{{Cell[ 
+            TextData[ {"Essential Mathematica for Students of Science"}], 
+            "Footer"], None, Cell[ 
+            TextData[ {"\[Copyright] James J. Kelly, 1998"}], "Footer"]}, {
+        Cell[ 
+            TextData[ {"Essential Mathematica for Students of Science"}], 
+            "Footer"], None, Cell[ 
+            TextData[ {"\[Copyright] James J. Kelly, 1998"}], "Footer"]}},
+    PageHeaderLines->{True, True},
+    PageFooterLines->{True, True},
+    PrintingOptions->{"FirstPageHeader"->False,
+    "FacingPages"->True},
+    CellFrameLabelMargins->6,
+    StyleMenuListing->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Headings", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Title"],
+    ShowCellBracket->True,
+    CellMargins->{{0, 0}, {0, 0}},
+    CellGroupingRules->"TitleGrouping",
+    PageBreakBelow->False,
+    LineSpacing->{1, 0},
+    CounterIncrements->"Title",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}, {
+        "Subtitle", 0}, {"Subsubtitle", 0}},
+    FontSize->34,
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Title", "Presentation"],
+    CellMargins->{{0, 0}, {0, 0}},
+    LineSpacing->{1, 0},
+    FontSize->44],
+  
+  Cell[StyleData["Title", "Condensed"],
+    CellMargins->{{0, 0}, {0, 0}},
+    FontSize->24],
+  
+  Cell[StyleData["Title", "Printout"],
+    CellMargins->{{0, 0}, {0, 0}},
+    FontSize->24,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0],
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subtitle"],
+    CellMargins->{{0, 0}, {0, 0}},
+    PageBreakBelow->False,
+    LineSpacing->{1, 3},
+    ParagraphIndent->-96,
+    CounterIncrements->"Subtitle",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}, {
+        "Subsubtitle", 0}},
+    FontFamily->"Helvetica",
+    FontSize->18,
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.2, 0.700008, 0.700008]],
+  
+  Cell[StyleData["Subtitle", "Presentation"],
+    CellMargins->{{0, 0}, {0, 0}},
+    LineSpacing->{1, 6},
+    ParagraphIndent->-157,
+    FontSize->30],
+  
+  Cell[StyleData["Subtitle", "Condensed"],
+    CellMargins->{{0, 0}, {0, 0}},
+    ParagraphIndent->-78,
+    FontSize->14],
+  
+  Cell[StyleData["Subtitle", "Printout"],
+    CellMargins->{{0, 0}, {0, 0}},
+    ParagraphIndent->-85,
+    FontSize->16,
+    FontColor->GrayLevel[0],
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsubtitle"],
+    ShowCellBracket->True,
+    CellMargins->{{10, 4}, {30, 10}},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubtitle",
+    CounterAssignments->{{"Section", 0}, {"Equation", 0}, {"Figure", 0}},
+    FontFamily->"Helvetica",
+    FontSize->14,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Subsubtitle", "Presentation"],
+    ShowCellBracket->True,
+    CellMargins->{{8, 10}, {40, 20}},
+    LineSpacing->{1, 0},
+    FontSize->24],
+  
+  Cell[StyleData["Subsubtitle", "Condensed"],
+    ShowCellBracket->True,
+    CellMargins->{{8, 10}, {12, 8}},
+    FontSize->12],
+  
+  Cell[StyleData["Subsubtitle", "Printout"],
+    ShowCellBracket->True,
+    CellMargins->{{9, 10}, {50, 10}},
+    FontSize->14]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Section"],
+    CellFrame->{{0, 0}, {0, 1}},
+    CellDingbat->None,
+    CellMargins->{{12, Inherited}, {4, 24}},
+    CellGroupingRules->{"SectionGrouping", 30},
+    PageBreakBelow->False,
+    CellFrameMargins->6,
+    CounterIncrements->"Section",
+    CounterAssignments->{{"Subsection", 0}, {"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->16,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Section", "Presentation"],
+    CellMargins->{{10, 10}, {8, 32}},
+    LineSpacing->{1, 2},
+    FontSize->24,
+    FontTracking->"Condensed"],
+  
+  Cell[StyleData["Section", "Condensed"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14],
+  
+  Cell[StyleData["Section", "Printout"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsection"],
+    CellMargins->{{12, Inherited}, {8, 20}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->13,
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Subsection", "Presentation"],
+    CellMargins->{{11, 10}, {8, 32}},
+    LineSpacing->{1, 0},
+    FontSize->22],
+  
+  Cell[StyleData["Subsection", "Condensed"],
+    CellMargins->{{8, Inherited}, {2, 12}},
+    FontSize->12],
+  
+  Cell[StyleData["Subsection", "Printout"],
+    CellMargins->{{9, 0}, {4, 40}},
+    FontSize->12]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Subsubsection"],
+    CellDingbat->"\[FilledSquare]",
+    CellMargins->{{25, Inherited}, {8, 12}},
+    CellGroupingRules->{"SectionGrouping", 50},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubsection",
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Subsubsection", "Presentation"],
+    CellMargins->{{29, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Subsubsection", "Condensed"],
+    CellMargins->{{21, 0}, {4, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Subsubsection", "Printout"],
+    CellMargins->{{21, 0}, {4, 20}},
+    FontSize->11]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Body Text", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Text"],
+    CellMargins->{{12, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 12},
+    CounterIncrements->"Text",
+    FontFamily->"Times"],
+  
+  Cell[StyleData["Text", "Presentation"],
+    CellMargins->{{13, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12},
+    FontSize->16],
+  
+  Cell[StyleData["Text", "Condensed"],
+    CellMargins->{{9, 0}, {4, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 6}],
+  
+  Cell[StyleData["Text", "Printout"],
+    CellMargins->{{9, 0}, {4, 4}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["SmallText"],
+    CellMargins->{{12, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 6},
+    CounterIncrements->"SmallText",
+    FontFamily->"Helvetica",
+    FontSize->9],
+  
+  Cell[StyleData["SmallText", "Presentation"],
+    CellMargins->{{13, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    FontSize->12],
+  
+  Cell[StyleData["SmallText", "Condensed"],
+    CellMargins->{{8, 10}, {2, 2}},
+    LineSpacing->{1, 2},
+    FontSize->9],
+  
+  Cell[StyleData["SmallText", "Printout"],
+    CellMargins->{{9, 0}, {4, 4}}]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Input/Output", "Section"],
+  
+  Cell["\<\
+The cells in this section define styles used for input and output to the \
+kernel.  Be careful when modifying, renaming, or removing these styles, \
+because the front end associates special meanings with these style names.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Input"],
+    CellFrame->0.5,
+    CellMargins->{{25, 10}, {8, 8}},
+    Evaluatable->True,
+    CellGroupingRules->"InputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{5, Inherited}, {Inherited, Inherited}},
+    DefaultFormatType->DefaultInputFormatType,
+    FormatType->InputForm,
+    ShowStringCharacters->True,
+    NumberMarks->True,
+    CounterIncrements->"Input",
+    FontWeight->"Bold",
+    Background->RGBColor[1, 0.700008, 0.4]],
+  
+  Cell[StyleData["Input", "Presentation"],
+    CellMargins->{{25, Inherited}, {10, 10}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Input", "Condensed"],
+    CellMargins->{{25, 0}, {6, 6}}],
+  
+  Cell[StyleData["Input", "Printout"],
+    CellFrame->0.5,
+    CellMargins->{{25, 0}, {6, 6}},
+    Background->None]
+  }, Closed]],
+  
+  Cell[StyleData["InlineInput"],
+    CellGroupingRules->"InputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    DefaultFormatType->DefaultInputFormatType,
+    AutoItalicWords->{},
+    FormatType->InputForm,
+    ShowStringCharacters->True,
+    NumberMarks->True,
+    CounterIncrements->"Input",
+    FontWeight->"Bold"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Output"],
+    CellFrame->True,
+    CellMargins->{{25, 10}, {8, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    CellEditDuplicate->True,
+    CellGroupingRules->"OutputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    CellLabelMargins->{{3, Inherited}, {Inherited, Inherited}},
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Output",
+    Background->RGBColor[1, 0.900008, 0.900008]],
+  
+  Cell[StyleData["Output", "Presentation"],
+    CellMargins->{{25, Inherited}, {12, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Output", "Condensed"],
+    CellMargins->{{25, 0}, {6, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4}],
+  
+  Cell[StyleData["Output", "Printout"],
+    CellMargins->{{25, 0}, {6, 0}},
+    CellElementSpacings->{"ClosedGroupTopMargin"->4},
+    Background->None]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Message"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"OutputGrouping",
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Message",
+    StyleMenuListing->None,
+    FontColor->RGBColor[1, 0, 0]],
+  
+  Cell[StyleData["Message", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Message", "Condensed"],
+    CellMargins->{{50, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Message", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}},
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Print"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"OutputGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Print",
+    StyleMenuListing->None],
+  
+  Cell[StyleData["Print", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Print", "Condensed"],
+    CellMargins->{{50, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Print", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Graphics"],
+    CellMargins->{{62, Inherited}, {Inherited, Inherited}},
+    CellGroupingRules->"GraphicsGrouping",
+    CellHorizontalScrolling->True,
+    PageBreakWithin->False,
+    GeneratedCell->True,
+    CellAutoOverwrite->True,
+    ShowCellLabel->False,
+    DefaultFormatType->DefaultOutputFormatType,
+    FormatType->InputForm,
+    CounterIncrements->"Graphics",
+    StyleMenuListing->None],
+  
+  Cell[StyleData["Graphics", "Presentation"],
+    CellMargins->{{74, Inherited}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["Graphics", "Condensed"],
+    CellMargins->{{52, Inherited}, {Inherited, Inherited}},
+    ImageSize->{175, 175}],
+  
+  Cell[StyleData["Graphics", "Printout"],
+    CellMargins->{{54, Inherited}, {Inherited, Inherited}},
+    ImageSize->{250, 250}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["CellLabel"],
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->11,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["CellLabel", "Presentation"],
+    FontSize->12],
+  
+  Cell[StyleData["CellLabel", "Condensed"],
+    FontSize->8],
+  
+  Cell[StyleData["CellLabel", "Printout"],
+    FontSize->8,
+    FontColor->GrayLevel[0]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Unique Styles", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Author"],
+    CellMargins->{{10, 4}, {2, 10}},
+    FontSize->12,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Author", "Presentation"],
+    CellMargins->{{12, 10}, {2, 12}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12},
+    FontSize->16],
+  
+  Cell[StyleData["Author", "Condensed"],
+    CellMargins->{{8, 10}, {1, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 4},
+    FontSize->9],
+  
+  Cell[StyleData["Author", "Printout"],
+    CellMargins->{{9, 0}, {4, 12}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Copyright"],
+    CellMargins->{{10, 10}, {40, 2}},
+    FontFamily->"Helvetica",
+    FontSize->9],
+  
+  Cell[StyleData["Copyright", "Presentation"],
+    CellMargins->{{12, 10}, {50, 2}},
+    LineSpacing->{1, 5},
+    FontSize->12],
+  
+  Cell[StyleData["Copyright", "Condensed"],
+    CellMargins->{{8, 10}, {12, 1}},
+    LineSpacing->{1, 2},
+    FontSize->9],
+  
+  Cell[StyleData["Copyright", "Printout"],
+    CellMargins->{{9, 0}, {72, 4}},
+    FontSize->7]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Abstract"],
+    CellMargins->{{45, 75}, {Inherited, 30}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Abstract", "Printout"],
+    CellMargins->{{36, 67}, {Inherited, 50}},
+    FontSize->10]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Example"],
+    CellMargins->{{12, 10}, {5, 12}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 12},
+    CounterIncrements->"Example",
+    FontFamily->"Times",
+    FontWeight->"Bold"],
+  
+  Cell[StyleData["Example", "Presentation"],
+    CellMargins->{{18, 10}, {8, 20}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12}],
+  
+  Cell[StyleData["Example", "Condensed"],
+    CellMargins->{{8, 10}, {4, 8}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 4}],
+  
+  Cell[StyleData["Example", "Printout"],
+    CellMargins->{{9, 0}, {4, 10}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Definition"],
+    CellFrame->{{3, 0}, {0, 0}},
+    CellMargins->{{52, 10}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Definition",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.2, 0.700008, 0.700008]],
+  
+  Cell[StyleData["Definition", "Presentation"],
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Definition", "Condensed"],
+    CellMargins->{{40, 10}, {1, 4}}],
+  
+  Cell[StyleData["Definition", "Printout"],
+    CellMargins->{{44, 0}, {2, 6}},
+    Background->GrayLevel[0.6]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Theorem"],
+    CellFrame->{{3, 0}, {0, 0}},
+    CellMargins->{{52, 10}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Theorem",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontColor->GrayLevel[1],
+    Background->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["Theorem", "Presentation"],
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Theorem", "Condensed"],
+    CellMargins->{{40, 10}, {1, 4}}],
+  
+  Cell[StyleData["Theorem", "Printout"],
+    CellMargins->{{44, 0}, {2, 6}},
+    Background->GrayLevel[0.4]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Caution"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{52, 25}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Caution",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->GrayLevel[0],
+    Background->RGBColor[0.996109, 0, 0],
+    FontVariations->{"Underline"->False}],
+  
+  Cell[StyleData["Caution", "Presentation"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Caution", "Condensed"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{40, 25}, {1, 4}}],
+  
+  Cell[StyleData["Caution", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[WarningSign]",
+    CellMargins->{{44, 25}, {2, 6}},
+    Background->GrayLevel[0.900008]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Advice"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{52, 25}, {8, 8}},
+    PageBreakWithin->False,
+    GroupPageBreakWithin->False,
+    CellLabelMargins->{{23, Inherited}, {Inherited, Inherited}},
+    ShowStringCharacters->True,
+    CounterIncrements->"Advice",
+    FontFamily->"Helvetica",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->GrayLevel[0],
+    Background->RGBColor[0, 1, 0],
+    FontVariations->{"Underline"->False}],
+  
+  Cell[StyleData["Advice", "Presentation"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{62, Inherited}, {5, 12}},
+    LineSpacing->{1, 0}],
+  
+  Cell[StyleData["Advice", "Condensed"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{40, 25}, {1, 4}}],
+  
+  Cell[StyleData["Advice", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[LightBulb]",
+    CellMargins->{{44, 25}, {2, 6}},
+    Background->GrayLevel[0.900008]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Exercise"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->"NormalGrouping",
+    PageBreakBelow->False,
+    CounterIncrements->"Subsubsection",
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0, 0, 0.996109]],
+  
+  Cell[StyleData["Exercise", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Exercise", "Condensed"],
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Exercise", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseMain"],
+    CellFrame->{{6, 0}, {0, 1}},
+    CellMargins->{{12, Inherited}, {4, 20}},
+    CellGroupingRules->{"SectionGrouping", 30},
+    PageBreakBelow->False,
+    CellFrameColor->RGBColor[0.571389, 0.19675, 0.570504],
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Helvetica",
+    FontSize->16,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["ExerciseMain", "Presentation"],
+    CellMargins->{{18, 10}, {8, 32}},
+    LineSpacing->{1, 2},
+    FontSize->24,
+    FontTracking->"Condensed"],
+  
+  Cell[StyleData["ExerciseMain", "Condensed"],
+    CellMargins->{{9, 0}, {2, 50}},
+    FontSize->14],
+  
+  Cell[StyleData["ExerciseMain", "Printout"],
+    CellMargins->{{9, 0}, {2, 50}},
+    CellFrameColor->GrayLevel[0.500008],
+    FontSize->14,
+    FontTracking->"Plain",
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseTitle"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.571389, 0.19675, 0.570504]],
+  
+  Cell[StyleData["ExerciseTitle", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["ExerciseTitle", "Condensed"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["ExerciseTitle", "Printout"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ExerciseText"],
+    CellMargins->{{32, 10}, {5, 5}},
+    LineSpacing->{1, 3},
+    ParagraphSpacing->{0, 8},
+    CounterIncrements->"ExcersiceText",
+    FontFamily->"Times"],
+  
+  Cell[StyleData["ExerciseText", "Presentation"],
+    CellMargins->{{32, 10}, {8, 8}},
+    LineSpacing->{1, 5},
+    ParagraphSpacing->{0, 12}],
+  
+  Cell[StyleData["ExerciseText", "Condensed"],
+    CellMargins->{{32, 0}, {4, 4}},
+    LineSpacing->{1, 1},
+    ParagraphSpacing->{0, 6}],
+  
+  Cell[StyleData["ExerciseText", "Printout"],
+    CellMargins->{{32, 0}, {4, 4}},
+    ParagraphSpacing->{0, 6}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Problem"],
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{23, Inherited}, {4, 18}},
+    CellGroupingRules->{"SectionGrouping", 40},
+    PageBreakBelow->False,
+    CounterIncrements->"Subsection",
+    CounterAssignments->{{"Subsubsection", 0}},
+    FontFamily->"Times",
+    FontSize->13,
+    FontWeight->"Plain",
+    FontColor->GrayLevel[0]],
+  
+  Cell[StyleData["Problem", "Presentation"],
+    CellMargins->{{33, 10}, {8, 26}},
+    LineSpacing->{1, 0},
+    FontSize->18],
+  
+  Cell[StyleData["Problem", "Condensed"],
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11],
+  
+  Cell[StyleData["Problem", "Printout"],
+    CellFrame->False,
+    CellDingbat->"\[FilledDownTriangle]",
+    CellMargins->{{9, 0}, {6, 20}},
+    FontSize->11,
+    FontColor->GrayLevel[0]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Formulas and Programming", "Section"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["DisplayFormula"],
+    CellMargins->{{62, 10}, {2, 10}},
+    CellHorizontalScrolling->True,
+    DefaultFormatType->DefaultInputFormatType,
+    ScriptLevel->0,
+    SingleLetterItalics->True,
+    UnderoverscriptBoxOptions->{LimitsPositioning->True}],
+  
+  Cell[StyleData["DisplayFormula", "Presentation"],
+    CellMargins->{{74, 10}, {2, 10}}],
+  
+  Cell[StyleData["DisplayFormula", "Condensed"],
+    CellMargins->{{52, 10}, {2, 10}}],
+  
+  Cell[StyleData["DisplayFormula", "Printout"],
+    CellMargins->{{54, 10}, {2, 10}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["ChemicalFormula"],
+    CellMargins->{{62, 10}, {2, 10}},
+    DefaultFormatType->DefaultInputFormatType,
+    AutoSpacing->False,
+    ScriptLevel->1,
+    ScriptBaselineShifts->{0.6, Automatic},
+    SingleLetterItalics->False,
+    ZeroWidthTimes->True],
+  
+  Cell[StyleData["ChemicalFormula", "Presentation"],
+    CellMargins->{{74, 10}, {2, 10}},
+    FontSize->10],
+  
+  Cell[StyleData["ChemicalFormula", "Condensed"],
+    CellMargins->{{52, 10}, {2, 10}},
+    FontSize->10],
+  
+  Cell[StyleData["ChemicalFormula", "Printout"],
+    CellMargins->{{54, 10}, {2, 10}},
+    FontSize->10]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Program"],
+    CellMargins->{{12, 10}, {Inherited, 6}},
+    FontFamily->"Courier"],
+  
+  Cell[StyleData["Program", "Presentation"],
+    CellMargins->{{13, 30}, {Inherited, 4}},
+    FontSize->9.5],
+  
+  Cell[StyleData["Program", "Condensed"],
+    CellMargins->{{8, 10}, {Inherited, 4}},
+    FontSize->9.5],
+  
+  Cell[StyleData["Program", "Printout"],
+    CellMargins->{{9, 0}, {Inherited, 4}},
+    FontSize->9.5]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Automatic Numbering", "Section"],
+  
+  Cell["\<\
+The following styles are useful for numbered equations, figures, etc.  They \
+automatically give the cell a FrameLabel containing a reference to a \
+particular counter, and also increment that counter.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedEquation"],
+    CellMargins->{{62, 10}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, Cell[ 
+            TextData[ {"(", 
+              CounterBox[ "NumberedEquation"], ")"}]]}, {None, None}},
+    DefaultFormatType->DefaultInputFormatType,
+    CounterIncrements->"NumberedEquation",
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedEquation", "Presentation"],
+    CellMargins->{{74, 10}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["NumberedEquation", "Condensed"],
+    CellMargins->{{52, 10}, {Inherited, Inherited}}],
+  
+  Cell[StyleData["NumberedEquation", "Printout"],
+    CellMargins->{{54, 0}, {Inherited, Inherited}}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedFigure"],
+    CellMargins->{{62, 145}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, None}, {Cell[ 
+            TextData[ {"Figure ", 
+              CounterBox[ "NumberedFigure"]}]], None}},
+    CounterIncrements->"NumberedFigure",
+    ImageMargins->{{43, Inherited}, {Inherited, 0}},
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedFigure", "Presentation"]],
+  
+  Cell[StyleData["NumberedFigure", "Condensed"]],
+  
+  Cell[StyleData["NumberedFigure", "Printout"]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["NumberedTable"],
+    CellMargins->{{62, 145}, {Inherited, Inherited}},
+    CellFrameLabels->{{None, None}, {Cell[ 
+            TextData[ {"Table ", 
+              CounterBox[ "NumberedTable"]}]], None}},
+    TextAlignment->Center,
+    CounterIncrements->"NumberedTable",
+    FormatTypeAutoConvert->False],
+  
+  Cell[StyleData["NumberedTable", "Presentation"]],
+  
+  Cell[StyleData["NumberedTable", "Condensed"]],
+  
+  Cell[StyleData["NumberedTable", "Printout"]]
+  }, Closed]]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Styles for Headers and Footers", "Section"],
+  
+  Cell[StyleData["Header"],
+    CellMargins->{{0, 0}, {4, 1}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["Footer"],
+    CellMargins->{{0, 0}, {0, 4}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontSlant->"Italic"],
+  
+  Cell[StyleData["PageNumber"],
+    CellMargins->{{0, 0}, {4, 1}},
+    StyleMenuListing->None,
+    FontFamily->"Helvetica",
+    FontSize->9,
+    FontWeight->"Bold"]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell["Hyperlink Styles", "Section"],
+  
+  Cell["\<\
+The cells below define styles useful for making hypertext ButtonBoxes.  The \
+\"Hyperlink\" style is for links within the same Notebook, or between \
+Notebooks.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["Hyperlink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`NotebookLocate[ #2]}]&),
+    Active->True,
+    ButtonFrame->"None",
+    ButtonNote->ButtonData}],
+  
+  Cell[StyleData["Hyperlink", "Presentation"]],
+  
+  Cell[StyleData["Hyperlink", "Condensed"]],
+  
+  Cell[StyleData["Hyperlink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell["\<\
+The following styles are for linking automatically to the on-line help \
+system.\
+\>", "Text"],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["MainBookLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "MainBook", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["MainBookLink", "Presentation"]],
+  
+  Cell[StyleData["MainBookLink", "Condensed"]],
+  
+  Cell[StyleData["MainBookLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["AddOnsLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontFamily->"Courier",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "AddOns", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["AddOnsLink", "Presentation"]],
+  
+  Cell[StyleData["AddOnsLink", "Condensed"]],
+  
+  Cell[StyleData["AddOnLink", "Printout"],
+    FontWeight->"Bold",
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["RefGuideLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontFamily->"Courier",
+    FontWeight->"Bold",
+    FontSlant->"Plain",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "RefGuideLink", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["RefGuideLink", "Presentation"]],
+  
+  Cell[StyleData["RefGuideLink", "Condensed"]],
+  
+  Cell[StyleData["RefGuideLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["GettingStartedLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "GettingStarted", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["GettingStartedLink", "Presentation"]],
+  
+  Cell[StyleData["GettingStartedLink", "Condensed"]],
+  
+  Cell[StyleData["GettingStartedLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]],
+  
+  Cell[CellGroupData[{
+  
+  Cell[StyleData["OtherInformationLink"],
+    StyleMenuListing->None,
+    ButtonStyleMenuListing->Automatic,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1],
+    Background->None,
+    FontVariations->{"Underline"->True},
+    ButtonBoxOptions->{ButtonFunction:>(FrontEndExecute[ {
+        FrontEnd`HelpBrowserLookup[ "OtherInformation", #]}]&),
+    Active->True,
+    ButtonFrame->"None"}],
+  
+  Cell[StyleData["OtherInformationLink", "Presentation"]],
+  
+  Cell[StyleData["OtherInformationLink", "Condensed"]],
+  
+  Cell[StyleData["OtherInformationLink", "Printout"],
+    FontColor->GrayLevel[0],
+    Background->GrayLevel[1],
+    FontVariations->{"Underline"->True}]
+  }, Closed]]
+  }, Closed]]
+  }, Open  ]]
+  }]
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 78, 2, 81, "Title"],
+Cell[1857, 57, 455, 15, 85, "Author"],
+
+Cell[CellGroupData[{
+Cell[2337, 76, 31, 0, 83, "Section"],
+Cell[2371, 78, 1366, 27, 171, "Text"],
+Cell[3740, 107, 208, 5, 41, "DisplayFormula",
+  Evaluatable->False],
+Cell[3951, 114, 343, 6, 67, "Text"],
+Cell[4297, 122, 251, 6, 41, "Text"],
+Cell[4551, 130, 240, 6, 52, "DisplayFormula",
+  Evaluatable->False],
+Cell[4794, 138, 1958, 43, 224, "Text"],
+Cell[6755, 183, 298, 8, 67, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[7090, 196, 33, 0, 51, "Section"],
+Cell[7126, 198, 238, 4, 125, "Input"],
+Cell[7367, 204, 120, 2, 99, "Input"],
+Cell[7490, 208, 144, 3, 41, "Text"],
+Cell[7637, 213, 252, 5, 125, "Input"],
+Cell[7892, 220, 347, 7, 151, "Input"],
+Cell[8242, 229, 892, 32, 68, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[9171, 266, 31, 0, 51, "Section"],
+Cell[9205, 268, 1425, 41, 122, "Text"],
+Cell[10633, 311, 380, 7, 125, "Input"],
+Cell[11016, 320, 195, 4, 73, "Input"],
+Cell[11214, 326, 1436, 32, 171, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[12687, 363, 32, 0, 51, "Section"],
+Cell[12722, 365, 334, 7, 67, "Text"],
+Cell[13059, 374, 145, 2, 73, "Input"],
+Cell[13207, 378, 70, 2, 41, "Text"],
+Cell[13280, 382, 145, 2, 73, "Input"],
+Cell[13428, 386, 217, 5, 41, "Text"],
+Cell[13648, 393, 1043, 28, 122, "Text"],
+Cell[14694, 423, 674, 12, 229, "Input"],
+Cell[15371, 437, 64, 2, 41, "Text"],
+Cell[15438, 441, 73, 1, 73, "Input"],
+Cell[15514, 444, 42, 0, 41, "Text"],
+Cell[15559, 446, 73, 1, 73, "Input"],
+Cell[15635, 449, 33, 0, 41, "Text"],
+Cell[15671, 451, 70, 1, 73, "Input"],
+Cell[15744, 454, 194, 4, 41, "Text"],
+Cell[15941, 460, 133, 2, 73, "Input"],
+Cell[16077, 464, 420, 9, 69, "Text"],
+Cell[16500, 475, 558, 12, 68, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[17095, 492, 37, 0, 51, "Section"],
+Cell[17135, 494, 1985, 48, 203, "Text"],
+Cell[19123, 544, 369, 7, 125, "Input"],
+Cell[19495, 553, 131, 3, 41, "Text"],
+Cell[19629, 558, 364, 7, 151, "Input"],
+Cell[19996, 567, 837, 18, 119, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[20870, 590, 34, 0, 51, "Section"],
+Cell[20907, 592, 534, 8, 93, "Text"],
+Cell[21444, 602, 420, 8, 151, "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[21901, 615, 26, 0, 51, "Section"],
+Cell[21930, 617, 39, 0, 41, "Text"],
+Cell[21972, 619, 119, 2, 65, "DisplayFormula"],
+Cell[22094, 623, 605, 18, 67, "Text"],
+Cell[22702, 643, 184, 4, 125, "Input"],
+Cell[22889, 649, 440, 11, 68, "Text"],
+Cell[23332, 662, 380, 7, 188, "Input"],
+Cell[23715, 671, 255, 8, 41, "Text"],
+Cell[23973, 681, 151, 3, 74, "Input"],
+Cell[24127, 686, 181, 3, 73, "Input"],
+Cell[24311, 691, 969, 17, 145, "Text"],
+Cell[25283, 710, 159, 3, 74, "Input"],
+Cell[25445, 715, 189, 3, 73, "Input"],
+Cell[25637, 720, 260, 5, 99, "Input"],
+Cell[25900, 727, 410, 8, 67, "Text"],
+Cell[26313, 737, 262, 5, 99, "Input"],
+Cell[26578, 744, 640, 17, 67, "Text"],
+Cell[27221, 763, 333, 5, 91, "DisplayFormula"],
+Cell[27557, 770, 64, 0, 41, "Text"],
+Cell[27624, 772, 221, 4, 41, "DisplayFormula"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[27882, 781, 36, 0, 51, "Section"],
+Cell[27921, 783, 901, 26, 93, "Text"],
+Cell[28825, 811, 248, 4, 62, "DisplayFormula"],
+Cell[29076, 817, 593, 16, 67, "Text"],
+Cell[29672, 835, 196, 8, 41, "Text"],
+Cell[29871, 845, 176, 3, 61, "DisplayFormula"],
+Cell[30050, 850, 145, 5, 41, "Text"],
+Cell[30198, 857, 241, 4, 80, "DisplayFormula"],
+Cell[30442, 863, 618, 15, 93, "Text"],
+Cell[31063, 880, 326, 6, 157, "Input"],
+Cell[31392, 888, 334, 6, 99, "Input"],
+Cell[31729, 896, 1353, 38, 119, "Text"],
+Cell[33085, 936, 810, 13, 255, "Input"],
+Cell[33898, 951, 306, 5, 99, "Input"],
+Cell[34207, 958, 307, 5, 99, "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[34551, 968, 39, 0, 51, "Section"],
+Cell[34593, 970, 2076, 50, 197, "Text"],
+Cell[36672, 1022, 521, 15, 69, "Text"],
+Cell[37196, 1039, 133, 2, 73, "Input"],
+Cell[37332, 1043, 647, 17, 95, "Text"],
+Cell[37982, 1062, 5472, 126, 229, 1186, 69, "GraphicsData", "PostScript", \
+"Graphics"],
+Cell[43457, 1190, 566, 15, 69, "Text"],
+Cell[44026, 1207, 111, 3, 41, "Text"],
+Cell[44140, 1212, 160, 2, 129, "Input"],
+Cell[44303, 1216, 158, 3, 73, "Input"],
+Cell[44464, 1221, 21, 0, 41, "Text"],
+Cell[44488, 1223, 538, 8, 151, "Input"],
+Cell[45029, 1233, 48, 0, 41, "Text"],
+Cell[45080, 1235, 373, 7, 67, "Text"],
+Cell[45456, 1244, 86, 1, 73, "Input"],
+Cell[45545, 1247, 677, 14, 177, "Input"],
+Cell[46225, 1263, 1009, 23, 119, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[47271, 1291, 33, 0, 54, "ExerciseMain"],
+
+Cell[CellGroupData[{
+Cell[47329, 1295, 33, 0, 58, "ExerciseTitle"],
+Cell[47365, 1297, 613, 16, 192, "ExerciseText"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[48015, 1318, 37, 0, 58, "ExerciseTitle"],
+Cell[48055, 1320, 652, 19, 67, "ExerciseText"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[48744, 1344, 75, 0, 58, "ExerciseTitle"],
+Cell[48822, 1346, 333, 8, 109, "ExerciseText"]
+}, Closed]]
+}, Closed]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+
