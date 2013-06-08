@@ -1,0 +1,130 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      3536,        120]
+NotebookOptionsPosition[      2971,         96]
+NotebookOutlinePosition[      3313,        111]
+CellTagsIndexPosition[      3270,        108]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Quit", "[", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.5796645006234946`*^9, 3.579664504123695*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<Notation`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.579664507383881*^9, 3.5796645227397594`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Notation", "[", 
+  RowBox[{
+   RowBox[{
+    TemplateBox[{SubscriptBox[
+       RowBox[{"(", 
+         RowBox[{"x_", " ", "\[RightTeeArrow]", " ", "body_"}], ")"}], "&"]},
+     "NotationTemplateTag"], " ", "\[DoubleLongLeftRightArrow]", " ", 
+    TemplateBox[{RowBox[{"Function", "[", 
+        RowBox[{"x_", ",", "body_"}], "]"}]},
+     "NotationTemplateTag"]}], ",", 
+   RowBox[{"Action", " ", "\[Rule]", " ", "CreateNotationRules"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.5796645726926165`*^9, 3.5796645752047606`*^9}, {
+  3.579664626482693*^9, 3.5796646694451504`*^9}, {3.5796647202220545`*^9, 
+  3.57966476664571*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Function", "[", 
+  RowBox[{"x", ",", 
+   RowBox[{
+    RowBox[{"x", "^", "2"}], "+", "1"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.57966467258433*^9, 3.5796646887792563`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"x", "\[Function]", 
+   RowBox[{
+    SuperscriptBox["x", "2"], "+", "1"}]}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.5796646958016577`*^9, 3.579664770579935*^9, 
+  3.5796648352066317`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Notation", "[", 
+  RowBox[{
+   RowBox[{
+    TemplateBox[{SubscriptBox[
+       RowBox[{"(", 
+         RowBox[{"x_", " ", "\[RightTeeArrow]", " ", "body_"}], ")"}], "&"]},
+     "NotationTemplateTag"], " ", "\[DoubleLongLeftRightArrow]", " ", 
+    TemplateBox[{RowBox[{"Function", "[", 
+        RowBox[{"x_", ",", "body_"}], "]"}]},
+     "NotationTemplateTag"]}], ",", 
+   RowBox[{"Action", " ", "\[Rule]", " ", "RemoveNotationRules"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.5796647820225897`*^9, 3.5796647955893655`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Function", "[", 
+  RowBox[{"x", ",", 
+   RowBox[{
+    RowBox[{"x", "^", "2"}], "+", "1"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.5796648013946977`*^9, 3.5796648104272146`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"x", "\[Function]", 
+   RowBox[{
+    SuperscriptBox["x", "2"], "+", "1"}]}], TraditionalForm]], "Output",
+ CellChangeTimes->{{3.579664811332266*^9, 3.5796648375157633`*^9}}]
+}, Open  ]]
+},
+WindowSize->{707, 545},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"8.0 for Microsoft Windows (64-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 138, 3, 31, "Input"],
+Cell[698, 25, 142, 2, 31, "Input"],
+Cell[843, 29, 650, 15, 41, "Input"],
+Cell[CellGroupData[{
+Cell[1518, 48, 200, 5, 31, "Input"],
+Cell[1721, 55, 232, 6, 32, "Output"]
+}, Open  ]],
+Cell[1968, 64, 549, 13, 41, "Input"],
+Cell[CellGroupData[{
+Cell[2542, 81, 203, 5, 31, "Input"],
+Cell[2748, 88, 207, 5, 32, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

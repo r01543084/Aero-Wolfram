@@ -1,0 +1,120 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      3503,        111]
+NotebookOptionsPosition[      2778,         83]
+NotebookOutlinePosition[      3197,         99]
+CellTagsIndexPosition[      3154,         96]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+2D Finite Element Method with Serendipity elements\
+\>", "Title",
+ CellChangeTimes->{{3.5796553843530736`*^9, 3.5796554047692413`*^9}, {
+  3.5796555143875113`*^9, 3.5796555235460353`*^9}}],
+
+Cell["By Manuel Diaz NTU 2012.06.08", "Subtitle",
+ CellChangeTimes->{{3.579655574193932*^9, 3.579655590193847*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Initial", "Subsection",
+ CellChangeTimes->{{3.579656369586426*^9, 3.5796563810980844`*^9}, {
+  3.5796572687958574`*^9, 3.5796572694738965`*^9}, {3.5796578252256837`*^9, 
+  3.5796578273698063`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Quit", "[", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.5796582552962823`*^9, 3.5796582572353935`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<Notation`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.5796578285788755`*^9, 3.5796578381954255`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   StyleBox[
+    RowBox[{"Notation", "::", "difform"}], "MessageName"], 
+   RowBox[{
+   ":", " "}], "\<\"The defined current default input format \
+\[NoBreak]\\!\\(TraditionalForm\\`StandardForm\\)\[NoBreak] differs from the \
+current default output format \
+\[NoBreak]\\!\\(TraditionalForm\\`TraditionalForm\\)\[NoBreak]. The \
+WorkingForm option will default to the current default output format, but \
+theNotations, Symbolizations, and InfixNotations may behave differently than \
+expected. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:Notation/ref/Notation\\\", ButtonNote -> \
+\\\"Notation`Notation::difform\\\"]\\)\"\>"}], TraditionalForm]], "Message", \
+"MSG",
+ CellChangeTimes->{{3.5796582598635435`*^9, 3.579658270800169*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell["Q4 Element", "Section",
+ CellChangeTimes->{{3.579655541346053*^9, 3.5796555422181034`*^9}, {
+  3.5796555967942247`*^9, 3.5796555998894014`*^9}}],
+
+Cell["Q8 Element", "Section",
+ CellChangeTimes->{{3.5796555470333786`*^9, 3.5796555475934105`*^9}, {
+  3.579655601569498*^9, 3.579655603257594*^9}}],
+
+Cell["T6 Element", "Section",
+ CellChangeTimes->{{3.5796555681295853`*^9, 3.5796555688896284`*^9}, {
+  3.579655605177704*^9, 3.5796556072658234`*^9}}]
+}, Open  ]]
+},
+WindowSize->{1288, 673},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"8.0 for Microsoft Windows (64-bit) (November 7, 2010)",
+StyleDefinitions->FrontEnd`FileName[{"Creative"}, "PastelColor.nb", 
+  CharacterEncoding -> "WindowsANSI"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 198, 4, 65, "Title"],
+Cell[780, 28, 115, 1, 23, "Subtitle"],
+Cell[CellGroupData[{
+Cell[920, 33, 203, 3, 36, "Subsection"],
+Cell[1126, 38, 140, 3, 41, "Input"],
+Cell[CellGroupData[{
+Cell[1291, 45, 144, 2, 41, "Input"],
+Cell[1438, 49, 843, 17, 39, "Message"]
+}, Open  ]]
+}, Open  ]],
+Cell[2308, 70, 150, 2, 75, "Section"],
+Cell[2461, 74, 148, 2, 45, "Section"],
+Cell[2612, 78, 150, 2, 45, "Section"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
