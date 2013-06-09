@@ -10,18 +10,70 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[      3536,        120]
-NotebookOptionsPosition[      2971,         96]
-NotebookOutlinePosition[      3313,        111]
-CellTagsIndexPosition[      3270,        108]
+NotebookDataLength[     21467,        699]
+NotebookOptionsPosition[     18028,        581]
+NotebookOutlinePosition[     18441,        597]
+CellTagsIndexPosition[     18398,        594]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+
+Cell[CellGroupData[{
+Cell["Using Notation and Symbolize", "Title",
+ CellChangeTimes->{{3.579739421916362*^9, 3.579739430216601*^9}}],
+
+Cell[TextData[{
+ "by Manuel Diaz, NTU, 2013.06.09\nusing ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " 9.0"
+}], "Subsubtitle",
+ CellChangeTimes->{{3.579739434288741*^9, 3.579739451448872*^9}, {
+  3.579742386531733*^9, 3.579742392694524*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Preamble", "Subsection",
+ CellChangeTimes->{{3.579739501765336*^9, 3.579739504004096*^9}, {
+  3.579742286556554*^9, 3.579742288855404*^9}}],
+
 Cell[BoxData[
  RowBox[{
   RowBox[{"Quit", "[", "]"}], ";"}]], "Input",
  CellChangeTimes->{{3.5796645006234946`*^9, 3.579664504123695*^9}}],
+
+Cell[TextData[{
+ "When defining your own notations it is ",
+ StyleBox["critically",
+  FontSlant->"Italic"],
+ " important to use the ",
+ ButtonBox["notation templates",
+  BaseStyle->"Hyperlink",
+  ButtonData:>{
+    FrontEnd`ToFileName[{$InstallationDirectory, "AddOns", "Packages", 
+      "Notation", "LocalPalettes", "English", "NotationPalette.nb"}], None},
+  ButtonNote->"Show Palette"],
+ ". The notation templates are contained in the notation palette shown \
+below."
+}], "Text",
+ CellChangeTimes->{{3.579742292238853*^9, 3.579742296582456*^9}}],
+
+Cell["\<\
+The reason for this restriction is that the templates pasted into a notebook \
+contain essential tag boxes embedded in the correct way. These embedded tag \
+boxes allow the following comands to properly group and parse the new \
+notation being defined. Further, they allow these functions to get the \
+styling information of the new notation so that the output is formatted with \
+the same spacing, sizes, adjustments, etc. as the input.\
+\>", "Text",
+ CellChangeTimes->{{3.579742318015091*^9, 3.57974236910571*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Notations", "Section",
+ CellChangeTimes->{{3.57973946484371*^9, 3.579739470069255*^9}}],
 
 Cell[BoxData[
  RowBox[{"Needs", "[", "\"\<Notation`\>\"", "]"}]], "Input",
@@ -54,12 +106,13 @@ Cell[BoxData[
  CellChangeTimes->{{3.57966467258433*^9, 3.5796646887792563`*^9}}],
 
 Cell[BoxData[
- FormBox[
-  RowBox[{"x", "\[Function]", 
-   RowBox[{
-    SuperscriptBox["x", "2"], "+", "1"}]}], TraditionalForm]], "Output",
+ SubscriptBox[
+  RowBox[{"(", 
+   RowBox[{"x", " ", "\[RightTeeArrow]", " ", 
+    RowBox[{
+     SuperscriptBox["x", "2"], "+", "1"}]}], ")"}], "&"]], "Output",
  CellChangeTimes->{3.5796646958016577`*^9, 3.579664770579935*^9, 
-  3.5796648352066317`*^9}]
+  3.5796648352066317`*^9, 3.579739511913383*^9}]
 }, Open  ]],
 
 Cell[BoxData[
@@ -87,16 +140,449 @@ Cell[BoxData[
  CellChangeTimes->{{3.5796648013946977`*^9, 3.5796648104272146`*^9}}],
 
 Cell[BoxData[
- FormBox[
-  RowBox[{"x", "\[Function]", 
+ RowBox[{"Function", "[", 
+  RowBox[{"x", ",", 
    RowBox[{
-    SuperscriptBox["x", "2"], "+", "1"}]}], TraditionalForm]], "Output",
- CellChangeTimes->{{3.579664811332266*^9, 3.5796648375157633`*^9}}]
+    SuperscriptBox["x", "2"], "+", "1"}]}], "]"}]], "Output",
+ CellChangeTimes->{{3.579664811332266*^9, 3.5796648375157633`*^9}, 
+   3.579739516252648*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Notation", "[", 
+  RowBox[{
+   TemplateBox[{RowBox[{"a_", " ", 
+       SubscriptBox["\[Delta]", "n_"], " ", "b_"}]},
+    "NotationTemplateTag"], "\[DoubleLongLeftRightArrow]", " ", 
+   TemplateBox[{RowBox[{"myFunc", "[", 
+       RowBox[{"a_", ",", "b_", ",", "n_"}], "]"}]},
+    "NotationTemplateTag"]}], "]"}]], "Input",
+ CellChangeTimes->{{3.579739675268886*^9, 3.579739736860984*^9}, {
+  3.579739780537432*^9, 3.579739783241126*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"myFunc", "[", 
+  RowBox[{"x", ",", "y", ",", 
+   RowBox[{"n", "+", "m"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.579739797330828*^9, 3.579739806179164*^9}}],
+
+Cell[BoxData[
+ RowBox[{"x", " ", 
+  SubscriptBox["\[Delta]", 
+   RowBox[{"m", "+", "n"}]], " ", "y"}]], "Output",
+ CellChangeTimes->{3.579739808238095*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Notation", "[", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       SubscriptBox["\[Integral]", "\[CapitalOmega]"], 
+       RowBox[{"f_", 
+         RowBox[{"\[DifferentialD]", "x_"}]}]}]},
+    "NotationTemplateTag"], " ", "\[DoubleLongRightArrow]", " ", 
+   TemplateBox[{RowBox[{"myIntegralFunc", "[", 
+       RowBox[{"f_", ",", "x_"}], "]"}]},
+    "NotationTemplateTag"]}], "]"}]], "Input",
+ CellChangeTimes->{{3.579739853164864*^9, 3.579739933153364*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  SubscriptBox["\[Integral]", "\[CapitalOmega]"], 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"x", " ", 
+     RowBox[{"Sin", "[", "x", "]"}]}], ")"}], 
+   RowBox[{"\[DifferentialD]", "x"}]}]}]], "Input",
+ CellChangeTimes->{{3.579739937584228*^9, 3.579740027426481*^9}}],
+
+Cell[BoxData[
+ RowBox[{"myIntegralFunc", "[", 
+  RowBox[{
+   RowBox[{"x", " ", 
+    RowBox[{"Sin", "[", "x", "]"}]}], ",", "x"}], "]"}]], "Output",
+ CellChangeTimes->{3.579740028141645*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Notation", "[", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox[
+        RowBox[{
+          SuperscriptBox["\[PartialD]", "n_"], "f_"}], 
+        RowBox[{"\[PartialD]", 
+          SuperscriptBox["x_", "n_"]}]], " "}]},
+    "NotationTemplateTag"], " ", "\[DoubleLongRightArrow]", " ", 
+   TemplateBox[{RowBox[{"D", "[", 
+       RowBox[{"f_", ",", 
+         RowBox[{"{", 
+           RowBox[{"x_", ",", "n_"}], "}"}]}], "]"}]},
+    "NotationTemplateTag"]}], "]"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   SuperscriptBox["\[PartialD]", "3"], 
+   RowBox[{"\[ScriptCapitalG]", "[", "x", "]"}]}], 
+  RowBox[{"\[PartialD]", 
+   SuperscriptBox["x", "3"]}]]], "Input",
+ CellChangeTimes->{{3.579740138901767*^9, 3.579740200078033*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  SuperscriptBox["\[ScriptCapitalG]", 
+   TagBox[
+    RowBox[{"(", "3", ")"}],
+    Derivative],
+   MultilineFunction->None], "[", "x", "]"}]], "Output",
+ CellChangeTimes->{{3.579740176006787*^9, 3.57974020125165*^9}}]
+}, Open  ]],
+
+Cell["Good!", "Subsubsection",
+ CellChangeTimes->{{3.57973953721551*^9, 3.579739561399599*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Symbolize", "Section",
+ CellChangeTimes->{{3.57973947674988*^9, 3.579739488806219*^9}, {
+  3.579739603195258*^9, 3.579739603245933*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Example 1", "Subsection",
+ CellChangeTimes->{{3.579740686390598*^9, 3.579740690504503*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Symbolize", "[", 
+  TemplateBox[{"domain\[ScriptCapitalD]"},
+   "NotationTemplateTag"], "]"}]], "Input",
+ CellChangeTimes->{{3.579740305221927*^9, 3.5797403319427*^9}, {
+  3.579740412069777*^9, 3.579740491327046*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"domain\[ScriptCapitalD]", " ", "=", " ", "2"}]], "Input",
+ CellChangeTimes->{{3.579740500555901*^9, 3.579740512292781*^9}}],
+
+Cell[BoxData["domain\[ScriptCapitalD]"], "Output",
+ CellChangeTimes->{{3.57974050405136*^9, 3.579740513281054*^9}, 
+   3.57974070007614*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"RemoveSymbolize", "[", 
+  TemplateBox[{"domain\[ScriptCapitalD]"},
+   "NotationTemplateTag"], " ", "]"}]], "Input",
+ CellChangeTimes->{{3.579740516598753*^9, 3.579740589037975*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Example 2", "Subsection",
+ CellChangeTimes->{{3.579740693745789*^9, 3.579740695899074*^9}, {
+  3.579742892082827*^9, 3.579742895656648*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Quit", "[", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.579742897228464*^9, 3.579742900828826*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<Notation`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.579741371326152*^9, 3.579741380616595*^9}}],
+
+Cell["\<\
+here I define x as any number in my computations\
+\>", "Text",
+ CellChangeTimes->{{3.57974186314681*^9, 3.579741889093823*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"x", "=", "  ", 
+  RowBox[{"{", 
+   RowBox[{"a", ",", "b", ",", "c"}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.579741700994973*^9, 3.579741708803113*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"a", ",", "b", ",", "c"}], "}"}]], "Output",
+ CellChangeTimes->{3.579741709509913*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "and then I want to use another variable ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " that has nothing to do with my original x"
+}], "Text",
+ CellChangeTimes->{{3.579741894627982*^9, 3.579741926983042*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  SubscriptBox["x", "1"], "+", "2"}]], "Input",
+ CellChangeTimes->{{3.579741711229787*^9, 3.579741743387586*^9}}],
+
+Cell[BoxData[
+ RowBox[{"2", "+", 
+  SubscriptBox[
+   RowBox[{"{", 
+    RowBox[{"a", ",", "b", ",", "c"}], "}"}], "1"]}]], "Output",
+ CellChangeTimes->{3.579741744572896*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "the we fail to compute correctly becuase ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is interpreted by mathematica as a subpart or derivation of x. To fix this \
+I would need to use Symbolize comand to make ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " an independent symbol,"
+}], "Text",
+ CellChangeTimes->{{3.57974195531097*^9, 3.579742049414711*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Symbolize", "[", 
+  TemplateBox[{SubscriptBox["x", "1"]},
+   "NotationTemplateTag"], "]"}]], "Input",
+ CellChangeTimes->{{3.579741775008019*^9, 3.579741776436935*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  SubscriptBox["x", "1"], "+", "2"}]], "Input",
+ CellChangeTimes->{{3.579741788521886*^9, 3.579741794594*^9}}],
+
+Cell[BoxData[
+ RowBox[{"2", "+", 
+  SubscriptBox["x", "1"]}]], "Output",
+ CellChangeTimes->{3.57974179553607*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["x"], "Input",
+ CellChangeTimes->{3.579741813519695*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"a", ",", "b", ",", "c"}], "}"}]], "Output",
+ CellChangeTimes->{3.579741814318048*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Good!", "Subsubsection",
+ CellChangeTimes->{{3.579742060694335*^9, 3.579742067339128*^9}}],
+
+Cell[TextData[{
+ "now how can I define in group a series of values like ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " to ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "8"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " for my computations?"
+}], "Text",
+ CellChangeTimes->{{3.579742071807139*^9, 3.579742111404079*^9}, {
+  3.579742553734287*^9, 3.579742554507541*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Symbolize", "[", 
+   TemplateBox[{SubscriptBox["x", "2"]},
+    "NotationTemplateTag"], "]"}], ";", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"and", " ", "go", " ", "on"}], "..."}], " ", "*)"}]}]], "Input",
+ CellChangeTimes->{{3.579742479689258*^9, 3.579742480811279*^9}, {
+  3.579742562922005*^9, 3.579742577240009*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"Symbolize", "[", 
+    TemplateBox[{SubscriptBox["x", "i"]},
+     "NotationTemplateTag"], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"i", ",", "2", ",", "8"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.579742133052859*^9, 3.579742134590375*^9}, {
+  3.579742404292041*^9, 3.579742457870257*^9}, {3.579742509245141*^9, 
+  3.579742511850926*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Symbolize", "::", "bsymbexs"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Warning: The box structure attempting to be symbolized has \
+a similar or identical symbol already defined, possibly overriding previously \
+symbolized box structure. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:Notation/ref/Symbolize\\\", ButtonNote -> \
+\\\"Notation`Symbolize::bsymbexs\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{{3.579742451028967*^9, 3.579742459495009*^9}, 
+   3.579742512872024*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Symbolize", "::", "bsymbexs"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Warning: The box structure attempting to be symbolized has \
+a similar or identical symbol already defined, possibly overriding previously \
+symbolized box structure. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:Notation/ref/Symbolize\\\", ButtonNote -> \
+\\\"Notation`Symbolize::bsymbexs\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{{3.579742451028967*^9, 3.579742459495009*^9}, 
+   3.579742513297854*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Symbolize", "::", "bsymbexs"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Warning: The box structure attempting to be symbolized has \
+a similar or identical symbol already defined, possibly overriding previously \
+symbolized box structure. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:Notation/ref/Symbolize\\\", ButtonNote -> \
+\\\"Notation`Symbolize::bsymbexs\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{{3.579742451028967*^9, 3.579742459495009*^9}, 
+   3.579742513779234*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"General", "::", "stop"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Further output of \[NoBreak]\\!\\(\\*StyleBox[\\(Symbolize \
+:: bsymbexs\\), \\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during \
+this calculation. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
+\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{{3.579742451028967*^9, 3.579742459495009*^9}, 
+   3.579742513911988*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "Null", ",", "Null", ",", "Null", ",", "Null", ",", "Null", ",", "Null", 
+   ",", "Null"}], "}"}]], "Output",
+ CellChangeTimes->{3.579742460833325*^9, 3.57974251406175*^9}]
+}, Open  ]],
+
+Cell["\<\
+Symbolize a general any structure with a given subindex,\
+\>", "Text",
+ CellChangeTimes->{{3.579742658693472*^9, 3.579742703581059*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Symbolize", "[", 
+  TemplateBox[{SubscriptBox["expr", "coll"]},
+   "NotationTemplateTag"], "]"}]], "Input",
+ CellChangeTimes->{{3.579742838765837*^9, 3.579742839374164*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Symbolize", "::", "bsymbexs"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Warning: The box structure attempting to be symbolized has \
+a similar or identical symbol already defined, possibly overriding previously \
+symbolized box structure. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:Notation/ref/Symbolize\\\", ButtonNote -> \
+\\\"Notation`Symbolize::bsymbexs\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.579742883531939*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  SubscriptBox["\[CapitalOmega]", "coll"], " ", "//", " ", 
+  "FullForm"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox["\\[CapitalOmega]\\[UnderBracket]Subscript\\[UnderBracket]coll",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Output",
+ CellChangeTimes->{3.57974288435419*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Symbolize", "[", 
+  TemplateBox[{SubscriptBox["expr_", "coll"]},
+   "NotationTemplateTag"], "]"}]], "Input",
+ CellChangeTimes->{{3.579742711407565*^9, 3.579742730855215*^9}, {
+  3.579742786384371*^9, 3.579742796838011*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  SubscriptBox["\[CapitalOmega]", "coll"], " ", "//", " ", 
+  "FullForm"}]], "Input",
+ CellChangeTimes->{{3.579742740768744*^9, 3.579742759624693*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox["\\[CapitalOmega]\\[UnderBracket]Subscript\\[UnderBracket]coll",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Output",
+ CellChangeTimes->{{3.579742747711524*^9, 3.579742760091312*^9}, 
+   3.579742803182759*^9}]
+}, Open  ]],
+
+Cell["\<\
+can you spot the difference? ^^,\
+\>", "Text",
+ CellChangeTimes->{{3.57974286414172*^9, 3.579742876389707*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 },
-WindowSize->{707, 545},
+WindowSize->{1024, 550},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
-FrontEndVersion->"8.0 for Microsoft Windows (64-bit) (November 7, 2010)",
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+FrontEndVersion->"9.0 for Linux x86 (32-bit) (February 7, 2013)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -110,21 +596,113 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[557, 20, 138, 3, 31, "Input"],
-Cell[698, 25, 142, 2, 31, "Input"],
-Cell[843, 29, 650, 15, 41, "Input"],
 Cell[CellGroupData[{
-Cell[1518, 48, 200, 5, 31, "Input"],
-Cell[1721, 55, 232, 6, 32, "Output"]
+Cell[579, 22, 111, 1, 93, "Title"],
+Cell[693, 25, 250, 7, 53, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[968, 36, 145, 2, 45, "Subsection"],
+Cell[1116, 40, 138, 3, 32, "Input"],
+Cell[1257, 45, 548, 14, 51, "Text"],
+Cell[1808, 61, 526, 8, 91, "Text"]
 }, Open  ]],
-Cell[1968, 64, 549, 13, 41, "Input"],
 Cell[CellGroupData[{
-Cell[2542, 81, 203, 5, 31, "Input"],
-Cell[2748, 88, 207, 5, 32, "Output"]
+Cell[2371, 74, 93, 1, 81, "Section"],
+Cell[2467, 77, 142, 2, 32, "Input"],
+Cell[2612, 81, 650, 15, 45, "Input"],
+Cell[CellGroupData[{
+Cell[3287, 100, 200, 5, 32, "Input"],
+Cell[3490, 107, 288, 7, 38, "Output"]
+}, Open  ]],
+Cell[3793, 117, 549, 13, 45, "Input"],
+Cell[CellGroupData[{
+Cell[4367, 134, 203, 5, 32, "Input"],
+Cell[4573, 141, 229, 6, 37, "Output"]
+}, Open  ]],
+Cell[4817, 150, 460, 10, 45, "Input"],
+Cell[CellGroupData[{
+Cell[5302, 164, 182, 4, 32, "Input"],
+Cell[5487, 170, 155, 4, 32, "Output"]
+}, Open  ]],
+Cell[5657, 177, 473, 11, 61, "Input"],
+Cell[CellGroupData[{
+Cell[6155, 192, 290, 8, 51, "Input"],
+Cell[6448, 202, 189, 5, 32, "Output"]
+}, Open  ]],
+Cell[6652, 210, 503, 14, 69, "Input"],
+Cell[CellGroupData[{
+Cell[7180, 228, 264, 7, 60, "Input"],
+Cell[7447, 237, 241, 7, 34, "Output"]
+}, Open  ]],
+Cell[7703, 247, 95, 1, 35, "Subsubsection"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7835, 253, 142, 2, 81, "Section"],
+Cell[CellGroupData[{
+Cell[8002, 259, 97, 1, 45, "Subsection"],
+Cell[8102, 262, 241, 5, 45, "Input"],
+Cell[CellGroupData[{
+Cell[8368, 271, 147, 2, 32, "Input"],
+Cell[8518, 275, 140, 2, 32, "Output"]
+}, Open  ]],
+Cell[8673, 280, 205, 4, 45, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8915, 289, 146, 2, 45, "Subsection"],
+Cell[9064, 293, 136, 3, 32, "Input"],
+Cell[9203, 298, 140, 2, 32, "Input"],
+Cell[9346, 302, 137, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[9508, 309, 178, 4, 32, "Input"],
+Cell[9689, 315, 125, 3, 32, "Output"]
+}, Open  ]],
+Cell[9829, 321, 290, 8, 31, "Text"],
+Cell[CellGroupData[{
+Cell[10144, 333, 137, 3, 32, "Input"],
+Cell[10284, 338, 173, 5, 32, "Output"]
+}, Open  ]],
+Cell[10472, 346, 505, 14, 51, "Text"],
+Cell[10980, 362, 191, 4, 45, "Input"],
+Cell[CellGroupData[{
+Cell[11196, 370, 134, 3, 32, "Input"],
+Cell[11333, 375, 113, 3, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11483, 383, 69, 1, 32, "Input"],
+Cell[11555, 386, 125, 3, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11717, 394, 96, 1, 35, "Subsubsection"],
+Cell[11816, 397, 447, 14, 31, "Text"],
+Cell[12266, 413, 365, 9, 45, "Input"],
+Cell[CellGroupData[{
+Cell[12656, 426, 408, 10, 45, "Input"],
+Cell[13067, 438, 615, 12, 43, "Message"],
+Cell[13685, 452, 615, 12, 43, "Message"],
+Cell[14303, 466, 615, 12, 43, "Message"],
+Cell[14921, 480, 586, 12, 24, "Message"],
+Cell[15510, 494, 214, 5, 32, "Output"]
+}, Open  ]],
+Cell[15739, 502, 146, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[15910, 509, 197, 4, 45, "Input"],
+Cell[16110, 515, 565, 11, 43, "Message"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16712, 531, 109, 3, 32, "Input"],
+Cell[16824, 536, 250, 7, 46, "Output"]
+}, Open  ]],
+Cell[17089, 546, 247, 5, 45, "Input"],
+Cell[CellGroupData[{
+Cell[17361, 555, 175, 4, 32, "Input"],
+Cell[17539, 561, 301, 8, 46, "Output"]
+}, Open  ]],
+Cell[17855, 572, 121, 3, 31, "Text"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 }
 ]
 *)
 
 (* End of internal cache information *)
-
