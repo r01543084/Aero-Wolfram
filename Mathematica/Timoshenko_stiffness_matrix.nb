@@ -1,0 +1,258 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      7493,        248]
+NotebookOptionsPosition[      6709,        216]
+NotebookOutlinePosition[      7044,        231]
+CellTagsIndexPosition[      7001,        228]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["", "Text"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"CC", "=", " ", 
+   RowBox[{"(", GridBox[{
+      {
+       RowBox[{"\[Kappa]", " ", "G", " ", "A"}], "0"},
+      {"0", 
+       RowBox[{"EE", " ", "II"}]}
+     }], ")"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"L", " ", "=", " ", 
+   RowBox[{"(", GridBox[{
+      {
+       FractionBox["d", "dx"], 
+       RowBox[{"-", "1"}]},
+      {"0", 
+       FractionBox["d", "dx"]}
+     }], ")"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"u", " ", "=", " ", 
+   RowBox[{"(", GridBox[{
+      {"w"},
+      {"\[Theta]"}
+     }], ")"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.580976945891328*^9, 3.58097707679764*^9}, {
+   3.580977127684274*^9, 3.580977167211158*^9}, 3.580978077184064*^9, {
+   3.580978128178334*^9, 3.580978128990962*^9}}],
+
+Cell["Putting everything togueter", "Text",
+ CellChangeTimes->{{3.58097813422155*^9, 3.580978149652846*^9}, {
+  3.580979061703864*^9, 3.580979064670976*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   SuperscriptBox["u", "\[Transpose]"], ".", 
+   SuperscriptBox["L", "\[Transpose]"], ".", "CC", ".", "L", ".", "u"}], " ", 
+  "//", "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.580977281783175*^9, 3.580977343580716*^9}, {
+  3.580977391870289*^9, 3.580977418992217*^9}, {3.580977449402578*^9, 
+  3.58097745084684*^9}, {3.580977483382349*^9, 3.580977488484431*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{
+       FractionBox[
+        RowBox[{"A", " ", "d", " ", "G", " ", "w", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           FractionBox[
+            RowBox[{"d", " ", "w"}], "dx"], "-", "\[Theta]"}], ")"}], " ", 
+         "\[Kappa]"}], "dx"], "+", 
+       RowBox[{"\[Theta]", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          FractionBox[
+           RowBox[{
+            SuperscriptBox["d", "2"], " ", "EE", " ", "II", " ", "\[Theta]"}], 
+           SuperscriptBox["dx", "2"]], "-", 
+          RowBox[{"A", " ", "G", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             FractionBox[
+              RowBox[{"d", " ", "w"}], "dx"], "-", "\[Theta]"}], ")"}], " ", 
+           "\[Kappa]"}]}], ")"}]}]}]}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{{3.580977308473404*^9, 3.580977344666893*^9}, {
+   3.580977392793516*^9, 3.580977420060034*^9}, 3.580977451661093*^9, 
+   3.58097749088844*^9, 3.580978080933201*^9}]
+}, Open  ]],
+
+Cell["Step-by-Step", "Text",
+ CellChangeTimes->{{3.580977284191057*^9, 3.580977285235399*^9}, {
+  3.580978153365775*^9, 3.580978160367314*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   SuperscriptBox["u", "\[Transpose]"], ".", 
+   SuperscriptBox["L", "\[Transpose]"]}], " ", "//", 
+  "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.580978863427269*^9, 3.580978864078336*^9}, {
+  3.580979073434237*^9, 3.580979087229922*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{
+       FractionBox[
+        RowBox[{"d", " ", "w"}], "dx"], "-", "\[Theta]"}], 
+      FractionBox[
+       RowBox[{"d", " ", "\[Theta]"}], "dx"]}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{{3.580979074259786*^9, 3.580979087975513*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   SuperscriptBox["u", "\[Transpose]"], ".", 
+   SuperscriptBox["L", "\[Transpose]"], ".", "CC"}], "//", 
+  "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.580979106594056*^9, 3.580979112720478*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{"A", " ", "G", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         FractionBox[
+          RowBox[{"d", " ", "w"}], "dx"], "-", "\[Theta]"}], ")"}], " ", 
+       "\[Kappa]"}], 
+      FractionBox[
+       RowBox[{"d", " ", "EE", " ", "II", " ", "\[Theta]"}], "dx"]}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{3.580979113510919*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"L", ".", "u"}], "  ", "//", "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.580979283284717*^9, 3.580979286507302*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{
+       FractionBox[
+        RowBox[{"d", " ", "w"}], "dx"], "-", "\[Theta]"}]},
+     {
+      FractionBox[
+       RowBox[{"d", " ", "\[Theta]"}], "dx"]}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{3.580979286984635*^9}]
+}, Open  ]]
+},
+WindowSize->{1024, 550},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"9.0 for Linux x86 (32-bit) (February 7, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 16, 0, 31, "Text"],
+Cell[576, 22, 786, 26, 156, "Input"],
+Cell[1365, 50, 157, 2, 31, "Text"],
+Cell[CellGroupData[{
+Cell[1547, 56, 407, 8, 35, "Input"],
+Cell[1957, 66, 1451, 39, 68, "Output"]
+}, Open  ]],
+Cell[3423, 108, 143, 2, 31, "Text"],
+Cell[CellGroupData[{
+Cell[3591, 114, 282, 7, 35, "Input"],
+Cell[3876, 123, 754, 21, 56, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4667, 149, 239, 6, 35, "Input"],
+Cell[4909, 157, 848, 24, 57, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5794, 186, 159, 3, 32, "Input"],
+Cell[5956, 191, 737, 22, 143, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

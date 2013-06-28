@@ -1,0 +1,574 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     16224,        565]
+NotebookOptionsPosition[     13712,        476]
+NotebookOutlinePosition[     14047,        491]
+CellTagsIndexPosition[     14004,        488]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Dynamic problems with FEM", "Title",
+ CellChangeTimes->{{3.580352428633185*^9, 3.580352439914383*^9}, {
+  3.580368952918062*^9, 3.580368954971597*^9}}],
+
+Cell["\<\
+by Manuel Diaz, NTU, 2013.07.15.
+Based on Logan\[CloseCurlyQuote]s book Chp. 16 for 1D bars.  \
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.580352444094964*^9, 3.580352493761731*^9}, {
+  3.58036897038427*^9, 3.580369018087652*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Section",
+ CellChangeTimes->{{3.580352497620432*^9, 3.580352499955574*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Quit", "[", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.580352501841467*^9, 3.580352504376503*^9}, 
+   3.580356339330357*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Needs", "[", "\"\<Notation`\>\"", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.58035634034995*^9, 3.580356364845634*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Symbolize", "[", 
+   TemplateBox[{SubscriptBox["x", "_"]},
+    "NotationTemplateTag"], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.580356366574015*^9, 3.580356400629328*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Symbolize", "[", 
+   TemplateBox[{SuperscriptBox[
+      SubscriptBox["N", "_"], "L2"]},
+    "NotationTemplateTag"], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.580367689639023*^9, 3.580367705301062*^9}, {
+  3.580367819955352*^9, 3.580367820851496*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Symbolize", "[", 
+   TemplateBox[{SuperscriptBox[
+      SubscriptBox["B", "_"], "L2"]},
+    "NotationTemplateTag"], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.580367832460014*^9, 3.580367837437298*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Symbolize", "[", 
+   TemplateBox[{SubscriptBox["m", "lumped"]},
+    "NotationTemplateTag"], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.580368684883609*^9, 3.580368689892335*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Goal of this book ", "Section",
+ CellChangeTimes->{{3.580369068693081*^9, 3.580369089137395*^9}, {
+  3.580369119226957*^9, 3.58036912026697*^9}}],
+
+Cell["\<\
+we want to solve here for ODE: \
+\>", "Text",
+ CellChangeTimes->{{3.580369092533072*^9, 3.580369105681705*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"F", "[", "t", "]"}], "-", 
+    RowBox[{"k", " ", "x"}]}], " ", "=", " ", 
+   RowBox[{"m", " ", 
+    RowBox[{"x", "''"}]}]}], ";", " ", 
+  RowBox[{"(", "1", ")"}]}]], "Input",
+ CellChangeTimes->{{3.580369108546912*^9, 3.5803691401402*^9}, 
+   3.580369249250901*^9, 3.58036935919819*^9, {3.580369891282516*^9, 
+   3.580369893025142*^9}}],
+
+Cell["\<\
+using the following transformation \[Omega] = k/m and assume for free \
+vibration, F[t]= 0
+we get, \
+\>", "Text",
+ CellChangeTimes->{{3.580369259091343*^9, 3.580369342592219*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"x", "''"}], "+", " ", 
+    RowBox[{"\[Omega]", " ", "x"}]}], " ", "=", " ", "0"}], ";", " ", 
+  RowBox[{"(", "2", ")"}]}]], "Input",
+ CellChangeTimes->{{3.580369307594057*^9, 3.580369313377398*^9}, {
+  3.580369346710616*^9, 3.580369355537976*^9}, {3.580369895885378*^9, 
+  3.580369897045396*^9}}],
+
+Cell["\<\
+here \[Omega] is called the \[OpenCurlyDoubleQuote]Natual circular frecuency\
+\[CloseCurlyDoubleQuote] of the free vibration of the mass,
+we can also define,\
+\>", "Text",
+ CellChangeTimes->{{3.580369380396897*^9, 3.580369434659486*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[Tau]", " ", "=", " ", 
+   FractionBox[
+    RowBox[{"2", "\[Pi]"}], "\[Omega]"]}], ";"}]], "Input",
+ CellChangeTimes->{{3.580369436586039*^9, 3.580369451812054*^9}}],
+
+Cell["\<\
+here \[Tau] is measured in seconds, Also the frecuency in hertz (Hz =  1/s), \
+\
+\>", "Text",
+ CellChangeTimes->{{3.580369509735026*^9, 3.580369568597269*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"f", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"1", "/", "\[Tau]"}], " ", "=", " ", 
+    RowBox[{"\[Omega]", "/", "\[Pi]"}]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.580369571260152*^9, 3.580369609739273*^9}}],
+
+Cell["\<\
+we are going to develop a simple example to solve equations (1) and (2) for \
+single bar element using the following time integration methods: 
+\tExplicit: Central Method
+\tImplicit: Newmarks-Beta Method
+\tImplicit: Wilson-Theta Method\
+\>", "Text",
+ CellChangeTimes->{{3.580369625577657*^9, 3.58036975283507*^9}, {
+  3.580369904020045*^9, 3.580369920558483*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Derive a bernoulli beam", "Section",
+ CellChangeTimes->{{3.580356425457073*^9, 3.580356448617887*^9}}],
+
+Cell["\<\
+We will derive a the FEM formulation for a beam with differente sections.\
+\>", "Text",
+ CellChangeTimes->{{3.580356452845695*^9, 3.580356538255027*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+strain/displacement and stress/strain relations\
+\>", "Subsection",
+ CellChangeTimes->{{3.580368098497972*^9, 3.580368122505551*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EE", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Elasticity", " ", "Young", " ", "Modulus"}], " ", 
+   "*)"}]}]], "Input",
+ CellChangeTimes->{{3.580368128340128*^9, 3.580368183489337*^9}, {
+  3.580368310051018*^9, 3.580368311495848*^9}}],
+
+Cell[BoxData["EE"], "Output",
+ CellChangeTimes->{3.580368312304148*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+shape function for linear elements\
+\>", "Subsection",
+ CellChangeTimes->{{3.580356411230837*^9, 3.580356411856689*^9}, {
+  3.580367672419578*^9, 3.580367679845546*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   SuperscriptBox[
+    SubscriptBox["N", "1"], "L2"], "=", " ", 
+   RowBox[{"1", "-", 
+    FractionBox["x", "L"]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   SuperscriptBox[
+    SubscriptBox["N", "2"], "L2"], "=", " ", 
+   FractionBox["x", "L"]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.580367710324557*^9, 3.580367763139697*^9}, {
+  3.580368123161643*^9, 3.580368124309603*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  SuperscriptBox[
+   SubscriptBox["N", "e"], "L2"], "=", 
+  RowBox[{"{", 
+   RowBox[{
+    SuperscriptBox[
+     SubscriptBox["N", "1"], "L2"], ",", 
+    SuperscriptBox[
+     SubscriptBox["N", "2"], "L2"]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.580367767171739*^9, 3.580367786435476*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"1", "-", 
+    FractionBox["x", "L"]}], ",", 
+   FractionBox["x", "L"]}], "}"}]], "Output",
+ CellChangeTimes->{3.580367799735959*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  SuperscriptBox[
+   SubscriptBox["B", "e"], "L2"], "=", " ", 
+  RowBox[{
+   SubscriptBox["\[PartialD]", "x"], 
+   SuperscriptBox[
+    SubscriptBox["N", "e"], "L2"]}]}]], "Input",
+ CellChangeTimes->{{3.580367848358726*^9, 3.580367878795863*^9}},
+ FontWeight->"Plain"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"-", 
+    FractionBox["1", "L"]}], ",", 
+   FractionBox["1", "L"]}], "}"}]], "Output",
+ CellChangeTimes->{3.580367884451007*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["stiffness matrix", "Subsection",
+ CellChangeTimes->{{3.580368015077351*^9, 3.580368030168772*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"k", " ", "=", " ", 
+   RowBox[{"A", " ", "EE", 
+    RowBox[{
+     SubsuperscriptBox["\[Integral]", "0", "L"], 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Transpose", "[", 
+        RowBox[{"{", 
+         SuperscriptBox[
+          SubscriptBox["B", "e"], "L2"], "}"}], "]"}], ".", 
+       RowBox[{"{", 
+        SuperscriptBox[
+         SubscriptBox["B", "e"], "L2"], "}"}]}], 
+      RowBox[{"\[DifferentialD]", "x"}]}]}]}]}], " ", 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"k", "//", "MatrixForm"}]}], "Input",
+ CellChangeTimes->{{3.580368188589336*^9, 3.580368210439726*^9}, {
+  3.580368241825802*^9, 3.580368242098851*^9}, {3.580368276780445*^9, 
+  3.580368458973896*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      FractionBox[
+       RowBox[{"A", " ", "EE"}], "L"], 
+      RowBox[{"-", 
+       FractionBox[
+        RowBox[{"A", " ", "EE"}], "L"]}]},
+     {
+      RowBox[{"-", 
+       FractionBox[
+        RowBox[{"A", " ", "EE"}], "L"]}], 
+      FractionBox[
+       RowBox[{"A", " ", "EE"}], "L"]}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{{3.580368330110503*^9, 3.580368460026537*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["mass matrix", "Subsection",
+ CellChangeTimes->{{3.580368033202165*^9, 3.580368035019444*^9}}],
+
+Cell[TextData[{
+ "element consistent mass matrix defined as: ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["m", "e"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "= ",
+ Cell[BoxData[
+  RowBox[{
+   SubsuperscriptBox["\[Integral]", 
+    SubscriptBox["x", "1"], 
+    SubscriptBox["x", "2"]], 
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{"(", 
+      SuperscriptBox["N", "e"], ")"}], "T"], "\[Rho]", " ", "A", " ", 
+    SuperscriptBox["N", "e"], 
+    RowBox[{"\[DifferentialD]", "x"}]}]}]]]
+}], "Text",
+ CellChangeTimes->{{3.580368802485043*^9, 3.580368890953771*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"m", " ", "=", " ", 
+   RowBox[{"\[Rho]", " ", "A", " ", 
+    RowBox[{
+     SubsuperscriptBox["\[Integral]", "0", "L"], 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Transpose", "[", 
+        RowBox[{"{", 
+         SuperscriptBox[
+          SubscriptBox["N", "e"], "L2"], "}"}], "]"}], ".", 
+       RowBox[{"{", 
+        SuperscriptBox[
+         SubscriptBox["N", "e"], "L2"], "}"}]}], 
+      RowBox[{"\[DifferentialD]", "x"}]}]}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"m", " ", "//", "MatrixForm"}]}], "Input",
+ CellChangeTimes->{{3.580368500338202*^9, 3.580368582921053*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      FractionBox[
+       RowBox[{"A", " ", "L", " ", "\[Rho]"}], "3"], 
+      FractionBox[
+       RowBox[{"A", " ", "L", " ", "\[Rho]"}], "6"]},
+     {
+      FractionBox[
+       RowBox[{"A", " ", "L", " ", "\[Rho]"}], "6"], 
+      FractionBox[
+       RowBox[{"A", " ", "L", " ", "\[Rho]"}], "3"]}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{{3.580368571021377*^9, 3.580368583762841*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["lumped mass matrix", "Subsection",
+ CellChangeTimes->{{3.580368484974262*^9, 3.580368489524449*^9}}],
+
+Cell["\<\
+lumped = divided  ->  (like a synonim)\
+\>", "Text",
+ CellChangeTimes->{{3.580368729746043*^9, 3.580368770059991*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   SubscriptBox["m", "lumped"], "=", " ", 
+   RowBox[{
+    FractionBox[
+     RowBox[{"\[Rho]", " ", "A", " ", "L"}], "2"], 
+    RowBox[{"(", GridBox[{
+       {"1", "0"},
+       {"0", "1"}
+      }], ")"}]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.580368671916489*^9, 3.580368724073386*^9}, 
+   3.580369028755597*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Central Difference Method", "Section",
+ CellChangeTimes->{{3.58036994713548*^9, 3.580369953540043*^9}}],
+
+Cell["Assembly equation", "Text",
+ CellChangeTimes->{{3.580370069827551*^9, 3.580370081306886*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"F", "[", "t", "]"}], "}"}], "-", 
+   RowBox[{
+    RowBox[{"[", "k", "]"}], " ", 
+    RowBox[{"{", "d", "}"}]}]}], " ", "=", " ", 
+  RowBox[{
+   RowBox[{"[", "m", "]"}], " ", 
+   RowBox[{"{", 
+    RowBox[{"d", "''"}], "}"}]}]}]], "Input",
+ CellChangeTimes->{{3.580370096349835*^9, 3.580370097974386*^9}, {
+  3.580370212407604*^9, 3.580370229986388*^9}}],
+
+Cell["\<\
+where:
+\t k, is the stiffness matrix
+\t m, is the mass matrix \
+\>", "Text",
+ CellChangeTimes->{{3.580370104176118*^9, 3.580370131001304*^9}}],
+
+Cell["but how to define d and d\[CloseCurlyQuote]\[CloseCurlyQuote]?", "Text",
+ CellChangeTimes->{{3.58037013563684*^9, 3.58037014761048*^9}}],
+
+Cell["using central formulation:", "Text",
+ CellChangeTimes->{{3.580370150745082*^9, 3.580370209352417*^9}, {
+  3.580370244048513*^9, 3.580370307545936*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"d", "\"\<} =\!\(
+\*FractionBox[\(\(TraditionalForm\`\(\(\\\ \)\({
+\*SubscriptBox[\(d\), \(i + 1\)]}\)\)\) - 2 {
+\*SubscriptBox[\(d\), \(i\)]}\\\  + {
+\*SubscriptBox[\(d\), \(i - 1\)]}\), 
+SuperscriptBox[\((\[CapitalDelta]t)\), \(2\)]]\)\>"}]}]], "Input",
+ CellChangeTimes->{{3.580370309613084*^9, 3.580370356058757*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1024, 550},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"9.0 for Linux x86 (32-bit) (February 7, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 157, 2, 93, "Title"],
+Cell[739, 26, 239, 5, 53, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[1003, 35, 99, 1, 81, "Section"],
+Cell[1105, 38, 162, 4, 32, "Input"],
+Cell[1270, 44, 157, 3, 32, "Input"],
+Cell[1430, 49, 211, 5, 45, "Input"],
+Cell[1644, 56, 289, 7, 46, "Input"],
+Cell[1936, 65, 240, 6, 46, "Input"],
+Cell[2179, 73, 216, 5, 45, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2432, 83, 151, 2, 81, "Section"],
+Cell[2586, 87, 121, 3, 31, "Text"],
+Cell[2710, 92, 395, 11, 32, "Input"],
+Cell[3108, 105, 189, 5, 51, "Text"],
+Cell[3300, 112, 356, 9, 32, "Input"],
+Cell[3659, 123, 247, 5, 51, "Text"],
+Cell[3909, 130, 201, 5, 56, "Input"],
+Cell[4113, 137, 169, 4, 31, "Text"],
+Cell[4285, 143, 243, 6, 32, "Input"],
+Cell[4531, 151, 373, 8, 111, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4941, 164, 108, 1, 81, "Section"],
+Cell[5052, 167, 163, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[5240, 174, 143, 3, 45, "Subsection"],
+Cell[CellGroupData[{
+Cell[5408, 181, 257, 6, 32, "Input"],
+Cell[5668, 189, 71, 1, 32, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5788, 196, 179, 4, 45, "Subsection"],
+Cell[5970, 202, 431, 13, 98, "Input"],
+Cell[CellGroupData[{
+Cell[6426, 219, 314, 10, 37, "Input"],
+Cell[6743, 231, 184, 6, 46, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6964, 242, 291, 9, 34, "Input"],
+Cell[7258, 253, 179, 6, 49, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7486, 265, 104, 1, 45, "Subsection"],
+Cell[CellGroupData[{
+Cell[7615, 270, 711, 20, 75, "Input"],
+Cell[8329, 292, 915, 28, 80, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9293, 326, 99, 1, 45, "Subsection"],
+Cell[9395, 329, 575, 19, 40, "Text"],
+Cell[CellGroupData[{
+Cell[9995, 352, 619, 17, 75, "Input"],
+Cell[10617, 371, 923, 26, 80, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11589, 403, 106, 1, 45, "Subsection"],
+Cell[11698, 406, 128, 3, 31, "Text"],
+Cell[11829, 411, 352, 12, 55, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12230, 429, 109, 1, 81, "Section"],
+Cell[12342, 432, 99, 1, 31, "Text"],
+Cell[12444, 435, 417, 13, 32, "Input"],
+Cell[12864, 450, 152, 5, 71, "Text"],
+Cell[13019, 457, 142, 1, 31, "Text"],
+Cell[13164, 460, 157, 2, 31, "Text"],
+Cell[13324, 464, 360, 8, 60, "Input"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

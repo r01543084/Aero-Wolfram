@@ -1,0 +1,931 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     31764,        922]
+NotebookOptionsPosition[     28677,        817]
+NotebookOutlinePosition[     29033,        833]
+CellTagsIndexPosition[     28990,        830]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Bernoulli vs Timoshenko Beams", "Title",
+ CellChangeTimes->{{3.58079831956083*^9, 3.580798348119776*^9}, {
+  3.580798384526186*^9, 3.580798384975398*^9}}],
+
+Cell["\<\
+by Manuel Diaz, NTU. 2013.08.21
+References:\
+\>", "Subtitle",
+ CellChangeTimes->{{3.580798350699587*^9, 3.580798452542206*^9}}],
+
+Cell["\<\
+1. Chen, David; Lecture Notes on Finite Element Method. Ch. 5, NTU Spring \
+2013.\
+\>", "Subsubsection",
+ CellChangeTimes->{{3.580798455546022*^9, 3.580798504521137*^9}, {
+   3.580798547122669*^9, 3.58079855083015*^9}, {3.580798592749783*^9, 
+   3.580798611880874*^9}, {3.580798648635394*^9, 3.580798665715734*^9}, {
+   3.580799938214731*^9, 3.58079993828261*^9}, 3.580868058175909*^9}],
+
+Cell["\<\
+2. Ferreira, AJM; Matlab Codes for Finite Element Analysis. Ch. 10, Springer \
+2007.\
+\>", "Subsubsection",
+ CellChangeTimes->{{3.580798560123241*^9, 3.580798674616223*^9}, {
+   3.580798768969568*^9, 3.580798771599166*^9}, {3.580799941207563*^9, 
+   3.580799941332553*^9}, 3.580868060046281*^9}],
+
+Cell["\<\
+3. Wu. Enboa, et al. Modal Testing. Experiment in Applied Mechanics, NTU, IAM \
+2002.\
+\>", "Subsubsection",
+ CellChangeTimes->{{3.580868028056344*^9, 3.580868033616248*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Preamble ", "Section",
+ CellChangeTimes->{{3.580800052203377*^9, 3.580800073868439*^9}, {
+  3.580800436618937*^9, 3.580800437925236*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Quit", "[", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.580800152740576*^9, 3.580800154475481*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<Notation`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.580800101085142*^9, 3.580800136064752*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Symbolize", "[", 
+   TemplateBox[{SubscriptBox["u", "_"]},
+    "NotationTemplateTag"], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Symbolize", "[", 
+   TemplateBox[{SuperscriptBox[
+      SubscriptBox["u", "_"], "A"]},
+    "NotationTemplateTag"], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Symbolize", "[", 
+   TemplateBox[{SuperscriptBox[
+      SubscriptBox["u", "_"], "B"]},
+    "NotationTemplateTag"], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.580800192802057*^9, 3.580800212406128*^9}, 
+   3.580800334564093*^9, {3.580800729439247*^9, 3.580800748116353*^9}, {
+   3.580803809149241*^9, 3.580803821182114*^9}, {3.580864818376914*^9, 
+   3.580864824328859*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Symbolize", "[", 
+   TemplateBox[{FractionBox[
+      RowBox[{"\[PartialD]", "f_"}], 
+      RowBox[{"\[PartialD]", "x_"}]]},
+    "NotationTemplateTag"], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Symbolize", "[", 
+   TemplateBox[{FractionBox[
+      RowBox[{
+        SuperscriptBox["\[PartialD]", "2"], "f_"}], 
+      RowBox[{"\[PartialD]", 
+        SuperscriptBox["x_", "2"]}]]},
+    "NotationTemplateTag"], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.580800741965638*^9, 3.580800744337073*^9}, {
+  3.58080101622474*^9, 3.580801039490101*^9}, {3.580801130914951*^9, 
+  3.580801157049585*^9}}],
+
+Cell[BoxData[{
+ RowBox[{"Notation", "[", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox[
+        RowBox[{"\[PartialD]", "f_"}], 
+        RowBox[{"\[PartialD]", "x_"}]], " "}]},
+    "NotationTemplateTag"], " ", "\[DoubleLongRightArrow]", " ", 
+   TemplateBox[{RowBox[{"D", "[", 
+       RowBox[{"f_", ",", 
+         RowBox[{"{", 
+           RowBox[{"x_", ",", "1"}], "}"}]}], "]"}]},
+    "NotationTemplateTag"]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Notation", "[", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox[
+        RowBox[{
+          SuperscriptBox["\[PartialD]", "n_"], "f_"}], 
+        RowBox[{"\[PartialD]", 
+          SuperscriptBox["x_", "n_"]}]], " "}]},
+    "NotationTemplateTag"], " ", "\[DoubleLongRightArrow]", " ", 
+   TemplateBox[{RowBox[{"D", "[", 
+       RowBox[{"f_", ",", 
+         RowBox[{"{", 
+           RowBox[{"x_", ",", "n_"}], "}"}]}], "]"}]},
+    "NotationTemplateTag"]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.580800359926207*^9, 3.580800367643944*^9}, {
+  3.580800966914803*^9, 3.580800977751973*^9}, {3.580801581378815*^9, 
+  3.580801600830318*^9}, {3.580801901047524*^9, 3.580801901534395*^9}, {
+  3.580802041502276*^9, 3.580802063813881*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Small", " ", "angle", " ", "approximation"}], ",", " ", 
+    RowBox[{
+     RowBox[{"Sin", "[", "\[Theta]", "]"}], " ", "\[TildeTilde]", " ", 
+     "\[Theta]"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Sin", "[", "\[Theta]", "]"}], " ", "/.", 
+    RowBox[{"\[Theta]", "\[Rule]", "0.125"}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Cos", "[", "\[Theta]", "]"}], " ", "/.", 
+    RowBox[{"\[Theta]", "\[Rule]", "0.125"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.58080354737128*^9, 3.580803722925253*^9}, {
+  3.580804014499317*^9, 3.580804067290179*^9}, {3.580804380587379*^9, 
+  3.580804420524218*^9}, {3.580805482808158*^9, 3.580805492845669*^9}, {
+  3.580805528663535*^9, 3.580805544776427*^9}}],
+
+Cell[BoxData["0.12467473338522769`"], "Output",
+ CellChangeTimes->{{3.580803582769649*^9, 3.580803723556052*^9}, {
+  3.580804384889132*^9, 3.580804421104593*^9}}],
+
+Cell[BoxData["0.992197667229329`"], "Output",
+ CellChangeTimes->{{3.580803582769649*^9, 3.580803723556052*^9}, {
+  3.580804384889132*^9, 3.580804421114771*^9}}]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.580800044805914*^9, 3.580800049011308*^9}}],
+
+Cell["\<\
+The major simplification in beam theory is to assume how a beam deform. There \
+are two major theories for describing the behavior of beam: Euler-Bernoulli \
+beam theory, also called engineering beam theory, and Timoshenko beam theory. \
+\>", "Text",
+ CellChangeTimes->{{3.580798821053189*^9, 3.580798928659812*^9}}],
+
+Cell["\<\
+We considere first as shown in figure (1) in [1], that the x-axis is placed \
+coincident with the centroid of the cross section A, here it will be called \
+midline. The only independent variable x and everything in the beam theory is \
+a function of x.\
+\>", "Text",
+ CellChangeTimes->{{3.580798939500464*^9, 3.580799079590011*^9}, {
+  3.580799954676009*^9, 3.580799956228638*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Bernoulli Beam", "Section",
+ CellChangeTimes->{{3.580799121879178*^9, 3.58079912451737*^9}, {
+  3.580799344314881*^9, 3.580799346685881*^9}}],
+
+Cell["\<\
+The key assumptions in the bernoulli beam theory are
+1. Mid-surface plane remains in mid-surface after bending
+2. Cross section remain straight and perpendicular to mid-surface\
+\>", "Text",
+ CellChangeTimes->{{3.580799141283729*^9, 3.580799312838987*^9}, {
+  3.580799400071165*^9, 3.580799447941421*^9}, {3.580799542479755*^9, 
+  3.580799585693738*^9}}],
+
+Cell["\<\
+I.e., any section remains normal and straigth to the midline before and \
+during the deformation\
+\>", "Text",
+ CellChangeTimes->{{3.580799677982186*^9, 3.580799754399123*^9}}],
+
+Cell["\<\
+Examing figure 1, we can do derive the following kinematica relations:\
+\>", "Text",
+ CellChangeTimes->{{3.580799967917327*^9, 3.580800020325411*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["u", "x"], "[", "y", "]"}], ";", "  ", 
+    RowBox[{
+     RowBox[{"small", " ", "x"}], "-", "displacements"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["u", "y"], "[", "x", "]"}], ";", "  ", 
+    RowBox[{
+     RowBox[{"small", " ", "y"}], "-", "displacements"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox[
+      SubscriptBox["u", "x"], "A"], ";", " ", 
+     RowBox[{
+     "displacements", " ", "of", " ", "the", " ", "middle", " ", "plane"}]}], 
+    ",", " ", 
+    RowBox[{
+     RowBox[{"here", " ", "considered"}], " ", "=", " ", "0"}]}], " ", "*)"}],
+   "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox[
+      SubscriptBox["u", "y"], "A"], ";", " ", 
+     RowBox[{
+     "displacements", " ", "of", " ", "the", " ", "middle", " ", "plane"}]}], 
+    ",", " ", 
+    RowBox[{
+     RowBox[{"here", " ", "considered"}], " ", "=", " ", "0"}]}], " ", "*)"}],
+   "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox[
+      SubscriptBox["u", "x"], "B"], ";", " ", 
+     RowBox[{
+     "displacements", " ", "of", " ", "the", " ", "middle", " ", "plane"}]}], 
+    ",", " ", 
+    RowBox[{"here", " ", "considered", " ", "constant"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox[
+      SubscriptBox["u", "y"], "B"], ";", " ", 
+     RowBox[{
+     "displacements", " ", "of", " ", "the", " ", "middle", " ", "plane"}]}], 
+    ",", " ", 
+    RowBox[{"here", " ", "considered", " ", "constant"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.580800514918388*^9, 3.58080057451464*^9}, {
+   3.580801179870018*^9, 3.580801193474217*^9}, {3.580801237131241*^9, 
+   3.580801261696054*^9}, {3.580802606534136*^9, 3.580802670525659*^9}, {
+   3.580802711239961*^9, 3.580802717625165*^9}, {3.58080328137771*^9, 
+   3.580803287855902*^9}, {3.5808034603843*^9, 3.580803468618583*^9}, {
+   3.580803851864725*^9, 3.580803927657276*^9}, {3.580803981313116*^9, 
+   3.580803999360722*^9}, 3.580804090746064*^9, {3.58080544293195*^9, 
+   3.580805473841059*^9}, {3.580805586170328*^9, 3.580805587658586*^9}, {
+   3.580805807535714*^9, 3.580805824490623*^9}, {3.580867910978241*^9, 
+   3.580867925169802*^9}}],
+
+Cell[TextData[StyleBox["Kinematic relations:", "Subsection"]], "Text",
+ CellChangeTimes->{{3.580865206359683*^9, 3.580865219748502*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"\[Beta]", " ", "=", " ", 
+   FractionBox[
+    RowBox[{"\[PartialD]", 
+     RowBox[{
+      SubscriptBox["u", "y"], "[", "x", "]"}]}], 
+    RowBox[{"\[PartialD]", "x"}]]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   SuperscriptBox[
+    SubscriptBox["u", "x"], "A"], "=", " ", "0"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   SuperscriptBox[
+    SubscriptBox["u", "x"], "B"], "=", " ", 
+   RowBox[{
+    RowBox[{"-", " ", "y"}], " ", "\[Beta]"}]}], ";", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    SuperscriptBox[
+     SubscriptBox["u", "x"], "B"], "=", " ", 
+    RowBox[{
+     RowBox[{"-", " ", "y"}], " ", 
+     RowBox[{"Sin", "[", "\[Theta]", "]"}], " ", "but", " ", "using", " ", 
+     "the", " ", "small", " ", "angle", " ", 
+     RowBox[{"assumption", ":"}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   SubscriptBox["u", "x"], "=", " ", 
+   RowBox[{
+    SuperscriptBox[
+     SubscriptBox["u", "x"], "A"], "+", " ", 
+    SuperscriptBox[
+     SubscriptBox["u", "x"], "B"]}]}]}]}], "Input",
+ CellChangeTimes->{{3.580864730675623*^9, 3.580864761987337*^9}, 
+   3.580864888654462*^9, {3.580864960510505*^9, 3.580865019898009*^9}, {
+   3.580865067427732*^9, 3.580865095988856*^9}, {3.58086673502522*^9, 
+   3.580866746725381*^9}, {3.580867467458718*^9, 3.580867473755876*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "y"}], " ", 
+  RowBox[{
+   SuperscriptBox[
+    SubscriptBox["u", "y"], "\[Prime]",
+    MultilineFunction->None], "[", "x", "]"}]}]], "Output",
+ CellChangeTimes->{3.580865159061911*^9, 3.580867488105225*^9, 
+  3.580868903726843*^9}]
+}, Open  ]],
+
+Cell[TextData[StyleBox["Strain relations:", "Subsection"]], "Text",
+ CellChangeTimes->{{3.580865185404532*^9, 3.580865216940586*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  SubscriptBox["\[Epsilon]", "xx"], "=", " ", 
+  FractionBox[
+   RowBox[{"\[PartialD]", 
+    SubscriptBox["u", "x"]}], 
+   RowBox[{"\[PartialD]", "x"}]]}], "\[IndentingNewLine]", 
+ RowBox[{
+  SubscriptBox["\[Epsilon]", "yy"], "=", " ", 
+  FractionBox[
+   RowBox[{"\[PartialD]", 
+    RowBox[{
+     SubscriptBox["u", "y"], "[", "x", "]"}]}], 
+   RowBox[{"\[PartialD]", "y"}]]}], "\[IndentingNewLine]", 
+ RowBox[{
+  SubscriptBox["\[Gamma]", "xy"], "=", " ", 
+  RowBox[{
+   FractionBox[
+    RowBox[{"\[PartialD]", 
+     SubscriptBox["u", "x"]}], 
+    RowBox[{"\[PartialD]", "y"}]], "+", 
+   FractionBox[
+    RowBox[{"\[PartialD]", 
+     RowBox[{
+      SubscriptBox["u", "y"], "[", "x", "]"}]}], 
+    RowBox[{"\[PartialD]", "x"}]]}]}]}], "Input",
+ CellChangeTimes->{{3.580800924618925*^9, 3.580800944485769*^9}, {
+   3.580802842090791*^9, 3.58080288507915*^9}, 3.580803355874813*^9, {
+   3.580803421491559*^9, 3.580803453782371*^9}, 3.580804199594984*^9, {
+   3.580804570192513*^9, 3.580804574930456*^9}, {3.580804687153736*^9, 
+   3.580804690456361*^9}, {3.580804789798793*^9, 3.58080479298436*^9}, {
+   3.580804834121006*^9, 3.580804834325715*^9}, {3.580804865850876*^9, 
+   3.580804878925792*^9}, {3.580805121159546*^9, 3.580805131322517*^9}, {
+   3.580805223124731*^9, 3.580805223290221*^9}, 3.580805259302494*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "y"}], " ", 
+  RowBox[{
+   SuperscriptBox[
+    SubscriptBox["u", "y"], "\[Prime]\[Prime]",
+    MultilineFunction->None], "[", "x", "]"}]}]], "Output",
+ CellChangeTimes->{
+  3.58080329563338*^9, 3.580804200493914*^9, 3.580804575899218*^9, {
+   3.580804671271938*^9, 3.580804690969431*^9}, 3.58080475833506*^9, 
+   3.580804794673595*^9, {3.580804835157938*^9, 3.580804879955713*^9}, 
+   3.580805134582608*^9, 3.580805224422784*^9, 3.580805259976659*^9, 
+   3.580865164579266*^9, 3.580867497492195*^9, 3.580868907171985*^9}],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{
+  3.58080329563338*^9, 3.580804200493914*^9, 3.580804575899218*^9, {
+   3.580804671271938*^9, 3.580804690969431*^9}, 3.58080475833506*^9, 
+   3.580804794673595*^9, {3.580804835157938*^9, 3.580804879955713*^9}, 
+   3.580805134582608*^9, 3.580805224422784*^9, 3.580805259976659*^9, 
+   3.580865164579266*^9, 3.580867497492195*^9, 3.58086890717756*^9}],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{
+  3.58080329563338*^9, 3.580804200493914*^9, 3.580804575899218*^9, {
+   3.580804671271938*^9, 3.580804690969431*^9}, 3.58080475833506*^9, 
+   3.580804794673595*^9, {3.580804835157938*^9, 3.580804879955713*^9}, 
+   3.580805134582608*^9, 3.580805224422784*^9, 3.580805259976659*^9, 
+   3.580865164579266*^9, 3.580867497492195*^9, 3.580868907183429*^9}]
+}, Open  ]],
+
+Cell["\<\
+Observer that the strain thourgh the thickness and the shear strain, booth \
+vanishes!\
+\>", "Text",
+ CellChangeTimes->{{3.580865311758998*^9, 3.580865327303582*^9}, {
+  3.580865358498199*^9, 3.580865389285719*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Material Laws", "Subsection",
+ CellChangeTimes->{{3.580868458737684*^9, 3.580868465224622*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"EE", " ", ":", " ", 
+    RowBox[{
+     RowBox[{"young", "'"}], "s", " ", "modulus"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"II", " ", ":", " ", 
+    RowBox[{"Cross", " ", "section", " ", "innertia"}]}], " ", 
+   "*)"}]}]], "Input",
+ CellChangeTimes->{{3.580868666792304*^9, 3.580868700583239*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"k", " ", "=", " ", 
+   FractionBox[
+    RowBox[{"\[PartialD]", "\[Beta]"}], 
+    RowBox[{"\[PartialD]", "x"}]]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"moment", " ", "=", " ", 
+  RowBox[{"EE", " ", "II", " ", "k"}]}]}], "Input",
+ CellChangeTimes->{{3.58086871194382*^9, 3.580868735333744*^9}}],
+
+Cell[BoxData[
+ RowBox[{"EE", " ", "II", " ", 
+  RowBox[{
+   SuperscriptBox[
+    SubscriptBox["u", "y"], "\[Prime]\[Prime]",
+    MultilineFunction->None], "[", "x", "]"}]}]], "Output",
+ CellChangeTimes->{3.580868735945158*^9, 3.580868912217488*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "Correction", " ", "factor", " ", "due", " ", "to", " ", "shear", " ", 
+     "stress"}], ",", " ", 
+    RowBox[{"here", " ", "taken", " ", "as", " ", 
+     RowBox[{"5", "/", "3"}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"GG", " ", ":", " ", 
+    RowBox[{"rigidity", " ", "modulus"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"AA", " ", ":", " ", 
+    RowBox[{"Cross", " ", "Section", " ", "Area"}]}], " ", "*)"}]}]], "Input",\
+
+ CellChangeTimes->{{3.580868775732274*^9, 3.58086884591137*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"shear", " ", "=", " ", 
+  RowBox[{"\[Alpha]", " ", "GG", " ", "AA", " ", 
+   SubscriptBox["\[Gamma]", "xy"]}]}]], "Input",
+ CellChangeTimes->{{3.580868762768645*^9, 3.580868771808448*^9}, {
+  3.58086882966502*^9, 3.580868869519394*^9}}],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{3.580868872392404*^9, 3.580868916371844*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Timoshenko Beam", "Section",
+ CellChangeTimes->{{3.580799324857316*^9, 3.580799349019911*^9}}],
+
+Cell["\<\
+Here the only assumption taken is  
+1. Mid-surface plane remains in mid-surface after bending\
+\>", "Text",
+ CellChangeTimes->{{3.58079938158725*^9, 3.580799390394191*^9}, {
+  3.580799598703578*^9, 3.580799631842245*^9}}],
+
+Cell["\<\
+I.e., the sections remain plane but not necesarilly normal to the midline.\
+\>", "Text",
+ CellChangeTimes->{{3.580799759252252*^9, 3.580799802499324*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["u", "x"], "[", "y", "]"}], ";", "  ", 
+    RowBox[{
+     RowBox[{"small", " ", "x"}], "-", "displacements"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["u", "y"], "[", "x", "]"}], ";", "  ", 
+    RowBox[{
+     RowBox[{"small", " ", "y"}], "-", "displacements"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox[
+      SubscriptBox["u", "x"], "A"], ";", " ", 
+     RowBox[{
+     "displacements", " ", "of", " ", "the", " ", "middle", " ", "plane"}]}], 
+    ",", " ", 
+    RowBox[{
+     RowBox[{"here", " ", "considered"}], " ", "=", " ", "0"}]}], " ", "*)"}],
+   "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox[
+      SubscriptBox["u", "y"], "A"], ";", " ", 
+     RowBox[{
+     "displacements", " ", "of", " ", "the", " ", "middle", " ", "plane"}]}], 
+    ",", " ", 
+    RowBox[{
+     RowBox[{"here", " ", "considered"}], " ", "=", " ", "0"}]}], " ", "*)"}],
+   "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox[
+      SubscriptBox["u", "x"], "B"], ";", " ", 
+     RowBox[{
+     "displacements", " ", "of", " ", "the", " ", "middle", " ", "plane"}]}], 
+    ",", " ", 
+    RowBox[{"here", " ", "considered", " ", "constant"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox[
+      SubscriptBox["u", "y"], "B"], ";", " ", 
+     RowBox[{
+     "displacements", " ", "of", " ", "the", " ", "middle", " ", "plane"}]}], 
+    ",", " ", 
+    RowBox[{"here", " ", "considered", " ", "constant"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.580800514918388*^9, 3.58080057451464*^9}, {
+   3.580801179870018*^9, 3.580801193474217*^9}, {3.580801237131241*^9, 
+   3.580801261696054*^9}, {3.580802606534136*^9, 3.580802670525659*^9}, {
+   3.580802711239961*^9, 3.580802717625165*^9}, {3.58080328137771*^9, 
+   3.580803287855902*^9}, {3.5808034603843*^9, 3.580803468618583*^9}, {
+   3.580803851864725*^9, 3.580803927657276*^9}, {3.580803981313116*^9, 
+   3.580803999360722*^9}, 3.580804090746064*^9, {3.58080544293195*^9, 
+   3.580805473841059*^9}, {3.580805586170328*^9, 3.580805587658586*^9}, {
+   3.580805807535714*^9, 3.580805824490623*^9}, {3.580867867354032*^9, 
+   3.580867900826883*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Kinematic Relations", "Subsection",
+ CellChangeTimes->{{3.580868248227849*^9, 3.580868251745713*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[Beta]", " ", "=", " ", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"\[PartialD]", 
+       RowBox[{
+        SubscriptBox["u", "y"], "[", "x", "]"}]}], 
+      RowBox[{"\[PartialD]", "x"}]], " ", "-", " ", "\[Theta]"}]}], ";"}], 
+  " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   SuperscriptBox[
+    SubscriptBox["u", "x"], "A"], "=", " ", "0"}], ";", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    SuperscriptBox[
+     SubscriptBox["u", "x"], "B"], "=", " ", 
+    RowBox[{
+     RowBox[{"-", " ", "y"}], " ", 
+     RowBox[{"Sin", "[", "\[Theta]", "]"}], " ", "but", " ", "using", " ", 
+     "the", " ", "small", " ", "angle", " ", 
+     RowBox[{"assumption", ":"}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   SuperscriptBox[
+    SubscriptBox["u", "x"], "B"], "=", " ", 
+   RowBox[{
+    RowBox[{"-", " ", "y"}], " ", "\[Beta]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  SubscriptBox["u", "x"], "=", " ", 
+  RowBox[{
+   RowBox[{
+    SuperscriptBox[
+     SubscriptBox["u", "x"], "A"], "+", " ", 
+    SuperscriptBox[
+     SubscriptBox["u", "x"], "B"]}], " ", "//", "Simplify"}]}]}], "Input",
+ CellChangeTimes->{{3.580864730675623*^9, 3.580864761987337*^9}, 
+   3.580864888654462*^9, {3.580864960510505*^9, 3.580865019898009*^9}, {
+   3.580865067427732*^9, 3.580865095988856*^9}, {3.580866388766533*^9, 
+   3.580866392809719*^9}, {3.580866451317822*^9, 3.580866452329153*^9}, {
+   3.580866714567117*^9, 3.580866720253304*^9}, {3.580866762563237*^9, 
+   3.580866768540578*^9}, {3.580867260807389*^9, 3.580867263587189*^9}, {
+   3.580867314542636*^9, 3.580867316575916*^9}, {3.580867402201462*^9, 
+   3.580867431690767*^9}, {3.580867539817902*^9, 3.580867543768273*^9}}],
+
+Cell[BoxData[
+ RowBox[{"y", " ", 
+  RowBox[{"(", 
+   RowBox[{"\[Theta]", "-", 
+    RowBox[{
+     SuperscriptBox[
+      SubscriptBox["u", "y"], "\[Prime]",
+      MultilineFunction->None], "[", "x", "]"}]}], ")"}]}]], "Output",
+ CellChangeTimes->{
+  3.580865159061911*^9, 3.580866461975481*^9, {3.580867410670854*^9, 
+   3.580867432328556*^9}, {3.580867544721969*^9, 3.580867553781478*^9}, 
+   3.580867607968763*^9}]
+}, Open  ]],
+
+Cell[TextData[StyleBox["Strain relations", "Subsection"]], "Text",
+ CellChangeTimes->{{3.580865185404532*^9, 3.580865216940586*^9}, 
+   3.580868209169258*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  SubscriptBox["\[Epsilon]", "xx"], "=", " ", 
+  FractionBox[
+   RowBox[{"\[PartialD]", 
+    SubscriptBox["u", "x"]}], 
+   RowBox[{"\[PartialD]", "x"}]]}], "\[IndentingNewLine]", 
+ RowBox[{
+  SubscriptBox["\[Epsilon]", "yy"], "=", " ", 
+  FractionBox[
+   RowBox[{"\[PartialD]", 
+    RowBox[{
+     SubscriptBox["u", "y"], "[", "x", "]"}]}], 
+   RowBox[{"\[PartialD]", "y"}]]}], "\[IndentingNewLine]", 
+ RowBox[{
+  SubscriptBox["\[Gamma]", "xy"], "=", " ", 
+  RowBox[{
+   FractionBox[
+    RowBox[{"\[PartialD]", 
+     SubscriptBox["u", "x"]}], 
+    RowBox[{"\[PartialD]", "y"}]], "+", 
+   FractionBox[
+    RowBox[{"\[PartialD]", 
+     RowBox[{
+      SubscriptBox["u", "y"], "[", "x", "]"}]}], 
+    RowBox[{"\[PartialD]", "x"}]]}]}]}], "Input",
+ CellChangeTimes->{{3.580800924618925*^9, 3.580800944485769*^9}, {
+   3.580802842090791*^9, 3.58080288507915*^9}, 3.580803355874813*^9, {
+   3.580803421491559*^9, 3.580803453782371*^9}, 3.580804199594984*^9, {
+   3.580804570192513*^9, 3.580804574930456*^9}, {3.580804687153736*^9, 
+   3.580804690456361*^9}, {3.580804789798793*^9, 3.58080479298436*^9}, {
+   3.580804834121006*^9, 3.580804834325715*^9}, {3.580804865850876*^9, 
+   3.580804878925792*^9}, {3.580805121159546*^9, 3.580805131322517*^9}, {
+   3.580805223124731*^9, 3.580805223290221*^9}, 3.580805259302494*^9, {
+   3.580868612592625*^9, 3.580868639194171*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "y"}], " ", 
+  RowBox[{
+   SuperscriptBox[
+    SubscriptBox["u", "y"], "\[Prime]\[Prime]",
+    MultilineFunction->None], "[", "x", "]"}]}]], "Output",
+ CellChangeTimes->{
+  3.58080329563338*^9, 3.580804200493914*^9, 3.580804575899218*^9, {
+   3.580804671271938*^9, 3.580804690969431*^9}, 3.58080475833506*^9, 
+   3.580804794673595*^9, {3.580804835157938*^9, 3.580804879955713*^9}, 
+   3.580805134582608*^9, 3.580805224422784*^9, 3.580805259976659*^9, 
+   3.580865164579266*^9, 3.580866515153248*^9, 3.580867446427695*^9, 
+   3.580867547350114*^9, 3.580867612811403*^9, {3.580868614619005*^9, 
+   3.580868640232741*^9}}],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{
+  3.58080329563338*^9, 3.580804200493914*^9, 3.580804575899218*^9, {
+   3.580804671271938*^9, 3.580804690969431*^9}, 3.58080475833506*^9, 
+   3.580804794673595*^9, {3.580804835157938*^9, 3.580804879955713*^9}, 
+   3.580805134582608*^9, 3.580805224422784*^9, 3.580805259976659*^9, 
+   3.580865164579266*^9, 3.580866515153248*^9, 3.580867446427695*^9, 
+   3.580867547350114*^9, 3.580867612811403*^9, {3.580868614619005*^9, 
+   3.580868640243092*^9}}],
+
+Cell[BoxData["\[Theta]"], "Output",
+ CellChangeTimes->{
+  3.58080329563338*^9, 3.580804200493914*^9, 3.580804575899218*^9, {
+   3.580804671271938*^9, 3.580804690969431*^9}, 3.58080475833506*^9, 
+   3.580804794673595*^9, {3.580804835157938*^9, 3.580804879955713*^9}, 
+   3.580805134582608*^9, 3.580805224422784*^9, 3.580805259976659*^9, 
+   3.580865164579266*^9, 3.580866515153248*^9, 3.580867446427695*^9, 
+   3.580867547350114*^9, 3.580867612811403*^9, {3.580868614619005*^9, 
+   3.580868640253676*^9}}]
+}, Open  ]],
+
+Cell["\<\
+Observer that only the strain thourgh the thickness vanishes!\
+\>", "Text",
+ CellChangeTimes->{{3.580865311758998*^9, 3.580865327303582*^9}, {
+  3.580865358498199*^9, 3.580865389285719*^9}, {3.580867656116594*^9, 
+  3.580867662738315*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Material Laws", "Subsection",
+ CellChangeTimes->{{3.580868458737684*^9, 3.580868465224622*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"EE", " ", ":", " ", 
+    RowBox[{
+     RowBox[{"young", "'"}], "s", " ", "modulus"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"II", " ", ":", " ", 
+    RowBox[{"Cross", " ", "section", " ", "innertia"}]}], " ", 
+   "*)"}]}]], "Input",
+ CellChangeTimes->{{3.580868666792304*^9, 3.580868700583239*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"k", " ", "=", " ", 
+   FractionBox[
+    RowBox[{"\[PartialD]", "\[Beta]"}], 
+    RowBox[{"\[PartialD]", "x"}]]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"moment", " ", "=", " ", 
+  RowBox[{"EE", " ", "II", " ", "k"}]}]}], "Input",
+ CellChangeTimes->{{3.58086871194382*^9, 3.580868735333744*^9}}],
+
+Cell[BoxData[
+ RowBox[{"EE", " ", "II", " ", 
+  RowBox[{
+   SuperscriptBox[
+    SubscriptBox["u", "y"], "\[Prime]\[Prime]",
+    MultilineFunction->None], "[", "x", "]"}]}]], "Output",
+ CellChangeTimes->{3.580868735945158*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Shear", " ", "correction", " ", 
+     RowBox[{"factor", ".", " ", "Some"}], " ", 
+     RowBox[{"refs", ".", " ", "mention"}], " ", "that", " ", "it", " ", 
+     "takes", " ", "into", " ", "account", " ", "non"}], "-", 
+    RowBox[{"straight", " ", "cross", " ", 
+     RowBox[{"sections", ".", " ", "Here"}], " ", "is", " ", "taken", " ", 
+     "as", " ", 
+     RowBox[{"5", "/", "6"}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"GG", " ", ":", " ", 
+    RowBox[{"rigidity", " ", "modulus"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"AA", " ", ":", " ", 
+    RowBox[{"Cross", " ", "Section", " ", "Area"}]}], " ", "*)"}]}]], "Input",\
+
+ CellChangeTimes->{{3.580868775732274*^9, 3.58086884591137*^9}, {
+  3.580868944778566*^9, 3.580868972096507*^9}, {3.580869183122473*^9, 
+  3.580869218759415*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"shear", " ", "=", " ", 
+  RowBox[{"\[Alpha]", " ", "GG", " ", "AA", " ", 
+   SubscriptBox["\[Gamma]", "xy"]}]}]], "Input",
+ CellChangeTimes->{{3.580868762768645*^9, 3.580868771808448*^9}, {
+  3.58086882966502*^9, 3.580868869519394*^9}}],
+
+Cell[BoxData[
+ RowBox[{"AA", " ", "GG", " ", "\[Alpha]", " ", "\[Theta]"}]], "Output",
+ CellChangeTimes->{3.580868872392404*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1024, 550},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+ShowSelection->True,
+FrontEndVersion->"9.0 for Linux x86 (32-bit) (February 7, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 160, 2, 93, "Title"],
+Cell[742, 26, 137, 4, 81, "Subtitle"],
+Cell[882, 32, 396, 7, 35, "Subsubsection"],
+Cell[1281, 41, 305, 6, 29, "Subsubsection"],
+Cell[1589, 49, 184, 4, 29, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[1798, 57, 143, 2, 51, "Section"],
+Cell[1944, 61, 136, 3, 32, "Input"],
+Cell[2083, 66, 140, 2, 32, "Input"],
+Cell[2226, 70, 733, 18, 115, "Input"],
+Cell[2962, 90, 646, 17, 138, "Input"],
+Cell[3611, 109, 1201, 30, 134, "Input"],
+Cell[CellGroupData[{
+Cell[4837, 143, 807, 18, 77, "Input"],
+Cell[5647, 163, 162, 2, 32, "Output"],
+Cell[5812, 167, 160, 2, 32, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[6021, 175, 97, 1, 51, "Section"],
+Cell[6121, 178, 326, 5, 51, "Text"],
+Cell[6450, 185, 391, 7, 51, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6878, 197, 147, 2, 81, "Section"],
+Cell[7028, 201, 364, 7, 71, "Text"],
+Cell[7395, 210, 186, 4, 31, "Text"],
+Cell[7584, 216, 160, 3, 31, "Text"],
+Cell[7747, 221, 2471, 67, 168, "Input"],
+Cell[10221, 290, 136, 1, 39, "Text"],
+Cell[CellGroupData[{
+Cell[10382, 295, 1347, 38, 128, "Input"],
+Cell[11732, 335, 270, 8, 34, "Output"]
+}, Open  ]],
+Cell[12017, 346, 133, 1, 39, "Text"],
+Cell[CellGroupData[{
+Cell[12175, 351, 1338, 33, 167, "Input"],
+Cell[13516, 386, 560, 12, 34, "Output"],
+Cell[14079, 400, 398, 6, 32, "Output"],
+Cell[14480, 408, 399, 6, 32, "Output"]
+}, Open  ]],
+Cell[14894, 417, 225, 5, 31, "Text"],
+Cell[CellGroupData[{
+Cell[15144, 426, 101, 1, 45, "Subsection"],
+Cell[15248, 429, 393, 11, 55, "Input"],
+Cell[CellGroupData[{
+Cell[15666, 444, 332, 8, 82, "Input"],
+Cell[16001, 454, 247, 6, 34, "Output"]
+}, Open  ]],
+Cell[16263, 463, 636, 17, 77, "Input"],
+Cell[CellGroupData[{
+Cell[16924, 484, 260, 5, 34, "Input"],
+Cell[17187, 491, 92, 1, 32, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17340, 499, 100, 1, 81, "Section"],
+Cell[17443, 502, 231, 5, 51, "Text"],
+Cell[17677, 509, 164, 3, 31, "Text"],
+Cell[17844, 514, 2471, 67, 168, "Input"],
+Cell[CellGroupData[{
+Cell[20340, 585, 107, 1, 45, "Subsection"],
+Cell[CellGroupData[{
+Cell[20472, 590, 1733, 44, 128, "Input"],
+Cell[22208, 636, 414, 11, 34, "Output"]
+}, Open  ]],
+Cell[22637, 650, 158, 2, 39, "Text"],
+Cell[CellGroupData[{
+Cell[22820, 656, 1388, 34, 167, "Input"],
+Cell[24211, 692, 658, 14, 34, "Output"],
+Cell[24872, 708, 497, 8, 32, "Output"],
+Cell[25372, 718, 504, 8, 32, "Output"]
+}, Open  ]],
+Cell[25891, 729, 249, 5, 31, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[26177, 739, 101, 1, 45, "Subsection"],
+Cell[26281, 742, 393, 11, 55, "Input"],
+Cell[CellGroupData[{
+Cell[26699, 757, 332, 8, 82, "Input"],
+Cell[27034, 767, 225, 6, 34, "Output"]
+}, Open  ]],
+Cell[27274, 776, 935, 22, 99, "Input"],
+Cell[CellGroupData[{
+Cell[28234, 802, 260, 5, 34, "Input"],
+Cell[28497, 809, 128, 2, 32, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

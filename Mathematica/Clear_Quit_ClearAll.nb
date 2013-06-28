@@ -1,0 +1,538 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     15748,        529]
+NotebookOptionsPosition[     12098,        403]
+NotebookOutlinePosition[     13299,        443]
+CellTagsIndexPosition[     13091,        435]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Using Clear Functions", "Title",
+ CellChangeTimes->{{3.580352428633185*^9, 3.580352439914383*^9}, {
+  3.580354353561205*^9, 3.580354357840207*^9}}],
+
+Cell["\<\
+by Manuel Diaz, NTU, 2013.07.15\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.580352444094964*^9, 3.580352493761731*^9}, {
+  3.580354346189005*^9, 3.580354346930593*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Tests", "Section",
+ CellChangeTimes->{{3.580352497620432*^9, 3.580352499955574*^9}, {
+  3.580354349372199*^9, 3.580354351350339*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Quit[]", "Subsection",
+ CellChangeTimes->{{3.580354415930797*^9, 3.580354419009129*^9}}],
+
+Cell["\<\
+notice that when we Quit the kernel the operation counter starts again to \
+count from [1]...\
+\>", "Text",
+ CellChangeTimes->{{3.580354844248502*^9, 3.580354878016584*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Quit", "[", "]"}], ";"}], " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Terminates", " ", "the", " ", "kernel", " ", "loosing", " ", "any", " ", 
+    "definitions", " ", "that", " ", "have", " ", "been", " ", "made"}], " ", 
+   "*)"}], " "}]], "Input",
+ CellChangeTimes->{{3.580352501841467*^9, 3.580352504376503*^9}, {
+   3.580352610589529*^9, 3.580352670435589*^9}, {3.580352831139782*^9, 
+   3.58035291097099*^9}, {3.58035334433552*^9, 3.580353431407922*^9}, {
+   3.580353483975425*^9, 3.580353489990007*^9}, {3.580353592704108*^9, 
+   3.580353601569532*^9}, 3.580353723959787*^9, {3.580354034243902*^9, 
+   3.580354036015012*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Clear Symbols manually", "Subsection",
+ CellChangeTimes->{{3.580354424138816*^9, 3.580354440534446*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"x1", "=", "1"}], ";", 
+  RowBox[{"x2", "=", "3"}], ";", 
+  RowBox[{"y", "=", "5"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"x1", "+", "x2", "+", "y"}]}], "Input",
+ CellChangeTimes->{{3.580353652281206*^9, 3.580353660054212*^9}}],
+
+Cell[BoxData["9"], "Output",
+ CellChangeTimes->{3.580353661356208*^9, 3.580355111094999*^9, 
+  3.58035608560907*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Clear", "[", "\"\<x*\>\"", "]"}], ";", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "clear", " ", "all", " ", "values", " ", "in", " ", "symbols", " ", 
+    "current", " ", "Mathematica", " ", "sesion"}], " ", "*)"}]}]], "Input",
+ CellChangeTimes->{{3.580353610506335*^9, 3.580353628334725*^9}, {
+  3.580353669934812*^9, 3.580353711678186*^9}, {3.580354330800199*^9, 
+  3.580354332169042*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"x1", ",", "x2", ",", "y"}], "}"}]], "Input",
+ CellChangeTimes->{{3.580353686958727*^9, 3.580353692024055*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"x1", ",", "x2", ",", "5"}], "}"}]], "Output",
+ CellChangeTimes->{3.580353693224323*^9, 3.580354276207423*^9, 
+  3.580354335958288*^9, 3.580355112494395*^9, 3.580356086966404*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+About Attributes and ClearAll[]\
+\>", "Subsection",
+ CellChangeTimes->{{3.580354465557309*^9, 3.580354470648277*^9}, {
+  3.580354707915171*^9, 3.58035472232044*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<Notation`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.580352674856345*^9, 3.580352689505436*^9}, {
+   3.580353392607536*^9, 3.580353394002211*^9}, 3.580353727731728*^9, {
+   3.580354444831809*^9, 3.580354462707822*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Symbolize", "[", 
+  TemplateBox[{SubscriptBox["k", "_"]},
+   "NotationTemplateTag"], "]"}]], "Input",
+ CellChangeTimes->{{3.580356038099418*^9, 3.580356040144242*^9}, {
+  3.580356183164842*^9, 3.580356194695345*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"myFunc", "[", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["k", "1"], ":", "_"}], ",", 
+    RowBox[{
+     SubscriptBox["k", "2"], ":", "_"}]}], "]"}], ":=", " ", 
+  FractionBox[
+   RowBox[{"2", 
+    SubscriptBox["k", "1"], 
+    SubscriptBox["k", "2"]}], 
+   RowBox[{
+    SubscriptBox["k", "1"], "+", 
+    SubscriptBox["k", "2"]}]]}]], "Input",
+ CellChangeTimes->{{3.580355676142833*^9, 3.580355730532995*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"myFunc", "[", 
+  RowBox[{"1", ",", "2"}], "]"}]], "Input",
+ CellChangeTimes->{{3.580355736008174*^9, 3.580355744678775*^9}}],
+
+Cell[BoxData[
+ FractionBox["4", "3"]], "Output",
+ CellChangeTimes->{3.580355747310504*^9, 3.58035604893957*^9, 
+  3.580356097253151*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  SubscriptBox["k", "3"], "=", "4"}]], "Input"],
+
+Cell[BoxData["4"], "Output",
+ CellChangeTimes->{3.580356197784481*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", 
+  SubscriptBox["k", "3"]}]], "Input",
+ CellChangeTimes->{{3.580356199931327*^9, 3.580356202017876*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ SubscriptBox["k", "3"]], "Print", "PrintUsage",
+ CellChangeTimes->{3.580356203140255*^9},
+ CellTags->"Info3580385002-1964640"],
+
+Cell[BoxData[
+ InterpretationBox[GridBox[{
+    {GridBox[{
+       {
+        RowBox[{
+         SubscriptBox["k", "3"], "=", "4"}]}
+      },
+      BaselinePosition->{Baseline, {1, 1}},
+      GridBoxAlignment->{
+       "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+        "RowsIndexed" -> {}},
+      GridBoxItemSize->{"Columns" -> {{
+           Scaled[0.999]}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+        "RowsIndexed" -> {}}]}
+   },
+   BaselinePosition->{Baseline, {1, 1}},
+   GridBoxAlignment->{
+    "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+     "RowsIndexed" -> {}}],
+  Definition[$CellContext`k\[UnderBracket]Subscript\[UnderBracket]3],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.580356203214637*^9},
+ CellTags->"Info3580385002-1964640"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Symbolize", "[", 
+  TemplateBox[{"mySymbol\[ScriptCapitalX]"},
+   "NotationTemplateTag"], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"mySymbol\[ScriptCapitalX]", "[", "x_", "]"}], ":=", 
+  RowBox[{"Table", "[", 
+   RowBox[{"i", ",", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", "1", ",", "x"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.580354890108607*^9, 3.58035491233583*^9}, {
+  3.580355278310798*^9, 3.580355280286039*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"mySymbol\[ScriptCapitalX]", "[", 
+  RowBox[{"{", 
+   RowBox[{"1", ",", "2", ",", "3", ",", "4"}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.580354916018692*^9, 3.580354925775456*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Table", "::", "iterb"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Iterator \[NoBreak]\\!\\({i, 1, \\(\\({1, 2, 3, \
+4}\\)\\)}\\)\[NoBreak] does not have appropriate bounds. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/iterb\\\", \
+ButtonNote -> \\\"Table::iterb\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.580355295606769*^9}],
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{"i", ",", 
+   RowBox[{"{", 
+    RowBox[{"i", ",", "1", ",", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "2", ",", "3", ",", "4"}], "}"}]}], "}"}]}], 
+  "]"}]], "Output",
+ CellChangeTimes->{3.580354927029233*^9, 3.580355122389005*^9, 
+  3.580355295612043*^9}]
+}, Open  ]],
+
+Cell["\<\
+uhm... the problem is that we need to have the rights to use a list as an \
+input:\
+\>", "Text",
+ CellChangeTimes->{{3.580354942159927*^9, 3.580354966266381*^9}}],
+
+Cell[BoxData[
+ RowBox[{"SetAttributes", "[", 
+  RowBox[{"mySymbol\[ScriptCapitalX]", ",", "Listable"}], "]"}]], "Input",
+ CellChangeTimes->{{3.580354641830542*^9, 3.580354668828942*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"mySymbol\[ScriptCapitalX]", "[", 
+  RowBox[{"{", 
+   RowBox[{"1", ",", "2", ",", "3", ",", "4"}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.580354980302674*^9, 3.580354986598944*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "1", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "3", ",", "4"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.580354987396224*^9, 3.580355194637862*^9, 
+  3.580355308182913*^9, 3.580356111054787*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "mySymbol\[ScriptCapitalX]"}]], "Input",
+ CellChangeTimes->{{3.58035532847406*^9, 3.580355333513707*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Global`mySymbol\[ScriptCapitalX]", "Print", "PrintUsage",
+ CellChangeTimes->{3.580356114803553*^9},
+ CellTags->"Info3580384914-1964640"],
+
+Cell[BoxData[
+ InterpretationBox[GridBox[{
+    {
+     RowBox[{
+      RowBox[{"Attributes", "[", "mySymbol\[ScriptCapitalX]", "]"}], "=", 
+      RowBox[{"{", "Listable", "}"}]}]},
+    {" "},
+    {GridBox[{
+       {
+        RowBox[{
+         RowBox[{"mySymbol\[ScriptCapitalX]", "[", "x_", "]"}], ":=", 
+         RowBox[{"Table", "[", 
+          RowBox[{"i", ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", "1", ",", "x"}], "}"}]}], "]"}]}]}
+      },
+      BaselinePosition->{Baseline, {1, 1}},
+      GridBoxAlignment->{
+       "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+        "RowsIndexed" -> {}},
+      GridBoxItemSize->{"Columns" -> {{
+           Scaled[0.999]}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+        "RowsIndexed" -> {}}]}
+   },
+   BaselinePosition->{Baseline, {1, 1}},
+   GridBoxAlignment->{
+    "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+     "RowsIndexed" -> {}}],
+  Definition[$CellContext`mySymbol\[ScriptCapitalX]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.580356114950553*^9},
+ CellTags->"Info3580384914-1964640"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"ClearAll", "[", "mySymbol\[ScriptCapitalX]", "]"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "mySymbol\[ScriptCapitalX]"}]], "Input",
+ CellChangeTimes->{{3.580355236219666*^9, 3.580355239660501*^9}}],
+
+Cell["Global`mySymbol\[ScriptCapitalX]", "Print", "PrintUsage",
+ CellChangeTimes->{3.580356120552073*^9},
+ CellTags->"Info3580384920-1964640"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Using Clear[\[OpenCurlyDoubleQuote]Global`\[CloseCurlyDoubleQuote]]", \
+"Subsection",
+ CellChangeTimes->{{3.580354704614*^9, 3.580354755688102*^9}}],
+
+Cell["\<\
+notice that I haven\[CloseCurlyQuote]t clear  some variables in this \
+notebook, but after evalating the  function everything will be gone!\
+\>", "Text",
+ CellChangeTimes->{{3.58035476639684*^9, 3.58035481101845*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Clear", "[", "\"\<Global`*\>\"", "]"}], ";"}], " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "clear", " ", "all", " ", "definition", " ", "in", " ", "current", " ", 
+    "Mathematica", " ", "sesion"}], " ", "*)"}]}]], "Input",
+ CellChangeTimes->{3.580355259699718*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"?", "y"}], "\[IndentingNewLine]", 
+ RowBox[{"?", 
+  SubscriptBox["k", "3"]}]}], "Input",
+ CellChangeTimes->{{3.580355256757099*^9, 3.580355261350102*^9}, {
+  3.580356126786442*^9, 3.580356137075538*^9}, {3.580356211132162*^9, 
+  3.58035627328125*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Global`y", "Print", "PrintUsage",
+ CellChangeTimes->{3.580356274432694*^9},
+ CellTags->"Info3580385074-1964640"],
+
+Cell[BoxData[
+ SubscriptBox["k", "3"]], "Print", "PrintUsage",
+ CellChangeTimes->{3.580356274887939*^9},
+ CellTags->"Info3580385074-1964640"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1024, 550},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+ShowSelection->True,
+FrontEndVersion->"9.0 for Linux x86 (32-bit) (February 7, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "Info3580385002-1964640"->{
+  Cell[5321, 182, 141, 3, 42, "Print",
+   CellTags->"Info3580385002-1964640"],
+  Cell[5465, 187, 811, 22, 23, "Print",
+   CellTags->"Info3580385002-1964640"]},
+ "Info3580384914-1964640"->{
+  Cell[9018, 301, 142, 2, 42, "Print",
+   CellTags->"Info3580384914-1964640"],
+  Cell[9163, 305, 1119, 31, 57, "Print",
+   CellTags->"Info3580384914-1964640"]},
+ "Info3580384920-1964640"->{
+  Cell[10556, 349, 142, 2, 42, "Print",
+   CellTags->"Info3580384920-1964640"]},
+ "Info3580385074-1964640"->{
+  Cell[11772, 389, 118, 2, 42, "Print",
+   CellTags->"Info3580385074-1964640"],
+  Cell[11893, 393, 141, 3, 42, "Print",
+   CellTags->"Info3580385074-1964640"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"Info3580385002-1964640", 12418, 414},
+ {"Info3580384914-1964640", 12607, 419},
+ {"Info3580384920-1964640", 12797, 424},
+ {"Info3580385074-1964640", 12907, 427}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 153, 2, 93, "Title"],
+Cell[735, 26, 177, 4, 31, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[937, 34, 139, 2, 81, "Section"],
+Cell[CellGroupData[{
+Cell[1101, 40, 94, 1, 45, "Subsection"],
+Cell[1198, 43, 183, 4, 31, "Text"],
+Cell[1384, 49, 679, 14, 32, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2100, 68, 110, 1, 45, "Subsection"],
+Cell[CellGroupData[{
+Cell[2235, 73, 265, 6, 55, "Input"],
+Cell[2503, 81, 116, 2, 32, "Output"]
+}, Open  ]],
+Cell[2634, 86, 426, 9, 32, "Input"],
+Cell[CellGroupData[{
+Cell[3085, 99, 150, 3, 32, "Input"],
+Cell[3238, 104, 218, 4, 32, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3505, 114, 175, 4, 45, "Subsection"],
+Cell[3683, 120, 262, 4, 32, "Input"],
+Cell[3948, 126, 240, 5, 45, "Input"],
+Cell[4191, 133, 443, 15, 59, "Input"],
+Cell[CellGroupData[{
+Cell[4659, 152, 148, 3, 32, "Input"],
+Cell[4810, 157, 136, 3, 49, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4983, 165, 71, 2, 32, "Input"],
+Cell[5057, 169, 70, 1, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5164, 175, 132, 3, 32, "Input"],
+Cell[CellGroupData[{
+Cell[5321, 182, 141, 3, 42, "Print",
+ CellTags->"Info3580385002-1964640"],
+Cell[5465, 187, 811, 22, 23, "Print",
+ CellTags->"Info3580385002-1964640"]
+}, Open  ]]
+}, Open  ]],
+Cell[6303, 213, 130, 3, 45, "Input"],
+Cell[6436, 218, 334, 8, 32, "Input"],
+Cell[CellGroupData[{
+Cell[6795, 230, 211, 4, 32, "Input"],
+Cell[7009, 236, 485, 10, 24, "Message"],
+Cell[7497, 248, 306, 9, 32, "Output"]
+}, Open  ]],
+Cell[7818, 260, 172, 4, 31, "Text"],
+Cell[7993, 266, 186, 3, 32, "Input"],
+Cell[CellGroupData[{
+Cell[8204, 273, 211, 4, 32, "Input"],
+Cell[8418, 279, 405, 11, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8860, 295, 133, 2, 32, "Input"],
+Cell[CellGroupData[{
+Cell[9018, 301, 142, 2, 42, "Print",
+ CellTags->"Info3580384914-1964640"],
+Cell[9163, 305, 1119, 31, 57, "Print",
+ CellTags->"Info3580384914-1964640"]
+}, Open  ]]
+}, Open  ]],
+Cell[10309, 340, 85, 1, 32, "Input"],
+Cell[CellGroupData[{
+Cell[10419, 345, 134, 2, 32, "Input"],
+Cell[10556, 349, 142, 2, 42, "Print",
+ CellTags->"Info3580384920-1964640"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10747, 357, 154, 2, 45, "Subsection"],
+Cell[10904, 361, 227, 4, 31, "Text"],
+Cell[11134, 367, 312, 8, 32, "Input"],
+Cell[CellGroupData[{
+Cell[11471, 379, 276, 6, 55, "Input"],
+Cell[CellGroupData[{
+Cell[11772, 389, 118, 2, 42, "Print",
+ CellTags->"Info3580385074-1964640"],
+Cell[11893, 393, 141, 3, 42, "Print",
+ CellTags->"Info3580385074-1964640"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
