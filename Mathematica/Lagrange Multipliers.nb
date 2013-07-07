@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    138815,       2388]
-NotebookOptionsPosition[    137903,       2354]
-NotebookOutlinePosition[    138238,       2369]
-CellTagsIndexPosition[    138195,       2366]
+NotebookDataLength[    138708,       2383]
+NotebookOptionsPosition[    137796,       2349]
+NotebookOutlinePosition[    138131,       2364]
+CellTagsIndexPosition[    138088,       2361]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -85,14 +85,12 @@ Cell[TextData[{
    RowBox[{"\[ScriptCapitalZ]", "(", 
     RowBox[{
      SubscriptBox["x", "0"], ",", 
-     SubscriptBox["y", "0"]}]}], TraditionalForm]],
-  FormatType->"TraditionalForm"],
+     SubscriptBox["y", "0"]}]}], TraditionalForm]]],
  ") is a maximun of \[ScriptCapitalZ](x,y) for the original constrained \
 problem, then there exist ",
  Cell[BoxData[
   FormBox[
-   SubscriptBox["\[Lambda]", "0"], TraditionalForm]],
-  FormatType->"TraditionalForm"],
+   SubscriptBox["\[Lambda]", "0"], TraditionalForm]]],
  " such that ",
  Cell[BoxData[
   FormBox[
@@ -100,17 +98,14 @@ problem, then there exist ",
     RowBox[{
      SubscriptBox["x", "0"], ",", " ", 
      SubscriptBox["y", "0"], ",", 
-     SubscriptBox["\[Lambda]", "0"]}]}], TraditionalForm]],
-  FormatType->"TraditionalForm"],
+     SubscriptBox["\[Lambda]", "0"]}]}], TraditionalForm]]],
  ") is a stationary point the Lagrange problem."
 }], "Text",
  CellChangeTimes->{{3.581490677058255*^9, 3.581490700441407*^9}, {
   3.5814907352053022`*^9, 3.581490965426993*^9}, {3.581491188156113*^9, 
   3.581491188451712*^9}}],
 
-Cell["\<\
-Consider the two-dimensional problem introduced above:\
-\>", "Text",
+Cell["Consider the two-dimensional problem introduced above:", "Text",
  CellChangeTimes->{{3.581491386647228*^9, 3.581491409539735*^9}, 
    3.581492805608299*^9}],
 
@@ -2377,17 +2372,17 @@ Cell[1034, 36, 319, 5, 51, "Text"],
 Cell[1356, 43, 356, 7, 71, "Text"],
 Cell[1715, 52, 540, 9, 51, "Text"],
 Cell[2258, 63, 531, 15, 32, "Input"],
-Cell[2792, 80, 962, 28, 51, "Text"],
-Cell[3757, 110, 170, 4, 31, "Text"],
-Cell[3930, 116, 389, 9, 34, "Input"],
-Cell[4322, 127, 435, 10, 34, "Input"],
-Cell[4760, 139, 176, 2, 31, "Text"],
+Cell[2792, 80, 863, 25, 51, "Text"],
+Cell[3658, 107, 162, 2, 31, "Text"],
+Cell[3823, 111, 389, 9, 34, "Input"],
+Cell[4215, 122, 435, 10, 34, "Input"],
+Cell[4653, 134, 176, 2, 31, "Text"],
 Cell[CellGroupData[{
-Cell[4961, 145, 903, 22, 55, "Input"],
-Cell[5867, 169, 131421, 2163, 295, 67805, 1118, "CachedBoxData", "BoxData", \
+Cell[4854, 140, 903, 22, 55, "Input"],
+Cell[5760, 164, 131421, 2163, 295, 67805, 1118, "CachedBoxData", "BoxData", \
 "Output"]
 }, Open  ]],
-Cell[137303, 2335, 572, 15, 55, "Input"]
+Cell[137196, 2330, 572, 15, 55, "Input"]
 }, Open  ]]
 }, Open  ]]
 }
