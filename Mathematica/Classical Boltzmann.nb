@@ -1,0 +1,826 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     25435,        817]
+NotebookOptionsPosition[     23299,        745]
+NotebookOutlinePosition[     23634,        760]
+CellTagsIndexPosition[     23591,        757]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Classical Boltzmann", "Title",
+ CellChangeTimes->{{3.582344499590716*^9, 3.582344535477348*^9}, {
+  3.582344757436031*^9, 3.582344760664106*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Objective", "Section",
+ CellChangeTimes->{{3.58234572888362*^9, 3.582345744027715*^9}, {
+  3.582355416001869*^9, 3.582355417485277*^9}}],
+
+Cell["Here the basic question that we will try to answer is :", "Text",
+ CellChangeTimes->{{3.582345644984663*^9, 3.582345661011739*^9}}],
+
+Cell[TextData[{
+ "\[OpenCurlyDoubleQuote] What\[CloseCurlyQuote]s the probability of finding \
+a molecule which is moving with velocity components within range ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["c", "1"], "+", 
+    SubscriptBox["dc", "1"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " along ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "-axis, ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", "2"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["c", "2"], "+", 
+    SubscriptBox["dc", "2"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " along ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "2"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "-axis and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["c", "3"], "+", 
+    SubscriptBox["dc", "3"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " along ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "3"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "-axis.\[CloseCurlyDoubleQuote]"
+}], "Text",
+ CellChangeTimes->{{3.582344716231554*^9, 3.58234493647512*^9}, {
+  3.582345642371876*^9, 3.582345643789131*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Quit", "[", "]"}], ";", " ", 
+  RowBox[{"(*", 
+   RowBox[{"Quit", " ", "Mathematica", " ", "Kernel"}], "*)"}]}]], "Code",
+ CellChangeTimes->{{3.582347370307067*^9, 3.582347400143314*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<Notation`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.582349516393847*^9, 3.582349544200049*^9}, {
+  3.582349600238201*^9, 3.582349601657395*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Symbolize", "[", 
+   TemplateBox[{SubscriptBox["c", "_"]},
+    "NotationTemplateTag"], "]"}], ";", 
+  RowBox[{"Symbolize", "[", 
+   TemplateBox[{SubscriptBox["dc", "_"]},
+    "NotationTemplateTag"], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.582349611045919*^9, 3.582349637944259*^9}, {
+  3.582349775490222*^9, 3.582349821903518*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Basic Assumptions", "Section",
+ CellChangeTimes->{{3.582345751502421*^9, 3.582345755096443*^9}}],
+
+Cell["\<\
+For the case of a system equilibrium process and without any enternal force \
+acting on it, the following hypotesis are valid:\
+\>", "Text",
+ CellChangeTimes->{{3.582344947529836*^9, 3.58234505922934*^9}}],
+
+Cell[TextData[{
+ "The number of velocities which can be found within the range ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", "i"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     SubscriptBox["c", "i"], "+", 
+     RowBox[{
+      SubscriptBox["dc", "i"], " ", "is", " ", "proportial", " ", "to", " ", 
+      "the", " ", 
+      SubscriptBox["dc", "i"]}]}], ",", " ", 
+    RowBox[{
+     RowBox[{"i", ".", "e", ".", " ", "the"}], " ", "size", " ", "of", " ", 
+     "the", " ", "differential", " ", "volume", " ", "we", " ", "are", " ", 
+     "studying"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "ItemNumbered",
+ CellChangeTimes->{{3.582345062993213*^9, 3.582345205273616*^9}, {
+  3.582345986982503*^9, 3.582345995156261*^9}, {3.582346042537585*^9, 
+  3.582346049404667*^9}, {3.582347349618159*^9, 3.582347349640821*^9}}],
+
+Cell[BoxData[
+ RowBox[{" ", 
+  RowBox[{
+   RowBox[{"diffCube", " ", "=", " ", 
+    RowBox[{
+     SubscriptBox["dc", "1"], 
+     SubscriptBox["dc", "2"], 
+     SubscriptBox["dc", "3"]}]}], ";"}]}]], "Code"],
+
+Cell["\<\
+The three events are independent from each other so that,\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.582345196467534*^9, 3.582345266569006*^9}, 
+   3.582346052421434*^9}],
+
+Cell[BoxData[
+ RowBox[{" ", 
+  RowBox[{
+   RowBox[{"probability", " ", "=", " ", 
+    RowBox[{
+     RowBox[{"\[Phi]", "[", 
+      SubscriptBox["c", "1"], "]"}], 
+     SubscriptBox["dc", "1"], 
+     RowBox[{"\[Phi]", "[", 
+      SubscriptBox["c", "2"], "]"}], 
+     SubscriptBox["dc", "2"], 
+     RowBox[{"\[Phi]", "[", 
+      SubscriptBox["c", "3"], "]"}], 
+     SubscriptBox["dc", "3"]}]}], ";"}]}]], "Code",
+ CellChangeTimes->{{3.582345269250558*^9, 3.582345316321019*^9}, 
+   3.582345499052478*^9, {3.582346706950493*^9, 3.582346732633646*^9}}],
+
+Cell[TextData[{
+ "Represents the probability to find the molecule with velocity components \
+within the range ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["c", "1"], "+", 
+    SubscriptBox["dc", "1"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", "2"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["c", "2"], "+", 
+    SubscriptBox["dc", "2"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["c", "3"], "+", 
+    SubscriptBox["dc", "3"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". "
+}], "Text",
+ CellChangeTimes->{{3.5823453452007*^9, 3.582345407523006*^9}, {
+  3.582345437877169*^9, 3.582345447193449*^9}, {3.582346006522914*^9, 
+  3.582346006714071*^9}}],
+
+Cell["\<\
+now instead of individual probabilities we can use distribution function such \
+that \
+\>", "Text",
+ CellChangeTimes->{{3.582345484735006*^9, 3.582345487762029*^9}, {
+  3.582345526467466*^9, 3.582345539871185*^9}, {3.582345580518101*^9, 
+  3.58234561796107*^9}, {3.582345826567346*^9, 3.582345887273791*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"pdf", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"f", "[", 
+     RowBox[{
+      SubscriptBox["c", "1"], ",", 
+      SubscriptBox["c", "2"], ",", 
+      SubscriptBox["c", "3"]}], "]"}], 
+    SubscriptBox["dc", "1"], 
+    SubscriptBox["dc", "2"], 
+    SubscriptBox["dc", "3"]}]}], ";"}]], "Code",
+ CellChangeTimes->{{3.582346762625327*^9, 3.582346812383027*^9}, {
+  3.582346854771705*^9, 3.582346885849353*^9}, {3.582347157261452*^9, 
+  3.582347181796353*^9}}],
+
+Cell["\<\
+where n denote the particle number density.\
+\>", "Text",
+ CellChangeTimes->{{3.582346069735817*^9, 3.582346078023051*^9}}],
+
+Cell[TextData[{
+ "Hypothesis of isotropy: For equilibrium processes in the absence of \
+external forces there is no distinction between the three directions, so that \
+f[",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["c", "1"], ",", 
+    SubscriptBox["c", "2"], ",", 
+    SubscriptBox["c", "3"]}], TraditionalForm]],
+  CellChangeTimes->{{3.582345891114282*^9, 3.582345942580406*^9}}],
+ "] depends on ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", "2"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " anc ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", "3"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " only through the invariant c = ",
+ Cell[BoxData[
+  FormBox[
+   SqrtBox[
+    RowBox[{"(", 
+     RowBox[{
+      SuperscriptBox[
+       SubscriptBox["c", "1"], "2"], "+", 
+      SuperscriptBox[
+       SubscriptBox["c", "2"], "2"], "+", 
+      SuperscriptBox[
+       SubscriptBox["c", "3"], "2"]}], ")"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ","
+}], "ItemNumbered",
+ CellChangeTimes->{{3.582346090175102*^9, 3.582346104735538*^9}, {
+  3.582346138474291*^9, 3.582346406559566*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"isotropy", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"n", " ", 
+       RowBox[{"\[Phi]", "[", 
+        SubscriptBox["c", "1"], "]"}], 
+       RowBox[{"\[Phi]", "[", 
+        SubscriptBox["c", "2"], "]"}], 
+       RowBox[{"\[Phi]", "[", 
+        SubscriptBox["c", "3"], "]"}]}], " ", "\[Rule]", " ", 
+      RowBox[{"\[CapitalPhi]", "[", "c", "]"}]}], ",", " ", 
+     RowBox[{"c", " ", "\[Rule]", " ", 
+      SqrtBox[
+       RowBox[{
+        SuperscriptBox[
+         SubscriptBox["c", "1"], "2"], "+", 
+        SuperscriptBox[
+         SubscriptBox["c", "2"], "2"], "+", 
+        SuperscriptBox[
+         SubscriptBox["c", "3"], "2"]}]]}]}], "}"}]}], ";"}]], "Code",
+ CellChangeTimes->{{3.582347056060829*^9, 3.582347121172023*^9}, 
+   3.582347773019281*^9, {3.582348014461785*^9, 3.582348038752319*^9}, 
+   3.582348475625366*^9, {3.582349449135735*^9, 3.582349496189823*^9}, {
+   3.582349666038492*^9, 3.582349675681403*^9}, {3.582350080263144*^9, 
+   3.582350080420493*^9}}],
+
+Cell["\<\
+Thus taking the logarithm of this expresion we get:\
+\>", "Text",
+ CellChangeTimes->{{3.582346466725572*^9, 3.582346487233411*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"Equal", "[", 
+  RowBox[{
+   RowBox[{"pdf", "/", "diffCube"}], ",", 
+   RowBox[{"n", " ", 
+    RowBox[{"probability", "/", "diffCube"}]}]}], "]"}], "\n", 
+ RowBox[{
+  RowBox[{"Equal", "[", 
+   RowBox[{
+    RowBox[{"pdf", "/", "diffCube"}], ",", 
+    RowBox[{"n", " ", 
+     RowBox[{"probability", "/", "diffCube"}]}]}], "]"}], " ", "//.", 
+  "isotropy"}], "\n", 
+ RowBox[{"SetAttributes", "[", 
+  RowBox[{"n", ",", "Constant"}], "]"}]}], "Code",
+ CellChangeTimes->{{3.58234650663573*^9, 3.582346562296945*^9}, 
+   3.582346602089209*^9, {3.58234721871347*^9, 3.582347341627772*^9}, 
+   3.582347498214018*^9, {3.582347528249992*^9, 3.582347531426722*^9}, {
+   3.582347782875138*^9, 3.582347937356785*^9}, {3.582347990622765*^9, 
+   3.582347990884934*^9}, {3.582348030722838*^9, 3.582348083624511*^9}, {
+   3.582348118122521*^9, 3.582348147922566*^9}, {3.582348184306938*^9, 
+   3.582348320380629*^9}, {3.582348545968172*^9, 3.582348556638564*^9}, {
+   3.582348805012979*^9, 3.582348809271141*^9}, {3.582348853878491*^9, 
+   3.582348922913877*^9}, {3.58234900495886*^9, 3.582349010835776*^9}, {
+   3.582349053526592*^9, 3.582349136048456*^9}, {3.582349167856896*^9, 
+   3.582349295370512*^9}, {3.582349362226532*^9, 3.582349372767303*^9}, {
+   3.582349947666764*^9, 3.582349969644772*^9}, {3.582350032167708*^9, 
+   3.582350032333942*^9}, {3.58235008855914*^9, 3.58235008869891*^9}, {
+   3.582353092109537*^9, 3.582353107073433*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"f", "[", 
+   RowBox[{
+    SubscriptBox["c", "1"], ",", 
+    SubscriptBox["c", "2"], ",", 
+    SubscriptBox["c", "3"]}], "]"}], "\[Equal]", 
+  RowBox[{"n", " ", 
+   RowBox[{"\[Phi]", "[", 
+    SubscriptBox["c", "1"], "]"}], " ", 
+   RowBox[{"\[Phi]", "[", 
+    SubscriptBox["c", "2"], "]"}], " ", 
+   RowBox[{"\[Phi]", "[", 
+    SubscriptBox["c", "3"], "]"}]}]}]], "Output",
+ CellChangeTimes->{3.582353429539801*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"f", "[", 
+   RowBox[{
+    SubscriptBox["c", "1"], ",", 
+    SubscriptBox["c", "2"], ",", 
+    SubscriptBox["c", "3"]}], "]"}], "\[Equal]", 
+  RowBox[{"\[CapitalPhi]", "[", 
+   SqrtBox[
+    RowBox[{
+     SubsuperscriptBox["c", "1", "2"], "+", 
+     SubsuperscriptBox["c", "2", "2"], "+", 
+     SubsuperscriptBox["c", "3", "2"]}]], "]"}]}]], "Output",
+ CellChangeTimes->{3.58235342955062*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Determine of Probability Distribution Function", \
+"Section"]], "Section",
+ CellChangeTimes->{{3.582353938179077*^9, 3.582353993257666*^9}}],
+
+Cell["\<\
+Finding \[OpenCurlyQuote]f\[CloseCurlyQuote] from the functional equation\
+\>", "Text",
+ CellChangeTimes->{{3.582353997447267*^9, 3.582354019651366*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[CapitalPhi]", "[", 
+   SqrtBox[
+    RowBox[{
+     SubsuperscriptBox["c", "1", "2"], "+", 
+     SubsuperscriptBox["c", "2", "2"], "+", 
+     SubsuperscriptBox["c", "3", "2"]}]], "]"}], " ", "\[Equal]", " ", 
+  RowBox[{"n", " ", 
+   RowBox[{"\[Phi]", "[", 
+    SubscriptBox["c", "1"], "]"}], " ", 
+   RowBox[{"\[Phi]", "[", 
+    SubscriptBox["c", "2"], "]"}], " ", 
+   RowBox[{"\[Phi]", "[", 
+    SubscriptBox["c", "3"], "]"}]}]}]], "Output",
+ CellChangeTimes->{{3.58235403959156*^9, 3.582354044837248*^9}}],
+
+Cell["\<\
+Applying Natural Logarithm to last result,\
+\>", "Text",
+ CellChangeTimes->{{3.582349377854049*^9, 3.582349437661893*^9}, {
+  3.582349936787146*^9, 3.582349942974795*^9}, {3.582349984175416*^9, 
+  3.582349999864715*^9}, {3.582350115592116*^9, 3.582350173705104*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"lhs", ",", "rhs"}], "}"}], " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\[CapitalPhi]", "[", 
+      SqrtBox[
+       RowBox[{
+        SubsuperscriptBox["c", "1", "2"], "+", 
+        SubsuperscriptBox["c", "2", "2"], "+", 
+        SubsuperscriptBox["c", "3", "2"]}]], "]"}], ",", " ", 
+     RowBox[{"n", " ", 
+      RowBox[{"\[Phi]", "[", 
+       SubscriptBox["c", "1"], "]"}], " ", 
+      RowBox[{"\[Phi]", "[", 
+       SubscriptBox["c", "2"], "]"}], " ", 
+      RowBox[{"\[Phi]", "[", 
+       SubscriptBox["c", "3"], "]"}]}]}], "}"}]}], ";"}]], "Code",
+ CellChangeTimes->{{3.582349409034127*^9, 3.582349409416226*^9}, {
+   3.582350213008313*^9, 3.582350249609406*^9}, 3.582350342239455*^9, {
+   3.582350565257588*^9, 3.582350573802205*^9}, {3.582352027533066*^9, 
+   3.582352030035601*^9}, 3.582353438057773*^9}],
+
+Cell["\<\
+for the RHS we get after applying loggarithm rules\
+\>", "Text",
+ CellChangeTimes->{{3.58235197261326*^9, 3.582352016493135*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"rhs", " ", "=", " ", 
+  RowBox[{"Total", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Log", "[", "#", "]"}], "&"}], "/@", "rhs"}], "]"}]}]], "Code",
+ CellChangeTimes->{{3.582350891888769*^9, 3.582351012471662*^9}, {
+   3.582351153551847*^9, 3.582351169277538*^9}, {3.582351271246872*^9, 
+   3.582351408932842*^9}, {3.582351502850523*^9, 3.582351503916489*^9}, {
+   3.582351607655485*^9, 3.582351609520461*^9}, {3.582351700030577*^9, 
+   3.582351715521995*^9}, 3.582351820005103*^9, {3.582351917483561*^9, 
+   3.582351944945708*^9}, {3.582352023744227*^9, 3.582352024045249*^9}, {
+   3.582353713786764*^9, 3.582353716749199*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Log", "[", "n", "]"}], "+", 
+  RowBox[{"Log", "[", 
+   RowBox[{"\[Phi]", "[", 
+    SubscriptBox["c", "1"], "]"}], "]"}], "+", 
+  RowBox[{"Log", "[", 
+   RowBox[{"\[Phi]", "[", 
+    SubscriptBox["c", "2"], "]"}], "]"}], "+", 
+  RowBox[{"Log", "[", 
+   RowBox[{"\[Phi]", "[", 
+    SubscriptBox["c", "3"], "]"}], "]"}]}]], "Output",
+ CellChangeTimes->{{3.582351341426714*^9, 3.582351409513441*^9}, 
+   3.582351612764811*^9, 3.582351821149507*^9, {3.582351922320583*^9, 
+   3.582351945513915*^9}, 3.58235203955609*^9, 3.582353728792703*^9}]
+}, Open  ]],
+
+Cell["The LHS is simply,", "Text",
+ CellChangeTimes->{{3.582352000361294*^9, 3.582352020069092*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"lhs", " ", "=", " ", 
+  RowBox[{"Total", "[", 
+   RowBox[{"Log", "[", 
+    RowBox[{"{", "lhs", "}"}], "]"}], "]"}]}]], "Code",
+ CellChangeTimes->{{3.582350267107293*^9, 3.582350327700086*^9}, {
+  3.582352047739277*^9, 3.582352066045288*^9}, {3.582353720762525*^9, 
+  3.58235372641521*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Log", "[", 
+  RowBox[{"\[CapitalPhi]", "[", 
+   SqrtBox[
+    RowBox[{
+     SubsuperscriptBox["c", "1", "2"], "+", 
+     SubsuperscriptBox["c", "2", "2"], "+", 
+     SubsuperscriptBox["c", "3", "2"]}]], "]"}], "]"}]], "Output",
+ CellChangeTimes->{
+  3.582350290543723*^9, {3.582350328247366*^9, 3.582350345337811*^9}, {
+   3.582352041741755*^9, 3.582352066890647*^9}, 3.582353445373468*^9, 
+   3.58235373042288*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "differenciating the resulting equation successively with respect to ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["c", "i"], ","}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " yields,"
+}], "Text",
+ CellChangeTimes->{{3.582352103899315*^9, 3.582352148918373*^9}, 
+   3.582352561965686*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{" ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"D", "[", 
+      RowBox[{
+       RowBox[{"lhs", "==", "rhs"}], ",", "#"}], "]"}], "&"}], "/@", 
+    RowBox[{"{", 
+     RowBox[{
+      SubscriptBox["c", "1"], ",", 
+      SubscriptBox["c", "2"], ",", 
+      SubscriptBox["c", "3"]}], "}"}]}], " ", "//.", 
+   RowBox[{
+    SqrtBox[
+     RowBox[{
+      SubsuperscriptBox["c", "1", "2"], "+", 
+      SubsuperscriptBox["c", "2", "2"], "+", 
+      SubsuperscriptBox["c", "3", "2"]}]], " ", "\[Rule]", "c"}]}]}]], "Code",\
+
+ CellChangeTimes->{{3.582352637373523*^9, 3.582352701172598*^9}, {
+   3.58235295924721*^9, 3.582352961053284*^9}, {3.58235301191308*^9, 
+   3.582353017954449*^9}, 3.582353261390574*^9, {3.582353738108103*^9, 
+   3.582353738782485*^9}, {3.582354341840449*^9, 3.582354343977907*^9}, {
+   3.582354709115592*^9, 3.582354734276811*^9}, 3.582354794185258*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{
+    FractionBox[
+     RowBox[{
+      SubscriptBox["c", "1"], " ", 
+      RowBox[{
+       SuperscriptBox["\[CapitalPhi]", "\[Prime]",
+        MultilineFunction->None], "[", "c", "]"}]}], 
+     RowBox[{
+      SqrtBox[
+       RowBox[{
+        SubsuperscriptBox["c", "1", "2"], "+", 
+        SubsuperscriptBox["c", "2", "2"], "+", 
+        SubsuperscriptBox["c", "3", "2"]}]], " ", 
+      RowBox[{"\[CapitalPhi]", "[", "c", "]"}]}]], "\[Equal]", 
+    FractionBox[
+     RowBox[{
+      SuperscriptBox["\[Phi]", "\[Prime]",
+       MultilineFunction->None], "[", 
+      SubscriptBox["c", "1"], "]"}], 
+     RowBox[{"\[Phi]", "[", 
+      SubscriptBox["c", "1"], "]"}]]}], ",", 
+   RowBox[{
+    FractionBox[
+     RowBox[{
+      SubscriptBox["c", "2"], " ", 
+      RowBox[{
+       SuperscriptBox["\[CapitalPhi]", "\[Prime]",
+        MultilineFunction->None], "[", "c", "]"}]}], 
+     RowBox[{
+      SqrtBox[
+       RowBox[{
+        SubsuperscriptBox["c", "1", "2"], "+", 
+        SubsuperscriptBox["c", "2", "2"], "+", 
+        SubsuperscriptBox["c", "3", "2"]}]], " ", 
+      RowBox[{"\[CapitalPhi]", "[", "c", "]"}]}]], "\[Equal]", 
+    FractionBox[
+     RowBox[{
+      SuperscriptBox["\[Phi]", "\[Prime]",
+       MultilineFunction->None], "[", 
+      SubscriptBox["c", "2"], "]"}], 
+     RowBox[{"\[Phi]", "[", 
+      SubscriptBox["c", "2"], "]"}]]}], ",", 
+   RowBox[{
+    FractionBox[
+     RowBox[{
+      SubscriptBox["c", "3"], " ", 
+      RowBox[{
+       SuperscriptBox["\[CapitalPhi]", "\[Prime]",
+        MultilineFunction->None], "[", "c", "]"}]}], 
+     RowBox[{
+      SqrtBox[
+       RowBox[{
+        SubsuperscriptBox["c", "1", "2"], "+", 
+        SubsuperscriptBox["c", "2", "2"], "+", 
+        SubsuperscriptBox["c", "3", "2"]}]], " ", 
+      RowBox[{"\[CapitalPhi]", "[", "c", "]"}]}]], "\[Equal]", 
+    FractionBox[
+     RowBox[{
+      SuperscriptBox["\[Phi]", "\[Prime]",
+       MultilineFunction->None], "[", 
+      SubscriptBox["c", "3"], "]"}], 
+     RowBox[{"\[Phi]", "[", 
+      SubscriptBox["c", "3"], "]"}]]}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.582352701904223*^9, 3.582352961658551*^9, 3.582353019049776*^9, 
+   3.582353114661827*^9, 3.582353262726115*^9, 3.582353739816989*^9, 
+   3.582354353378374*^9, {3.582354718357823*^9, 3.582354735205925*^9}, 
+   3.582354795246195*^9}]
+}, Open  ]],
+
+Cell["recognize", "Text",
+ CellChangeTimes->{{3.582355089889449*^9, 3.582355107730219*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  SubscriptBox["\[PartialD]", "b"], 
+  RowBox[{"Log", "[", 
+   RowBox[{"a", "[", "b", "]"}], "]"}]}]], "Code",
+ CellChangeTimes->{{3.582355108821563*^9, 3.58235514330873*^9}, 
+   3.58235539077864*^9}],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   SuperscriptBox["a", "\[Prime]",
+    MultilineFunction->None], "[", "b", "]"}], 
+  RowBox[{"a", "[", "b", "]"}]]], "Output",
+ CellChangeTimes->{{3.582355118460391*^9, 3.582355144159507*^9}}]
+}, Open  ]],
+
+Cell[TextData[{
+ "I\[CloseCurlyQuote]m going to rearrage this last result in the following \
+way:\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox["1", "c"], 
+    RowBox[{
+     SubscriptBox["\[PartialD]", "c"], 
+     RowBox[{"Log", "[", 
+      RowBox[{"\[CapitalPhi]", "[", "c", "]"}], "]"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " = ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox["1", 
+     SubscriptBox["c", "1"]], 
+    RowBox[{
+     SubscriptBox["\[PartialD]", 
+      SubscriptBox["c", "1"]], 
+     RowBox[{"Log", "[", 
+      RowBox[{"\[Phi]", "[", 
+       SubscriptBox["c", "1"], "]"}], "]"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " = ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox["1", 
+     SubscriptBox["c", "2"]], 
+    RowBox[{
+     SubscriptBox["\[PartialD]", 
+      SubscriptBox["c", "2"]], 
+     RowBox[{"Log", "[", 
+      RowBox[{"\[Phi]", "[", 
+       SubscriptBox["c", "2"], "]"}], "]"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " = ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox["1", 
+     SubscriptBox["c", "3"]], 
+    RowBox[{
+     SubscriptBox["\[PartialD]", 
+      SubscriptBox["c", "3"]], 
+     RowBox[{"Log", "[", 
+      RowBox[{"\[Phi]", "[", 
+       SubscriptBox["c", "3"], "]"}], "]"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "Text",
+ CellChangeTimes->{{3.582355065613635*^9, 3.582355084217321*^9}, {
+  3.582355171421394*^9, 3.582355265483037*^9}, {3.58235549175975*^9, 
+  3.5823555205106*^9}}],
+
+Cell[TextData[{
+ "The only way to satisfy this relation is that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox["1", "c"], 
+    RowBox[{
+     SubscriptBox["\[PartialD]", "c"], 
+     RowBox[{"\[CapitalPhi]", "[", "c", "]"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " sould be a constant.\nThe experience of earlier practitioners tells us \
+that is it convenient to call ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox["1", "c"], 
+    RowBox[{
+     SubscriptBox["\[PartialD]", "c"], 
+     RowBox[{"\[CapitalPhi]", "[", "c", "]"}]}]}], TraditionalForm]]],
+ " = -2b"
+}], "Text",
+ CellChangeTimes->{{3.582355280435048*^9, 3.582355376844804*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1024, 550},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"9.0 for Linux x86 (32-bit) (February 7, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 151, 2, 93, "Title"],
+Cell[CellGroupData[{
+Cell[755, 28, 142, 2, 81, "Section"],
+Cell[900, 32, 137, 1, 31, "Text"],
+Cell[1040, 35, 1519, 56, 51, "Text"],
+Cell[2562, 93, 222, 5, 51, "Code"],
+Cell[2787, 100, 189, 3, 32, "Input"],
+Cell[2979, 105, 372, 9, 45, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3388, 119, 102, 1, 81, "Section"],
+Cell[3493, 122, 215, 4, 31, "Text"],
+Cell[3711, 128, 916, 25, 53, "ItemNumbered"],
+Cell[4630, 155, 205, 7, 51, "Code"],
+Cell[4838, 164, 181, 4, 30, "ItemNumbered"],
+Cell[5022, 170, 547, 15, 51, "Code"],
+Cell[5572, 187, 1122, 42, 51, "Text"],
+Cell[6697, 231, 318, 6, 31, "Text"],
+Cell[7018, 239, 490, 14, 51, "Code"],
+Cell[7511, 255, 133, 3, 31, "Text"],
+Cell[7647, 260, 1247, 42, 83, "ItemNumbered"],
+Cell[8897, 304, 1041, 27, 72, "Code"],
+Cell[9941, 333, 141, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[10107, 340, 1454, 28, 90, "Code"],
+Cell[11564, 370, 450, 14, 32, "Output"],
+Cell[12017, 386, 425, 13, 47, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12491, 405, 164, 2, 81, "Section"],
+Cell[12658, 409, 163, 3, 31, "Text"],
+Cell[12824, 414, 542, 15, 47, "Output"],
+Cell[13369, 431, 276, 5, 31, "Text"],
+Cell[13648, 438, 892, 23, 71, "Code"],
+Cell[14543, 463, 139, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[14707, 470, 652, 12, 51, "Code"],
+Cell[15362, 484, 571, 14, 32, "Output"]
+}, Open  ]],
+Cell[15948, 501, 100, 1, 31, "Text"],
+Cell[CellGroupData[{
+Cell[16073, 506, 313, 7, 51, "Code"],
+Cell[16389, 515, 438, 11, 47, "Output"]
+}, Open  ]],
+Cell[16842, 529, 330, 10, 31, "Text"],
+Cell[CellGroupData[{
+Cell[17197, 543, 897, 24, 66, "Code"],
+Cell[18097, 569, 2353, 70, 62, "Output"]
+}, Open  ]],
+Cell[20465, 642, 91, 1, 31, "Text"],
+Cell[CellGroupData[{
+Cell[20581, 647, 224, 6, 51, "Code"],
+Cell[20808, 655, 231, 6, 52, "Output"]
+}, Open  ]],
+Cell[21054, 664, 1538, 54, 68, "Text"],
+Cell[22595, 720, 676, 21, 77, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
