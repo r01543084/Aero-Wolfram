@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     40089,       1179]
-NotebookOptionsPosition[     36852,       1072]
-NotebookOutlinePosition[     37335,       1093]
-CellTagsIndexPosition[     37292,       1090]
+NotebookDataLength[     46499,       1392]
+NotebookOptionsPosition[     42872,       1275]
+NotebookOutlinePosition[     43352,       1296]
+CellTagsIndexPosition[     43309,       1293]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -468,16 +468,50 @@ Cell[BoxData[
     "NotationTemplateTag"], "]"}], ";"}]], "Input",
  CellChangeTimes->{{3.58604739287024*^9, 3.5860474229096212`*^9}, {
    3.586048844992914*^9, 3.5860488596824007`*^9}, {3.5860541640309353`*^9, 
-   3.586054178052601*^9}, 3.586561085292253*^9}]
-}, Closed]]
-}, Open  ]],
+   3.586054178052601*^9}, 3.586561085292253*^9}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Notation", "[", 
+   RowBox[{
+    TemplateBox[{RowBox[{
+        RowBox[{"<", "a_"}], ",", 
+        RowBox[{"b_", ">"}]}]},
+     "NotationTemplateTag"], " ", "\[DoubleLongRightArrow]", " ", 
+    TemplateBox[{RowBox[{"Integrate", "[", 
+        RowBox[{
+          RowBox[{"a_", " ", "b_"}], ",", 
+          RowBox[{"{", 
+            RowBox[{"\[Xi]", ",", 
+              RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "]"}]},
+     "NotationTemplateTag"]}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Notation", "[", 
+   RowBox[{
+    TemplateBox[{RowBox[{
+        RowBox[{"<<", "a_"}], ",", 
+        RowBox[{"b_", ">>"}]}]},
+     "NotationTemplateTag"], " ", "\[DoubleLongRightArrow]", " ", 
+    TemplateBox[{RowBox[{
+        RowBox[{"Integrate", "[", 
+          RowBox[{
+            RowBox[{"a_", " ", "b_"}], ",", 
+            RowBox[{"{", 
+              RowBox[{"\[Xi]", ",", 
+                RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "]"}], ",", 
+        RowBox[{"{", "}"}]}]},
+     "NotationTemplateTag"]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.586690706357506*^9, 3.5866907103778753`*^9}, {
+  3.586691888566708*^9, 3.5866919032901983`*^9}, {3.586691936038396*^9, 
+  3.58669193770809*^9}}]
+}, Open  ]]
+}, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["\<\
-Lifting Penaly Collocation Formulation\
-\>", "Section",
- CellChangeTimes->{{3.586615702509615*^9, 3.5866157119320593`*^9}}],
+Cell["Lifting Penaly Collocation Formulation for L4", "Section",
+ CellChangeTimes->{{3.586615702509615*^9, 3.5866157119320593`*^9}, {
+  3.586694250584838*^9, 3.5866942590732317`*^9}}],
 
 Cell["\<\
 Let\[CloseCurlyQuote]s assume we are using 4 Lobatto points as our solution \
@@ -591,7 +625,7 @@ Cell[BoxData[
     RowBox[{"1", ",", 
      SubscriptBox["q", "4"]}], "}"}]}], "}"}]], "Output",
  CellChangeTimes->{3.5866188620897617`*^9, 3.5866219653294563`*^9, 
-  3.5866220530660677`*^9}]
+  3.5866220530660677`*^9, 3.586690557222125*^9, 3.586691582935515*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -632,7 +666,8 @@ Cell[BoxData[
   PlotRange->{{-1., 1.}, {0, 0}},
   PlotRangeClipping->True,
   PlotRangePadding->{{0.04, 0.04}, {0., 0.}}]], "Output",
- CellChangeTimes->{3.586623746562296*^9}]
+ CellChangeTimes->{3.586623746562296*^9, 3.586690557405631*^9, 
+  3.586691583022744*^9}]
 }, Open  ]],
 
 Cell["\<\
@@ -685,7 +720,8 @@ Cell[BoxData[
      SubscriptBox["q", "3"]}], "-", 
     SubscriptBox["q", "4"]}], ")"}]}]], "Output",
  CellChangeTimes->{3.5866202113862753`*^9, 3.5866219656468563`*^9, 
-  3.586622053281518*^9, 3.586622682402988*^9, 3.586622717434939*^9}]
+  3.586622053281518*^9, 3.586622682402988*^9, 3.586622717434939*^9, 
+  3.586690557569121*^9, 3.586691583195231*^9}]
 }, Open  ]],
 
 Cell["\<\
@@ -805,7 +841,8 @@ Cell[BoxData[
       RowBox[{"5", " ", 
        SuperscriptBox["\[Xi]", "3"]}]}], ")"}]}]}], "}"}]], "Output",
  CellChangeTimes->{{3.5866222021314087`*^9, 3.586622293851407*^9}, 
-   3.586622415132043*^9, 3.586622505611726*^9, 3.586622921678591*^9}]
+   3.586622415132043*^9, 3.586622505611726*^9, 3.586622921678591*^9, 
+   3.586690557656642*^9, 3.586691583279621*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -830,7 +867,8 @@ Cell[BoxData[
    FractionBox["5", "8"], ",", 
    RowBox[{"-", 
     FractionBox["1", "8"]}]}], "}"}]], "Output",
- CellChangeTimes->{3.5866227473705893`*^9, 3.5866229238061237`*^9}]
+ CellChangeTimes->{3.5866227473705893`*^9, 3.5866229238061237`*^9, 
+  3.586690557755143*^9, 3.586691583344203*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -848,34 +886,38 @@ Cell[BoxData[
  CellChangeTimes->{{3.586623847853499*^9, 3.586623901763817*^9}}],
 
 Cell[BoxData["1"], "Output",
- CellChangeTimes->{{3.586623861176297*^9, 3.5866239024219522`*^9}}]
+ CellChangeTimes->{{3.586623861176297*^9, 3.5866239024219522`*^9}, 
+   3.586690557823009*^9, 3.5866915833941402`*^9}]
 }, Open  ]],
 
 Cell["Assume I have a way to define,", "Text",
  CellChangeTimes->{{3.586623009828373*^9, 3.5866230393759747`*^9}}],
 
-Cell[BoxData[
+Cell[BoxData[{
  RowBox[{
-  RowBox[{"{", 
-   RowBox[{
-    SubscriptBox["q", "1"], ",", 
-    SubscriptBox["q", "2"], ",", 
-    SubscriptBox["q", "3"], ",", 
-    SubscriptBox["q", "4"]}], "}"}], " ", ";", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     SubscriptBox["q", "1"], ",", 
+     SubscriptBox["q", "2"], ",", 
+     SubscriptBox["q", "3"], ",", 
+     SubscriptBox["q", "4"]}], "}"}], " ", ";"}], 
   RowBox[{"(*", " ", 
    RowBox[{
    "my", " ", "q", " ", "vector", " ", "on", " ", "every", " ", "SP"}], " ", 
-   "*)"}], "\[IndentingNewLine]", 
-  RowBox[{"{", 
-   RowBox[{
-    SubscriptBox["f", "1"], ",", 
-    SubscriptBox["f", "2"], ",", 
-    SubscriptBox["f", "3"], ",", 
-    SubscriptBox["f", "4"]}], "}"}], " ", ";", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     SubscriptBox["f", "1"], ",", 
+     SubscriptBox["f", "2"], ",", 
+     SubscriptBox["f", "3"], ",", 
+     SubscriptBox["f", "4"]}], "}"}], " ", ";"}], 
   RowBox[{"(*", " ", 
    RowBox[{
    "my", " ", "fluxes", " ", "values", " ", "on", " ", "every", " ", "SP"}], 
-   " ", "*)"}]}]], "Input",
+   " ", "*)"}]}]}], "Input",
  CellChangeTimes->{{3.5866230406996183`*^9, 3.586623146686262*^9}}],
 
 Cell[TextData[{
@@ -883,8 +925,7 @@ Cell[TextData[{
 Flux, ",
  Cell[BoxData[
   FormBox[
-   OverscriptBox["f", "^"], TraditionalForm]],
-  FormatType->"TraditionalForm"],
+   OverscriptBox["f", "^"], TraditionalForm]]],
  ", (like lax-friedrichs numerical flux spliting) has been used to replace \
 the normal flux to provide element coupling, i.e.,"
 }], "Text",
@@ -919,26 +960,92 @@ Cell[BoxData[{
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"-", 
-   SubscriptBox["f", "1"]}], "+", 
   SubscriptBox[
    OverscriptBox["f", "^"], 
-   RowBox[{
-    FractionBox["1", "2"], "+", "j"}]]}]], "Output",
+   RowBox[{"j", "+", 
+    RowBox[{"1", "/", "2"}]}]], "-", 
+  SubscriptBox["f", "1"]}]], "Output",
  CellChangeTimes->{3.586621965800785*^9, 3.586622053451511*^9, 
-  3.586623300987872*^9}],
+  3.586623300987872*^9, 3.586690557900797*^9, 3.586691583462514*^9}],
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"-", 
-   SubscriptBox["f", "4"]}], "+", 
   SubscriptBox[
    OverscriptBox["f", "^"], 
-   RowBox[{
-    RowBox[{"-", 
-     FractionBox["1", "2"]}], "+", "j"}]]}]], "Output",
+   RowBox[{"j", "-", 
+    RowBox[{"1", "/", "2"}]}]], "-", 
+  SubscriptBox["f", "4"]}]], "Output",
  CellChangeTimes->{3.586621965800785*^9, 3.586622053451511*^9, 
-  3.5866233009940042`*^9}]
+  3.586623300987872*^9, 3.586690557900797*^9, 3.586691583467491*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["By Flux Reconstruction", "Subsection",
+ CellChangeTimes->{{3.586711180319656*^9, 3.586711191839238*^9}}],
+
+Cell["\<\
+As I did before all I need to do if I follow the flux Reconstruction \
+procedure is evaluate:\
+\>", "Text",
+ CellChangeTimes->{{3.586711481300869*^9, 3.586711532191762*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   SubscriptBox["F", "j"], "[", 
+   SubscriptBox["\[Xi]", "k"], "]"}], " ", "=", " ", 
+  RowBox[{
+   RowBox[{
+    SubscriptBox["f", "j"], "[", 
+    SubscriptBox["\[Xi]", "k"], "]"}], "+", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      SubscriptBox[
+       OverscriptBox["f", "^"], 
+       RowBox[{"j", "-", 
+        RowBox[{"1", "/", "2"}]}]], "-", 
+      RowBox[{
+       SubscriptBox["f", "j"], "[", 
+       RowBox[{"-", "1"}], "]"}]}], ")"}], 
+    RowBox[{
+     SubscriptBox["\[ScriptG]", "LB"], "[", 
+     SubscriptBox["\[Xi]", "k"], "]"}]}], "+", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      SubscriptBox[
+       OverscriptBox["f", "^"], 
+       RowBox[{"j", "+", 
+        RowBox[{"1", "/", "2"}]}]], "-", 
+      RowBox[{
+       SubscriptBox["f", "j"], "[", "1", "]"}]}], ")"}], 
+    RowBox[{
+     SubscriptBox["\[ScriptG]", "RB"], "[", 
+     SubscriptBox["\[Xi]", "k"], "]"}]}]}]}]], "Text",
+ CellChangeTimes->{
+  3.586711467030183*^9, {3.586711676267255*^9, 3.586711686186754*^9}}],
+
+Cell["and substitute it ", "Text",
+ CellChangeTimes->{{3.586711534391247*^9, 3.586711544134837*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox[
+   RowBox[{"\[PartialD]", 
+    SubscriptBox["q", 
+     RowBox[{"j", ",", "k"}]]}], 
+   RowBox[{"\[PartialD]", "t"}]], "+", 
+  RowBox[{
+   FractionBox["2", 
+    SubscriptBox["h", "j"]], 
+   RowBox[{
+    SubscriptBox[
+     RowBox[{"(", 
+      SubscriptBox["F", "j"], ")"}], "\[Xi]"], "[", 
+    SubscriptBox["\[Xi]", "k"], "]"}]}]}]], "Text",
+ CellChangeTimes->{{3.5867115650555143`*^9, 3.5867116477489357`*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -947,132 +1054,228 @@ Cell[TextData[{
  "The correction Field ",
  Cell[BoxData[
   FormBox[
-   SubscriptBox["\[Delta]", "i"], TraditionalForm]],
-  FormatType->"TraditionalForm"],
+   SubscriptBox["\[Delta]", "i"], TraditionalForm]]],
  " \[Element] ",
  Cell[BoxData[
   FormBox[
-   SuperscriptBox["P", "k"], TraditionalForm]],
-  FormatType->"TraditionalForm"]
+   SuperscriptBox["P", "k"], TraditionalForm]]]
 }], "Subsection",
  CellChangeTimes->{{3.586623377954753*^9, 3.586623409317667*^9}}],
 
-Cell[BoxData[
- RowBox[{
-  RowBox[{
-   SubscriptBox["\[Integral]", 
-    SubscriptBox["V", "i"]], 
-   RowBox[{"W", " ", 
-    SubscriptBox["\[Delta]", "i"], 
-    RowBox[{"\[DifferentialD]", "V"}]}]}], " ", "\[Equal]", " ", 
-  RowBox[{
-   SubscriptBox["\[Integral]", 
-    RowBox[{"\[PartialD]", 
-     SubscriptBox["V", "i"]}]], 
-   RowBox[{"W", " ", "F", " ", 
-    RowBox[{"\[DifferentialD]", "S"}]}]}]}]], "Text",
- CellChangeTimes->{{3.586616724098654*^9, 3.5866168837727757`*^9}, {
-  3.586617974226252*^9, 3.586617981679755*^9}, {3.5866239551335897`*^9, 
-  3.586623967587645*^9}},
- EmphasizeSyntaxErrors->True],
-
-Cell["\<\
-if we assume W to be 1, if follows,\
-\>", "Text",
- CellChangeTimes->{{3.586624030192336*^9, 3.586624041265217*^9}}],
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{
-   SubscriptBox["\[Integral]", 
-    SubscriptBox["V", "i"]], 
-   RowBox[{
-    SubscriptBox["\[Delta]", "i"], 
-    RowBox[{"\[DifferentialD]", "V"}]}]}], " ", "\[Equal]", " ", 
-  RowBox[{
-   SubscriptBox["\[Integral]", 
-    RowBox[{"\[PartialD]", 
-     SubscriptBox["V", "i"]}]], 
-   RowBox[{"F", " ", 
-    RowBox[{"\[DifferentialD]", "S"}]}]}]}]], "Text",
- CellChangeTimes->{{3.586624050477271*^9, 3.586624067032219*^9}}],
-
 Cell[TextData[{
- "as we did with our q values, we can expand ",
+ "However if we use the CLP procedure we must compute the \
+\[OpenCurlyDoubleQuote]correction field\[CloseCurlyDoubleQuote], ",
  Cell[BoxData[
   FormBox[
    SubscriptBox["\[Delta]", "i"], TraditionalForm]],
   FormatType->"TraditionalForm"],
- " using lagrange polynomial as,"
+ "."
 }], "Text",
- CellChangeTimes->{{3.5866241306487303`*^9, 3.5866241630939007`*^9}}],
+ CellChangeTimes->{{3.5867116944163027`*^9, 3.5867117517023478`*^9}}],
 
-Cell[BoxData[
- RowBox[{"ClearAll", "[", "\[Phi]", "]"}]], "Input",
- CellChangeTimes->{{3.586624783948098*^9, 3.586624840753484*^9}}],
+Cell[TextData[{
+ "Introduce the correction field\n\n",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["\[Integral]", 
+    SubscriptBox["v", "i"]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "W ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["\[Delta]", "i"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "\[DifferentialD]V = ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["\[Integral]", 
+    RowBox[{"\[PartialD]", 
+     SubscriptBox["V", "i"]}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "W [",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox[
+    RowBox[{"F", "]"}], "~"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "\[DifferentialD]S"
+}], "Text",
+ CellChangeTimes->{{3.586704097560495*^9, 3.58670418221085*^9}, {
+  3.586704580806942*^9, 3.586704582562698*^9}}],
 
-Cell[BoxData[{
- RowBox[{
-  RowBox[{"delta", " ", "=", 
-   RowBox[{
-    SubscriptBox["\[Delta]", "i"], "\[Rule]", " ", 
+Cell[TextData[{
+ "where ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\n", 
     RowBox[{
-     UnderscriptBox["\[Sum]", "j"], 
+     OverscriptBox[
+      RowBox[{"[", "F", "]"}], "~"], " ", "=", " ", 
      RowBox[{
-      SubscriptBox["\[Phi]", "j"], 
-      SubscriptBox["\[Delta]", 
-       RowBox[{"i", ",", "j"}]]}]}]}]}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"weigth", " ", "=", " ", 
-   RowBox[{"W", " ", "\[Rule]", " ", 
-    SubscriptBox["\[Phi]", "i"]}]}], ";"}]}], "Input",
- CellChangeTimes->{{3.5866241674244347`*^9, 3.586624238203125*^9}, {
-  3.586624581119068*^9, 3.586624606573874*^9}, {3.586624645213809*^9, 
-  3.586624645893146*^9}, {3.586624851885519*^9, 3.586624857247466*^9}}],
+      RowBox[{
+       OverscriptBox["F", "~"], "(", 
+       RowBox[{
+        SuperscriptBox["Q", "h"], ",", " ", 
+        SuperscriptBox[
+         SubscriptBox["Q", "+"], "h"], ",", 
+        OverscriptBox["n", 
+         RowBox[{"\[Rule]", " "}]]}], ")"}], "-", 
+      RowBox[{
+       SuperscriptBox["F", "n"], "(", 
+       SuperscriptBox[
+        SubscriptBox["Q", "i"], "h"], ")"}]}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "Text",
+ CellChangeTimes->{{3.5867041810539513`*^9, 3.586704193712884*^9}, {
+  3.5867042490495377`*^9, 3.586704430862957*^9}, {3.586704567878334*^9, 
+  3.586704587987364*^9}}],
 
 Cell["\<\
-LHS using the above rules gives,\
+doing w = 1 LCP correction term yields,\
 \>", "Text",
- CellChangeTimes->{{3.586624614369982*^9, 3.5866246523695173`*^9}, {
-  3.5866248611101713`*^9, 3.586624910868572*^9}}],
-
-Cell[CellGroupData[{
+ CellChangeTimes->{{3.586704446164466*^9, 3.586704450686499*^9}, {
+  3.5867107745819063`*^9, 3.586710801530179*^9}}],
 
 Cell[BoxData[
  RowBox[{
   RowBox[{
-   RowBox[{"\[Integral]", 
-    RowBox[{"W", " ", 
-     SubscriptBox["\[Delta]", "i"], 
-     RowBox[{"\[DifferentialD]", "v"}]}]}], " ", "/.", " ", "delta"}], " ", "/.",
-   " ", "weigth"}]], "Input",
- CellChangeTimes->{{3.586624491351264*^9, 3.5866244974358253`*^9}, {
-  3.5866245697066393`*^9, 3.5866245713578873`*^9}, {3.586624659901907*^9, 
-  3.586624665046414*^9}, {3.586624717072666*^9, 3.586624753773757*^9}, {
-  3.586624876137959*^9, 3.586624880406726*^9}}],
+   SubscriptBox["\[Integral]", 
+    SubscriptBox["V", "i"]], 
+   RowBox[{
+    SubscriptBox["\[Delta]", "i"], 
+    RowBox[{"\[DifferentialD]", "V"}]}]}], " ", "\[Equal]", " ", 
+  RowBox[{
+   SubscriptBox["\[Integral]", 
+    RowBox[{"\[PartialD]", 
+     SubscriptBox["V", "i"]}]], 
+   RowBox[{
+    RowBox[{"[", 
+     OverscriptBox["F", "~"], "]"}], " ", 
+    RowBox[{"\[DifferentialD]", "S"}]}]}]}]], "Text",
+ CellChangeTimes->{{3.58671074426931*^9, 3.586710758078861*^9}}],
+
+Cell["or ", "Text",
+ CellChangeTimes->{{3.586710827263093*^9, 3.586710830769712*^9}}],
 
 Cell[BoxData[
- RowBox[{"v", " ", 
-  SubscriptBox["\[Phi]", "i"], " ", 
+ RowBox[{
+  OverscriptBox[
+   SubscriptBox["\[Delta]", "i"], "_"], "=", " ", 
   RowBox[{
-   UnderscriptBox["\[Sum]", "j"], 
+   FractionBox["1", 
+    RowBox[{"|", 
+     SubscriptBox["V", "i"], "|"}]], 
    RowBox[{
-    SubscriptBox["\[Phi]", "j"], " ", 
-    SubscriptBox["\[Delta]", 
-     RowBox[{"i", ",", "j"}]]}]}]}]], "Output",
- CellChangeTimes->{{3.5866247259256687`*^9, 3.586624754345289*^9}, {
-  3.5866248724766493`*^9, 3.5866248811380444`*^9}}]
-}, Open  ]],
+    UnderscriptBox["\[Sum]", 
+     RowBox[{"f", "\[Element]", 
+      RowBox[{"\[PartialD]", 
+       SubscriptBox["V", "i"]}]}]], 
+    RowBox[{
+     SubscriptBox["\[Integral]", "f"], 
+     RowBox[{
+      RowBox[{"[", 
+       OverscriptBox["F", "~"], "]"}], 
+      RowBox[{"\[DifferentialD]", "S"}]}]}]}]}]}]], "Text",
+ CellChangeTimes->{{3.586710834750518*^9, 3.586710902766305*^9}, {
+  3.586711076649704*^9, 3.5867110867881937`*^9}}],
 
-Cell["for the RHs,", "Text",
- CellChangeTimes->{{3.5866244855466413`*^9, 3.586624488332426*^9}}]
+Cell["\<\
+using a suitable on the face of every element yields,\
+\>", "Text",
+ CellChangeTimes->{{3.5867109108232307`*^9, 3.5867109495724077`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  OverscriptBox[
+   SubscriptBox["\[Delta]", "i"], "_"], "=", " ", 
+  RowBox[{
+   FractionBox["1", 
+    RowBox[{"|", 
+     SubscriptBox["V", "i"], "|"}]], 
+   RowBox[{
+    UnderscriptBox["\[Sum]", 
+     RowBox[{"f", "\[Element]", 
+      RowBox[{"\[PartialD]", 
+       SubscriptBox["V", "i"]}]}]], 
+    RowBox[{
+     UnderscriptBox["\[Sum]", "l"], 
+     RowBox[{
+      SubscriptBox[
+       RowBox[{
+        SubscriptBox["w", "l"], "[", 
+        OverscriptBox["F", "~"], "]"}], 
+       RowBox[{"f", ",", "l"}]], 
+      SubscriptBox["S", "f"]}]}]}]}]}]], "Text",
+ CellChangeTimes->{{3.586710961925892*^9, 3.58671109086434*^9}}],
+
+Cell["\<\
+For the Linear case, we only have one flux-node at each end of every element, \
+therefore the internal sumation simplifies to.\
+\>", "Text",
+ CellChangeTimes->{{3.586712083179858*^9, 3.586712101360613*^9}, {
+   3.586712279904845*^9, 3.58671231505653*^9}, {3.586712345491743*^9, 
+   3.58671238919208*^9}, 3.5867125492154903`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  OverscriptBox[
+   SubscriptBox["\[Delta]", "i"], "_"], "=", " ", 
+  RowBox[{
+   FractionBox["1", 
+    RowBox[{"|", 
+     SubscriptBox["V", "i"], "|"}]], 
+   RowBox[{
+    UnderscriptBox[
+     OverscriptBox["\[Sum]", "2"], "f"], 
+    RowBox[{
+     SubscriptBox[
+      RowBox[{"w", "[", 
+       OverscriptBox["F", "~"], "]"}], "f"], 
+     SubscriptBox["S", "f"]}]}]}]}]], "Text",
+ CellChangeTimes->{{3.58671239770718*^9, 3.586712432326982*^9}, 
+   3.586712594128166*^9}],
+
+Cell[TextData[{
+ " assuming ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["S", "f"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "to be unity for linear case is easy to realize that,"
+}], "Text",
+ CellChangeTimes->{{3.5867125509776163`*^9, 3.586712589158354*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  OverscriptBox[
+   SubscriptBox["\[Delta]", "i"], "_"], "=", " ", 
+  RowBox[{
+   FractionBox["1", 
+    RowBox[{"|", 
+     SubscriptBox["V", "i"], "|"}]], 
+   RowBox[{"(", 
+    RowBox[{
+     SubscriptBox[
+      RowBox[{"w", "[", 
+       OverscriptBox["F", "~"], "]"}], "1"], "+", 
+     SubscriptBox[
+      RowBox[{"w", "[", 
+       OverscriptBox["F", "~"], "]"}], "2"]}], ")"}]}]}]], "Text",
+ CellChangeTimes->{{3.5867126085507107`*^9, 3.586712673039241*^9}}],
+
+Cell["\<\
+Therefore if we compare the flux reconstruction with LCP procedure we notice \
+that g(x) is directly related to w in this last equation.\
+\>", "Text",
+ CellChangeTimes->{{3.586712674405148*^9, 3.586712686888624*^9}, {
+  3.586712806662889*^9, 3.58671287306304*^9}}]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
 },
 WindowToolbars->"EditBar",
-WindowSize->{960, 1024},
-WindowMargins->{{958, Automatic}, {Automatic, 0}},
+WindowSize->{683, 721},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FontColor->RGBColor[
   Rational[2, 3], 
   Rational[16, 17], 
@@ -1094,90 +1297,100 @@ CellTagsIndex->{}
 Notebook[{
 Cell[CellGroupData[{
 Cell[579, 22, 271, 3, 150, "Title"],
-Cell[853, 27, 207, 4, 51, "Subtitle"],
+Cell[853, 27, 207, 4, 81, "Subtitle"],
 Cell[1063, 33, 174, 2, 51, "Subtitle"],
 Cell[1240, 37, 167, 2, 31, "Text"],
-Cell[1410, 41, 617, 10, 71, "Text"],
+Cell[1410, 41, 617, 10, 91, "Text"],
 Cell[2030, 53, 275, 3, 31, "Text"],
 Cell[2308, 58, 310, 8, 32, "Input"],
 Cell[CellGroupData[{
 Cell[2643, 70, 114, 1, 81, "Section"],
 Cell[CellGroupData[{
 Cell[2782, 75, 191, 2, 35, "Subsubsection"],
-Cell[2976, 79, 582, 11, 32, "Input"],
-Cell[3561, 92, 623, 13, 32, "Input"]
+Cell[2976, 79, 582, 11, 55, "Input"],
+Cell[3561, 92, 623, 13, 55, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[4221, 110, 204, 3, 35, "Subsubsection"],
 Cell[4428, 115, 144, 2, 32, "Input"],
 Cell[4575, 119, 137, 2, 32, "Input"],
-Cell[4715, 123, 7022, 182, 719, "Input"],
+Cell[4715, 123, 7022, 182, 1037, "Input"],
 Cell[11740, 307, 234, 4, 32, "Input"],
-Cell[11977, 313, 2577, 68, 115, "Input"],
+Cell[11977, 313, 2577, 68, 209, "Input"],
 Cell[14557, 383, 171, 3, 32, "Input"],
-Cell[14731, 388, 2704, 57, 61, "Input"],
+Cell[14731, 388, 2704, 57, 124, "Input"],
 Cell[17438, 447, 500, 11, 48, "Input"],
-Cell[17941, 460, 421, 10, 48, "Input"]
-}, Closed]]
+Cell[17941, 460, 421, 10, 48, "Input"],
+Cell[18365, 472, 1243, 33, 80, "Input"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[19657, 511, 183, 2, 87, "Section"],
+Cell[19843, 515, 197, 4, 51, "Text"],
+Cell[20043, 521, 708, 22, 113, "Input"],
+Cell[20754, 545, 1337, 32, 78, "Input"],
+Cell[22094, 579, 99, 1, 31, "Text"],
+Cell[22196, 582, 538, 15, 32, "Input"],
+Cell[CellGroupData[{
+Cell[22759, 601, 132, 2, 32, "Input"],
+Cell[22894, 605, 652, 22, 55, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[18411, 476, 133, 3, 81, "Section"],
-Cell[18547, 481, 197, 4, 31, "Text"],
-Cell[18747, 487, 708, 22, 113, "Input"],
-Cell[19458, 511, 1337, 32, 56, "Input"],
-Cell[20798, 545, 99, 1, 31, "Text"],
-Cell[20900, 548, 538, 15, 32, "Input"],
+Cell[23583, 632, 654, 21, 98, "Input"],
+Cell[24240, 655, 547, 14, 247, "Output"]
+}, Open  ]],
+Cell[24802, 672, 158, 3, 31, "Text"],
+Cell[24963, 677, 478, 11, 77, "Input"],
+Cell[25444, 690, 354, 8, 34, "Input"],
 Cell[CellGroupData[{
-Cell[21463, 567, 132, 2, 32, "Input"],
-Cell[21598, 571, 608, 22, 55, "Output"]
+Cell[25823, 702, 242, 5, 34, "Input"],
+Cell[26068, 709, 491, 14, 49, "Output"]
+}, Open  ]],
+Cell[26574, 726, 194, 4, 51, "Text"],
+Cell[26771, 732, 1600, 44, 143, "Input"],
+Cell[CellGroupData[{
+Cell[28396, 780, 687, 17, 77, "Input"],
+Cell[29086, 799, 1372, 45, 89, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[22243, 598, 654, 21, 64, InheritFromParent],
-Cell[22900, 621, 500, 13, 247, "Output"]
-}, Open  ]],
-Cell[23415, 637, 158, 3, 31, "Text"],
-Cell[23576, 642, 478, 11, 55, "Input"],
-Cell[24057, 655, 354, 8, 34, "Input"],
-Cell[CellGroupData[{
-Cell[24436, 667, 242, 5, 34, "Input"],
-Cell[24681, 674, 444, 13, 49, "Output"]
-}, Open  ]],
-Cell[25140, 690, 194, 4, 31, "Text"],
-Cell[25337, 696, 1600, 44, 121, "Input"],
-Cell[CellGroupData[{
-Cell[26962, 744, 687, 17, 32, "Input"],
-Cell[27652, 763, 1324, 44, 49, "Output"]
+Cell[30495, 849, 339, 9, 32, "Input"],
+Cell[30837, 860, 336, 10, 49, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[29013, 812, 339, 9, 32, "Input"],
-Cell[29355, 823, 289, 9, 49, "Output"]
+Cell[31210, 875, 346, 10, 32, "Input"],
+Cell[31559, 887, 146, 2, 32, "Output"]
+}, Open  ]],
+Cell[31720, 892, 114, 1, 31, "Text"],
+Cell[31837, 895, 786, 25, 77, "Input"],
+Cell[32626, 922, 486, 11, 76, "Text"],
+Cell[CellGroupData[{
+Cell[33137, 937, 814, 21, 65, "Input"],
+Cell[33954, 960, 300, 8, 37, "Output"],
+Cell[34257, 970, 300, 8, 37, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[29681, 837, 346, 10, 32, "Input"],
-Cell[30030, 849, 96, 1, 32, "Output"]
-}, Open  ]],
-Cell[30141, 853, 114, 1, 31, "Text"],
-Cell[30258, 856, 734, 22, 55, "Input"],
-Cell[30995, 880, 519, 12, 56, "Text"],
-Cell[CellGroupData[{
-Cell[31539, 896, 814, 21, 65, "Input"],
-Cell[32356, 919, 273, 9, 46, "Output"],
-Cell[32632, 930, 296, 10, 46, "Output"]
+Cell[34594, 983, 110, 1, 45, "Subsection"],
+Cell[34707, 986, 183, 4, 51, "Text"],
+Cell[34893, 992, 1032, 35, 62, "Text"],
+Cell[35928, 1029, 100, 1, 31, "Text"],
+Cell[36031, 1032, 448, 15, 55, "Text"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[32965, 945, 362, 12, 48, "Subsection"],
-Cell[33330, 959, 608, 17, 55, "Text"],
-Cell[33941, 978, 125, 3, 31, "Text"],
-Cell[34069, 983, 456, 14, 55, "Text"],
-Cell[34528, 999, 292, 8, 31, "Text"],
-Cell[34823, 1009, 132, 2, 32, "Input"],
-Cell[34958, 1013, 673, 17, 79, "Input"],
-Cell[35634, 1032, 175, 4, 31, "Text"],
-Cell[CellGroupData[{
-Cell[35834, 1040, 498, 11, 50, "Input"],
-Cell[36335, 1053, 366, 10, 54, "Output"]
-}, Open  ]],
-Cell[36716, 1066, 96, 1, 31, "Text"]
+Cell[36516, 1052, 296, 10, 48, "Subsection"],
+Cell[36815, 1064, 343, 9, 51, "Text"],
+Cell[37161, 1075, 792, 28, 83, "Text"],
+Cell[37956, 1105, 792, 25, 64, "Text"],
+Cell[38751, 1132, 180, 4, 31, "Text"],
+Cell[38934, 1138, 506, 16, 55, "Text"],
+Cell[39443, 1156, 85, 1, 31, "Text"],
+Cell[39531, 1159, 625, 20, 61, "Text"],
+Cell[40159, 1181, 147, 3, 31, "Text"],
+Cell[40309, 1186, 648, 22, 61, "Text"],
+Cell[40960, 1210, 338, 6, 51, "Text"],
+Cell[41301, 1218, 493, 17, 63, "Text"],
+Cell[41797, 1237, 272, 8, 31, "Text"],
+Cell[42072, 1247, 483, 16, 53, "Text"],
+Cell[42558, 1265, 274, 5, 51, "Text"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
