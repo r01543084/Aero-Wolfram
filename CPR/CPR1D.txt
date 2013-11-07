@@ -1,0 +1,536 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%              Solving 1-D wave equation with CPR/FR
+%
+%               du/dt + df/dx = 0,  for x \in [a,b]
+%                 where f = f(u): linear/nonlinear
+%
+%              coded by Manuel Diaz, NTU, 2013.10.29
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ref: A flux reconstruction approach to high-order schemes including
+% Discontinuous Galerkin methods. H.T. Huynh, AIAA 2007.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+clc; clear all; close all;
+
+%% Simulation Parameters
+fluxfun = 'linear'; % select flux function
+cfl = 0.03; % CFL condition
+tEnd = 2; % final time
+K = 4; % degree of accuaracy %example: K = 6 -> cfl 0.001
+nE = 6; % number of elements
+
+%% PreProcess
+% Define our Flux function
+switch fluxfun
+    case 'linear'
+        a=-2; flux = @(w) a*w; 
+        dflux = @(w) a*ones(size(w));
+    case 'nonlinear' %Burgers
+        flux = @(w) w.^2/2; 
+        dflux = @(w) w; 
+end
+
+% Build 1d mesh
+xgrid = mesh1d([0 1],nE,'Legendre',K);
+dx = xgrid.elementSize; J = xgrid.Jacobian; 
+x = xgrid.nodeCoordinates; quad = xgrid.quadratureType;
+
+% compute gR'(xi) & gL'(xi)
+RR = CorrectionPolynomial('RadauRight',K+1); % g: one-order higher
+dg.RR = RR.eval_dP(xgrid.solutionPoints); dg.RL = -flipud(dg.RR);
+
+% Build Lagrange k-Polynomials
+l = LagrangePolynomial(xgrid.solutionPoints);
+L.lcoef = double(subs(l.lagrangePolynomial,-1));
+L.rcoef = double(subs(l.lagrangePolynomial,1));
+L.dcoef = double(subs(l.dlagrangePolynomial,xgrid.solutionPoints));
+
+% IC
+u0 = IC(x,2);
+
+% Set plot range
+plotrange = [xgrid.range(1),xgrid.range(2),0.9*min(min(u0)),1.1*max(max(u0))];
+
+%% Solver Loop
+
+
+% Set initial time & load IC
+t = 0; u = u0; it = 0;
+
+% Using a 3-stage TVD Runge Kutta time integration
+while t < tEnd
+    uo = u;
+    
+    % update time
+    dt = cfl*dx/max(max(abs(dflux(u)))); t = t+dt;
+    
+    % iteration counter
+    it = it+1; 
+    
+    % Plot u
+    plot(x,u,x,u0,'-o'); axis(plotrange); grid on; 
+       
+    % 1st stage
+    dF = residual(u,L,dg,flux,dflux,quad);
+    u = uo-dt*dF/J;
+
+    % 2nd Stage
+    dF = residual(u,L,dg,flux,dflux,quad); 
+    u = 0.75*uo+0.25*(u-dt*dF/J);
+
+    % 3rd stage
+    dF = residual(u,L,dg,flux,dflux,quad); 
+    u = (uo+2*(u-dt*dF/J))/3;
+    
+    %pause(0.1)
+    if rem(it,10) == 0
+        drawnow;
+    end
+end
+
+function dF = residual(u,L,dg,flux,dflux,quad)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Compute the Residual for 1d wave equation using CPR/FR 
+%
+%                       Residual = dF/dxi 
+%             where F = is our Correcting Flux function
+%
+%              coded by Manuel Diaz, NTU, 2013.10.29
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% compute fluxes in node coordinates
+f = flux(u);
+
+% Interpolate u and flux values at the boundaries of Ij
+switch quad
+    case 'LGL'
+        u_lbd = u(1,:);
+        u_rbd = u(end,:);
+        f_lbd = f(1,:);
+        f_rbd = f(end,:);
+    otherwise
+        u_lbd = L.lcoef*u;
+        u_rbd = L.rcoef*u;
+        f_lbd = L.lcoef*f;
+        f_rbd = L.rcoef*f;
+end
+% Build Numerical fluxes acroos faces
+u_pface = [u_lbd,0]; % + side
+u_nface = [0,u_rbd]; % - side
+
+% Apply Periodic BCs
+u_nface(1) = u_nface(end); % left BD
+u_pface(end) = u_pface(1); % right BD
+
+% LF numerical flux
+alpha = max(max(abs(dflux(u))));
+nflux = 0.5*(flux(u_nface)+flux(u_pface)-alpha*(u_pface-u_nface));
+nfluxL = nflux(1:end-1); nfluxR = nflux(2:end);
+
+% flux derivate
+df = L.dcoef*f;
+
+% Compute the derivate: F = f + gL*(nfluxL-f_bdL) + gR*(nfluxR-f_bdR)
+dF = df + dg.RR*(nfluxL - f_lbd) + dg.RL*(nfluxR - f_rbd);
+
+end
+
+function u0 = IC(x,ICcase)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Function to construct the Initial Condition
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Create the selected IC
+switch ICcase
+    case {1} % Gaussian wave
+        u0 = exp(-(6*(x-0.5)).^2);
+        
+    case {2} % sinusoidal wave
+        u0 = 0.5*(2 + sin(2*pi*x));
+    case {3} % Riemann problem
+             % u = 1 for x <  x_mid
+             % u = 0 for x >= x_mid
+        u0 = zeros(size(x));
+        xmid = (x(end)-x(1))/2;
+        rhs = find(x<xmid);
+        u0(rhs) = 1;
+    otherwise
+        error('case not in the list')
+end
+
+classdef CorrectionPolynomial
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %CORRECTIONPOLYNOMIAL class
+    %   Build Correction Polynomials of degree K for CPR scheme.
+    %
+    %   by Manuel Diaz, NTU, 2013.10.12
+    %
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    properties
+        pDeg
+        pType
+    end
+    
+    properties (Dependent = true, SetAccess = private)
+        xi % local coordiante
+        P  % Correction Polynomail
+        dP % derivate of correction Polynomial
+    end
+    
+    methods (Static)
+        function legP = LegendreP(kDeg)
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            % Legendre Polynomials
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            %
+            %  Input : kDeg: Polynomial Degree requested
+            % Output : legP: symbolic Legendre polynomial
+            %
+            x = sym('x');
+            switch kDeg
+                case(0)
+                    legP = x^0; % = 1
+                case(1)
+                    legP = x;
+                case(2)
+                    legP = 1/2*(-1+3*x^2);
+                case(3)
+                    legP = 1/2*(-3*x+5*x^3);
+                case(4)
+                    legP = 1/8*(3-30*x^2+35*x^4);
+                case(5)
+                    legP = 1/8*(63*x^5-70*x^3+15*x);
+                case(6)
+                    legP = 1/16*(231*x^6-315*x^4+105*x^2-5);
+                case(7)
+                    legP = 1/16*(-35*x + 315*x^3 - 693*x^5 + 429*x^7);
+                case(8)
+                    legP = 1/128*(-35 + 1260*x^2 - 6930*x^4 + 12012*x^6 - 6435*x^8);
+                case(9)
+                    legP = 1/128*(315*x - 4620*x^3 + 18018*x^5 - 25740*x^7 + 12155*x^9);
+                case(10)
+                    legP = 1/256*(63 - 3465*x^2 + 30030*x^4 - 90090*x^6 + 109395*x^8 - 46189*x^10);
+                otherwise
+                    error('Legendre Polynomial not available');
+            end
+        end
+                   
+    end % Methods
+           
+    methods
+        function obj = CorrectionPolynomial(type,Kdeg)
+            obj.pDeg = Kdeg;
+            obj.pType = type;
+        end
+        
+        function cpoly = get.P(obj)
+            switch obj.pType
+                case 'Legendre'
+                    cpoly = obj.LegendreP(obj.pDeg);
+                case 'LGL'
+                    cpoly = obj.LobattoP(obj.pDeg);
+                case 'RadauRight'
+                    cpoly = obj.RadauRightP(obj.pDeg);
+                case 'RadauLeft'
+                    cpoly = obj.RadauLeftP(obj.pDeg);
+                otherwise
+                    error('correction polynomial not available')
+            end
+        end
+        
+        function RRP = RadauRightP(obj,kDeg)
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            % Load from table the coefs for Radau Polynomials
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            %
+            %  Input : kDeg: Polynomial Degree requested
+            % Output : RRP: Right Radau polynomial
+            %
+            RRP = (-1)^(kDeg)/2*(obj.LegendreP(kDeg) - obj.LegendreP(kDeg-1));
+        end
+            
+        function RLP = RadauLeftP(obj,kDeg)
+        	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            % Load from table the coefs for Radau Polynomials
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            %
+            %  Input : kDeg: Polynomial Degree requested
+            % Output : RLP: Left Radau polynomial
+            %
+            RLP = (1/2)*(obj.LegendreP(kDeg) + obj.LegendreP(kDeg-1) );
+        end
+            
+        function lobP = LobattoP(obj,kDeg)
+        	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            % Lobatto Polynomials
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            %
+            %  Input : kDeg: Polynomial Degree requested
+            % Output : lobP: Symbolic Lobatto polynomial
+            %   
+            lobP = obj.LegendreP(kDeg) - obj.LegendreP(kDeg-2);
+        end
+        
+        function dcorrection = get.dP(obj)
+            x = sym('x'); dcorrection = diff(obj.P,x);
+        end
+        
+        function gpoints = eval_dP(obj,solutionPoints)
+            gpoints = double(subs(obj.dP,solutionPoints));
+        end
+        
+    end % Methods
+    
+end % Class
+
+classdef LagrangePolynomial
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %LAGRANGEPOLYNOMIAL class
+    %   Build Lagrange interpolation polynomials
+    %
+    %   by Manuel Diaz, NTU, 2013.10.12
+    %
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    properties
+        x0
+        Pdeg
+        nPoints
+    end
+    
+    properties(Dependent = true, SetAccess = private)
+       lagrangePolynomial
+       dlagrangePolynomial
+    end
+    
+    methods
+        function obj = LagrangePolynomial(x0)
+           obj.x0 = x0;
+           obj.Pdeg = length(x0)-1;
+           obj.nPoints = length(x0);
+        end
+        
+        function l = get.lagrangePolynomial(obj)
+            % Build Lagrange base functions
+            x = sym('x');
+            for i=1:obj.nPoints
+                l(i)=x/x;
+                for j=1:obj.nPoints
+                    if(i ~= j)
+                        l(i)=l(i)*(x-obj.x0(j))/(obj.x0(i)-obj.x0(j));
+                    end
+                end
+            end
+        end
+        
+        function D = get.dlagrangePolynomial(obj)
+            % Build derivate of Lagrange base functions
+            x = sym('x');
+            for i=1:obj.nPoints
+                l(i)=x/x;
+                for j=1:obj.nPoints
+                    if(i ~= j)
+                        l(i)=l(i)*(x-obj.x0(j))/(obj.x0(i)-obj.x0(j));
+                    end
+                end
+                D(i)=diff(l(i),x);
+            end
+        end
+        
+    end % Method
+end % Class
+
+classdef mesh1d
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %MESH1D class
+    %   Build a one-dimensional mesh for polynomial reconstructions
+    %
+    %   by Manuel Diaz, NTU, 2013.10.12
+    %
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    properties
+        range
+        quadratureType
+        solutionDegree
+        nElements
+        nFaces
+        nSolutionPoints
+    end
+    
+    properties (Dependent = true, SetAccess = private)
+        nNodes
+        solutionPoints
+        elementNodes
+        elementFaces
+        elementCenter
+        elementSize
+        nodeCoordinates
+        Jacobian
+    end
+    
+    methods (Static)
+        function [x,w] = GaussLaguerre(n, alpha)
+            % This function determines the abscisas (x) and weights (w) for the
+            % Gauss-Laguerre quadrature of order n>1, on the interval [0, +infinity].
+            % Unlike the function 'GaussLaguerre', this function is valid for
+            % n>=34. This is due to the fact that the companion matrix (of the n'th
+            % degree Laguerre polynomial) is now constructed as a symmetrical
+            % matrix, guaranteeing that all the eigenvalues (roots) will be real.
+
+            % � Geert Van Damme
+            % geert@vandamme-iliano.be
+            % February 21, 2010
+
+            % Building the companion matrix CM
+            % CM is such that det(xI-CM)=L_n(x), with L_n the Laguerree polynomial
+            % under consideration. Moreover, CM will be constructed in such a way
+            % that it is symmetrical.
+            i   = 1:n;
+            a   = (2*i-1) + alpha;
+            b   = sqrt( i(1:n-1) .* ((1:n-1) + alpha) );
+            CM  = diag(a) + diag(b,1) + diag(b,-1);
+
+            % Determining the abscissas (x) and weights (w)
+            % - since det(xI-CM)=L_n(x), the abscissas are the roots of the
+            %   characteristic polynomial, i.d. the eigenvalues of CM;
+            % - the weights can be derived from the corresponding eigenvectors.
+            [V,L]   = eig(CM);
+            [x,ind] = sort(diag(L));
+            V       = V(:,ind)';
+            w       = gamma(alpha+1) .* V(:,1).^2;
+        end
+        
+        function [x,w,P]=GaussLobatto(kk)
+        	N = kk-1; % Compute for the number of points kk
+            % lglnodes.m
+            %
+            % Computes the Legendre-Gauss-Lobatto nodes, weights and the LGL Vandermonde
+            % matrix. The LGL nodes are the zeros of (1-x^2)*P'_N(x). Useful for numerical
+            % integration and spectral methods.
+            %
+            % Reference on LGL nodes and weights:
+            %   C. Canuto, M. Y. Hussaini, A. Quarteroni, T. A. Tang, "Spectral Methods
+            %   in Fluid Dynamics," Section 2.3. Springer-Verlag 1987
+            %
+            % Written by Greg von Winckel - 04/17/2004
+            % Contact: gregvw@chtm.unm.edu
+            
+            % Truncation + 1
+            N1=N+1;
+            % Use the Chebyshev-Gauss-Lobatto nodes as the first guess
+            x=-cos(pi*(0:N)/N)';
+            % The Legendre Vandermonde Matrix
+            P=zeros(N1,N1);
+            % Compute P_(N) using the recursion relation
+            % Compute its first and second derivatives and
+            % update x using the Newton-Raphson method.
+            xold=2;
+            
+            while max(abs(x-xold))>eps
+                xold=x;
+                P(:,1)=1;    P(:,2)=x;
+                for k=2:N
+                    P(:,k+1)=( (2*k-1)*x.*P(:,k)-(k-1)*P(:,k-1) )/k;
+                end
+                x=xold-( x.*P(:,N1)-P(:,N) )./( N1*P(:,N1) );
+            end
+            w=2./(N*N1*P(:,N1).^2);
+        end
+        
+        function [x,w] = GaussLegendre(n)
+            % This function determines the abscisas (x) and weights (w)  for the        %
+            % Gauss-Legendre quadrature, of order n>1, on the interval [-1, +1].        %
+            %   Unlike many publicly available functions, 'GaussLegendre_2' is valid    %
+            %   for n>=46. This is due to the fact that 'GaussLegendre_2' does not      %
+            %   rely on the build-in Matlab routine 'roots' to determine the roots of   %
+            %   the Legendre polynomial, but finds the roots by looking for the         %
+            %   eigenvalues of an alternative version of the companion matrix of the    %
+            %   n'th degree Legendre polynomial. The companion matrix is constructed    %
+            %   as a symmetrical matrix, guaranteeing that all the eigenvalues          %
+            %   (roots) will be real. On the contrary, the 'roots' function uses a      %
+            %   general form for the companion matrix, which becomes unstable at        %
+            %   higher orders n, leading to complex roots.                              %
+            
+            % � Geert Van Damme
+            % geert@vandamme-iliano.be
+            % February 21, 2010
+            
+            % Building the companion matrix CM
+            % CM is such that det(xI-CM)=P_n(x), with P_n the Legendre polynomial
+            % under consideration. Moreover, CM will be constructed in such a way
+            % that it is symmetrical.
+            i  = 1:n-1;
+            a  = i./sqrt(4*i.^2-1);
+            CM = diag(a,1) + diag(a,-1);
+            
+            % Determining the abscissas (x) and weights (w)
+            % - since det(xI-CM)=P_n(x), the abscissas are the roots of the
+            %   characteristic polynomial, i.d. the eigenvalues of CM;
+            % - the weights can be derived from the corresponding eigenvectors.
+            [V,L] = eig(CM);
+            [x,ind] = sort(diag(L));
+            % V = V'
+            w = 2 * (V(1,:).^2)';
+        end
+        
+    end % Static Methods
+    
+    methods
+        function obj = mesh1d(range,nE,type,KDeg) % The Constuctor
+            if nargin > 0 % Support calling with 0 arguments
+                obj.range = range;
+                obj.quadratureType = type;
+                obj.nElements = nE;
+                obj.nFaces    = nE+1;
+                obj.solutionDegree = KDeg;
+                obj.nSolutionPoints = KDeg+1;
+            end
+        end
+        
+        function SPs = get.solutionPoints(obj)
+            switch obj.quadratureType
+                case 'Legendre'
+                    SPs = obj.GaussLegendre(obj.nSolutionPoints);
+                case 'Laguerre'
+                    SPs = obj.GaussLaguerre(obj.nSolutionPoints);
+                case 'LGL'
+                    SPs = obj.GaussLobatto(obj.nSolutionPoints);
+                otherwise
+                    error('quadrature scheme not defined')
+            end
+        end
+                
+        function nN = get.nNodes(obj) % Element Nodes
+            nN = obj.nElements*obj.nSolutionPoints;
+        end
+        
+        function eFaces = get.elementFaces(obj) % Element Faces
+            Faces = linspace(obj.range(1),obj.range(2),obj.nFaces);
+            eFaces(1,:) = Faces(1:end-1);
+            eFaces(2,:) = Faces(2:end);
+        end
+        
+        function eSize = get.elementSize(obj) % Element Size
+            eSize = (obj.range(2)-obj.range(1))/obj.nElements;
+        end
+        
+        function eCenter =  get.elementCenter(obj) % Element Center
+               eCenter = (obj.elementFaces(2,:)+obj.elementFaces(1,:))/2;
+        end
+        
+        function J = get.Jacobian(obj) % Jacobian dx/dxi
+            J = obj.elementSize/2;
+        end
+        
+        function eNodes = get.elementNodes(obj)
+            eNodes = reshape(1:obj.nNodes,obj.nSolutionPoints,obj.nElements);
+        end
+        
+        function nodeCoords = get.nodeCoordinates(obj) % x-Grid
+            [xSPs,xc] = meshgrid(obj.elementCenter,obj.Jacobian*obj.solutionPoints);
+            nodeCoords = xSPs+xc; % x-Grid
+        end
+        
+    end % Methods
+    
+end % Class
+
