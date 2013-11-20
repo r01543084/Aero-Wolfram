@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     16251,        504]
-NotebookOptionsPosition[     15205,        465]
-NotebookOutlinePosition[     15548,        480]
-CellTagsIndexPosition[     15505,        477]
+NotebookDataLength[     16316,        504]
+NotebookOptionsPosition[     15192,        464]
+NotebookOutlinePosition[     15613,        480]
+CellTagsIndexPosition[     15570,        477]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -367,11 +367,10 @@ Cell[BoxData[
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"Solve", "::", "svars"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Equations may not give solutions for all \\\"solve\\\" \
-variables. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\
-\\\", ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/Solve/svars\\\", \
+   RowBox[{"Solve", "::", "svars"}], "MessageName"], ":", 
+  " ", "\<\"Equations may not give solutions for all \\\"solve\\\" variables. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/Solve/svars\\\", \
 ButtonNote -> \\\"Solve::svars\\\"]\\)\"\>"}]], "Message", "MSG",
  CellChangeTimes->{3.5720554021409216`*^9}],
 
@@ -465,7 +464,8 @@ Cell[BoxData[
 },
 WindowSize->{1288, 673},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
-FrontEndVersion->"8.0 for Microsoft Windows (64-bit) (November 7, 2010)",
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+FrontEndVersion->"9.0 for Microsoft Windows (64-bit) (January 25, 2013)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -483,28 +483,28 @@ Cell[557, 20, 282, 7, 52, "Input"],
 Cell[842, 29, 2873, 79, 212, "Input"],
 Cell[CellGroupData[{
 Cell[3740, 112, 1240, 32, 72, "Input"],
-Cell[4983, 146, 1114, 30, 47, "Output"],
-Cell[6100, 178, 586, 14, 47, "Output"],
+Cell[4983, 146, 1114, 30, 46, "Output"],
+Cell[6100, 178, 586, 14, 46, "Output"],
 Cell[6689, 194, 532, 13, 33, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[7258, 212, 225, 4, 31, "Input"],
-Cell[7486, 218, 1482, 46, 47, "Output"]
+Cell[7486, 218, 1482, 46, 46, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[9005, 269, 552, 14, 72, "Input"],
-Cell[9560, 285, 807, 25, 50, "Output"],
-Cell[10370, 312, 900, 28, 50, "Output"],
-Cell[11273, 342, 145, 2, 30, "Output"]
+Cell[9560, 285, 807, 25, 49, "Output"],
+Cell[10370, 312, 900, 28, 49, "Output"],
+Cell[11273, 342, 145, 2, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[11455, 349, 581, 15, 31, "Input"],
-Cell[12039, 366, 444, 9, 21, "Message"],
-Cell[12486, 377, 1796, 52, 55, "Output"]
+Cell[12039, 366, 431, 8, 21, "Message"],
+Cell[12473, 376, 1796, 52, 56, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[14319, 434, 294, 8, 31, "Input"],
-Cell[14616, 444, 573, 18, 53, "Output"]
+Cell[14306, 433, 294, 8, 31, "Input"],
+Cell[14603, 443, 573, 18, 54, "Output"]
 }, Open  ]]
 }
 ]

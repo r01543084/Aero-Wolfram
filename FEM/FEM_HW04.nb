@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[      8239,        221]
-NotebookOptionsPosition[      7700,        200]
-NotebookOutlinePosition[      8044,        215]
-CellTagsIndexPosition[      8001,        212]
+NotebookDataLength[      7756,        209]
+NotebookOptionsPosition[      7285,        191]
+NotebookOutlinePosition[      7706,        207]
+CellTagsIndexPosition[      7663,        204]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -23,24 +23,10 @@ Cell[BoxData[
  CellChangeTimes->{{3.572948678069374*^9, 3.572948681215554*^9}, 
    3.5729494389198923`*^9, {3.572956652792502*^9, 3.572956653504543*^9}}],
 
-Cell[TextData[StyleBox["Problem 1: Integration with Gauss quadrature", \
-"Subsection"]], "Text",
- CellChangeTimes->{{3.572944861118938*^9, 3.572944883094195*^9}}],
-
-Cell[BoxData["\[IndentingNewLine]"], "Input",
- CellChangeTimes->{3.5729449758935027`*^9}],
-
-Cell[TextData[StyleBox["Problem 2: Solve Deferencial ODE", "Subsection"]], \
+Cell[TextData[StyleBox["Lagrange Interpolation Polynomial", "Subsection"]], \
 "Text",
- CellChangeTimes->{{3.5729448966059675`*^9, 3.57294490713457*^9}}],
-
-Cell[BoxData["\[IndentingNewLine]"], "Input",
- CellChangeTimes->{3.5729449771815767`*^9}],
-
-Cell[TextData[StyleBox["Problem 3: Lagrange Interpolation Polynomial", \
-"Subsection"]], "Text",
  CellChangeTimes->{{3.572944912261863*^9, 3.5729449216063976`*^9}, {
-  3.573024488577871*^9, 3.573024489175905*^9}}],
+   3.573024488577871*^9, 3.573024489175905*^9}, 3.593914342254151*^9}],
 
 Cell[BoxData[{
  RowBox[{
@@ -68,26 +54,31 @@ Cell[BoxData[{
    RowBox[{"Material", " ", "thickness", " ", "in", " ", "mm"}], " ", 
    "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"X", " ", "=", " ", 
-   RowBox[{"Table", "[", 
-    RowBox[{"a", ",", 
-     RowBox[{"{", 
-      RowBox[{"a", ",", "0", ",", 
-       RowBox[{"n", "+", "1"}]}], "}"}]}], "]"}]}], ";", " ", 
+  RowBox[{
+   RowBox[{"X", " ", "=", " ", 
+    RowBox[{"Table", "[", 
+     RowBox[{"a", ",", 
+      RowBox[{"{", 
+       RowBox[{"a", ",", "0", ",", 
+        RowBox[{"n", "+", "1"}]}], "}"}]}], "]"}]}], ";"}], " ", 
   RowBox[{"(*", " ", 
    RowBox[{
     RowBox[{"nodes", " ", "from", " ", "0", " ", "to", " ", "n"}], "+", "1"}],
-    " ", "*)"}], "\[IndentingNewLine]", 
-  RowBox[{"yRaw", " ", "=", " ", 
-   RowBox[{"{", 
-    RowBox[{
-    "8", ",", "10", ",", "9", ",", "12", ",", "12", ",", "10", ",", "5"}], 
-    "}"}]}], ";", " ", 
+    " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"yRaw", " ", "=", " ", 
+    RowBox[{"{", 
+     RowBox[{
+     "8", ",", "10", ",", "9", ",", "12", ",", "12", ",", "10", ",", "5"}], 
+     "}"}]}], ";"}], " ", 
   RowBox[{"(*", " ", 
    RowBox[{"Raw", " ", "data", " ", "from", " ", "physical", " ", "problem"}],
-    " ", "*)"}], "\[IndentingNewLine]", 
-  RowBox[{"y", " ", "=", " ", 
-   RowBox[{"yRaw", "/", "2"}]}], ";", " ", 
+    " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"y", " ", "=", " ", 
+    RowBox[{"yRaw", "/", "2"}]}], ";"}], " ", 
   RowBox[{"(*", " ", 
    RowBox[{"y", " ", "values", " ", "for", " ", "interpolation"}], " ", 
    "*)"}]}]}], "Input",
@@ -198,9 +189,10 @@ Cell[BoxData[
    3.572956864553614*^9, 3.5729568916401634`*^9}, {3.5729571696400642`*^9, 
    3.5729571871620665`*^9}, 3.5729574207864285`*^9}]
 },
-WindowSize->{707, 545},
-WindowMargins->{{39, Automatic}, {Automatic, 30}},
-FrontEndVersion->"8.0 for Microsoft Windows (64-bit) (November 7, 2010)",
+WindowSize->{1288, 673},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+FrontEndVersion->"9.0 for Microsoft Windows (64-bit) (January 25, 2013)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -215,14 +207,10 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[557, 20, 192, 3, 31, "Input"],
-Cell[752, 25, 162, 2, 30, "Text"],
-Cell[917, 29, 89, 1, 52, "Input"],
-Cell[1009, 32, 151, 2, 30, "Text"],
-Cell[1163, 36, 89, 1, 52, "Input"],
-Cell[1255, 39, 213, 3, 30, "Text"],
-Cell[1471, 44, 2140, 55, 152, "Input"],
-Cell[3614, 101, 2177, 49, 112, "Input"],
-Cell[5794, 152, 1902, 46, 58, "Input"]
+Cell[752, 25, 225, 3, 43, "Text"],
+Cell[980, 30, 2216, 60, 172, "Input"],
+Cell[3199, 92, 2177, 49, 112, "Input"],
+Cell[5379, 143, 1902, 46, 60, "Input"]
 }
 ]
 *)

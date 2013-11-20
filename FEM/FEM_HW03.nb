@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     57717,       1600]
+NotebookDataLength[     57795,       1601]
 NotebookOptionsPosition[     56364,       1549]
-NotebookOutlinePosition[     56707,       1564]
-CellTagsIndexPosition[     56664,       1561]
+NotebookOutlinePosition[     56785,       1565]
+CellTagsIndexPosition[     56742,       1562]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -1547,9 +1547,10 @@ Cell[BoxData[
  CellChangeTimes->{3.572596771984174*^9, 3.5725970313150067`*^9}]
 }, Open  ]]
 },
-WindowSize->{1288, 673},
+WindowSize->{1286, 673},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
-FrontEndVersion->"8.0 for Microsoft Windows (64-bit) (November 7, 2010)",
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+FrontEndVersion->"9.0 for Microsoft Windows (64-bit) (January 25, 2013)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -1570,7 +1571,7 @@ Cell[1397, 49, 533, 16, 33, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[1967, 70, 130, 2, 31, "Input"],
-Cell[2100, 74, 7786, 243, 136, "Output"]
+Cell[2100, 74, 7786, 243, 135, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[9923, 322, 210, 5, 31, "Input"],
@@ -1578,13 +1579,13 @@ Cell[10136, 329, 203, 5, 33, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[10376, 339, 312, 6, 31, "Input"],
-Cell[10691, 347, 7994, 256, 148, "Output"]
+Cell[10691, 347, 7994, 256, 151, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[18722, 608, 444, 11, 92, "Input"],
-Cell[19169, 621, 96, 1, 30, "Output"],
-Cell[19268, 624, 96, 1, 30, "Output"],
-Cell[19367, 627, 96, 1, 30, "Output"]
+Cell[19169, 621, 96, 1, 31, "Output"],
+Cell[19268, 624, 96, 1, 31, "Output"],
+Cell[19367, 627, 96, 1, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[19500, 633, 2918, 91, 54, "Input"],
@@ -1600,7 +1601,7 @@ Cell[39918, 1123, 6059, 105, 234, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[46014, 1233, 8942, 261, 148, "Input"],
-Cell[54959, 1496, 1389, 50, 49, "Output"]
+Cell[54959, 1496, 1389, 50, 48, "Output"]
 }, Open  ]]
 }
 ]
