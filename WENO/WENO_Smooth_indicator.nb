@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     46762,       1261]
-NotebookOptionsPosition[     43817,       1160]
-NotebookOutlinePosition[     44166,       1175]
-CellTagsIndexPosition[     44123,       1172]
+NotebookDataLength[     46861,       1262]
+NotebookOptionsPosition[     43916,       1161]
+NotebookOutlinePosition[     44265,       1176]
+CellTagsIndexPosition[     44222,       1173]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -1151,10 +1151,11 @@ Cell[BoxData[
 }, Open  ]],
 
 Cell["\<\
-Observer the behavior of the WENO smooth indicators in continuous and \
-discontinuous data!\
+Note the behavior of the WENO smooth indicators in continuous and \
+discontinuous data. Here lies the key to fully understand the method.\
 \>", "Text",
- CellChangeTimes->{{3.5830492170892*^9, 3.583049256670387*^9}}]
+ CellChangeTimes->{{3.5830492170892*^9, 3.583049256670387*^9}, {
+  3.5939150307781367`*^9, 3.5939150761322007`*^9}}]
 }, Open  ]]
 }, Open  ]]
 },
@@ -1260,7 +1261,7 @@ Cell[42220, 1118, 457, 9, 31, "Output"],
 Cell[42680, 1129, 455, 9, 31, "Output"],
 Cell[43138, 1140, 457, 9, 31, "Output"]
 }, Open  ]],
-Cell[43610, 1152, 179, 4, 30, "Text"]
+Cell[43610, 1152, 278, 5, 49, "Text"]
 }, Open  ]]
 }, Open  ]]
 }
