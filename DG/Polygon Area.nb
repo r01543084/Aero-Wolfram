@@ -1,0 +1,208 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      5170,        199]
+NotebookOptionsPosition[      4336,        165]
+NotebookOutlinePosition[      4681,        180]
+CellTagsIndexPosition[      4638,        177]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["Gauss Area Formula", "Section",
+ CellChangeTimes->{{3.594626553923299*^9, 3.5946265739464445`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Coded by Manuel Diaz, NTU, 2013,11,28\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.594626577522649*^9, 3.5946265992978945`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Choose a polygone with n vertex\
+\>", "Subsection",
+ CellChangeTimes->{{3.594626614882786*^9, 3.594626682241638*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"n", " ", "=", " ", "4"}], ";"}]], "Input",
+ CellChangeTimes->{{3.594626684062742*^9, 3.594626687443936*^9}}],
+
+Cell["\<\
+having the following set of vectex coordinates,\
+\>", "Text",
+ CellChangeTimes->{{3.594626692642233*^9, 3.594626716690609*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     SubscriptBox["x", "i"], ",", 
+     SubscriptBox["y", "i"]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"i", ",", "n"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.5946266286055703`*^9, 3.5946266465635977`*^9}, 
+   3.59462672038682*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"ax", ",", "ay"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"bx", ",", "by"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"cx", ",", "cy"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"dx", ",", "dy"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.594626724034029*^9, 3.594628371812276*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      SubscriptBox["x", "1"], ",", 
+      SubscriptBox["y", "1"]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      SubscriptBox["x", "2"], ",", 
+      SubscriptBox["y", "2"]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      SubscriptBox["x", "3"], ",", 
+      SubscriptBox["y", "3"]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      SubscriptBox["x", "4"], ",", 
+      SubscriptBox["y", "4"]}], "}"}]}], "}"}], " ", "=", " ", 
+  RowBox[{"(", GridBox[{
+     {"ax", "ay"},
+     {"bx", "by"},
+     {"cx", "cy"},
+     {"dx", "dy"}
+    }], ")"}]}]], "Input",
+ CellChangeTimes->{{3.59462829373181*^9, 3.5946283272347264`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"ax", ",", "ay"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"bx", ",", "by"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"cx", ",", "cy"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"dx", ",", "dy"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.5946282986700926`*^9, 3.5946283287368126`*^9, 
+  3.5946283718342776`*^9}]
+}, Open  ]],
+
+Cell["\<\
+The area using of this polygone is given by,\
+\>", "Text",
+ CellChangeTimes->{{3.594626738689867*^9, 3.5946267576659527`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"A", " ", "=", " ", 
+  RowBox[{
+   FractionBox["1", "2"], 
+   RowBox[{
+    UnderoverscriptBox["\[Sum]", 
+     RowBox[{"i", "=", "1"}], 
+     RowBox[{"n", "-", "1"}]], 
+    RowBox[{"Det", "[", GridBox[{
+       {
+        SubscriptBox["x", "i"], 
+        SubscriptBox["x", 
+         RowBox[{"i", "+", "1"}]]},
+       {
+        SubscriptBox["y", "i"], 
+        SubscriptBox["y", 
+         RowBox[{"i", "+", "1"}]]}
+      }], "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.594627630627883*^9, 3.5946276308358946`*^9}, 
+   3.5946276886282005`*^9, 3.5946283406764956`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox["1", "2"], " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", "ay"}], " ", "bx"}], "+", 
+    RowBox[{"ax", " ", "by"}], "-", 
+    RowBox[{"by", " ", "cx"}], "+", 
+    RowBox[{"bx", " ", "cy"}], "-", 
+    RowBox[{"cy", " ", "dx"}], "+", 
+    RowBox[{"cx", " ", "dy"}]}], ")"}]}]], "Output",
+ CellChangeTimes->{{3.5946283420555744`*^9, 3.594628371846278*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{707, 545},
+WindowMargins->{{Automatic, 161}, {Automatic, 57}},
+FrontEndVersion->"9.0 for Microsoft Windows (64-bit) (January 25, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 105, 1, 86, "Section"],
+Cell[CellGroupData[{
+Cell[687, 25, 136, 3, 33, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[848, 32, 127, 3, 49, "Subsection"],
+Cell[978, 37, 143, 3, 31, "Input"],
+Cell[1124, 42, 137, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[1286, 49, 324, 10, 31, "Input"],
+Cell[1613, 61, 361, 11, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2011, 77, 716, 26, 72, "Input"],
+Cell[2730, 105, 392, 12, 31, "Output"]
+}, Open  ]],
+Cell[3137, 120, 136, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[3298, 127, 586, 19, 57, "Input"],
+Cell[3887, 148, 409, 12, 46, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
