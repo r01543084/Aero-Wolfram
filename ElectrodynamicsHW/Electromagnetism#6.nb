@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[   1519588,      25961]
-NotebookOptionsPosition[   1517563,      25891]
-NotebookOutlinePosition[   1518020,      25911]
-CellTagsIndexPosition[   1517977,      25908]
+NotebookDataLength[   1530703,      26336]
+NotebookOptionsPosition[   1527544,      26234]
+NotebookOutlinePosition[   1527943,      26251]
+CellTagsIndexPosition[   1527900,      26248]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -25885,17 +25885,357 @@ the sphere for example 6.1.\
   3.593774648640561*^9, 3.5937746698407736`*^9}, {3.593774933195614*^9, 
   3.593774935035616*^9}, {3.5956696417323933`*^9, 3.595669669060857*^9}, {
   3.596409821355411*^9, 3.596409852203019*^9}, {3.596409978123308*^9, 
-  3.596410031339191*^9}}]
+  3.596410031339191*^9}}],
+
+Cell["Biot-Savart Law:", "Text",
+ CellChangeTimes->{{3.596513339344308*^9, 3.5965133453169613`*^9}, 
+   3.596515262901823*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"B", "  ", "=", " ", 
+   RowBox[{
+    FractionBox[
+     SubscriptBox["\[Mu]", "0"], 
+     RowBox[{"4", "\[Pi]"}]], 
+    RowBox[{"\[Integral]", 
+     FractionBox[
+      RowBox[{"Idl", "\[Cross]", " ", 
+       OverscriptBox["R", "^"]}], 
+      SuperscriptBox["R", "3"]]}]}]}], ";"}]], "Text",
+ CellChangeTimes->{3.5965150643510313`*^9},
+ Background->GrayLevel[0.85]],
+
+Cell["\<\
+from the example problem we know,\
+\>", "Text",
+ CellChangeTimes->{{3.596515265845558*^9, 3.596515276221511*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   SubscriptBox["\[Sigma]", "v"], " ", "=", " ", 
+   FractionBox["\[Sigma]", "t"]}], ";", " ", 
+  RowBox[{"J", " ", "=", " ", 
+   RowBox[{
+    SubscriptBox["\[Sigma]", "v"], " ", 
+    OverscriptBox["v", "^"]}]}], ";", " ", 
+  RowBox[{
+   OverscriptBox["v", "^"], " ", "=", " ", 
+   RowBox[{"\[Omega]", " ", "\[Cross]", " ", "r"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   SubscriptBox["J", "s"], " ", "=", " ", 
+   SubscriptBox["k", "b"]}], " ", ";", " ", 
+  RowBox[{
+   SubscriptBox["k", 
+    RowBox[{"b", " "}]], " ", "=", " ", 
+   RowBox[{"J", " ", "t"}]}]}]}], "Input",
+ CellChangeTimes->{{3.596514473195243*^9, 3.5965146728269978`*^9}, {
+  3.596514748547391*^9, 3.596514753035346*^9}}],
+
+Cell[BoxData[
+ RowBox[{"\[Sigma]", " ", 
+  RowBox[{"\[Omega]", "\[Cross]", "r"}]}]], "Output",
+ CellChangeTimes->{
+  3.596514635275197*^9, 3.596514674853581*^9, {3.5965147497246237`*^9, 
+   3.59651475473777*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Idl", " ", "=", " ", 
+   RowBox[{"J", " ", "d", " ", "D"}]}], ";", " ", 
+  RowBox[{"Idl", " ", "=", " ", 
+   RowBox[{
+    SubscriptBox["k", "b"], "da"}]}]}]], "Input",
+ CellChangeTimes->{{3.596514691106007*^9, 3.596514691188339*^9}, {
+  3.5965147220163317`*^9, 3.5965148457286243`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"da", " ", "\[Sigma]", " ", 
+  RowBox[{"\[Omega]", "\[Cross]", "r"}]}]], "Output",
+ CellChangeTimes->{3.5965148407170143`*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "and\n",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["R", "^"], TraditionalForm]], "Text",
+  FormatType->"TraditionalForm"],
+ " = ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    OverscriptBox["z", "^"], "+", 
+    OverscriptBox["r", "^"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "\n",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["\[Omega]", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " \[Cross] ",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["R", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " = ",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["\[Omega]", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " \[Cross] ",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["z", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " + ",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["\[Omega]", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " \[Cross] ",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["r", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "\nbut\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    OverscriptBox["\[Omega]", "^"], " "}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "|| ",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["z", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "\n",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["\[Omega]", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " \[Cross] ",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["R", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " =  ",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["\[Omega]", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " \[Cross] ",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["r", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "Text",
+ CellChangeTimes->{{3.596515433706773*^9, 3.596515601735469*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"B", "  ", "=", " ", 
+   RowBox[{
+    FractionBox[
+     RowBox[{
+      SubscriptBox["\[Mu]", "0"], "\[Sigma]"}], 
+     RowBox[{"4", "\[Pi]"}]], 
+    RowBox[{"\[Integral]", 
+     RowBox[{
+      FractionBox[
+       RowBox[{" ", 
+        RowBox[{
+         OverscriptBox["\[Omega]", "^"], "\[Cross]", 
+         OverscriptBox["r", "^"], "\[Cross]", " ", 
+         OverscriptBox["R", "^"]}]}], 
+       SuperscriptBox["R", "3"]], 
+      RowBox[{"\[DifferentialD]", "a"}]}]}]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.5965151357868557`*^9, 3.596515138787229*^9}, {
+  3.5965152404258633`*^9, 3.596515245875098*^9}, {3.596516144363481*^9, 
+  3.596516147531447*^9}}],
+
+Cell[BoxData["Where"], "Text",
+ CellChangeTimes->{{3.5965150643510313`*^9, 3.596515249232079*^9}, {
+  3.5965156098565903`*^9, 3.596515610097212*^9}},
+ FormatType->"InputForm"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[DifferentialD]", "a"}], " ", "=", " ", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"2", "*", "Pi", "*", "R", "*", "sin", "*", "\[Theta]"}], ")"}], 
+   "*", "R", "*", 
+   RowBox[{"\[DifferentialD]", "\[Theta]"}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"2", " ", "\[Pi]", " ", 
+  SuperscriptBox["R", "2"], " ", "sin", " ", "\[Theta]", " ", 
+  RowBox[{"\[DifferentialD]", "\[Theta]"}]}]], "Output",
+ CellChangeTimes->{3.596515232329904*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "And we know from applied math course\n",
+ Cell[BoxData[
+  RowBox[{
+   OverscriptBox["\[Omega]", "^"], "\[Cross]", 
+   OverscriptBox["r", "^"], "\[Cross]", " ", 
+   OverscriptBox["R", "^"]}]],
+  CellChangeTimes->{{3.5965151357868557`*^9, 3.596515138787229*^9}, {
+   3.5965152404258633`*^9, 3.596515245875098*^9}, {3.596516144363481*^9, 
+   3.596516147531447*^9}}],
+ " = ",
+ Cell[BoxData[
+  RowBox[{"(", 
+   OverscriptBox["R", "^"]}]]],
+ " \[CenterDot] ",
+ Cell[BoxData[
+  OverscriptBox[
+   RowBox[{"r", ")"}], "^"]],
+  CellChangeTimes->{{3.5965151357868557`*^9, 3.596515138787229*^9}, {
+   3.5965152404258633`*^9, 3.596515245875098*^9}, {3.596516144363481*^9, 
+   3.596516147531447*^9}}],
+ Cell[BoxData[
+  OverscriptBox["\[Omega]", "^"]]],
+ " + ",
+ Cell[BoxData[
+  OverscriptBox[
+   RowBox[{"(", "R"}], "^"]]],
+ " \[CenterDot] ",
+ Cell[BoxData[
+  RowBox[{
+   RowBox[{
+    OverscriptBox["\[Omega]", "^"], ")"}], 
+   OverscriptBox["r", "^"], " "}]],
+  CellChangeTimes->{{3.5965151357868557`*^9, 3.596515138787229*^9}, {
+   3.5965152404258633`*^9, 3.596515245875098*^9}, {3.596516144363481*^9, 
+   3.596516147531447*^9}}]
+}], "Text",
+ CellChangeTimes->{{3.5965153964220467`*^9, 3.596515408029559*^9}, {
+  3.596516154168537*^9, 3.596516277960126*^9}}],
+
+Cell[TextData[{
+ "in the direction of ",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["r", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "Text",
+ CellChangeTimes->{{3.596515847485053*^9, 3.596515863332493*^9}, {
+  3.596515933916113*^9, 3.596515933995706*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  SubsuperscriptBox["\[Integral]", "0", "\[Pi]"], 
+  RowBox[{
+   RowBox[{"(", 
+    FractionBox[
+     RowBox[{"R", " ", "\[Omega]", " ", 
+      RowBox[{"Cos", "[", "\[Theta]", "]"}]}], 
+     SuperscriptBox["R", "3"]], ")"}], "2", "\[Pi]", " ", 
+   SuperscriptBox["R", "2"], " ", 
+   RowBox[{"Sin", "[", "\[Theta]", "]"}], 
+   OverscriptBox["r", "^"], 
+   RowBox[{"\[DifferentialD]", "\[Theta]"}]}]}]], "Input",
+ CellChangeTimes->{{3.596515638510248*^9, 3.5965156891644487`*^9}, {
+   3.596515733090085*^9, 3.5965157647149687`*^9}, 3.596515903323941*^9, 
+   3.5965160367076263`*^9, {3.596516069675622*^9, 3.596516097595643*^9}}],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{3.596515691269971*^9, 3.596515768263545*^9, 
+  3.596515904074676*^9, 3.596516037542644*^9, 3.596516113771305*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "in the direction of ",
+ Cell[BoxData[
+  FormBox[
+   OverscriptBox["\[Omega]", "^"], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "Text",
+ CellChangeTimes->{{3.596515906559437*^9, 3.596515928671543*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  SubsuperscriptBox["\[Integral]", "0", "\[Pi]"], 
+  RowBox[{
+   RowBox[{"(", 
+    FractionBox[
+     RowBox[{
+      SuperscriptBox["R", "2"], 
+      OverscriptBox["\[Omega]", "^"], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{"Sin", "[", "\[Theta]", "]"}], ")"}], "2"]}], 
+     SuperscriptBox["R", "3"]], ")"}], "2", "\[Pi]", " ", 
+   SuperscriptBox["R", "2"], " ", 
+   RowBox[{"Sin", "[", "\[Theta]", "]"}], 
+   RowBox[{"\[DifferentialD]", "\[Theta]"}]}]}]], "Input",
+ CellChangeTimes->{{3.59651577866652*^9, 3.5965158261230917`*^9}, {
+   3.596515954724143*^9, 3.596515989123612*^9}, 3.596516040220049*^9, {
+   3.5965161034842587`*^9, 3.5965161087273817`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox["8", "3"], " ", "\[Pi]", " ", "R", " ", 
+  OverscriptBox["\[Omega]", "^"]}]], "Output",
+ CellChangeTimes->{{3.5965157902856607`*^9, 3.5965158142137413`*^9}, {
+   3.596515936586638*^9, 3.5965159755308027`*^9}, {3.596516020502021*^9, 
+   3.596516041053746*^9}, 3.596516110095402*^9}]
+}, Open  ]],
+
+Cell["therefore,", "Text",
+ CellChangeTimes->{{3.596516307337738*^9, 3.5965163139896593`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"B", "  ", "=", " ", 
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     SubscriptBox["\[Mu]", "0"], "\[Sigma]"}], 
+    RowBox[{"4", "\[Pi]"}]], " ", 
+   FractionBox["8", "3"], " ", "\[Pi]", " ", "R", " ", 
+   OverscriptBox["\[Omega]", "^"]}]}]], "Input",
+ CellChangeTimes->{{3.596516315710004*^9, 3.596516335027012*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox["2", "3"], " ", "R", " ", "\[Sigma]", " ", 
+  OverscriptBox["\[Omega]", "^"], " ", 
+  SubscriptBox["\[Mu]", "0"]}]], "Output",
+ CellChangeTimes->{3.596516340240615*^9},
+ Background->GrayLevel[0.85]]
+}, Open  ]],
+
+Cell["\<\
+this result is in agreement with the result of example 5.11 in homework 5. 
+MD \
+\>", "Text",
+ CellChangeTimes->{{3.5965164874470577`*^9, 3.5965165157496243`*^9}}]
 }, Open  ]]
 }, Open  ]]
 },
 WindowSize->{766, 1340},
 WindowMargins->{{Automatic, 0}, {Automatic, -335}},
-FontColor->RGBColor[
-  Rational[2, 3], 
-  Rational[16, 17], 
-  Rational[28, 51]],
-Background->RGBColor[0.1, 0.1, 0.1],
+FontColor->RGBColor[0, 0, 0],
+Background->RGBColor[1, 1, 1],
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
 StyleDefinitions->"Default.nb"
 ]
@@ -25960,7 +26300,42 @@ Cell[997542, 17105, 519291, 8762, 379, 347201, 5940, "CachedBoxData", \
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[1516894, 25874, 194, 3, 80, "Section"],
-Cell[1517091, 25879, 444, 8, 50, "Text"]
+Cell[1517091, 25879, 444, 8, 49, "Text"],
+Cell[1517538, 25889, 126, 2, 30, "Text"],
+Cell[1517667, 25893, 398, 13, 71, "Text"],
+Cell[1518068, 25908, 123, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[1518216, 25915, 745, 22, 68, "Input"],
+Cell[1518964, 25939, 212, 5, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1519213, 25949, 321, 8, 31, "Input"],
+Cell[1519537, 25959, 149, 3, 31, "Output"]
+}, Open  ]],
+Cell[1519701, 25965, 1862, 75, 132, "Text"],
+Cell[1521566, 26042, 691, 20, 53, "Input"],
+Cell[1522260, 26064, 175, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[1522460, 26071, 259, 7, 31, "Input"],
+Cell[1522722, 26080, 209, 4, 31, "Output"]
+}, Open  ]],
+Cell[1522946, 26087, 1264, 38, 55, "Text"],
+Cell[1524213, 26127, 273, 8, 30, "Text"],
+Cell[CellGroupData[{
+Cell[1524511, 26139, 649, 15, 51, "Input"],
+Cell[1525163, 26156, 161, 2, 31, "Output"]
+}, Open  ]],
+Cell[1525339, 26161, 231, 7, 30, "Text"],
+Cell[CellGroupData[{
+Cell[1525595, 26172, 700, 18, 54, "Input"],
+Cell[1526298, 26192, 319, 6, 47, "Output"]
+}, Open  ]],
+Cell[1526632, 26201, 94, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[1526751, 26206, 338, 9, 48, "Input"],
+Cell[1527092, 26217, 236, 6, 63, "Output"]
+}, Open  ]],
+Cell[1527343, 26226, 173, 4, 50, "Text"]
 }, Open  ]]
 }, Open  ]]
 }
